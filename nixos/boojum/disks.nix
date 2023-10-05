@@ -1,4 +1,4 @@
-{ disks ? [ "/dev/nvme0n1" "/dev/nvme1n1" ], ... }:
+{ disks ? [ "/dev/nvme0n1" ], ... }:
 let
   defaultXfsOpts = [ "defaults" "relatime" "nodiratime" ];
 in
@@ -37,27 +37,6 @@ in
                 mountOptions = defaultXfsOpts;
               };
             }];
-        };
-      };
-      nvme1 = {
-        type = "disk";
-        device = builtins.elemAt disks 1;
-        content = {
-          type = "table";
-          format = "gpt";
-          partitions = [{
-            name = "home";
-            start = "0%";
-            end = "100%";
-            content = {
-              type = "filesystem";
-              # Overwirte the existing filesystem
-              extraArgs = [ "-f" ];
-              format = "xfs";
-              mountpoint = "/home";
-              mountOptions = defaultXfsOpts;
-            };
-          }];
         };
       };
     };
