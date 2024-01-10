@@ -6,11 +6,12 @@
 
 This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for configuring my computers and home environment. These are the computers this configuration currently manages:
 
-|  Hostname  | OEM         | Model                      | OS    | Role      | Status |
-| :--------- | :---------: | :------------------------: | :---: | :-------: | :----- |
-| boojum     | Lenovo      | Thinkpad Gen 6             | NixOS | Laptop    | WiP    |
-| jryjack    | Apple       | Macbook Pro M1 2020        | MacOS | Laptop    | tbn    |
-| maple      | Pine64      | [RockPro64]                  | NixOS | Station   | WiP    |
+|  Hostname  | OEM         | Model                        | OS    | Role      | Status |
+| :--------- | :---------: | :--------------------------: | :---: | :-------: | :----- |
+| boojum     | Lenovo      | Thinkpad Gen 6               | NixOS | Laptop    | WiP    |
+| jryjack    | Apple       | Macbook Pro M1 2020          | macOS | Laptop    | tbn    |
+| cork       | WSL2        | VM                           |       | VM        | tbn    |
+| maple      | Pine64      | [RockPro64]                  | NixOS | Station   | tbn    |
 | console    | Clockworkpi | [uConsole (CM-4, 4G Module)] | TBD   | Handheld  | tbn    |
 
 [uConsole (CM-4, 4G Module)]: https://www.clockworkpi.com/uconsole

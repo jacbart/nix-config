@@ -11,11 +11,7 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
-    aria2
     age
-    croc
-    wget2
-    zsync
   ] ++ lib.optionals (desktop != null) [
     gimp-with-plugins
     gnome.gnome-clocks
