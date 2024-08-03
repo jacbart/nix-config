@@ -6,7 +6,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    wezterm
+    kitty
     rofi-wayland
   ];
 

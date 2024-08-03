@@ -18,7 +18,7 @@
       availableKernelModules = [ ];                                                                    
       kernelModules = [ ];                                                                                                                      
     };
-    kernelModules = [ "kvm-intel" "bridge" "macvlan" "tap" "tun" "veth" "br_netfilter" "xt_nat" "cpufreq_powersave" "loop" "atkbd" "ctr" ];
+    kernelModules = [ ];
     extraModulePackages = [ ];
     kernelParams = [
       "resume_offset=533760"
