@@ -41,10 +41,10 @@
       # nix build .#homeConfigurations."meep@boojum".activationPackage
       homeConfigurations = {
         # .iso images
-        "meep@iso-console" = libx.mkHome { hostname = "iso-console"; username = "nixos"; };
-        "meep@iso-desktop" = libx.mkHome { hostname = "iso-desktop"; username = "nixos"; desktop = "hyprland"; };
-        "meep@iso-rockpro64" = libx.mkHome { hostname = "iso-rockpro64"; username = "nixos"; };
-        "meep@iso-uconsole" = libx.mkHome { hostname = "iso-uconsole"; username = "nixos"; };
+        "nixos@iso-console" = libx.mkHome { hostname = "iso-console"; username = "nixos"; };
+        "nixos@iso-desktop" = libx.mkHome { hostname = "iso-desktop"; username = "nixos"; desktop = "hyprland"; };
+        "nixos@iso-rockpro64" = libx.mkHome { hostname = "iso-rockpro64"; username = "nixos"; };
+        "nixos@iso-uconsole" = libx.mkHome { hostname = "iso-uconsole"; username = "nixos"; };
         # Workstations
         "meep@boojum" = libx.mkHome { hostname = "boojum"; username = "meep"; desktop = "hyprland"; };
         "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; desktop = "hyprland"; };
@@ -55,7 +55,7 @@
         # .iso images
         #  - nix build .#nixosConfigurations.{iso-console|iso-desktop}.config.system.build.isoImage
         iso-console = libx.mkHost { hostname = "iso-console"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"; };
-        iso-desktop = libx.mkHost { hostname = "iso-desktop"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; desktop = "hyprland"; };
+        iso-desktop = libx.mkHost { hostname = "iso-desktop"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; };
         iso-rockpro64 = libx.mkHost { hostname = "iso-rockpro64"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-base.nix"; };
         iso-uconsole = libx.mkHost { hostname = "iso-uconsole"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-base.nix"; };
         # Workstations
