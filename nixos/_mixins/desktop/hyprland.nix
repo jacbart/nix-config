@@ -7,7 +7,6 @@
     xwayland = {
       enable = true;
     };
-    nvidiaPatches = true;
   };
 
   environment.sessionVariables = {
