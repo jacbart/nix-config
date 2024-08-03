@@ -14,9 +14,6 @@ in
     age
   ] ++ lib.optionals (desktop != null) [
     gimp-with-plugins
-    gnome.gnome-clocks
-    libreoffice
-    pick-colour-picker
     zoom-us
 
     # Fast moving apps use the unstable branch
@@ -27,16 +24,11 @@ in
   ];
 
   services = {
-    aria2 = {
-      enable = true;
-      openPorts = true;
-      rpcSecret = "${hostname}";
-    };
-    croc = {
-      enable = true;
-      pass = "${hostname}";
-      openFirewall = true;
-    };
+    # aria2 = {
+    #   enable = true;
+    #   openPorts = true;
+    #   rpcSecret = "${hostname}";
+    # };
   };
 
   users.users.meep = {

@@ -5,7 +5,6 @@
     ../services/sane.nix
   ];
 
-  # Add additional apps and include Yaru for syntax highlighting
   environment.systemPackages = with pkgs; [
     wezterm
     rofi-wayland

@@ -1,9 +1,6 @@
 { lib, hostname, ... }:
 let
   hosts = [
-    "cork"
-    "maple"
-    "oak"
   ];
   tcpPorts = [ ];
   udpPorts = [ ];

@@ -12,7 +12,7 @@ This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for confi
 | jryjack    | Apple       | Macbook Pro M1 2020          | macOS | Laptop    | tbn    |
 | cork       | WSL2        | VM                           |       | VM        | tbn    |
 | maple      | Pine64      | [RockPro64]                  | NixOS | Station   | tbn    |
-| console    | Clockworkpi | [uConsole (CM-4, 4G Module)] | TBD   | Handheld  | tbn    |
+| ash        | Clockworkpi | [uConsole (CM-4, 4G Module)] | TBD   | Handheld  | tbn    |
 
 [uConsole (CM-4, 4G Module)]: https://www.clockworkpi.com/uconsole
 [RockPro64]: https://www.pine64.org/rockpro64/

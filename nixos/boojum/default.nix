@@ -15,11 +15,17 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "md_mod" "raid0" "raid1" "raid10" "raid456" "ext2" "ext4" "ahci" "sata_nv" "sata_via" "sata_sis" "sata_uli" "ata_piix" "pata_marvell" "sd_mod" "sr_mod" "mmc_block" "uhci_hcd" "ehci_hcd" "ehci_pci" "ohci_hcd" "ohci_pci" "xhci_hcd" "xhci_pci" "usbhid" "hid_generic" "hid_lenovo" "hid_apple" "hid_roccat" "hid_logitech_hidpp" "hid_logitech_dj" "hid_microsoft" "hid_cherry" "pcips2" "atkbd" "i8042" "rtc_cmos" ];                                                                    
+      availableKernelModules = [ ];                                                                    
       kernelModules = [ ];                                                                                                                      
     };
-    kernelModules = [ "kvm-intel" "bridge" "macvlan" "tap" "tun" "veth" "br_netfilter" "xt_nat" "cpufreq_powersave" "loop" "atkbd" "ctr" ];                                                                                                                 
+    kernelModules = [ "kvm-intel" "bridge" "macvlan" "tap" "tun" "veth" "br_netfilter" "xt_nat" "cpufreq_powersave" "loop" "atkbd" "ctr" ];
     extraModulePackages = [ ];
+    kernelParams = [
+      "resume_offset=533760"
+    ];
+    supportedFilesystems = lib.mkForce ["btrfs"];
+    kernelPackages = pkgs.linuxPackages_latest;
+    resumeDevice = "/dev/disk/by-label/nixos";
   };
 
   environment.systemPackages = with pkgs; [
@@ -32,6 +38,20 @@
     clock24 = true;
     extraConfig = ''
       set -g escape-time 50
+
+      # List of plugins
+      set -g @plugin 'tmux-plugins/tpm'
+      set -g @plugin 'tmux-plugins/tmux-sensible'
+      set -g @plugin 'jimeh/tmux-themepack'
+      set -g @plugin 'nhdaly/tmux-better-mouse-mode'
+
+      # Smart pane switching with awareness of vim splits
+      is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
+      bind -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
+      bind -n C-u if-shell "$is_vim" "send-keys C-u" "select-pane -U"
+      bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
+      bind -n C-\\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+
       # Window Splitting
       unbind %
       bind | split-window -h -f -c '#{pane_current_path}'
@@ -42,7 +62,26 @@
       set -g default-terminal "xterm-256color"
       set-option -sa terminal-overrides ",xterm*:Tc"
       set-option -g mouse on
+
       set -g status-keys vi
+
+      set -g @themepack 'basic'
+
+      # Don't exit copy mode when mouse drags
+      unbind -T copy-mode-vi MouseDragEnd1Pane
+      bind-key -T copy-mode-vi Escape send-keys -X cancel
+
+      # Pane titles
+      unbind t
+      bind t setw pane-border-status
+      set -g pane-border-format "#{pane_title}"
+      # Rename pane
+      unbind T
+      bind T command-prompt -p "(rename-pane)" -I "#T" "select-pane -T '%%'"
+
+      bind-key e run-shell 'tmux popup -E "hx $HOME/workspace/personal/notes/$(date "+%Y-%m-%d").md"'
+
+      run '~/.tmux/plugins/tpm/tpm'
     '';
   };
 

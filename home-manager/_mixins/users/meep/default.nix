@@ -7,12 +7,18 @@
     [user]
       name = Jack Bartlett
       email = jacbart@gmail.com
+    [init]
+      defaultBranch = main
     [push]
       default = current
-    [url "git@github.com:jacbart"]
-      insteadOf = https://github.com/jacbart
     [pull]
       rebase = false
+    [url "git@github.com:jacbart"]
+      insteadOf = https://github.com/jacbart
+    [url "git@github.com:journeyai"]
+      insteadOf = https://github.com/journeyai
+    [url "git@github.com:journeyid"]
+      insteadOf = https://github.com/journeyid
     [alias]
       cc = cz commit
       ck = cz check
@@ -20,27 +26,21 @@
       cv = cz version
     [core]
       editor = hx
-      sshCommand = "ssh -i ~/.ssh/id_gitpersonal"
+      sshCommand = "ssh -i ~/.ssh/id_git"
     '';
     packages = with pkgs; [
       fast-cli
       diffr
-      antibody
       age
       bitwarden-cli
       fd
       fzf
       git
-      helix
       jq
       ripgrep
     ];
     sessionVariables = {
-      BZR_EMAIL = "Martin Wimpress <code@wimpress.io>";
-      DEBFULLNAME = "Martin Wimpress";
-      DEBEMAIL = "code@wimpress.io";
-      DEBSIGN_KEYID = "8F04688C17006782143279DA61DF940515E06DA3";
-      PAGER = "moar";
+      
     };
   };
   programs = {
@@ -48,6 +48,9 @@
       shellAliases = {
         diff = "diffr";
         fast = "fast -u";
+        j = "z";
+        gs = "git status";
+        st = "stow -v -t $HOME";
       };
     };
     git = {
@@ -60,8 +63,7 @@
     }
     starship = {
       enable = true;
-      # Configuration written to ~/.config/starship.toml
-      settings = {
+       settings = {
         format = "$username$hostname$sudo$directory$git_branch$git_state$git_status$fill$helm$kubernetes$golang$rust$terraform$nix_shell$jobs$cmd_duration$time$line_break$character";
         command_timeout = 1000;
 

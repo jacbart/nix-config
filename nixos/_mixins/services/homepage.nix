@@ -9,13 +9,16 @@ let
 # For configuration options and examples, please see:
 # https://gethomepage.dev
 
-- Developer:
+- Information:
     - Github:
         - abbr: GH
           href: https://github.com/
     - StackOverflow:
         - abbr: SO
           href: https://stackoverflow.com/
+    - Chatgpt:
+        - abbr: CG
+          href: https://app.chatgpt.com/
 
 - Social:
     - Mastodon:
