@@ -7,7 +7,7 @@
     xwayland = {
       enable = true;
     };
-    # nvidiaPatches = true;
+    nvidiaPatches = true;
   };
 
   environment.sessionVariables = {
@@ -22,6 +22,11 @@
       opengl.enable = true;
 
       # Most wayland compositors need this
-      # nvidia.modesetting.enable = true;
+      nvidia.modesetting.enable = true;
   };
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [
+    pkgs.xdg-desktop-portal-gtk
+  ];
 }

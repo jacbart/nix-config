@@ -1,12 +1,15 @@
 { pkgs, ... }: {
   imports = [
-    ./waybar.nix
     ../services/flatpak.nix
     ../services/sane.nix
   ];
 
   environment.systemPackages = with pkgs; [
     kitty
+    wezterm
+    waybar
+    dunst
+    libnotify
     rofi-wayland
   ];
 
