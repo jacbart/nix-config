@@ -49,7 +49,7 @@
       LC_TIME = "en_US.utf8";
     };
   };
-  services.xserver.layout = "us";
+  services.xserver.xkb.layout = "us";
   time.timeZone = "America/Phoenix";
 
   # Only install the docs I use
@@ -84,7 +84,7 @@
 
   fonts = {
     fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" "SourceCodePro" "UbuntuMono" ]; })
       fira
       fira-go
@@ -97,7 +97,7 @@
     ];
 
     # Enable a basic set of fonts providing several font styles and families and reasonable coverage of Unicode.
-    enableDefaultFonts = false;
+    enableDefaultPackages = false;
 
     fontconfig = {
       antialias = true;
