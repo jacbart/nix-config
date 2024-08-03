@@ -5,7 +5,6 @@
   programs.hyprland = {
     enable = true;
     xwayland = {
-      hidpi = true;
       enable = true;
     };
     # nvidiaPatches = true;
