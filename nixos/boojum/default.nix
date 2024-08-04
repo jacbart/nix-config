@@ -4,7 +4,7 @@
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
     (import ./disks.nix { })
     ../_mixins/hardware/systemd-boot.nix
-    # ../_mixins/services/bluetooth.nix
+    ../_mixins/services/bluetooth.nix
     ../_mixins/services/pipewire.nix
   ];
 
@@ -15,10 +15,10 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [ ];                                                                    
+      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];                                                                    
       kernelModules = [ ];                                                                                                                      
     };
-    kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
     kernelParams = [
       "resume_offset=533760"
@@ -38,12 +38,6 @@
     clock24 = true;
     extraConfig = ''
       set -g escape-time 50
-
-      # List of plugins
-      set -g @plugin 'tmux-plugins/tpm'
-      set -g @plugin 'tmux-plugins/tmux-sensible'
-      set -g @plugin 'jimeh/tmux-themepack'
-      set -g @plugin 'nhdaly/tmux-better-mouse-mode'
 
       # Smart pane switching with awareness of vim splits
       is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
@@ -65,8 +59,6 @@
 
       set -g status-keys vi
 
-      set -g @themepack 'basic'
-
       # Don't exit copy mode when mouse drags
       unbind -T copy-mode-vi MouseDragEnd1Pane
       bind-key -T copy-mode-vi Escape send-keys -X cancel
@@ -78,14 +70,11 @@
       # Rename pane
       unbind T
       bind T command-prompt -p "(rename-pane)" -I "#T" "select-pane -T '%%'"
-
-      bind-key e run-shell 'tmux popup -E "hx $HOME/workspace/personal/notes/$(date "+%Y-%m-%d").md"'
-
-      run '~/.tmux/plugins/tpm/tpm'
     '';
   };
 
   networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
