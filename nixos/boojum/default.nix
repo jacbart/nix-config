@@ -4,7 +4,7 @@
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
     (import ./disks.nix { })
     ../_mixins/hardware/systemd-boot.nix
-    ../_mixins/services/bluetooth.nix
+    # ../_mixins/services/bluetooth.nix
     ../_mixins/services/pipewire.nix
   ];
 
@@ -22,6 +22,7 @@
     extraModulePackages = [ ];
     kernelParams = [
       "resume_offset=533760"
+      "nosgx"
     ];
     supportedFilesystems = lib.mkForce ["btrfs"];
     kernelPackages = pkgs.linuxPackages_latest;

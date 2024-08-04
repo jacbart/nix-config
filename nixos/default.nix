@@ -39,11 +39,11 @@
   time.timeZone = "America/Phoenix";
 
   # Only install the docs I use
-  documentation.enable = true;
-  documentation.nixos.enable = false;
-  documentation.man.enable = true;
-  documentation.info.enable = false;
-  documentation.doc.enable = false;
+  # documentation.enable = true;
+  # documentation.nixos.enable = false;
+  # documentation.man.enable = true;
+  # documentation.info.enable = false;
+  # documentation.doc.enable = false;
 
   environment = {
     # Eject nano and perl from the system
@@ -187,10 +187,10 @@
 
   services.fwupd.enable = true;
 
-  systemd.tmpfiles.rules = [
-    "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"
-    "d /mnt/snapshot/${username} 0755 ${username} users"
-  ];
+  # systemd.tmpfiles.rules = [
+  #   "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"
+  #   "d /mnt/snapshot/${username} 0755 ${username} users"
+  # ];
 
   system.activationScripts.diff = {
     supportsDryActivation = true;
