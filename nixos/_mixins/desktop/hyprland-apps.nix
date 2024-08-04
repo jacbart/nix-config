@@ -4,21 +4,14 @@
     ../services/sane.nix
   ];
 
-  # Add additional apps and include Yaru for syntax highlighting
   environment.systemPackages = with pkgs; [
-    appeditor
-    gthumb
-    formatter
-    usbimager
-    yaru-theme
+    kitty
+    wezterm
+    waybar
+    dunst
+    libnotify
+    rofi-wayland
   ];
-
-  # Add GNOME Disks, Pantheon Tweaks and Seahorse
-  programs = {
-    gnome-disks.enable = true;
-    pantheon-tweaks.enable = true;
-    seahorse.enable = true;
-  };
 
   systemd.services.configure-appcenter-repo = {
     wantedBy = ["multi-user.target"];

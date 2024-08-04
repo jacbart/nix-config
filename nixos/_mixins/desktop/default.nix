@@ -1,6 +1,5 @@
 { desktop, lib, pkgs, ... }: {
   imports = [
-    ../services/cups.nix
   ]
   ++ lib.optional (builtins.pathExists (./. + "/${desktop}.nix")) ./${desktop}.nix;
 
