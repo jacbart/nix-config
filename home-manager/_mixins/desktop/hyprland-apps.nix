@@ -2,6 +2,7 @@
   imports = [
     ../services/flatpak.nix
     ../services/sane.nix
+    ./localsend.nix
   ];
 
   environment.systemPackages = with pkgs; [

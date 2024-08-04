@@ -1,175 +1,204 @@
-{ config, lib, hostname, pkgs, username, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [
     ./helix.nix
+    ./starship.nix
   ];
   home = {
-    file.".gitconfig".text = ''
-    [user]
-      name = Jack Bartlett
-      email = jacbart@gmail.com
-    [init]
-      defaultBranch = main
-    [push]
-      default = current
-    [pull]
-      rebase = false
-    [url "git@github.com:jacbart"]
-      insteadOf = https://github.com/jacbart
-    [url "git@github.com:journeyai"]
-      insteadOf = https://github.com/journeyai
-    [url "git@github.com:journeyid"]
-      insteadOf = https://github.com/journeyid
-    [alias]
-      cc = cz commit
-      ck = cz check
-      cl = cz changelog
-      cv = cz version
-    [core]
-      editor = hx
-      sshCommand = "ssh -i ~/.ssh/id_git"
-    '';
+    file = {
+      "${config.xdg.configHome}/neofetch/config.conf".text = builtins.readFile ./neofetch.conf;
+      # add broot config
+      "${config.xdg.configHome}/broot/config.hjson".text = builtins.readFile ./broot/config.hjson;
+      "${config.xdg.configHome}/broot/verbs.hjson".text = builtins.readFile ./broot/verbs.hjson;
+      "${config.xdg.configHome}/broot/skins/dark-gruvbox.hjson".text = builtins.readFile ./broot/skins/dark-gruvbox.hjson;
+      "${config.xdg.configHome}/broot/skins/white.hjson".text = builtins.readFile ./broot/skins/white.hjson;
+    };
     packages = with pkgs; [
-      fast-cli
-      diffr
-      age
-      bitwarden-cli
-      fd
-      fzf
-      git
-      jq
+      neofetch
       ripgrep
+      fzf
+      fd
     ];
     sessionVariables = {
-      
+      MANPAGER = "sh -c 'col --no-backspaces --spaces | bat --language man'";
     };
   };
+
   programs = {
-    zsh = {
-      shellAliases = {
-        diff = "diffr";
-        fast = "fast -u";
-        j = "z";
-        gs = "git status";
-        st = "stow -v -t $HOME";
+    bat = {
+      enable = true;
+      extraPackages = with pkgs.bat-extras; [
+        batwatch
+        prettybat
+      ];
+    };
+    bottom = {
+      enable = true;
+      settings = {
+        colors = {
+          high_battery_color = "green";
+          medium_battery_color = "yellow";
+          low_battery_color = "red";
+        };
+        disk_filter = {
+          is_list_ignored = true;
+          list = [ "/dev/loop" ];
+          regex = true;
+          case_sensitive = false;
+          whole_word = false;
+        };
+        flags = {
+          dot_marker = false;
+          enable_gpu_memory = true;
+          group_processes = true;
+          hide_table_gap = true;
+          mem_as_value = true;
+          tree = true;
+        };
       };
     };
-    git = {
-      userEmail = "jacbart@gmail.com";
-      userName = "Jack Bartlett";
+    broot = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+    dircolors = {
+      enable = true;
+      enableBashIntegration = true;
     };
     direnv = {
       enable = true;
-      nix-direnv.enable = true;
-    }
-    starship = {
+      enableBashIntegration = true;
+      nix-direnv = {
+        enable = true;
+      };
+    };
+    zsh = {
       enable = true;
-       settings = {
-        format = "$username$hostname$sudo$directory$git_branch$git_state$git_status$fill$helm$kubernetes$golang$rust$terraform$nix_shell$jobs$cmd_duration$time$line_break$character";
-        command_timeout = 1000;
-
-        sudo = {
-          disabled = true;
-          style = "bold green";
-          symbol = "";
-          format = "[as $symbol]($style) ";
+      shellAliases = {
+        cat = "bat --paging=never --style=plain";
+        htop = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
+        ip = "ip --color --brief";
+        less = "bat --paging=always";
+        more = "bat --paging=always";
+        top = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
+        kc = "kubectl";
+        nc = "ncat";
+        t = "tmux";
+        j = "z";
+        gs = "git status";
+        ll = "ls -lh";
+        la = "ls -lah";
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [
+          "fzf"
+          "git"
+          "tmux"
+          "z"
+          "zsh-users/zsh-autosuggestions"
+          "zsh-users/zsh-syntax-highlighting"
+          "zsh-users/zsh-completions"
+        ];
+        theme = "";
+      };
+      history = {
+        size = 100000;
+        path = "${config.xdg.dataHome}/zsh/history";
+      };
+      initExtra = ''
+        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff5f00"
+        bindkey '^E' autosuggest-accept
+        bindkey '^ ' forward-word
+      '';
+    };
+    gh = {
+      enable = true;
+      extensions = with pkgs; [ gh-markdown-preview ];
+      settings = {
+        editor = "hx";
+        git_protocol = "ssh";
+        prompt = "enabled";
+      };
+    };
+    git = {
+      enable = true;
+      userName = "Jack Bartlett";
+      userEmail = "jacbart@gmail.com";
+      core = {
+        editor = "hx";
+        sshCommand = "ssh -i ~/.ssh/id_git";
+      };
+      url = {
+        "git@github.com:jacbart" = {
+          insteadOf = "https://github.com/jacbart";
         };
-
-        username = {
-          style_user = "white dimmed";
-          style_root = "red bold";
-          format = "[$user]($style)";
-          disabled = false;
-          show_always = false;
+        "git@github.com:journeyai" = {
+          insteadOf = "https://github.com/journeyai";
         };
-
-        hostname = {
-          ssh_only = true;
-          ssh_symbol = " ";
-          format = "@[$hostname]($style) ";
-          style = "green bold dimmed";
-        };
-
-        fill = {
-          symbol = "-";
-          style = "bright-black";
-        };
-
-        directory = {
-          style = "blue";
-          home_symbol = "~";
-          truncation_symbol = ".../";
-          truncation_length = 5;
-        };
-
-        character = {
-          success_symbol = "[❯](green)";
-          error_symbol = "[❯](red)";
-          vicmd_symbol = "[❮](green)";
-        };
-
-        git_branch = {
-          format = "[$branch]($style) ";
-          style = "green";
-        };
-
-        git_status = {
-          format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style) ";
-          style = "cyan";
-        };
-
-        git_state = {
-          format = "([$state( $progress_current/$progress_total)]($style)) ";
-          style = "bright-black";
-        };
-
-        golang = {
-          format = " [$symbol$version]($style)";
-          symbol = " ";
-        };
-        
-        rust = {
-          disabled = false;
-        };
-
-        nix_shell = {
-          disabled = false;
-          impure_msg = "[impure shell](bold red)";
-          pure_msg = "[pure shell](bold green)";
-          format = " via [$symbol$state( \($name\))](bold blue)";
-        };
-
-        terraform = {
-          format = " [$symbol$version $workspace]($style)";
-        };
-
-        helm = {
-          format = " via [⎈ $version](bold white) ";
-        };
-
-        kubernetes = {
-          format = "";
-          disabled = true;
-        };
-        
-        jobs = {
-          disabled = false;
-        };
-
-        cmd_duration = {
-          format = " [$duration]($style)";
-          style = "yellow";
-        };
-        time = {
-          disabled = false;
-          use_12hr = false;
-          format = " at [$time]($style)";
-          utc_time_offset = "local";
+        "git@github.com:journeyid" = {
+          insteadOf = "https://github.com/journeyid";
         };
       };
+      delta = {
+        enable = true;
+        options = {
+          features = "decorations";
+          navigate = true;
+          side-by-side = true;
+        };
+      };
+      aliases = {
+        lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+        cc = cz commit;
+        ck = cz check;
+        cl = cz changelog;
+        cv = cz version;
+      };
+      extraConfig = {
+        push = {
+          default = "current";
+        };
+        pull = {
+          rebase = false;
+        };
+        init = {
+          defaultBranch = "main";
+        };
+      };
+      ignores = [
+        "*.log"
+        "*.out"
+        ".DS_Store"
+        "bin/"
+        "dist/"
+        "result"
+      ];
+    };
+    gpg.enable = true;
+    home-manager.enable = true;
+    info.enable = true;
+    jq.enable = true;
+  }
+
+  services = {
+    gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      pinentryFlavor = "curses";
     };
   };
 
-  systemd.user.tmpfiles.rules = [
-    "d ${config.home.homeDirectory}/workspace/personal 0755 ${username} users - -"
-  ];
+  # Nicely reload system units when changing configs
+  systemd.user.startServices = "sd-switch";
+
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = lib.mkDefault true;
+      extraConfig = {
+        XDG_SCREENSHOTS_DIR = "${config.home.homeDirectory}/Pictures/Screenshots";
+      };
+    };
+  };
 }
