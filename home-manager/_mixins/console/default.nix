@@ -153,13 +153,13 @@
     jq.enable = true;
   }
 
-  services = {
-    gpg-agent = {
-      enable = true;
-      enableSshSupport = true;
-      pinentryFlavor = "curses";
-    };
-  };
+  # services = {
+  #   gpg-agent = {
+  #     enable = true;
+  #     enableSshSupport = true;
+  #     pinentryFlavor = "curses";
+  #   };
+  # };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
