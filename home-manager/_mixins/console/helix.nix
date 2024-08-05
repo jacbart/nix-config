@@ -19,12 +19,12 @@
         language = [
           {
             name = "hcl";
-            file-type = ["tf", "tfvars", "hcl", "koi", "jaws"];
+            file-type = ["tf" "tfvars" "hcl" "koi" "jaws"];
             auto-format = true;
-          },
+          }
           {
             name = "markdown";
-            formatter = { command = "dprint"; args = ["fmt", "--stdin", "md"]; };
+            formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
             auto-format = true;
           }
         ];
@@ -32,7 +32,7 @@
       settings = {
         theme = "ayu_dark"
         editor = {
-          shell = ["zsh", "-c"];
+          shell = ["zsh" "-c"];
           line-number = "absolute";
           mouse = true;
           color-modes = true;
@@ -41,9 +41,9 @@
           auto-completion = true;
           auto-format = true;
           statusline {
-            left = ["mode", "spinner"];
+            left = ["mode" "spinner"];
             center = ["file-name"];
-            right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"];
+            right = ["diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type"];
             separator = "│";
           };
           cursor-shape = {
