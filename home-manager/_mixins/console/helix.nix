@@ -7,7 +7,7 @@
       dprint
     ];
 
-    file.".dprint.json" = ''
+    file.".dprint.json".text = ''
     {
       "typescript": {
       },
