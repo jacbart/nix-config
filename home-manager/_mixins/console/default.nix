@@ -70,7 +70,7 @@
       enable = true;
       shellAliases = {
         cat = "bat --paging=never --style=plain";
-        top = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
+        htop = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
         ip = "ip --color --brief";
         less = "bat --paging=always";
         more = "bat --paging=always";

@@ -1,4 +1,4 @@
-# [NixOS]  & [Home Manager] Configurations
+# [NixOS] & [Home Manager] Configurations
 >based from [wimpysworld nix-config](https://github.com/wimpysworld/nix-config)
 
 [NixOS]: https://nixos.org/
@@ -11,7 +11,7 @@ This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for confi
 | boojum     | Lenovo      | Thinkpad Gen 6               | NixOS | Laptop    | WiP    |
 | jryjack    | Apple       | Macbook Pro M1 2020          | macOS | Laptop    | tbn    |
 | cork       | WSL2        | VM                           |       | VM        | tbn    |
-| maple      | Pine64      | [RockPro64]                  | NixOS | Station   | tbn    |
+| maple      | Pine64      | [RockPro64]                  | NixOS | NAS       | tbn    |
 | ash        | Clockworkpi | [uConsole (CM-4, 4G Module)] | TBD   | Handheld  | tbn    |
 
 [uConsole (CM-4, 4G Module)]: https://www.clockworkpi.com/uconsole
@@ -43,7 +43,7 @@ The [nixos/_mixins] and [home-manager/_mixins] are a collection of composited co
 [scripts]: ./scripts
 [shells]: ./shells
 
-## Installing 💾
+## Installing
 
 - Boot off a .iso image created by this flake using `rebuild-iso-desktop` or `rebuild-iso-console` (*see below*)
 - Put the .iso image on a USB drive
@@ -53,7 +53,6 @@ The [nixos/_mixins] and [home-manager/_mixins] are a collection of composited co
   2 Run `install-system <hostname> <username>` from a terminal
    - The install script uses [Disko] to automatically partition and format the disks, then uses my flake via `nixos-install` to complete a full-system installation
    - This flake is copied to the target user's home directory as `~/workspace/personal/nix-config`
-- Make a cuppa 🫖
 - Reboot
 - Login and run `rebuild-home` (*see below*) from a terminal to complete the Home Manager configuration.
 
@@ -71,7 +70,7 @@ I clone this repo to `~/workspace/personal/nix-config`. NixOS and Home Manager c
 gh repo clone jacbart/nix-config ~/workspace/personal/nix-config
 ```
 
-### NixOS ❄️
+### NixOS
 
 A `rebuild-host` alias is provided that does the following:
 
@@ -79,7 +78,7 @@ A `rebuild-host` alias is provided that does the following:
 sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
 ```
 
-### Home Manager 🏠️
+### Home Manager
 
 A `rebuild-home` alias is provided that does the following:
 
@@ -87,7 +86,7 @@ A `rebuild-home` alias is provided that does the following:
 home-manager switch -b backup --flake $HOME/workspace/personal/nix-config
 ```
 
-### ISO 📀
+### ISO
 
 Aliases for `rebuild-iso-desktop` (*desktop*) and `rebuild-iso-console` (*console only*) are provided that create .iso images from this flake. They do the following:
 
@@ -99,7 +98,7 @@ popd
 
 A live image will be left in `~/$HOME/workspace/personal/nix-config/result/iso/`. These .iso images are also periodically built and published via [GitHub Actions](./.github/workflows) and available in [this project's Releases](https://github.com/jacbart/nix-config/releases).
 
-## What's in the box? 🎁
+## What's in the box?
 
 Nix is configured with [flake support](https://zero-to-nix.com/concepts/flakes) and the [unified CLI](https://zero-to-nix.com/concepts/nix#unified-cli) enabled.
 
