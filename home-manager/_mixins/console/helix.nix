@@ -40,7 +40,7 @@
           bufferline = "multiple";
           auto-completion = true;
           auto-format = true;
-          statusline {
+          statusline = {
             left = ["mode" "spinner"];
             center = ["file-name"];
             right = ["diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type"];
