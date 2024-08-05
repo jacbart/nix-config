@@ -6,7 +6,7 @@
     file = {
       "${config.xdg.configHome}/neofetch/config.conf".text = builtins.readFile ./neofetch.conf;
       # add broot config
-      "${config.xdg.configHome}/broot/config.hjson".text = builtins.readFile ./broot/config.hjson;
+      "${config.xdg.configHome}/broot/config.hjson".text = builtins.readFile ./broot/conf.hjson;
       "${config.xdg.configHome}/broot/verbs.hjson".text = builtins.readFile ./broot/verbs.hjson;
       "${config.xdg.configHome}/broot/skins/dark-gruvbox.hjson".text = builtins.readFile ./broot/skins/dark-gruvbox.hjson;
       "${config.xdg.configHome}/broot/skins/white.hjson".text = builtins.readFile ./broot/skins/white.hjson;
