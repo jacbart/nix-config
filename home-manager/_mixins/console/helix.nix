@@ -7,12 +7,39 @@
       dprint
     ];
 
+    file.".dprint.json" = ''
+    {
+      "typescript": {
+      },
+      "json": {
+      },
+      "markdown": {
+      },
+      "toml": {
+      },
+      "dockerfile": {
+      },
+      "excludes": [
+        "**/node_modules",
+        "**/*-lock.json"
+      ],
+      "plugins": [
+        "https://plugins.dprint.dev/typescript-0.91.0.wasm",
+        "https://plugins.dprint.dev/json-0.19.3.wasm",
+        "https://plugins.dprint.dev/markdown-0.17.1.wasm",
+        "https://plugins.dprint.dev/toml-0.6.2.wasm",
+        "https://plugins.dprint.dev/dockerfile-0.3.2.wasm"
+      ]
+    }
+    '';
+
     sessionVariables = {
       EDITOR = "hx";
       SYSTEMD_EDITOR = "hx";
       VISUAL = "hx";
     };
-
+  };
+  programs = {
     helix = {
       enable = true;
       languages = {
@@ -76,31 +103,5 @@
         };
       };
     };
-
-    file.".dprint.json" = ''
-    {
-      "typescript": {
-      },
-      "json": {
-      },
-      "markdown": {
-      },
-      "toml": {
-      },
-      "dockerfile": {
-      },
-      "excludes": [
-        "**/node_modules",
-        "**/*-lock.json"
-      ],
-      "plugins": [
-        "https://plugins.dprint.dev/typescript-0.91.0.wasm",
-        "https://plugins.dprint.dev/json-0.19.3.wasm",
-        "https://plugins.dprint.dev/markdown-0.17.1.wasm",
-        "https://plugins.dprint.dev/toml-0.6.2.wasm",
-        "https://plugins.dprint.dev/dockerfile-0.3.2.wasm"
-      ]
-    }
-    '';
   };
 }
