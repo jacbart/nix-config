@@ -9,7 +9,7 @@
     };
   };
 
-  environment.sessionVariables = {
+  home.sessionVariables = {
     # If your cursor becomes invisible
     # WLR_NO_HARDWARE_CURSORS = "1";
     # Hint electron apps to use wayland
