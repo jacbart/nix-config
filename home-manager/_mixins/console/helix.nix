@@ -43,12 +43,22 @@
     helix = {
       enable = true;
       languages = {
+        # [[language]]
+        # name = "hcl"
+        # file-types = ["tf", "tfvars", "hcl", "jaws"]
+        # auto-format = true
+        # [[language]]
+        # name = "markdown"
+        # formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
+        # auto-format = true
+
         language = [
           {
             name = "hcl";
             file-type = ["tf" "tfvars" "hcl" "koi" "jaws"];
             auto-format = true;
-          }
+        }];
+        language = [
           {
             name = "markdown";
             formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };

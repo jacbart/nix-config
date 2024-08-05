@@ -61,11 +61,11 @@
     };
     dircolors = {
       enable = true;
-      enableBashIntegration = true;
+      enableZshIntegration = true;
     };
     direnv = {
       enable = true;
-      enableBashIntegration = true;
+      enableZshIntegration = true;
       nix-direnv = {
         enable = true;
       };
@@ -87,18 +87,17 @@
         ll = "ls -lh";
         la = "ls -lah";
       };
-      oh-my-zsh = {
+      zplug = {
         enable = true;
         plugins = [
-          "fzf"
-          "git"
-          "tmux"
-          "z"
-          "zsh-autosuggestions"
-          "zsh-syntax-highlighting"
-          "zsh-completions"
+          { name = "fzf"; }
+          { name = "git"; }
+          { name = "tmux"; }
+          { name = "z"; }
+          { name = "zsh-users/zsh-autosuggestions"; }
+          { name = "zsh-users/zsh-syntax-highlighting"; }
+          { name = "zsh-users/zsh-completions"; }
         ];
-        theme = "";
       };
       history = {
         size = 100000;
