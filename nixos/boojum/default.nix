@@ -8,10 +8,10 @@
     ../_mixins/services/pipewire.nix
   ];
 
-  swapDevices = [{
-    device = "/swap";
-    size = 16384;
-  }];
+  # swapDevices = [{
+  #   device = "/swap";
+  #   size = 16384;
+  # }];
 
   boot = {
     initrd = {
