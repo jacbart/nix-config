@@ -123,17 +123,6 @@
       enable = true;
       userName = "Jack Bartlett";
       userEmail = "jacbart@gmail.com";
-      url = {
-        "git@github.com:jacbart" = {
-          insteadOf = "https://github.com/jacbart";
-        };
-        "git@github.com:journeyai" = {
-          insteadOf = "https://github.com/journeyai";
-        };
-        "git@github.com:journeyid" = {
-          insteadOf = "https://github.com/journeyid";
-        };
-      };
       delta = {
         enable = true;
         options = {
@@ -150,6 +139,21 @@
         cv = "cz version";
       };
       extraConfig = {
+        core = {
+          editor = "hx";
+          sshCommand = "ssh -i ~/.ssh/id_git";
+        };
+        url = {
+          "git@github.com:jacbart" = {
+            insteadOf = "https://github.com/jacbart";
+          };
+          "git@github.com:journeyai" = {
+            insteadOf = "https://github.com/journeyai";
+          };
+          "git@github.com:journeyid" = {
+            insteadOf = "https://github.com/journeyid";
+          };
+        };
         push = {
           default = "current";
         };
