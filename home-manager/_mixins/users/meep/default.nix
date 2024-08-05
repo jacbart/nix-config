@@ -178,7 +178,7 @@
     home-manager.enable = true;
     info.enable = true;
     jq.enable = true;
-  }
+  };
 
   services = {
     gpg-agent = {
