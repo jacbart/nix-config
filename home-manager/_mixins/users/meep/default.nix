@@ -123,10 +123,6 @@
       enable = true;
       userName = "Jack Bartlett";
       userEmail = "jacbart@gmail.com";
-      core = {
-        editor = "hx";
-        sshCommand = "ssh -i ~/.ssh/id_git";
-      };
       url = {
         "git@github.com:jacbart" = {
           insteadOf = "https://github.com/jacbart";
