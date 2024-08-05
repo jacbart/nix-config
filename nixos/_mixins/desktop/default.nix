@@ -9,12 +9,12 @@
   #   plymouth.enable = true;
   # };
 
-  # hardware = {
-  #   opengl = {
-  #     enable = true;
-  #     driSupport = true;
-  #   };
-  # };
+  hardware = {
+    opengl = {
+      enable = true;
+      # driSupport = true;
+    };
+  };
 
   # programs.dconf.enable = true;
 
