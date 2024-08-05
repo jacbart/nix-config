@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }: {
   imports = [
-    ./helix.nix
     ./starship.nix
   ];
   home = {
