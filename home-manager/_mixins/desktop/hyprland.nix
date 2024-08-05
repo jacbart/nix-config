@@ -1,4 +1,8 @@
 { config, pkgs, ... }: {
+  imports = [
+    ./hyprland-apps.nix
+  ];
+
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
     enable = true;
@@ -9,7 +13,10 @@
 
     # Optional
     # Whether to enable hyprland-session.target on hyprland startup
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      variables = [ "--all" ];
+    };
 
     settings = {
     "$mod" = "SUPER";

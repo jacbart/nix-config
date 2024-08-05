@@ -11,10 +11,6 @@
   };
 
   programs = {
-    broot = {
-      enable = true;
-      enableZshIntegration = true;
-    };
     dircolors = {
       enable = true;
       enableZshIntegration = true;

@@ -3,7 +3,7 @@
     ./localsend.nix
   ];
 
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     kitty
     wezterm
     waybar
