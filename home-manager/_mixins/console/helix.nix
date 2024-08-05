@@ -52,19 +52,15 @@
         # formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
         # auto-format = true
 
-        language = [
-          {
+        language = [{
             name = "hcl";
             file-type = ["tf" "tfvars" "hcl" "koi" "jaws"];
             auto-format = true;
-        }];
-        language = [
-          {
+        } {
             name = "markdown";
             formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
             auto-format = true;
-          }
-        ];
+        }];
       };
       settings = {
         theme = "ayu_dark";
