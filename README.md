@@ -152,3 +152,7 @@ The [Disko] implementation and automated installation is chasing the ideas outli
 [Will Taylor's dotfiles]: https://github.com/wiltaylor/dotfiles
 [GitHub nixos configuration]: https://github.com/search?q=nixos+configuration
 [Disko]: https://github.com/nix-community/disko
+
+---
+
+https://wiki.nixos.org/wiki/I3
