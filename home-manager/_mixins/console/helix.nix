@@ -30,7 +30,7 @@
         ];
       };
       settings = {
-        theme = "ayu_dark"
+        theme = "ayu_dark";
         editor = {
           shell = ["zsh" "-c"];
           line-number = "absolute";
