@@ -1,6 +1,5 @@
 { ... }: {
-    home = {
-        programs.starship = {
+    programs.starship = {
         enable = true;
         # Configuration written to ~/.config/starship.toml
         settings = {
@@ -105,7 +104,6 @@
             format = " at [$time]($style)";
             utc_time_offset = "local";
             };
-        };
         };
     };
 }
