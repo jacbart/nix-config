@@ -24,7 +24,6 @@ in
             root = {
               name = "nixos";
               size = "100%";
-              extraArgs = [ "legacy_boot" ];
               content = {
                 type = "filesystem";
                 format = "ext4";
