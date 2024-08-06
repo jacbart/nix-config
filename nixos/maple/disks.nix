@@ -12,8 +12,7 @@ in
           type = "gpt";
           partitions = {
             idloader = {
-                name = "idbloader";
-                type = "device";
+                name = "idloader";
                 size = "8M";
             };
             uboot = {

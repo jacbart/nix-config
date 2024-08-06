@@ -115,7 +115,7 @@
       settings = {
         editor = "hx";
         git_protocol = "ssh";
-        prompt = "enabled";
+        prompt = "disable";
       };
     };
     git = {

@@ -14,7 +14,7 @@ in
     unstable.firefox-unwrapped
   ];
 
-  users.users.rat = {
+  users.users.ratatoskr = {
     description = "Ratatoskr";
     extraGroups = [
       "audio"
