@@ -14,11 +14,11 @@ in
             idloader = {
                 name = "idbloader";
                 type = "device";
-                size = "8389kB";
+                size = "8M";
             };
             uboot = {
               name = "uboot";
-              size = "8411kB";
+              size = "8M";
             };
             root = {
               name = "nixos";
