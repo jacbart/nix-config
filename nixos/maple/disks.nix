@@ -19,7 +19,6 @@ in
             uboot = {
               name = "uboot";
               size = "8411kB";
-              bootable = true;
             };
             root = {
               name = "nixos";
