@@ -8,6 +8,10 @@
       fzf
       fd
     ];
+
+    file = {
+      "${config.xdg.configHome}/neofetch/config.conf".text = builtins.readFile ./neofetch.conf;
+    };
   };
 
   programs = {

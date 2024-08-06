@@ -13,11 +13,15 @@
       terminal = "wezterm";
       theme = "DarkBlue";
     };
+    wezterm = {
+      enable = true;
+      package = pkgs.wezterm;
+      enableZshIntegration = true;
+    };
   };
 
   home = {
     packages = with pkgs; [
-      wezterm
       kitty
       dunst
       libnotify
