@@ -23,7 +23,8 @@
     bind =
       [
         "$mod, F, exec, firefox"
-        "$mod, RETURN, exec, wezterm"
+        "$mod, ENTER, exec, wezterm"
+        "$mod, D, exec, rofi -show drun"
       ]
       ++ (
         # workspaces

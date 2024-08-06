@@ -121,7 +121,7 @@
     };
     git = {
       enable = true;
-      userName = "Jack Bartlett";
+      userName = "jacbart";
       userEmail = "jacbart@gmail.com";
       delta = {
         enable = true;

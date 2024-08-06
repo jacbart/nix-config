@@ -8,11 +8,6 @@
     ../_mixins/services/pipewire.nix
   ];
 
-  # swapDevices = [{
-  #   device = "/swap";
-  #   size = 16384;
-  # }];
-
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
