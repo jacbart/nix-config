@@ -5,7 +5,7 @@
     (import ./disks.nix { })
     ../_mixins/hardware/systemd-boot.nix
     ../_mixins/services/docker.nix
-    # ../_mixins/services/bluetooth.nix
+    ../_mixins/services/bluetooth.nix
     ../_mixins/services/pipewire.nix
   ];
 
@@ -27,7 +27,7 @@
 
   environment.systemPackages = with pkgs; [
     helix
-    btop
+    bottom
   ];
 
   programs.tmux = {

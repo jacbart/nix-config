@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   imports = [
-    ../_mixins/services/bluetooth.nix
+    # ../_mixins/services/bluetooth.nix
     ../_mixins/services/pipewire.nix
     ../_mixins/services/openssh.nix
   ];
