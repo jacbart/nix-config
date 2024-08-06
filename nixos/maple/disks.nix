@@ -15,7 +15,6 @@ in
                 name = "idbloader";
                 type = "device";
                 size = "8389kB";
-                bootable = true;
             };
             uboot = {
               name = "uboot";
