@@ -5,7 +5,8 @@
     pulseaudio
     pulsemixer
   ] ++ lib.optionals (desktop != null) [
-    pavucontrol
+    # pavucontrol
+    pwvucontrol
   ];
 
   sound.enable = true;
