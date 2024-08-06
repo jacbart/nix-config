@@ -22,8 +22,9 @@
     "$mod" = "SUPER";
     bind =
       [
-        "$mod, F, exec, firefox"
-        "$mod, ENTER, exec, wezterm"
+        "$mod, Q, exec, killactive"
+        "$mod, W, exec, firefox"
+        "$mod, ENTER, exec, kitty"
         "$mod, D, exec, rofi -show drun"
       ]
       ++ (

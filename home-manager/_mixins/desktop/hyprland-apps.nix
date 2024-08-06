@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
   ];
 
@@ -18,11 +18,12 @@
   home = {
     packages = with pkgs; [
       wezterm
+      kitty
       dunst
       libnotify
     ];
 
-    file."${config.xdg.configHome}/.wezterm.lua".text = ''
+    file.".wezterm.lua".text = ''
       local wezterm = require('wezterm')
       local action = wezterm.action
 
