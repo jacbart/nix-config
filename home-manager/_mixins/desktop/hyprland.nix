@@ -44,5 +44,6 @@
           10)
       );
     };
-  };  
+  };
+  services.displayManager.enable = true;
 }

@@ -20,11 +20,6 @@ This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for confi
 
 ## Structure
 
-- [.github]: GitHub CI/CD workflows Nix ❄️ supercharged ⚡️ by [**Determinate Systems**](https://determinate.systems)
-  - [Nix Installer Action](https://github.com/marketplace/actions/the-determinate-nix-installer)
-  - [Magic Nix Cache Action](https://github.com/marketplace/actions/magic-nix-cache)
-  - [Flake Checker Action](https://github.com/marketplace/actions/nix-flake-checker)
-  - [Update Flake Lock Action](https://github.com/marketplace/actions/update-flake-lock)
 - [home-manager]: Home Manager configurations
   - Sane defaults for shell and desktop
 - [nixos]: NixOS configurations
@@ -34,7 +29,6 @@ This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for confi
 
 The [nixos/_mixins] and [home-manager/_mixins] are a collection of composited configurations based on the arguments defined in [flake.nix].
 
-[.github]: ./github/workflows
 [home-manager]: ./home-manager
 [nixos]: ./nixos
 [nixos/_mixins]: ./nixos/_mixins
@@ -62,7 +56,7 @@ If the target system is booted from something other than the .iso image created 
 curl -sL https://raw.githubusercontent.com/jacbart/nix-config/main/scripts/install.sh | bash -s <hostname> <username>
 ```
 
-## Applying Changes ✨
+## Applying Changes
 
 I clone this repo to `~/workspace/personal/nix-config`. NixOS and Home Manager changes are applied separately because I have some non-NixOS hosts.
 
@@ -97,10 +91,6 @@ popd
 ```
 
 A live image will be left in `~/$HOME/workspace/personal/nix-config/result/iso/`. These .iso images are also periodically built and published via [GitHub Actions](./.github/workflows) and available in [this project's Releases](https://github.com/jacbart/nix-config/releases).
-
-## What's in the box?
-
-Nix is configured with [flake support](https://zero-to-nix.com/concepts/flakes) and the [unified CLI](https://zero-to-nix.com/concepts/nix#unified-cli) enabled.
 
 ### Structure
 
@@ -156,3 +146,4 @@ The [Disko] implementation and automated installation is chasing the ideas outli
 ---
 
 https://wiki.nixos.org/wiki/I3
+https://jacobneplokh.com/how-to-setup-nextcloud-on-nixos/
