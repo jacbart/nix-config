@@ -90,10 +90,10 @@
       zplug = {
         enable = true;
         plugins = [
-          { name = "fzf"; }
-          { name = "git"; }
-          { name = "tmux"; }
-          { name = "z"; }
+          { name = "ohmyzsh/ohmyzsh/plugins/fzf"; }
+          { name = "ohmyzsh/ohmyzsh/plugins/git"; }
+          { name = "ohmyzsh/ohmyzsh/plugins/tmux"; }
+          { name = "ohmyzsh/ohmyzsh/plugins/z"; }
           { name = "zsh-users/zsh-autosuggestions"; }
           { name = "zsh-users/zsh-syntax-highlighting"; }
           { name = "zsh-users/zsh-completions"; }
