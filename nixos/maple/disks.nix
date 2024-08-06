@@ -1,4 +1,4 @@
-{ disks ? [ "/dev/mmcblk2" ], ... }:
+{ disks ? [ "/dev/mmcblk2" "/dev/sda" "/dev/sdb" ], ... }:
 let
   defaultExt4Opts = [ "defaults" ];
 in
@@ -9,26 +9,24 @@ in
         type = "disk";
         device = builtins.elemAt disks 0;
         content = {
-          type = "table";
-          format = "gpt";
-          partitions = [
-            {
+          type = "gpt";
+          partitions = {
+            idloader = {
                 name = "idbloader";
                 type = "device";
-                start = "32.8kB";
-                end = "8389kB";
-            }
-            {
+                size = "8389kB";
+                bootable = true;
+            };
+            uboot = {
               name = "uboot";
-              start = "8389kB";
-              end = "16.8MB";
-            }
-            {
-              name = "nixos";
-              start = "16.8MB";
-              end = "62.5GB";
+              size = "8411kB";
               bootable = true;
+            };
+            root = {
+              name = "nixos";
+              size = "100%";
               flags = [ "legacy_boot" ];
+              bootable = true;
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -36,9 +34,27 @@ in
                 mountOptions = defaultExt4Opts;
               };
             }
-          ];
+          };
         };
       };
+      # sda = {
+      #   type = "disk";
+      #   device = builtins.elemAt disks 1;
+      #   content = {
+      #     type = "gpt";
+      #     partitions = {
+      #       root = {
+      #         size = "100%";
+      #         content = {
+      #           type = "filesystem";
+      #           format = "ext4";
+      #           mountpoint = "/";
+      #           mountOptions = defaultExt4Opts;
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
     };
   };
 }
