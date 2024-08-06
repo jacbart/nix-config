@@ -24,7 +24,7 @@
         [
           "$mod, Q, exec, killactive"
           "$mod, W, exec, firefox"
-          "$mod, ENTER, exec, kitty"
+          "$mod, T, exec, kitty"
           "$mod, D, exec, rofi -show drun"
         ]
         ++ (
