@@ -25,7 +25,6 @@ in
               name = "nixos";
               size = "100%";
               flags = [ "legacy_boot" ];
-              bootable = true;
               content = {
                 type = "filesystem";
                 format = "ext4";
