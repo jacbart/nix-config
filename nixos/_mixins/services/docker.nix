@@ -4,7 +4,7 @@
     virtualisation = {
         docker = { 
             enable = true;
-            storageDriver = "btfs";
+            storageDriver = "btrfs";
         };
     };
 }
