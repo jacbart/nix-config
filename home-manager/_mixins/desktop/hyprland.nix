@@ -45,5 +45,4 @@
       );
     };
   };
-  services.displayManager.enable = true;
 }
