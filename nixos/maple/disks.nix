@@ -33,7 +33,7 @@ in
                 mountpoint = "/";
                 mountOptions = defaultExt4Opts;
               };
-            }
+            };
           };
         };
       };
