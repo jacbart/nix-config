@@ -1,4 +1,4 @@
-{ config, desktop, hostname, inputs, lib, outputs, pkgs, stateVersion, username, ... }:
+{ config, desktop, hostname, inputs, lib, outputs, pkgs, stateVersion, stdenv, username, ... }:
 let
   inherit (pkgs.stdenv) isDarwin;
 in
@@ -13,7 +13,7 @@ in
     # inputs.nix-colors.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
-    ./_mixins/console
+    ./_mixins/shell
   ]
   ++ lib.optional (builtins.isPath (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
   ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}/hosts/${hostname}.nix")) ./_mixins/users/${username}/hosts/${hostname}.nix
@@ -56,7 +56,7 @@ in
     };
   };
 
-  nix = {
+  nix = if isDarwin then {} else {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
