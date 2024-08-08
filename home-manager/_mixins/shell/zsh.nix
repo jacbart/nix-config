@@ -17,6 +17,7 @@
         t = "tmux";
         j = "z";
         gs = "git status";
+        st = "stow -v -t $HOME";
       };
       zplug = {
         enable = true;
