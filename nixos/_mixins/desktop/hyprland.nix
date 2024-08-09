@@ -26,7 +26,7 @@
     pkgs.xdg-desktop-portal-gtk
   ];
 
-  services.xservice.enable = true;
+  services.xserver.enable = true;
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
