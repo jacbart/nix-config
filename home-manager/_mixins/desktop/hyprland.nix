@@ -5,7 +5,7 @@
   ];
 
   gtk.enable = true;
-  autorandr = {
+  my-autorandr = {
     # laptop display
     display1 = {
       name = "eDP-1";
