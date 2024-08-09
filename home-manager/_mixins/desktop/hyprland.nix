@@ -3,6 +3,14 @@
     ./hyprland-apps.nix
   ];
 
+  services.xserver = {
+    enable = true;
+    displayManager = {
+      sddm.enable = true;
+      wayland.enable = true;
+    };
+  };
+
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
     enable = true;
