@@ -1,8 +1,7 @@
-{ config, ... }: {
-    programs.broot = {
-      enable = true;
-      enableZshIntegration = true;
-    };
+{ config, pkgs, ... }: {
+    home.packages = with pkgs; [
+        broot
+    ];
     home.file = {
         # add broot config
         "${config.xdg.configHome}/broot/conf.hjson".text = builtins.readFile ./broot/conf.hjson;
