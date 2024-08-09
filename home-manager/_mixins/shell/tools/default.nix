@@ -6,5 +6,6 @@
         ./helix.nix
         ./neofetch.nix
         ./starship.nix
+        ./tmux.nix
     ];
 }
