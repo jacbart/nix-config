@@ -26,19 +26,15 @@
     pkgs.xdg-desktop-portal-gtk
   ];
 
-  # services.xserver.enable = true;
-  # services.displayManager.sddm = {
-  #   enable = true;
-  #   wayland.enable = true;
-  # };
   services.greetd = {
     enable = true;
     package = pkgs.greetd;
-    settings = {
-      default_session = {
+    settings = rec {
+      initial_session = {
         command = "${pkgs.hyprland}/bin/hyprland";
         user = "${username}";
       };
+      default_session = initial_session;
     };
   };
 }
