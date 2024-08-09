@@ -7,6 +7,6 @@
       location = "center";
       extraConfig = {
         combi-modes = [ window drun ssh];
-      }
+      };
     };
 }
