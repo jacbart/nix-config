@@ -7,7 +7,7 @@
     programs.waybar = {
       enable = true;
       package = pkgs.waybar;
-      settings = builtins.readFile ./waybar/config.json;
-      style = builtins.readFile ./waybar/style.css;
+      settings = builtins.fromJSON (builtins.readFile ./waybar/config.json);
+      style = builtins.fromJSON (builtins.readFile ./waybar/style.css);
     };
 }
