@@ -1,8 +1,9 @@
 { config, pkgs, ... }: {
   imports = [
     ./hyprland-apps.nix
-    ./gtk.nix
   ];
+
+  gtk.enable = true;
 
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
