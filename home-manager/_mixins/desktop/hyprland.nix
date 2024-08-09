@@ -1,18 +1,10 @@
 { config, pkgs, ... }: {
   imports = [
     ./hyprland-apps.nix
-    ./autorandr.nix
   ];
 
   gtk.enable = true;
-  my-autorandr = {
-    # laptop display
-    display1 = {
-      name = "eDP-1";
-      fp = "00ffffffffffff0030e47e0500000000001a010495221378eadc95a35855a0260d5054000000010101010101010101010101010101012e3680a070381f403020350058c21000001a2e3680a070381f403020350058c21000001a00000000000000000000000000000000000000000002000833ff0a3c961e163696000000001c";
-    };
-  };
-
+  
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
     enable = true;
