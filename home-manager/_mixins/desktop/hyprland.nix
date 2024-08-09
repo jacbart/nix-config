@@ -18,6 +18,7 @@
       variables = [ "--all" ];
       extraCommands = [
         "${pkgs.eww}/bin/eww daemon"
+        "${pkgs.eww}/bin/eww open bar"
         # "${pkgs.waybar}/bin/waybar &"
       ];
     };
@@ -26,7 +27,7 @@
       "$mod" = "SUPER";
       bind =
         [
-          "$mod, Q, exec, killactive"
+          "$mod SHIFT, Q, exec, hyprctl kill"
           "$mod, W, exec, firefox"
           "$mod, T, exec, kitty"
           "$mod, D, exec, rofi -show combi"
