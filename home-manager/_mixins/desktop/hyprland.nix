@@ -4,7 +4,7 @@
   ];
 
   gtk.enable = true;
-  
+
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
     enable = true;
@@ -20,7 +20,7 @@
       variables = [ "--all" ];
       extraCommands = [
         "${pkgs.eww}/bin/eww daemon --config ${config.xdg.configHome}/eww"
-        "${pkgs.eww}/bin/eww open-many bar"
+        "${pkgs.eww}/bin/eww open bar --screen 0"
       ];
     };
 

@@ -197,7 +197,6 @@
                        :anchor "top center")
           :stacking "fg"
           :windowtype "dock"
-          :monitor 0
   (bar_1))
   
 (defwidget system []
@@ -274,7 +273,6 @@
                         :anchor "top right"
 						:width "270px" 
 						:height "60px")
-    :monitor 0
 (cal))
 
 
@@ -313,7 +311,6 @@
                         :anchor "top right"
 						:width "280px" 
 						:height "60px")
-    :monitor 0
 (audio))
 
 
@@ -323,7 +320,6 @@
                         :anchor "top right"
 						:width "290px" 
 						:height "120px")
-    :monitor 0
 (system))
 
 
@@ -346,5 +342,4 @@
 ;;  music
 		(defwindow music_win :stacking "fg" :focusable "false" :screen 1
 			    :geometry (geometry :x "0" :y "7%" :width 428 :height 104 :anchor "top center")
-			    (music_pop)
-                :monitor 0)
+			     				(music_pop))
