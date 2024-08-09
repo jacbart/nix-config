@@ -2,9 +2,14 @@
 
   home = {
     packages = with pkgs; [
+      dockerfile-language-server-nodejs
+      nil
       marksman
       markdown-oxide
       dprint
+      taplo
+      yaml-language-server
+      vscode-langservers-extracted
     ];
 
     file.".dprint.json".text = ''
@@ -12,8 +17,6 @@
       "typescript": {
       },
       "json": {
-      },
-      "markdown": {
       },
       "toml": {
       },
