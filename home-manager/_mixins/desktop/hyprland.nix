@@ -3,10 +3,7 @@
     ./hyprland-apps.nix
   ];
 
-  programs.hyprland = {
-    enable = true;
-    package = pkgs.hyprland;
-  };
+  programs.hyprland.enable = true;
 
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
