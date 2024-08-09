@@ -28,7 +28,7 @@
           "$mod, Q, exec, killactive"
           "$mod, W, exec, firefox"
           "$mod, T, exec, kitty"
-          "$mod, D, exec, rofi -show drun"
+          "$mod, D, exec, rofi -show combi"
         ]
         ++ (
           # workspaces
