@@ -4,6 +4,7 @@
   ];
 
   gtk.enable = true;
+  programs.autorandr.enable = true;
 
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
