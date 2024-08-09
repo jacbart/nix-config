@@ -8,13 +8,13 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "sway/workspaces",
+        "hyprland/workspaces",
         "cava",
-        "sway/mode",
-        "sway/scratchpad"
+        "hyprland/mode",
+        "hyprland/scratchpad"
     ],
     "modules-center": [
-        "sway/window"
+        "hyprland/window"
     ],
     "modules-right": [
         "mpris",
@@ -27,7 +27,7 @@
         "tray"
     ],
     // Modules configuration
-    "sway/workspaces": {
+    "hyprland/workspaces": {
         "all-outputs": true,
         "warp-on-scroll": false,
         "enable-bar-scroll": true,
@@ -43,7 +43,7 @@
             "10": ""
         }
     },
-    "sway/window": {
+    "hyprland/window": {
         "format": "{title}",
         "max-length": 40,
         "all-outputs": true
@@ -86,10 +86,10 @@
             "deactivated": ""
         }
     },
-    "sway/mode": {
+    "hyprland/mode": {
         "format": "{}"
     },
-    "sway/scratchpad": {
+    "hyprland/scratchpad": {
         "format": "{icon} {count}",
         "show-empty": false,
         "format-icons": ["", ""],
@@ -169,17 +169,17 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "sway/workspaces",
-        "sway/mode",
-        "sway/scratchpad"
+        "hyprland/workspaces",
+        "hyprland/mode",
+        "hyprland/scratchpad"
     ],
     "modules-center": [
         "clock"
     ],
     "modules-right": [
-        "sway/window"
+        "hyprland/window"
     ],
-    "sway/workspaces": {
+    "hyprland/workspaces": {
         "all-outputs": true,
         "warp-on-scroll": true,
         "enable-bar-scroll": true,
@@ -194,15 +194,15 @@
             "10": ""
         }
     },
-    "sway/window": {
+    "hyprland/window": {
         "format": "{title}",
         "max-length": 40,
         "all-outputs": true
     },
-    "sway/mode": {
+    "hyprland/mode": {
         "format": "{}"
     },
-    "sway/scratchpad": {
+    "hyprland/scratchpad": {
         "format": "{icon} {count}",
         "show-empty": false,
         "format-icons": ["", ""],
@@ -210,7 +210,7 @@
         "tooltip-format": "{app}: {title}"
     },
     "clock": {
-        // "timezone": "America/New_York",
+        // "timezone": "America/Phoenix",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     }
