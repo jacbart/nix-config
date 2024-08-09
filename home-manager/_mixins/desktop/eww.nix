@@ -8,5 +8,5 @@ in {
         eww
     ];
     
-    home.file."${config.xdg.configHome}/eww".source = "${eww-config}/eww";
+    home.file."${config.xdg.configHome}/eww".source = "${eww-config}/eww/bar";
 }
