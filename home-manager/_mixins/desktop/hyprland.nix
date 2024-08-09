@@ -17,7 +17,7 @@
       enable = true;
       variables = [ "--all" ];
       extraCommands = [
-        "${pkgs.eww-wayland}/bin/eww daemon"
+        "${pkgs.eww}/bin/eww daemon"
         # "${pkgs.waybar}/bin/waybar &"
       ];
     };

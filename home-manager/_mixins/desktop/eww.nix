@@ -5,7 +5,7 @@
     };
 in {
     home.packages = with pkgs; [
-        eww-wayland
+        eww
     ];
     
     home.file."${config.xdg.configHome}/eww".source = "${eww-config}/eww";
