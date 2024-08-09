@@ -2,16 +2,8 @@
   imports = [
     ./kitty.nix
     ./waybar.nix
+    ./rofi-wayland.nix
   ];
-
-  programs = {
-    rofi = {
-      enable = true;
-      package = pkgs.rofi-wayland;
-      terminal = "kitty";
-      theme = "DarkBlue";
-    };
-  };
 
   home = {
     packages = with pkgs; [

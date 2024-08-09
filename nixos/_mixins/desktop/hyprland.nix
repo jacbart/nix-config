@@ -26,9 +26,13 @@
     pkgs.xdg-desktop-portal-gtk
   ];
 
-  services.xserver.enable = true;
-  services.displayManager.sddm = {
+  # services.xserver.enable = true;
+  # services.displayManager.sddm = {
+  #   enable = true;
+  #   wayland.enable = true;
+  # };
+  services.greetd = {
     enable = true;
-    wayland.enable = true;
+    package = pkgs.greetd;
   };
 }
