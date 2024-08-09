@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }: rec {
     home.packages = with pkgs; [
         eww-wayland
     ];
