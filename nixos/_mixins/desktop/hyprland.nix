@@ -25,5 +25,12 @@
   xdg.portal.extraPortals = [
     pkgs.xdg-desktop-portal-gtk
   ];
-  services.displayManager.enable = true;
+
+  services.xserver = {
+    enable = true;
+    displayManager = {
+      sddm.enable = true;
+      wayland.enable = true;
+    };
+  };
 }
