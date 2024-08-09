@@ -36,7 +36,7 @@
     },
     "custom/os_button": {
         "format": "",
-        "on-click": "rofi -show window,drun,run,ssh",
+        "on-click": "rofi -show combi",
         "tooltip": false
     },
     "cpu": {

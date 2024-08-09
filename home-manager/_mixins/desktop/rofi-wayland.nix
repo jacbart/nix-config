@@ -4,5 +4,9 @@
       package = pkgs.rofi-wayland;
       terminal = "kitty";
       theme = "DarkBlue";
+      location = "center";
+      extraConfig = {
+        combi-modes = [ window drun ssh];
+      }
     };
 }
