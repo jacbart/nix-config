@@ -16,6 +16,9 @@
     systemd = {
       enable = true;
       variables = [ "--all" ];
+      extraCommands = [
+        "${pkgs.waybar}/bin/waybar &"
+      ];
     };
 
     settings = {
