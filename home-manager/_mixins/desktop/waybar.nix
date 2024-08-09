@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
     home = {
         # waybar
         file."${config.xdg.configHome}/waybar/config".text = builtins.readFile ./waybar/config;
