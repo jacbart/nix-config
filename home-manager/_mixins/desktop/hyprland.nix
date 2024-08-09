@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   imports = [
     ./hyprland-apps.nix
+    ./gtk.nix
   ];
 
   wayland.windowManager.hyprland = {
@@ -17,9 +18,8 @@
       enable = true;
       variables = [ "--all" ];
       extraCommands = [
-        "${pkgs.eww}/bin/eww daemon"
-        "${pkgs.eww}/bin/eww open bar"
-        # "${pkgs.waybar}/bin/waybar &"
+        "${pkgs.eww}/bin/eww daemon --config ${config.xdg.configHome}/eww"
+        "${pkgs.eww}/bin/eww open-many bar"
       ];
     };
 

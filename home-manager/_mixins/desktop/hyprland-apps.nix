@@ -1,8 +1,8 @@
 { config, pkgs, ... }: {
   imports = [
     ./eww.nix
+    ./gtk.nix
     ./kitty.nix
-    # ./waybar.nix
     ./rofi-wayland.nix
   ];
 
