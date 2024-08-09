@@ -1,14 +1,7 @@
-{ config, pkgs, ... }: let
-    eww-config = builtins.fetchGit {
-        url = "https://github.com/saimoomedits/eww-widgets";
-        rev = "cfb2523a4e37ed2979e964998d9a4c37232b2975";
-    };
-in {
+{ config, pkgs, ... }: {
     home.packages = with pkgs; [
         eww
     ];
     
     home.file."${config.xdg.configHome}/eww".source = ./eww;
-    home.file."${config.xdg.configHome}/eww/scripts".source = "${eww-config}/eww/bar/scripts";
-    home.file."${config.xdg.configHome}/eww/images".source = "${eww-config}/eww/bar/images";
 }
