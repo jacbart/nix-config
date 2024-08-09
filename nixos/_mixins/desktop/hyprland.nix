@@ -1,4 +1,4 @@
-{config, pkgs, ...}: {
+{ config, pkgs, username, ... }: {
   imports = [
   ];
 
@@ -34,5 +34,11 @@
   services.greetd = {
     enable = true;
     package = pkgs.greetd;
+    settings = {
+      default_session = {
+        command = "${pkgs.hyprland}/bin/hyprland";
+        user = "${username}";
+      };
+    };
   };
 }
