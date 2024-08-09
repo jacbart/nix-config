@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 calendar() {
 LOCK_FILE="$HOME/.cache/eww-calendar.lock"
-EWW_BIN="$HOME/.local/bin/eww/eww"
+EWW_BIN="$(which eww)"
 
 run() {
     ${EWW_BIN} -c $HOME/.config/eww/bar open calendar

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 workspaces() {
 
 ws1="1"
