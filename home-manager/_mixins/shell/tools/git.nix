@@ -16,9 +16,9 @@
             delta = {
                 enable = true;
                 options = {
-                features = "decorations";
-                navigate = true;
-                side-by-side = true;
+                    features = "decorations";
+                    navigate = true;
+                    side-by-side = true;
                 };
             };
             aliases = {
@@ -30,28 +30,28 @@
             };
             extraConfig = {
                 core = {
-                editor = "hx";
-                sshCommand = "ssh -i ~/.ssh/id_git";
+                    editor = "hx";
+                    sshCommand = "ssh -i ~/.ssh/id_git";
                 };
                 url = {
-                "git@github.com:jacbart" = {
-                    insteadOf = "https://github.com/jacbart";
-                };
-                "git@github.com:journeyai" = {
-                    insteadOf = "https://github.com/journeyai";
-                };
-                "git@github.com:journeyid" = {
-                    insteadOf = "https://github.com/journeyid";
-                };
+                    "git@github.com:jacbart" = {
+                        insteadOf = "https://github.com/jacbart";
+                    };
+                    "git@github.com:journeyai" = {
+                        insteadOf = "https://github.com/journeyai";
+                    };
+                    "git@github.com:journeyid" = {
+                        insteadOf = "https://github.com/journeyid";
+                    };
                 };
                 push = {
-                default = "current";
+                    default = "current";
                 };
                 pull = {
-                rebase = false;
+                    rebase = false;
                 };
                 init = {
-                defaultBranch = "main";
+                    defaultBranch = "main";
                 };
             };
             ignores = [

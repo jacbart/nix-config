@@ -1,37 +1,24 @@
 { config, pkgs, ...}: {
-
   home = {
     packages = with pkgs; [
-      dockerfile-language-server-nodejs
-      nil
-      marksman
-      markdown-oxide
-      dprint
-      taplo
-      yaml-language-server
-      vscode-langservers-extracted
+      # most used lsp's for helix
+      dockerfile-language-server-nodejs # dockerfile language server
+      nil # nix language server
+      marksman # markdown language server
+      markdown-oxide # markdown language server
+      dprint # code formatter [ markdown ]
+      taplo # TOML language server
+      terraform-ls # language server for [ .hcl, .tf, .tfvars, .koi, .jaws ]
+      yaml-language-server # YAML language server
+      vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
     ];
 
     file.".dprint.json".text = ''
     {
-      "typescript": {
+      "markdown": {
       },
-      "json": {
-      },
-      "toml": {
-      },
-      "dockerfile": {
-      },
-      "excludes": [
-        "**/node_modules",
-        "**/*-lock.json"
-      ],
       "plugins": [
-        "https://plugins.dprint.dev/typescript-0.91.0.wasm",
-        "https://plugins.dprint.dev/json-0.19.3.wasm",
         "https://plugins.dprint.dev/markdown-0.17.1.wasm",
-        "https://plugins.dprint.dev/toml-0.6.2.wasm",
-        "https://plugins.dprint.dev/dockerfile-0.3.2.wasm"
       ]
     }
     '';
