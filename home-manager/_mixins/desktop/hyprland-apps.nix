@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
-    ./eww.nix
+    # ./eww.nix
     ./kitty.nix
     ./rofi-wayland.nix
   ];
@@ -9,6 +9,9 @@
     packages = with pkgs; [
       dunst
       libnotify
+      swww
     ];
+
+    file."${config.xdg.dataHome}/images/moose-orange-bg.jpg".source = ./moose-orange-bg.jpg;
   };
 }
