@@ -1,4 +1,7 @@
 { pkgs, ... }: {
+    home.packages = with pkgs; [
+        commitizen
+    ];
     programs = {
         gh = {
             enable = true;

@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
     home.packages = with pkgs; [
-        perl # Required for zplug
+      perl # Required for zplug
     ];
 
     programs.zsh = {
@@ -27,9 +27,9 @@
       zplug = {
         enable = true;
         plugins = [
-          { name = "plugins/fzf"; tags = [ from:oh-my-zsh ]; }
-          { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
-          { name = "plugins/z"; tags = [ from:oh-my-zsh ]; }
+          { name = "plugins/fzf"; tags = [ "from:oh-my-zsh" ]; }
+          { name = "plugins/git"; tags = [ "from:oh-my-zsh" ]; }
+          { name = "plugins/z"; tags = [ "from:oh-my-zsh" ]; }
           { name = "zsh-users/zsh-autosuggestions"; }
           { name = "zsh-users/zsh-syntax-highlighting"; }
           { name = "zsh-users/zsh-completions"; }
