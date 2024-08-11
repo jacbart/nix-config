@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }: {
+{ pkgs, username, ... }: {
   imports = [
   ];
 
@@ -37,4 +37,6 @@
       default_session = initial_session;
     };
   };
+
+  security.pki.certificates = [ (builtins.readFile ../../../certs/local-meep-authority.crt) ];
 }

@@ -50,7 +50,7 @@
         "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; desktop = "hyprland"; platform = "aarch64-linux"; };
         "jackbartlett@jackjrny" = libx.mkHome { hostname = "jackjrny"; username = "jackbartlett"; platform = "aarch64-darwin"; };
         # Servers
-        "meep@maple" = libx.mkHome { hostname = "maple"; username = "meep"; platform = "aarch64-linux"; };
+        "ratatoskr@maple" = libx.mkHome { hostname = "maple"; username = "ratatoskr"; platform = "aarch64-linux"; };
       };
       nixosConfigurations = {
         # .iso images

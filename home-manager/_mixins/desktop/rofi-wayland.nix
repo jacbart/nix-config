@@ -6,7 +6,7 @@
       theme = "DarkBlue";
       location = "center";
       extraConfig = {
-        combi-modes = [ "window" "drun" "ssh" ];
+        combi-modes = [ "drun" "window" "ssh" ];
       };
     };
 }
