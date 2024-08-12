@@ -35,7 +35,6 @@
       LC_TIME = "en_US.UTF-8";
     };
   };
-  # services.xserver.xkb.layout = "us";
   time.timeZone = "America/Phoenix";
 
   # Only install the docs I use
@@ -54,9 +53,9 @@
       rsync
     ];
     systemPackages = with pkgs; [
-      # agenix
-      # pciutils
-      # psmisc
+      agenix
+      pciutils
+      psmisc
       unzip
       usbutils
       wget
@@ -112,6 +111,7 @@
     '';
     hostName = hostname;
     useDHCP = lib.mkDefault true;
+    networkmanager.enable = true;
   };
 
   nixpkgs = {

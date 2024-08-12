@@ -1,3 +1,6 @@
-{ ... }: {
-    home.file.".wezterm.lua".text = builtins.readFile ./wezterm.lua;
+{ pkgs, ... }: {
+    home = { 
+        packages = [ pkgs.unstable.wezterm ];
+        file.".wezterm.lua".text = builtins.readFile ./wezterm.lua;
+    };
 }

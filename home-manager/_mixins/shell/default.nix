@@ -1,25 +1,20 @@
-{ config, pkgs, ... }: let
-    inherit (pkgs.stdenv) isDarwin;
-in {
+{ pkgs, ... }: {
     imports = [
-        ./tools
-        ./plugins
-        ./scripts
-        ./zsh.nix
+        ./tools # cli/tui tools or services
+        ./plugins # shell extenstions ie functions or alias'
+        ./scripts # scripts auto added to PATH
+        ./zsh.nix # zsh config
     ];
 
     home = {
         packages = with pkgs; [
             ripgrep
             fd
+            netcat
         ];
         sessionVariables = {
-            MANPAGER = "sh -c 'col --no-backspaces --spaces | bat --language man'";
-            BREW_PATH = if isDarwin then "/opt/homebrew/bin" else "";
-            SCRIPT_PATH = "${config.xdg.dataHome}/zsh/scripts";
-            PATH = if isDarwin then "$PATH:$BREW_PATH:$SCRIPT_PATH" else "$PATH:$SCRIPT_PATH";
-            STOW_DIR = "$HOME/.dotfiles/stowpkgs";
-            ZSHDATADIR = "${config.xdg.dataHome}/zsh";
+            MANROFFOPT = "-c";
+            MANPAGER = "sh -c 'col -bx | bat -plman'";
         };
     };
 

@@ -1,22 +1,22 @@
 # [NixOS] & [Home Manager] Configurations
->based from [wimpysworld nix-config](https://github.com/wimpysworld/nix-config)
+
+> based from [wimpysworld nix-config](https://github.com/wimpysworld/nix-config)
 
 [NixOS]: https://nixos.org/
 [Home Manager]: https://github.com/nix-community/home-manager
 
 This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for configuring my computers and home environment. These are the computers this configuration currently manages:
 
-|  Hostname  | OEM         | Model                        | OS    | Role      | Status |
-| :--------- | :---------: | :--------------------------: | :---: | :-------: | :----- |
-| boojum     | Lenovo      | Thinkpad Gen 6               | NixOS | Laptop    | WiP    |
-| jryjack    | Apple       | Macbook Pro M1 2020          | macOS | Laptop    | tbn    |
-| cork       | WSL2        | VM                           |       | VM        | tbn    |
-| maple      | Pine64      | [RockPro64]                  | NixOS | NAS       | tbn    |
-| ash        | Clockworkpi | [uConsole (CM-4, 4G Module)] | TBD   | Handheld  | tbn    |
+| Hostname |     OEM     |            Model             |  OS   |   Role   | Status |
+| :------- | :---------: | :--------------------------: | :---: | :------: | :----- |
+| boojum   |   Lenovo    |        Thinkpad Gen 6        | NixOS |  Laptop  | WiP    |
+| jryjack  |    Apple    |     Macbook Pro M1 2020      | macOS |  Laptop  | tbn    |
+| cork     |    WSL2     |              VM              |       |    VM    | tbn    |
+| maple    |   Pine64    |         [RockPro64]          | NixOS |   NAS    | tbn    |
+| ash      | Clockworkpi | [uConsole (CM-4, 4G Module)] |  TBD  | Handheld | tbn    |
 
 [uConsole (CM-4, 4G Module)]: https://www.clockworkpi.com/uconsole
 [RockPro64]: https://www.pine64.org/rockpro64/
-
 
 ## Structure
 
@@ -39,16 +39,16 @@ The [nixos/_mixins] and [home-manager/_mixins] are a collection of composited co
 
 ## Installing
 
-- Boot off a .iso image created by this flake using `rebuild-iso-desktop` or `rebuild-iso-console` (*see below*)
+- Boot off a .iso image created by this flake using `rebuild-iso-desktop` or `rebuild-iso-console` (_see below_)
 - Put the .iso image on a USB drive
 - Boot the target computer from the USB drive
 - Two installation options are available:
   1 Use the graphical Calamares installer to install an adhoc system
   2 Run `install-system <hostname> <username>` from a terminal
-   - The install script uses [Disko] to automatically partition and format the disks, then uses my flake via `nixos-install` to complete a full-system installation
-   - This flake is copied to the target user's home directory as `~/workspace/personal/nix-config`
+  - The install script uses [Disko] to automatically partition and format the disks, then uses my flake via `nixos-install` to complete a full-system installation
+  - This flake is copied to the target user's home directory as `~/workspace/personal/nix-config`
 - Reboot
-- Login and run `rebuild-home` (*see below*) from a terminal to complete the Home Manager configuration.
+- Login and run `rebuild-home` (_see below_) from a terminal to complete the Home Manager configuration.
 
 If the target system is booted from something other than the .iso image created by this flake, you can still install the system using the following:
 
@@ -82,7 +82,7 @@ home-manager switch -b backup --flake $HOME/workspace/personal/nix-config
 
 ### ISO
 
-Aliases for `rebuild-iso-desktop` (*desktop*) and `rebuild-iso-console` (*console only*) are provided that create .iso images from this flake. They do the following:
+Aliases for `rebuild-iso-desktop` (_desktop_) and `rebuild-iso-console` (_console only_) are provided that create .iso images from this flake. They do the following:
 
 ```bash
 pushd $HOME/workspace/personal/nix-config
@@ -129,8 +129,9 @@ While learning Nix I watched some talks/interviews with [Matthew Croughan](https
 I like the directory hierarchy in [Jon Seager's nixos-config] and the mixin pattern used in [Matthew Croughan's nixcfg], so my initial Nix configuration is heavily influenced by both of those. Ana's excellent [Declarative GNOME configuration with NixOS] blog post was essential to get a personalised desktop. That said, there's plenty to learn from browsing other people's Nix configurations, not least for discovering cool software. I recommend a search of [GitHub nixos configuration] from time to time to see what interesting techniques you pick up and new tools you might discover.
 
 The [Disko] implementation and automated installation is chasing the ideas outlined in these blog posts:
-  - [Setting up my new laptop: nix style](https://bmcgee.ie/posts/2022/12/setting-up-my-new-laptop-nix-style/)
-  - [Setting up my machines: nix style](https://aldoborrero.com/posts/2023/01/15/setting-up-my-machines-nix-style/)
+
+- [Setting up my new laptop: nix style](https://bmcgee.ie/posts/2022/12/setting-up-my-new-laptop-nix-style/)
+- [Setting up my machines: nix style](https://aldoborrero.com/posts/2023/01/15/setting-up-my-machines-nix-style/)
 
 [nome from Luc Perkins]: https://github.com/the-nix-way/nome
 [nixos-config from Cole Helbling]: https://github.com/cole-h/nixos-config
@@ -147,3 +148,4 @@ The [Disko] implementation and automated installation is chasing the ideas outli
 
 https://wiki.nixos.org/wiki/I3
 https://jacobneplokh.com/how-to-setup-nextcloud-on-nixos/
+https://github.com/fufexan/dotfiles

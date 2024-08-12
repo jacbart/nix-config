@@ -21,7 +21,7 @@
       extraCommands = [
         "${pkgs.swww}/bin/swww-daemon"
         # "${pkgs.eww}/bin/eww daemon --config ${config.xdg.configHome}/eww"
-        # "${pkgs.eww}/bin/eww open bar --screen 0"
+        # "${pkgs.eww}/bin/eww daemon --config $HOME/workspace/personal/nix-config/home-manager/_mixins/desktop/eww"
       ];
     };
 
@@ -33,6 +33,7 @@
 
       exec-once = [
         "${pkgs.swww}/bin/swww img ${config.xdg.dataHome}/images/moose-orange-bg"
+        # "${pkgs.eww}/bin/eww open bar --screen 0"
       ];
       
       "$mod" = "SUPER";
@@ -116,8 +117,8 @@
         ", XF86AudioRaiseVolume, exec, ${config.xdg.dataHome}/zsh/scripts/os/volume_control.zsh up"
         ", XF86AudioLowerVolume, exec, ${config.xdg.dataHome}/zsh/scripts/os/volume_control.zsh down"
         # brightness controls
-        ", XF86MonBrightnessDown, exec, brightnessctl s 10%-"
-        ", XF86MonBrightnessUp, exec, brightnessctl s +10%"
+        ", XF86MonBrightnessDown, exec, ${config.xdg.dataHome}/zsh/scripts/os/brightness_control.zsh down"
+        ", XF86MonBrightnessUp, exec, ${config.xdg.dataHome}/zsh/scripts/os/brightness_control.zsh up"
       ];
       bindr = [
         # toggle rofi launcher

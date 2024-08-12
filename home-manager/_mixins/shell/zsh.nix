@@ -1,22 +1,42 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: let
+  modPath = [
+    "$PATH"
+    "${config.xdg.dataHome}/zsh/scripts"
+    "${config.xdg.dataHome}/zsh/scripts/os"
+    "${config.xdg.dataHome}/zsh/scripts/misc"
+  ] ++ lib.optional (pkgs.stdenv.isDarwin) [
+    "/opt/homebrew/bin"
+  ];
+  modPathStr = lib.strings.concatMapStrings (path: path + ":") modPath;
+in {
     home.packages = with pkgs; [
       perl # Required for zplug
+      unstable.tlrc
     ];
 
     programs.zsh = {
       enable = true;
+      sessionVariables = {
+        STOW_DIR = "$HOME/.dotfiles/stowpkgs";
+        ZSHDATADIR = "${config.xdg.dataHome}/zsh";
+        PATH = "${modPathStr}";
+      };
       shellAliases = {
+        cd = "z";
+        j = "z";
+        ls = "eza";
+        ll = "eza --long";
+        la = "eza --long --all";
         cat = "bat --paging=never --style=plain";
-        htop = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
         hm = "home-manager";
         less = "bat --paging=always";
         more = "bat --paging=always";
         top = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
-        kc = "kubectl";
-        nc = "ncat";
+        htop = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
         t = "tmux";
-        j = "z";
         gs = "git status";
+        ga = "git add";
+        gcm = "git commit -m";
         st = "stow -v -t $HOME";
         nix-gc = "sudo nix-collect-garbage --delete-older-than 10d && nix-collect-garbage --delete-older-than 10d";
         rebuild-all = "sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config && home-manager switch -b backup --flake $HOME/workspace/personal/nix-config";
@@ -29,7 +49,6 @@
         plugins = [
           { name = "plugins/fzf"; tags = [ "from:oh-my-zsh" ]; }
           { name = "plugins/git"; tags = [ "from:oh-my-zsh" ]; }
-          { name = "plugins/z"; tags = [ "from:oh-my-zsh" ]; }
           { name = "zsh-users/zsh-autosuggestions"; }
           { name = "zsh-users/zsh-syntax-highlighting"; }
           { name = "zsh-users/zsh-completions"; }

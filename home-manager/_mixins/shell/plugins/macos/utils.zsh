@@ -4,7 +4,6 @@ export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 ## Alias
 alias copy="pbcopy"
 alias grep="grep -RIns --color=auto --exclude=\"tags\""
-alias ls="ls -l -h --color"
 alias lsusb="system_profiler SPUSBDataType"
 alias newmacaddr="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//' | xargs sudo ifconfig en0 ether"
 alias showhidden="defaults write com.apple.finder AppleShowAllFiles"

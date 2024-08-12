@@ -1,16 +1,19 @@
 { config, pkgs, ... }: {
   imports = [
-    # ./eww.nix
-    ./kitty.nix
-    ./rofi-wayland.nix
+    ./eww.nix # panels and widgets
+    ./kitty.nix # terminal
+    ./rofi-wayland.nix # app launcher
   ];
 
   home = {
     packages = with pkgs; [
       unstable.bitwarden-desktop
       unstable.element-desktop
-      brightnessctl
-      swww
+      unstable.libreoffice-qt6-fresh # office document viewer
+      unstable.geeqie # image veiwer
+      brightnessctl # screen brightness controls
+      swww # wallpaper
+      vlc # multi-media viewer
     ];
 
     file."${config.xdg.dataHome}/images/moose-orange-bg.jpg".source = ./moose-orange-bg.jpg;
