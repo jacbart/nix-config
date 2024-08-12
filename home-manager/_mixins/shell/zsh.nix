@@ -38,6 +38,7 @@ in {
         ls = "eza";
         ll = "eza --long";
         la = "eza --long --all";
+        tree = "eza --long --tree --level=3";
         cat = "bat --paging=never --style=plain";
         hm = "home-manager";
         less = "bat --paging=always";

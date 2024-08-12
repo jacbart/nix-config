@@ -8,6 +8,7 @@ _: {
       "--color=always"
       "--git"
       "--icons=always"
+      "--oneline"
     ];
   };
 }
