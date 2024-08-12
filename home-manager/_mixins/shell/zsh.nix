@@ -34,7 +34,6 @@ in {
       };
       shellAliases = {
         cd = "z";
-        j = "z";
         ls = "eza";
         ll = "eza --long";
         la = "eza --long --all";

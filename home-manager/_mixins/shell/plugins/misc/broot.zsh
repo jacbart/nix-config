@@ -12,3 +12,16 @@ br () {
                 return "$code"
         fi
 }
+
+j () {
+        p=""
+        if [ $# -lt 1 ]; then
+                p="$(pwd)"
+        elif [ $# -gt 1 ]; then
+                echo "only one arg allowed"
+        else
+                p="$@"
+        fi
+        z "$p" && wait
+        br
+}

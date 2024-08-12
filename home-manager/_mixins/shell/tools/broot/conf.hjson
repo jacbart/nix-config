@@ -80,7 +80,7 @@ ext_colors: {
     js: rgb(242, 245, 86)
     jsx: rgb(242, 245, 86)
     html: rgb(86, 245, 143)
-    # dark blue
+    # pink
     yml: rgb(255, 155, 251)
     yaml: rgb(255, 155, 251)
     json: rgb(255, 155, 251)
@@ -91,10 +91,15 @@ ext_colors: {
     toml: rgb(255, 155, 251)
     jaws: rgb(255, 155, 251)
     koi: rgb(255, 155, 251)
-    #red
+    # red
     env: rgb(245, 86, 86)
     secret: rgb(245, 86, 86)
     lock: rgb(245, 86, 86)
+    # light green
+    sh: rgb(29, 224, 163)
+    zsh: rgb(29, 224, 163)
+    fish: rgb(29, 224, 163)
+    ps1: rgb(29, 224, 163)
 }
 
 content_search_max_file_size: 10MB
