@@ -66,23 +66,34 @@ quit_on_last_cancel: true
 # }
 
 ext_colors: {
-    png: rgb(255, 128, 75)
-    jpg: rgb(255, 128, 75)
+    # orange
+    png: rgb(224, 129, 29)
+    jpg: rgb(224, 129, 29)
+    jpeg: rgb(224, 129, 29)
+    # light blue
     md: rgb(86, 185, 245)
+    # green
     rs: rgb(86, 245, 143)
     go: rgb(86, 245, 143)
+    # yellow
     cls: rgb(242, 245, 86)
     js: rgb(242, 245, 86)
     jsx: rgb(242, 245, 86)
     html: rgb(86, 245, 143)
-    yml: rgb(0, 110, 255)
-    yaml: rgb(0, 110, 255)
-    json: rgb(0, 110, 255)
-    hcl: rgb(0, 110, 255)
-    conf: rgb(0, 110, 255)
-    jaws: rgb(0, 110, 255)
-    koi: rgb(0, 110, 255)
+    # dark blue
+    yml: rgb(255, 155, 251)
+    yaml: rgb(255, 155, 251)
+    json: rgb(255, 155, 251)
+    hjson: rgb(255, 155, 251)
+    nix: rgb(255, 155, 251)
+    hcl: rgb(255, 155, 251)
+    conf: rgb(255, 155, 251)
+    toml: rgb(255, 155, 251)
+    jaws: rgb(255, 155, 251)
+    koi: rgb(255, 155, 251)
+    #red
     env: rgb(245, 86, 86)
+    secret: rgb(245, 86, 86)
     lock: rgb(245, 86, 86)
 }
 
