@@ -2,6 +2,6 @@
   programs.firefox = {
     enable = true;
     languagePacks = [ "en-US" ];
-    package = pkgs.unstable.firefox;
+    package = pkgs.unstable.firefox-unwrapped;
   };
 }

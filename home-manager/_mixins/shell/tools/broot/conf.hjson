@@ -1,63 +1,13 @@
-###############################################################
-# This configuration file lets you
-# - define new commands
-# - change the shortcut or triggering keys of built-in verbs
-# - change the colors
-# - set default values for flags
-# - set special behaviors on specific paths
-# - and more...
-#
-# Configuration documentation is available at
-#     https://dystroy.org/broot
-#
-# This file's format is Hjson ( https://hjson.github.io/ ). Some
-# properties are commented out. To enable them, remove the `#`.
-#
-###############################################################
-
-###############################################################
-# Default flags
-# You can set up flags you want broot to start with by
-# default, for example `default_flags="-ihp"` if you usually want
-# to see hidden and gitignored files and the permissions (then
-# if you don't want the hidden files at a specific launch,
-# you can launch broot with `br -H`).
-# A popular flag is the `g` one which displays git related info.
-#
 default_flags: gswpI
 
-###############################################################
-# Terminal's title
-# If you want the terminal's title to be updated when you change
-# directory, set a terminal_title pattern by uncommenting one of
-# the examples below and tuning it to your taste.
-#
-terminal_title: "[broot] {git-name}"
-# terminal_title: "{file} 🐄"
-# terminal_title: "-= {file-name} =-"
+terminal_title: "-= {file-name} =-"
 
-###############################################################
-# Date/Time format
-# If you want to change the format for date/time, uncomment the
-# following line and change it according to
-# https://docs.rs/chrono/0.4.11/chrono/format/strftime/index.html
-#
 date_time_format: %Y/%m/%d %R
 
-###############################################################
-# uncomment to activate modal mode
-#
-# (you really should read https://dystroy.org/broot/modal/
-# before as it may not suit everybody even among vim users)
-#
 # You may start either in 'command' mode, or in 'input' mode
-#
 modal: true
 initial_mode: command
 
-###############################################################
-# Whether to mark the selected line with a triangle
-#
 show_selection_mark: true
 
 ###############################################################
@@ -77,60 +27,15 @@ show_selection_mark: true
 #     name
 # ]
 
-###############################################################
-# True Colors
-# If this parameter isn't set, broot tries to automatically
-# determine whether true colors (24 bits) are available.
-# As this process is unreliable, you may uncomment this setting
-# and set it to false or true if you notice the colors in
-# previewed images are too off.
-#
-# true_colors: false
+true_colors: true
 
-###############################################################
-# Icons
-# If you want to display icons in broot, uncomment this line
-# (see https://dystroy.org/broot/icons for installation and
-# troubleshooting)
-#
-# icon_theme: vscode
+icon_theme: nerdfont
 
-###############################################################
-# Special paths
-# If some paths must be handled specially, uncomment (and change
-# this section as per the examples)
-# Setting "list":"never" on a dir prevents broot from looking at its 
-#  children when searching, unless the dir is the selected root.
-# Setting "sum":"never" on a dir prevents broot from looking at its
-#  children when computing the total size and count of files.
-# Setting "show":"always" makes a file visible even if its name
-#  starts with a dot.
-# Setting "list":"always" may be useful on a link to a directory
-#  (they're otherwise not entered by broot unless selected)
-#
 special_paths: {
-    "/media" : {
-        list: "never"
-        sum: "never"
-    }
     "~/.config": { "show": "always" }
-    "trav": {
-        show: always
-        list: "always",
-        sum: "never"
-    }
-    # "~/useless": { "show": "never" }
-    # "~/my-link-I-want-to-explore": { "list": "always" }
 }
 
-###############################################################
-# Quit on last cancel
-# You can usually cancel the last state change on escape.
-# If you want the escape key to quit broot when there's nothing
-# to cancel (for example when you just opened broot), uncomment
-# this parameter
-# 
-# quit_on_last_cancel: true
+quit_on_last_cancel: true
 
 ###############################################################
 # Search modes
@@ -160,40 +65,32 @@ special_paths: {
 #     /: regex name
 # }
 
-###############################################################
-# File Extension Colors
-#
-# uncomment and modify the next section if you want to color
-# file name depending on their extension
-#
-# ext_colors: {
-#     png: rgb(255, 128, 75)
-#     rs: yellow
-# }
+ext_colors: {
+    png: rgb(255, 128, 75)
+    jpg: rgb(255, 128, 75)
+    md: rgb(86, 185, 245)
+    rs: rgb(86, 245, 143)
+    go: rgb(86, 245, 143)
+    cls: rgb(242, 245, 86)
+    js: rgb(242, 245, 86)
+    jsx: rgb(242, 245, 86)
+    html: rgb(86, 245, 143)
+    yml: rgb(0, 110, 255)
+    yaml: rgb(0, 110, 255)
+    json: rgb(0, 110, 255)
+    hcl: rgb(0, 110, 255)
+    conf: rgb(0, 110, 255)
+    jaws: rgb(0, 110, 255)
+    koi: rgb(0, 110, 255)
+    env: rgb(245, 86, 86)
+    lock: rgb(245, 86, 86)
+}
 
-###############################################################
-# Max file size for content search
-#
-# Bigger files are ignored when searching their content. You
-# can specify this size either in ISO units (eg 5GB) or in
-# the old binary units (eg 44Kib)
 content_search_max_file_size: 10MB
 
-###############################################################
-# Max Panels Count
-#
-# Change this if you sometimes want to have more than 2 panels
-# open
-# max_panels_count: 2
+max_panels_count: 2
 
-###############################################################
-# Update work dir
-#
-# By default, broot process' work dir is kept in sync with the
-# current's panel root. If you want to keep it unchanged,
-# uncomment this setting
-#
-# update_work_dir: false
+update_work_dir: false
 
 ###############################################################
 # Kitty Keyboard extension
@@ -217,13 +114,6 @@ kitty_graphics_transmission: chunks
 lines_before_match_in_preview: 1
 lines_after_match_in_preview: 1
 
-###############################################################
-# transformations before preview
-#
-# It's possible to define transformations to apply to some files
-# before calling one of the default preview renderers in broot.
-# Below are two examples that you may uncomment and adapt:
-#
 preview_transformers: [
     # Use mutool to render any PDF file as an image
     # In this example we use placeholders for the input and output files
@@ -259,15 +149,6 @@ preview_transformers: [
     }
 ]
 
-###############################################################
-# Imports
-#
-# While it's possible to have all configuration in one file,
-# it's more convenient to split it in several ones.
-# Importing also allows to set a condition on the terminal's
-# color, which makes it possible to have a different skin 
-# chosen when your terminal has a light background and when
-# it has a light one.
 imports: [
 
     # Verbs are better configured in verbs.hjson. But you

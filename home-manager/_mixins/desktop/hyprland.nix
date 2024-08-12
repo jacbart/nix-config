@@ -19,9 +19,10 @@
       enable = true;
       variables = [ "--all" ];
       extraCommands = [
+        # wallpaper daemon
         "${pkgs.swww}/bin/swww-daemon"
+        # panel/widet daemon
         # "${pkgs.eww}/bin/eww daemon --config ${config.xdg.configHome}/eww"
-        # "${pkgs.eww}/bin/eww daemon --config $HOME/workspace/personal/nix-config/home-manager/_mixins/desktop/eww"
       ];
     };
 
@@ -36,6 +37,16 @@
         # "${pkgs.eww}/bin/eww open bar --screen 0"
       ];
       
+      input = {
+        touchpad = {
+          natural_scroll = true;
+          scroll_factor = 0.4;
+        };
+      };
+      gestures = {
+        workspace_swipe = true;
+      };
+
       "$mod" = "SUPER";
       
       bindm = [
