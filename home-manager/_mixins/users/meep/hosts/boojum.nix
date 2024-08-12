@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-with lib.hm.gvariant;
-{
-  imports = [
+{ pkgs, ... }: {
+  home.packages = with pkgs; [
+    powertop
   ];
 }

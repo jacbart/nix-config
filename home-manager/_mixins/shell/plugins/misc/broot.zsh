@@ -22,6 +22,6 @@ j () {
         else
                 p="$@"
         fi
-        z "$p" && wait
+        z "$p" || exit 1 && wait
         br
 }
