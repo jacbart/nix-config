@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-volUP="wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-volDown="wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+volUP="wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
+volDown="wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
 volTog="wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
 vol=$(wpctl get-volume @DEFAULT_SINK@ | cut -d " " -f 2)

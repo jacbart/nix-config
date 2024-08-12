@@ -1,8 +1,6 @@
-{ config, pkgs, ... }:
-let
+{ config, pkgs, ... }: let
     inherit (pkgs.stdenv) isDarwin;
-in
-{
+in {
     home.file."${config.xdg.dataHome}/zsh/functions/os" = {
         source = if isDarwin then ./macos else ./linux;
         recursive = true;

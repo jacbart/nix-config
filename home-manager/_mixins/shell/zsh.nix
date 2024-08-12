@@ -1,18 +1,29 @@
 { config, pkgs, lib, ... }: let
+  inherit (pkgs.stdenv) isLinux isDarwin;
   modPath = [
     "$PATH"
     "${config.xdg.dataHome}/zsh/scripts"
     "${config.xdg.dataHome}/zsh/scripts/os"
     "${config.xdg.dataHome}/zsh/scripts/misc"
-  ] ++ lib.optional (pkgs.stdenv.isDarwin) [
-    "/opt/homebrew/bin"
-  ];
+  ] ++ lib.optional (isDarwin) "/opt/homebrew/bin";
   modPathStr = lib.strings.concatMapStrings (path: path + ":") modPath;
+
+  # tlrcHandler = let 
+  #   inherit (pkgs.darwin.apple_sdk) frameworks;
+  # in pkgs.stdenv.mkDerivation {
+  #   name = "tlrc";
+  #   buildInputs = lib.optional (isDarwin) [ 
+  #     frameworks.Security
+  #     frameworks.CoreFoundation
+  #     frameworks.CoreServices
+  #   ];
+  #   src = pkgs.unstable.tlrc;
+  # };
 in {
     home.packages = with pkgs; [
       perl # Required for zplug
-      unstable.tlrc
-    ];
+      # tlrcHandler
+    ] ++ lib.optional (isLinux) unstable.tlrc;
 
     programs.zsh = {
       enable = true;
