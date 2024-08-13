@@ -4,6 +4,10 @@
   ];
 
   gtk.enable = true;
+  home.packages = with pkgs; [
+    xdg-desktop-portal
+    xdg-desktop-portal-hyprland
+  ];
 
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor

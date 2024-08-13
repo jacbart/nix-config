@@ -50,7 +50,7 @@
             unbind T
             bind T command-prompt -p "(rename-pane)" -I "#T" "select-pane -T '%%'"
 
-            bind-key e run-shell 'tmux popup -E "hx $HOME/workspace/personal/notes/$(date "+%Y-%m-%d").md"'
+            bind-key e run-shell 'tmux popup -E "hx $HOME/workspace/journal/$(date "+%Y-%m-%d").md"'
 
             run '~/.tmux/plugins/tpm/tpm'
         '';

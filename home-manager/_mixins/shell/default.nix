@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: let
+    # helper function for generating a shell (minimal, server, desktop)
+    mkDotenv = { type ? "minimal" }: {
+        
+    };
+in {
     imports = [
         ./tools # cli/tui tools or services
         ./plugins # shell extenstions ie functions or alias'
@@ -34,9 +39,7 @@
         direnv = {
             enable = true;
             enableZshIntegration = true;
-            nix-direnv = {
-            enable = true;
-            };
+            nix-direnv.enable = true;
         };
         fzf = {
             enable = true;

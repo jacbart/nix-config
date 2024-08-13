@@ -8,6 +8,8 @@
     package = inputs.lan-mouse.packages.${pkgs.stdenv.hostPlatform.system}.default;
     # Optional configuration in nix syntax, see config.toml for available options
     settings = {
+      frontend = "Cli";
+      capture-backend = "layer-shell";
       release_bind = [ "KeyA" "KeyS" "KeyD" "KeyF" ];
       port = 4242;
       left = {

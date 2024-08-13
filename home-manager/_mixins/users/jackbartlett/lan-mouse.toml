@@ -1,3 +1,4 @@
+frontend = "Cli"
 port = 4242
 release_bind = ["KeyA", "KeyS", "KeyD", "KeyF"]
 [right]
