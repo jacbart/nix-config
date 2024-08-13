@@ -14,14 +14,25 @@ br () {
 }
 
 j () {
-        p=""
         if [ $# -lt 1 ]; then
                 p="$(pwd)"
+                z "$p"
+                if [ $? -eq 0 ]; then
+                        wait
+                        br
+                else
+                        echo "cannot find path $@"
+                fi
         elif [ $# -gt 1 ]; then
                 echo "only one arg allowed"
         else
                 p="$@"
+                z "$p"
+                if [ $? -eq 0 ]; then
+                        wait
+                        br
+                else
+                        echo "cannot find path $@"
+                fi
         fi
-        z "$p" || exit 1 && wait
-        br
 }
