@@ -2,6 +2,7 @@
   imports = [
     ./eww.nix # panels and widgets
     ./kitty.nix # terminal
+    ./lan-mouse.nix # virtual kvm
     ./rofi-wayland.nix # app launcher
   ];
 

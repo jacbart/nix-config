@@ -22,6 +22,9 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+
+    lan-mouse.url = "github:feschber/lan-mouse";
+    lan-mouse.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs =
     { self
