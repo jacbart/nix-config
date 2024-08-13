@@ -1,8 +1,10 @@
-{ config, pkgs, ...}: {
+{ pkgs, ...}: {
   home = {
     packages = with pkgs; [
       # most used lsp's for helix
       dockerfile-language-server-nodejs # dockerfile language server
+      # gofumpt # go formatter
+      # gopls # go language server
       nil # nix language server
       marksman # markdown language server
       markdown-oxide # markdown language server
@@ -33,7 +35,43 @@
     helix = {
       enable = true;
       languages = {
+        language-server = {
+          gopls = {
+            command = "gopls";
+            config =  { 
+              "gofumpt" = true;
+              "local" = "goimports";
+              "semanticTokens" = true;
+              "staticcheck" = true;
+              "verboseOutput" = true;
+              "analyses" = {
+              "fieldalignment" = true;
+                "nilness" = true;
+                unusedparams = true;
+                unusedwrite = true;
+                useany = true;
+              };
+              usePlaceholders = true;
+              completeUnimported = true;
+              hints = {
+                "assignVariableType" = true;
+                "compositeLiteralFields" = true;
+                "compositeLiteralTypes" = true;
+                "constantValues" = true;
+                "functionTypeParameters" = true;
+                "parameterNames" = true;
+                "rangeVariableTypes" = true;
+              };
+            };
+          }; 
+        };
         language = [{
+            name = "go";
+            roots = [ "go.work" "go.mod" ];
+            auto-format = true;
+            comment-token = "//";
+            language-servers = [ "gopls" ];
+        } {
             name = "hcl";
             file-types = ["tf" "tfvars" "hcl" "koi" "jaws"];
             auto-format = true;
