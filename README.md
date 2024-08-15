@@ -149,3 +149,4 @@ The [Disko] implementation and automated installation is chasing the ideas outli
 https://wiki.nixos.org/wiki/I3
 https://jacobneplokh.com/how-to-setup-nextcloud-on-nixos/
 https://github.com/fufexan/dotfiles
+https://wiki.lightcrimson.com/en/garuda-sway-config/hyprland-keybinds

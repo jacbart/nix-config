@@ -2,8 +2,7 @@
     (centerbox :orientation "h"
       (workspaces)
       (music)
-      (sidestuff)
-      (system-tray)))
+      (sidestuff)))
   
   (defwidget sidestuff []
     (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
@@ -24,16 +23,16 @@
          :space-evenly true
          :halign "start"
          :spacing 10
-      (button :onclick "hyprctl dispatch workspace 1" 1)
-      (button :onclick "hyprctl dispatch workspace 2" 2)
-      (button :onclick "hyprctl dispatch workspace 3" 3)
-      (button :onclick "hyprctl dispatch workspace 4" 4)
-      (button :onclick "hyprctl dispatch workspace 5" 5)
-      (button :onclick "hyprctl dispatch workspace 6" 6)
-      (button :onclick "hyprctl dispatch workspace 7" 7)
-      (button :onclick "hyprctl dispatch workspace 8" 8)
-      (button :onclick "hyprctl dispatch workspace 9" 9)
-      (button :onclick "hyprctl dispatch workspace 10" 10)))
+      (button :onclick "hyprctl dispatch workspace 1 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 1'" 1)
+      (button :onclick "hyprctl dispatch workspace 2 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 2'" 2)
+      (button :onclick "hyprctl dispatch workspace 3 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 3'" 3)
+      (button :onclick "hyprctl dispatch workspace 4 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 4'" 4)
+      (button :onclick "hyprctl dispatch workspace 5 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 5'" 5)
+      (button :onclick "hyprctl dispatch workspace 6 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 6'" 6)
+      (button :onclick "hyprctl dispatch workspace 7 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 7'" 7)
+      (button :onclick "hyprctl dispatch workspace 8 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 8'" 8)
+      (button :onclick "hyprctl dispatch workspace 9 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 9'" 9)
+      (button :onclick "hyprctl dispatch workspace 10 && dunstify -h string:x-canonical-private-synchronous:ws 'Workspace 10'" 10)))
   
   (defwidget music []
     (box :class "music"
@@ -52,12 +51,7 @@
         :max 101
         :active {onchange != ""}
         :value value
-        :onchange onchange)))
-  
-  (defwidget system-tray []
-      (systray :orientation "h"
-        :space-evenly true
-        :prepend-new true))
+        :onchange onchange))) 
   
   (deflisten music :initial ""
     "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
@@ -66,7 +60,8 @@
     "scripts/getvol")
   
   (defpoll time :interval "10s"
-    "date '+%H:%M %b %d, %Y'")
+    "date '+%b %d, %Y %H:%M'")
+    ; "date '+%H:%M %b %d, %Y'")
   
   (defwindow bar
     :monitor 0

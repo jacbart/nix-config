@@ -1,4 +1,4 @@
-{ desktop, lib, pkgs, ... }: {
+{ desktop, lib, ... }: {
   imports = [
   ]
   ++ lib.optional (builtins.pathExists (./. + "/${desktop}.nix")) ./${desktop}.nix
@@ -15,26 +15,14 @@
   hardware = {
     opengl = {
       enable = true;
-      # driSupport = true;
+      driSupport = true;
     };
   };
 
   # programs.dconf.enable = true;
 
-  # Disable xterm
-  # services.xserver.excludePackages = [ pkgs.xterm ];
-  # services.xserver.desktopManager.xterm.enable = false;
-
-  # systemd.services.disable-wifi-powersave = {
-  #   wantedBy = ["multi-user.target"];
-  #   path = [ pkgs.iw ];
-  #   script = ''
-  #     iw dev wlan0 set power_save off
-  #   '';
-  # };
-
-  # xdg.portal = {
-  #   enable = true;
-  #   xdgOpenUsePortal = true;
-  # };
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+  };
 }

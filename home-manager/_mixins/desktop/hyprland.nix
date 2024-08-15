@@ -4,9 +4,9 @@
   ];
 
   gtk.enable = true;
-  home.packages = with pkgs; [
-    xdg-desktop-portal
-    xdg-desktop-portal-hyprland
+  home.packages = with pkgs;[
+    # auth popup
+    polkit-kde-agent
   ];
 
   wayland.windowManager.hyprland = {
@@ -21,13 +21,8 @@
     # Whether to enable hyprland-session.target on hyprland startup
     systemd = {
       enable = true;
-      variables = [ "--all" ];
-      extraCommands = [
-        # wallpaper daemon
-        "${pkgs.swww}/bin/swww-daemon"
-        # panel/widet daemon
-        # "${pkgs.eww}/bin/eww daemon --config ${config.xdg.configHome}/eww"
-      ];
+      # variables = [ "--all" ];
+      # extraCommands = [];
     };
 
     settings = {
@@ -37,8 +32,15 @@
       ];
 
       exec-once = [
+        # wallpaper daemon
+        "${pkgs.swww}/bin/swww-daemon"
+        # panel/widget daemon
+        "${pkgs.eww}/bin/eww daemon --config ${config.xdg.configHome}/eww"
+
+        # open wallpaper
         "${pkgs.swww}/bin/swww img ${config.xdg.dataHome}/images/moose-orange-bg"
-        # "${pkgs.eww}/bin/eww open bar --screen 0"
+        # open top bar
+        "${pkgs.eww}/bin/eww open bar --screen 0"
       ];
       
       input = {
@@ -75,6 +77,7 @@
         "$mod, Q, killactive"
         "$mod SHIFT, Q, exec, hyprctl kill"
         "$mod SHIFT, S, togglefloating"
+        "$mod SHIFT, F, fullscreen"
         # window resize
         "$mod ALT, H, resizeactive, -160 0"
         "$mod ALT, L, resizeactive, 160 0"

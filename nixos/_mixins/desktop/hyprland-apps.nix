@@ -3,11 +3,11 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    dunst
+    eww
     hyprlock
     hypridle
     kitty
-    waybar
-    dunst
     libnotify
     rofi-wayland
   ];

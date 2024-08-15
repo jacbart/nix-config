@@ -23,14 +23,6 @@ in
     unstable.firefox-unwrapped
   ];
 
-  services = {
-    # aria2 = {
-    #   enable = true;
-    #   openPorts = true;
-    #   rpcSecret = "${hostname}";
-    # };
-  };
-
   users.users.meep = {
     description = "Meep";
     extraGroups = [
