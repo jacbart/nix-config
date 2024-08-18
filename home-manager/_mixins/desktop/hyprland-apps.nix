@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
+    ./dunst.nix # notifications
     ./eww.nix # panels and widgets
     ./kitty.nix # terminal
     # ./lan-mouse.nix # virtual kvm
@@ -100,27 +101,6 @@
             on-timeout = "systemctl suspend"; # suspend pc
           }
         ];
-      };
-    };
-    dunst = {
-      enable = true;
-      package = pkgs.dunst;
-      settings = {
-        global = {
-          width = 300;
-          height = 300;
-          offset = "30x50";
-          origin = "top-right";
-          transparency = 10;
-          frame_color = "#eceff1";
-          font = "Droid Sans 9";
-        };
-
-        urgency_normal = {
-          background = "#37474f";
-          foreground = "#eceff1";
-          timeout = 10;
-        };
       };
     };
   };

@@ -1,18 +1,10 @@
-{ config, pkgs, ... }:
+{ lib, ... }:
 let
-    inherit (pkgs.stdenv) isDarwin;
+  currentDir = ./.;
+  isDirectoryAndNotTemplate = name: type: type == "directory" && name != "_template";
+  directories = lib.filterAttrs isDirectoryAndNotTemplate (builtins.readDir currentDir);
+  importDirectory = name: import (currentDir + "/${name}");
 in
 {
-    home.packages = with pkgs; [
-        bc # used in volume_control.zsh
-    ];
-    home.file."${config.xdg.dataHome}/zsh/scripts/os" = {
-        source = if isDarwin then ./macos else ./linux;
-        recursive = true;
-    };
-
-    home.file."${config.xdg.dataHome}/zsh/scripts/misc" = {
-        source = ./misc;
-        recursive = true;
-    };
+  imports = lib.mapAttrsToList (name: _: importDirectory name) directories;
 }

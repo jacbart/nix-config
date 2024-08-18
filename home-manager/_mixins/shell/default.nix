@@ -6,8 +6,7 @@
 in {
     imports = [
         ./tools # cli/tui tools or services
-        ./plugins # shell extenstions ie functions or alias'
-        ./scripts # scripts auto added to PATH
+        ./scripts # shellApplications
         ./zsh.nix # zsh config
     ];
 

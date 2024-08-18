@@ -2,27 +2,12 @@
   inherit (pkgs.stdenv) isLinux isDarwin;
   modPath = [
     "$PATH"
-    "${config.xdg.dataHome}/zsh/scripts"
-    "${config.xdg.dataHome}/zsh/scripts/os"
-    "${config.xdg.dataHome}/zsh/scripts/misc"
+    "$HOME/bin"
   ] ++ lib.optional (isDarwin) "/opt/homebrew/bin";
   modPathStr = lib.strings.concatMapStrings (path: path + ":") modPath;
-
-  # tlrcHandler = let 
-  #   inherit (pkgs.darwin.apple_sdk) frameworks;
-  # in pkgs.stdenv.mkDerivation {
-  #   name = "tlrc";
-  #   buildInputs = lib.optional (isDarwin) [ 
-  #     frameworks.Security
-  #     frameworks.CoreFoundation
-  #     frameworks.CoreServices
-  #   ];
-  #   src = pkgs.unstable.tlrc;
-  # };
 in {
     home.packages = with pkgs; [
       perl # Required for zplug
-      # tlrcHandler
     ] ++ lib.optional (isLinux) unstable.tlrc;
 
     programs.zsh = {
@@ -34,6 +19,7 @@ in {
       };
       shellAliases = {
         cd = "z";
+        j = "z";
         ls = "eza";
         ll = "eza --long";
         la = "eza --long --all";
@@ -43,7 +29,6 @@ in {
         less = "bat --paging=always";
         more = "bat --paging=always";
         top = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
-        t = "tmux";
         gs = "git status";
         ga = "git add";
         gcm = "git commit -m";
@@ -73,8 +58,6 @@ in {
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff5f00"
         bindkey '^E' autosuggest-accept
         bindkey '^ ' forward-word
-        for file in $ZSHDATADIR/functions/os/*; do source $file; done
-        for file in $ZSHDATADIR/functions/misc/*; do source $file; done
       '';
     };
 }

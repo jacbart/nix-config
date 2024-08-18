@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
+set +e  # Disable errexit
+set +u  # Disable nounset
+set +o pipefail  # Disable pipefail
+
 brightnessUP="brightnessctl s +5%"
 brightnessDown="brightnessctl s 5%-"
 
@@ -29,6 +33,6 @@ down)
 	fi
 	;;
 *)
-	notif "Error in brightness_control.zsh"
+	notif "Error in brightness"
 	;;
 esac

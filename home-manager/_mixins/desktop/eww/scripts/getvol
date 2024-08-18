@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-
-wpctl get-volume @DEFAULT_SINK@ | cut -d " " -f 2

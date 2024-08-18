@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
+set +e  # Disable errexit
+set +u  # Disable nounset
+set +o pipefail  # Disable pipefail
+
 volUP="wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
 volDown="wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
 volTog="wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -32,6 +36,6 @@ toggle)
 	notif "Toggled Mute"
 	;;
 *)
-	notif "Error in volume_control.zsh"
+	notif "Error in volume"
 	;;
 esac
