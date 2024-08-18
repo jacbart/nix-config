@@ -9,7 +9,9 @@ brightnessDown="brightnessctl s 5%-"
 
 brightness=$(brightnessctl get)
 
-alias notif="dunstify -h string:x-canonical-private-synchronous:brightness"
+notif() {
+	dunstify -h string:x-canonical-private-synchronous:brightness "$@"
+}
 
 max=$(brightnessctl max)
 

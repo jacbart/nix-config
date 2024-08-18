@@ -10,7 +10,9 @@ volTog="wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
 vol=$(wpctl get-volume @DEFAULT_SINK@ | cut -d " " -f 2)
 
-alias notif="dunstify -h string:x-canonical-private-synchronous:audio"
+notif() {
+	dunstify -h string:x-canonical-private-synchronous:audio "$@"
+}
 
 case $1 in
 up)
