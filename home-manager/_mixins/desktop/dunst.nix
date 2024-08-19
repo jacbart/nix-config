@@ -9,14 +9,23 @@
           offset = "30x50";
           origin = "top-right";
           transparency = 10;
-          frame_color = "#eceff1";
+          frame_color = "#89b4fa";
+          separator_color = "frame";
           font = "Droid Sans 9";
         };
 
+        urgency_low = {
+          background = "#1e1e2e";
+          foreground = "#cdd6f4";
+        };
         urgency_normal = {
-          background = "#37474f";
-          foreground = "#eceff1";
-          timeout = 10;
+          background = "#1e1e2e";
+          foreground = "#cdd6f4";
+        };
+        urgency_critical = {
+          background = "#1e1e2e";
+          foreground = "#cdd6f4";
+          frame_color = "#fab387";
         };
       };
     };

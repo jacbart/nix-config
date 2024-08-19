@@ -64,7 +64,7 @@
       bind =
       [
         # toggle mute
-        ", XF86AudioMute, exec, ${config.xdg.dataHome}/zsh/scripts/os/volume toggle"
+        ", XF86AudioMute, exec, volume toggle"
         # ", XF86AudioMicMute, exec, "
         # launchers
         "$mod, W, exec, firefox"
@@ -132,11 +132,11 @@
         "ALT, TAB, bringactivetotop"
         "ALT SHIFT, TAB, cyclenext, prev"
         # volume controls
-        ", XF86AudioRaiseVolume, exec, ${config.xdg.dataHome}/zsh/scripts/os/volume up"
-        ", XF86AudioLowerVolume, exec, ${config.xdg.dataHome}/zsh/scripts/os/volume down"
+        ", XF86AudioRaiseVolume, exec, volume up"
+        ", XF86AudioLowerVolume, exec, volume down"
         # brightness controls
-        ", XF86MonBrightnessDown, exec, ${config.xdg.dataHome}/zsh/scripts/os/brightness down"
-        ", XF86MonBrightnessUp, exec, ${config.xdg.dataHome}/zsh/scripts/os/brightness up"
+        ", XF86MonBrightnessDown, exec, brightness down"
+        ", XF86MonBrightnessUp, exec, brightness up"
       ];
       bindr = [
         # toggle rofi launcher
