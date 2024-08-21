@@ -1,13 +1,29 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [
     ./hyprland-apps.nix
   ];
 
-  gtk.enable = true;
-  home.packages = with pkgs;[
+  # gtk.enable = true;
+  # home.packages = with pkgs;[
     # auth popup
-    polkit-kde-agent
-  ];
+    # polkit-kde-agent
+  # ];
+
+  services = {
+    gpg-agent.pinentryPackage = lib.mkForce pkgs.pinentry-gnome3;
+  };
+
+  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    Unit.Description = "polkit-gnome-authentication-agent-1";
+    Install.WantedBy = [ "hyprland-session.target" ];
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Restart = "on-failure";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
+    };
+  };
 
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
@@ -21,6 +37,7 @@
     # Whether to enable hyprland-session.target on hyprland startup
     systemd = {
       enable = true;
+      enableXdgAutostart = true;
       # variables = [ "--all" ];
       # extraCommands = [];
     };
@@ -143,10 +160,44 @@
         "$mod, D, exec, pkill rofi || rofi -show combi"
         "$mod, Space, exec, pkill rofi || rofi -show combi"
       ];
+      misc = {
+        background_color = "rgb(69, 71, 90)";
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
+        animate_manual_resizes = true;
+      };
       windowrulev2 = [
-        # auto set pip from firefox as a floating window
-        "float,class:(firefox),title:(Picture-in-Picture)"
+         # only allow shadows for floating windows
+        "noshadow, floating:0"
+
+        # idle inhibit while watching videos
+        "idleinhibit focus, class:^(mpv|.+exe)$"
+        "idleinhibit fullscreen, class:.*"
+
+        # make Firefox PiP window floating and sticky
+        "float, title:^(Picture-in-Picture)$"
+        "pin, title:^(Picture-in-Picture)$"
+
+        "float, class:^(1Password)$"
+        "stayfocused,title:^(Quick Access — 1Password)$"
+        "dimaround,title:^(Quick Access — 1Password)$"
+        "noanim,title:^(Quick Access — 1Password)$"
+
+        # make pop-up file dialogs floating, centred, and pinned
+        "float, title:(Open|Progress|Save File)"
+        "center, title:(Open|Progress|Save File)"
+        "pin, title:(Open|Progress|Save File)"
+        "float, class:^(code)$"
+        "center, class:^(code)$"
+        "pin, class:^(code)$"
+        
+        # throw sharing indicators away
+        "workspace special silent, title:^(Firefox — Sharing Indicator)$"
+        "workspace special silent, title:^(.*is sharing (your screen|a window)\.)$"
       ];
+      xwayland = {
+        force_zero_scaling = true;
+      };
     };
   };
 }
