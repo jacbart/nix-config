@@ -3,6 +3,7 @@
   modPath = [
     "$PATH"
     "$HOME/bin"
+    "$HOME/go/bin"
   ] ++ lib.optional (isDarwin) "/opt/homebrew/bin";
   modPathStr = lib.strings.concatMapStrings (path: path + ":") modPath;
 in {

@@ -25,12 +25,17 @@
 
     lan-mouse.url = "github:feschber/lan-mouse";
     lan-mouse.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs =
     { self
     , nix-formatter-pack
     , nixpkgs
     , vscode-server
+    , lan-mouse
+    , nixos-cosmic
     , ...
     } @ inputs:
     let
@@ -65,7 +70,7 @@
         # Workstations
         #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
         #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
-        boojum = libx.mkHost { hostname = "boojum"; username = "meep"; desktop = "hyprland"; };
+        boojum = libx.mkHost { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
         ash = libx.mkHost { hostname = "ash"; username = "meep"; desktop = "hyprland"; };
         # Servers
         maple = libx.mkHost { hostname = "maple"; username = "ratatoskr"; };
