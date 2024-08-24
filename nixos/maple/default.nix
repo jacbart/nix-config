@@ -2,7 +2,7 @@
 {
   imports = [
     ../_mixins/hardware/rockpro64.nix
-    (import ./disks.nix { })
+    # (import ./disks.nix { })
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)

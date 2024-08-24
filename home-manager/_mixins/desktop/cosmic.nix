@@ -10,6 +10,7 @@
       unstable.element-desktop
       unstable.libreoffice-qt6-fresh # office document viewer
       unstable.geeqie # image veiwer
+      gparted
       vlc # multi-media viewer
     ];
 
