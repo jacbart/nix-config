@@ -43,6 +43,7 @@ in
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1ssGFun8as4ZCOCHz8lAWHwqbcqBDdj12Z56aHgEdb jack bartlett"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIF4nyZ9WdHRf6yy6IlB/qJbNLIf3Sp9umUjm1pHhIAvAAAABHNzaDo= jacbart@gmail.com"
     ];
     packages = [ pkgs.home-manager ];
     shell = pkgs.zsh;

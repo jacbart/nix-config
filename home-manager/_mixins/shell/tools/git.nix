@@ -34,7 +34,8 @@
             extraConfig = {
                 core = {
                     editor = "hx";
-                    sshCommand = "ssh -i ~/.ssh/id_git";
+                    # sshCommand = "ssh -i ~/.ssh/id_git";
+                    sshCommand = "ssh -i ~/.ssh/id_git_sk";
                 };
                 url = {
                     "git@github.com:jacbart" = {
