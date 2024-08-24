@@ -1,8 +1,8 @@
 { pkgs, ... }: {
   programs.firefox = {
     enable = true;
-    package = pkgs.unstable.firefox-unwrapped;
-    preferencesStatus = "locked";
-    languagePacks = [ "en-US" ];
+    package = pkgs.unstable.firefox;
+    # preferencesStatus = "locked";
+    # languagePacks = [ "en-US" ];
   };
 }

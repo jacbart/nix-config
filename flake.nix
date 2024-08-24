@@ -27,7 +27,7 @@
     lan-mouse.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-    nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
   outputs =
     { self
@@ -54,7 +54,7 @@
         "nixos@iso-rockpro64" = libx.mkHome { hostname = "iso-rockpro64"; username = "nixos"; };
         "nixos@iso-uconsole" = libx.mkHome { hostname = "iso-uconsole"; username = "nixos"; };
         # Workstations
-        "meep@boojum" = libx.mkHome { hostname = "boojum"; username = "meep"; desktop = "hyprland"; };
+        "meep@boojum" = libx.mkHome { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
         "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; desktop = "hyprland"; platform = "aarch64-linux"; };
         "jackbartlett@jackjrny" = libx.mkHome { hostname = "jackjrny"; username = "jackbartlett"; platform = "aarch64-darwin"; };
         # Servers

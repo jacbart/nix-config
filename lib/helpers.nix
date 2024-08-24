@@ -16,8 +16,9 @@
     modules = [
       ../nixos
       inputs.agenix.nixosModules.default
-    ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [ installer ])
-    ++ (inputs.nixpkgs.lib.optionals (desktop == "cosmic") [
+    ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [
+      installer
+    ]) ++ (inputs.nixpkgs.lib.optionals (desktop == "cosmic") [
       {
         nix.settings = {
           substituters = [ "https://cosmic.cachix.org/" ];
