@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   imports = [
     ./firefox.nix
+    ../services/nextcloud-client.nix
   ];
 
   home = {

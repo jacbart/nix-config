@@ -10,7 +10,8 @@
     ./_mixins/users/root
   ]
   ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
-  ++ lib.optional (desktop != null) ./_mixins/desktop;
+  ++ lib.optional (desktop != null) ./_mixins/desktop
+  ++ lib.optional (desktop != null) ./_mixins/security;
 
   boot = {
     consoleLogLevel = 0;
