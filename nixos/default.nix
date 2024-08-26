@@ -55,6 +55,7 @@
     ];
     systemPackages = with pkgs; [
       agenix
+      kexec-tools
       pciutils
       psmisc
       unzip
@@ -108,8 +109,6 @@
 
   # Use passed hostname to configure basic networking
   networking = {
-    extraHosts = ''
-    '';
     hostName = hostname;
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;

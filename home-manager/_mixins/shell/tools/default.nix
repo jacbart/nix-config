@@ -20,9 +20,10 @@
             fd
             fzf
             htmlq
-            hyperfine
+            # hyperfine
             netcat
-            nurl
+            # nurl
+            nix-melt
             mprocs
             procs
             ripgrep

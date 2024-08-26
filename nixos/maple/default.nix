@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 {
   imports = [
     ../_mixins/hardware/rockpro64.nix
@@ -10,13 +10,21 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  networking.hostName = "maple";
-  # Pick only one of the below networking options.
-  #networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use most distros use this by default.
+  networking = {
+    hostId = "01d4f038";
+    hosts = {
+      "127.0.0.1" = [ "maple" "maple.meep.sh" ];
+      "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" ];
+    };
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 80 443 ];
+    };
+  };
 
-  # Set your time zone.
-  time.timeZone = "America/Phoenix";
+  environment.systemPackages = with pkgs; [
+    zfs
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   nixpkgs.config.allowBroken = true;

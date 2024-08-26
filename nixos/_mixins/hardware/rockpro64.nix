@@ -1,13 +1,17 @@
 # This configuration file can be safely imported in your system configuration.
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
-  # This list of modules is not entirely minified, but represents
-  # a set of modules that is required for the display to work in stage-1.
-  # Further minification can be done, but requires trial-and-error mainly.
-  boot.initrd.availableKernelModules = [ "ahci" "usb_storage" "usbhid" ];
+  boot.initrd.availableKernelModules = [ "ahci" "usbhid" ];
+  boot.kernelModules = [ ];
+  boot.extraModulePackages = [ ];
+  boot.zfs.extraPools = [ "trunk" ];
+  services.zfs.autoScrub.enable = true;
+  boot.zfs.forceImportRoot = false;
+  services.zfs.trim.enable = true;
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.supportedFilesystems = [ "zfs" ];
   boot.initrd.kernelModules = [
     # Rockchip modules
     "rockchip_rga"
