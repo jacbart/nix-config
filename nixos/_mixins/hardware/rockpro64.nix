@@ -21,7 +21,7 @@
   ];
 
   fileSystems."/" = {
-    device = "/dev/dis/by-label/NIXOS_SD";
+    device = "/dev/disk/by-label/NIXOS_SD";
     fsType = "ext4";
   };
 
