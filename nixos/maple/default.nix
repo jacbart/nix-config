@@ -2,6 +2,7 @@
 {
   imports = [
     ../_mixins/hardware/rockpro64.nix
+    ../_mixins/services/nextcloud-server.nix
     # (import ./disks.nix { })
   ];
 

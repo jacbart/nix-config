@@ -1,20 +1,19 @@
-{ config, pkgs, ... }:
+{ config, pkgs, hostname, ... }:
 let
-  nextcloud-package = pkgs.nextcloud29;
-  host = "maple";
   domain = "meep.sh";
-  # location = "/trunk/nextcloud";
 in
 {
   environment.etc."nextcloud-admin-pass".text = "CHANGEME";
+  # systemd.tmpfiles.rules = [
+  #   "f /var/lib/nextcloud/config/CAN_INSTALL 0644 nextcloud nextcloud - -"
+  # ];
   
   services = {
     nextcloud = {
       enable = true;
       https = false;
-      hostName = "${host}.${domain}";
-      package = nextcloud-package;
-      # home = location;
+      hostName = "${hostname}.${domain}";
+      package = pkgs.nextcloud29;
       configureRedis = true;
       database.createLocally = true;
       config = {
@@ -27,7 +26,13 @@ in
         inherit (config.services.nextcloud.package.packages.apps) contacts calendar tasks;
       };
       extraAppsEnable = true;
+      maxUploadSize = "10G";
       settings = {
+        # log_type = "file";
+        trusted_domains = [
+          "${hostname}.bbl.systems"
+          "${hostname}"
+        ];
         enabledPreviewProviders = [
           "OC\\Preview\\BMP"
           "OC\\Preview\\GIF"
