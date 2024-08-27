@@ -1,6 +1,7 @@
 { pkgs, ... }: {
     imports = [
         ./bottom.nix
+        ./bitwarden.nix
         ./broot.nix
         ./eza.nix
         ./git.nix
@@ -14,7 +15,6 @@
     home = {
         packages = with pkgs; [
             angle-grinder
-            bitwarden-cli
             dogdns
             fastfetch
             fd
