@@ -65,8 +65,8 @@
         #  - nix build .#nixosConfigurations.{iso-console|iso-desktop}.config.system.build.isoImage
         iso-console = libx.mkHost { hostname = "iso-console"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"; };
         iso-desktop = libx.mkHost { hostname = "iso-desktop"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; };
-        iso-rockpro64 = libx.mkHost { hostname = "iso-rockpro64"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix"; };
-        iso-uconsole = libx.mkHost { hostname = "iso-uconsole"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix"; };
+        iso-rockpro64 = libx.mkHost { hostname = "iso-rockpro64"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-installer.nix"; };
+        iso-uconsole = libx.mkHost { hostname = "iso-uconsole"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-installer.nix"; };
         # Workstations
         #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
         #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
