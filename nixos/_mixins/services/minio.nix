@@ -12,4 +12,6 @@
         "/var/lib/minio/data"
       ];
     };
+
+    environment.systemPackages = [ pkgs.minio-client ];
 }
