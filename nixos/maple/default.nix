@@ -1,9 +1,10 @@
-{ inputs, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [
     ../_mixins/hardware/rockpro64.nix
     # (import ./disks.nix { })
-    ../_mixins/services/binary-cache.nix
+    # ../_mixins/services/binary-cache.nix
+    ../_mixins/services/minio.nix
     ../_mixins/services/nextcloud-server.nix
   ];
 
@@ -11,6 +12,18 @@
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
+  # zfs
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.zfs.extraPools = [ "trunk" ];
+  services.zfs.autoScrub.enable = true;
+  services.zfs.trim.enable = true;
+  boot.zfs.forceImportRoot = false;
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
+  };
 
   networking = {
     hostId = "01d4f038";
@@ -20,7 +33,7 @@
     };
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 443 ];
+      allowedTCPPorts = [ 22 80 443 9000 9001 ];
     };
   };
 
