@@ -1,11 +1,13 @@
 { config, pkgs, ... }: {
   imports = [
     ./firefox.nix
+    ./rustdesk.nix
     ../services/nextcloud-client.nix
   ];
 
   home = {
     packages = with pkgs; [
+      unstable.ladybird
       unstable.bitwarden-desktop
       unstable.element-desktop
       unstable.libreoffice-qt6-fresh # office document viewer
