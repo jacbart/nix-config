@@ -4,7 +4,10 @@
   homeKeyPath = "${homeDir}/.config/sops/age/keys.txt";
 in {
   sops = {
-    age.keyFile = if builtins.pathExists homeKeyPath then homeKeyPath else null;
+    age = {
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed22519_key" ];
+      keyFile = if builtins.pathExists homeKeyPath then homeKeyPath else "/var/lib/sops-nix/key.txt";
+    };
 
     defaultSopsFile = "${secretsPath}/secrets.yaml";
     validateSopsFiles = false;
