@@ -4,10 +4,6 @@
   secretsPath = builtins.toString inputs.mySecrets;
   homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in {
-  systemd.tmpfiles.rules = [
-    "f ${homeDir}/.ssh/id_ratatoskr.pub - ${username} users - -"
-    "f ${homeDir}/.ssh/id_ratatoskr_sk.pub - ${username} users - -"
-  ];
   sops = {
     defaultSopsFile = "${secretsPath}/secrets.yaml";
     validateSopsFiles = false;
@@ -18,6 +14,7 @@ in {
       generateKey = true;
     };
     secrets = {
+      minio_secret_key = { };
       "public_keys/ratatoskr" = {
         path = "${homeDir}/.ssh/id_ratatoskr.pub";
       };
