@@ -1,8 +1,8 @@
 { config, pkgs, ... }: {
     sops.secrets = {
       minio_creds = {
-        owner = config.services.minio.user;
-        group = config.services.minio.group;
+        owner = "minio";
+        group = "minio";
       };
     };
     
