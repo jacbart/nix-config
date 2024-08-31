@@ -2,16 +2,17 @@
   imports = [
     inputs.disko.nixosModules.disko
     inputs.vscode-server.nixosModules.default
+
     (modulesPath + "/installer/scan/not-detected.nix")
     ./${hostname}
     ./_mixins/services/firewall.nix
     ./_mixins/services/openssh.nix
     ./_mixins/services/smartmon.nix
     ./_mixins/users/root
+    ./_mixins/security
   ]
   ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
-  ++ lib.optional (desktop != null) ./_mixins/desktop
-  ++ lib.optional (desktop != null) ./_mixins/security;
+  ++ lib.optional (desktop != null) ./_mixins/desktop;
 
   boot = {
     consoleLogLevel = 0;
@@ -54,10 +55,10 @@
       rsync
     ];
     systemPackages = with pkgs; [
-      agenix
       kexec-tools
       pciutils
       psmisc
+      sops
       unzip
       usbutils
       wget
@@ -123,7 +124,6 @@
       outputs.overlays.unstable-packages
 
       # You can also add overlays exported from other flakes:
-      inputs.agenix.overlays.default
 
       # Or define it inline, for example:
       # (final: prev: {

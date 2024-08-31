@@ -1,6 +1,4 @@
-_: {
-  home.file.".face".source = ./face.png;
-
+{ config, lib, ... }: {
   services = {
     gpg-agent = {
       enable = true;

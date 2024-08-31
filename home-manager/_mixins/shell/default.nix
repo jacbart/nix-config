@@ -1,9 +1,11 @@
-{ pkgs, ... }: let
+{ ... }:
+# let
     # helper function for generating a shell (minimal, server, desktop)
-    mkDotenv = { type ? "minimal" }: {
+    # mkDotenv = { type ? "minimal" }: {
         
-    };
-in {
+    # };
+# in
+{
     imports = [
         ./tools # cli/tui tools or services
         ./scripts # shellApplications

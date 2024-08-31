@@ -33,7 +33,7 @@
     };
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 443 9000 9001 ];
+      allowedTCPPorts = [ 80 443 9000 9001 ];
     };
   };
 

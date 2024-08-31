@@ -10,9 +10,10 @@ in
     # outputs.homeManagerModules.example
 
     # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
+    inputs.sops-nix.homeManagerModules.sops
 
     # You can also split up your configuration and import pieces of it here:
+    ./_mixins/core
     ./_mixins/shell
   ]
   ++ lib.optional (builtins.isPath (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
@@ -42,7 +43,7 @@ in
       outputs.overlays.unstable-packages
 
       # You can also add overlays exported from other flakes:
-      inputs.agenix.overlays.default
+      # inputs.agenix.overlays.default
 
       # Or define it inline, for example:
       # (final: prev: {

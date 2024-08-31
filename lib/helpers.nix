@@ -5,7 +5,9 @@
     extraSpecialArgs = {
       inherit inputs outputs desktop hostname platform username stateVersion;
     };
-    modules = [ ../home-manager ];
+    modules = [ 
+      ../home-manager
+    ];
   };
 
   # Helper function for generating host configs
@@ -15,7 +17,7 @@
     };
     modules = [
       ../nixos
-      inputs.agenix.nixosModules.default
+      inputs.sops-nix.nixosModules.sops
     ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [
       installer
     ]) ++ (inputs.nixpkgs.lib.optionals (desktop == "cosmic") [

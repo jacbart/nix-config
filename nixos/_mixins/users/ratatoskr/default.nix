@@ -14,6 +14,9 @@ in
     unstable.firefox-unwrapped
   ];
 
+  sops.secrets.ratatoskr-password.neededForUsers = true;
+  users.mutableUsers = false;
+
   users.users.ratatoskr = {
     description = "Ratatoskr";
     extraGroups = [
@@ -28,12 +31,12 @@ in
       "docker"
       "podman"
     ];
-    # mkpasswd -m sha-512
-    hashedPassword = "$6$d0rN6VEKockAdT6T$tAGvh9b1W0TAW.I0V/tGNomPlQs8DdNvWQCtTiX8bil7fWyIherdRoM58yRy/yPTIZbajBobWvDTKNQR14H.P.";
+    hashedPasswordFile = config.sops.secrets.ratatoskr-password.path;
     homeMode = "0755";
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP1ssGFun8as4ZCOCHz8lAWHwqbcqBDdj12Z56aHgEdb jack bartlett"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJJt5PF37jNBpEIan2WXnN23fNiZ2ApC5RxCSXrcNZddAAAABHNzaDo= ratatoskr"
     ];
     packages = [ pkgs.home-manager ];
     shell = pkgs.zsh;
