@@ -12,13 +12,13 @@ in {
       "private_keys/ratatoskr" = {
         path = "${homeDir}/.ssh/id_ratatoskr";
       };
-      "private_keys/ratatoskr_sk" = {
+      "private_keys/ratatoskr-sk" = {
         path = "${homeDir}/.ssh/id_ratatoskr_sk";
       };
       "public_keys/ratatoskr" = {
         path = "${homeDir}/.ssh/id_ratatoskr.pub";
       };
-      "public_keys/ratatoskr_sk" = {
+      "public_keys/ratatoskr-sk" = {
         path = "${homeDir}/.ssh/id_ratatoskr_sk.pub";
       };
     };

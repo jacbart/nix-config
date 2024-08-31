@@ -11,9 +11,5 @@ in {
       keyFile = "/var/lib/sops-nix/key.txt";
       generateKey = true;
     };
-    secrets = {
-      minio_creds = { };
-    };
   };
-
 }

@@ -3,7 +3,11 @@ let
   domain = "meep.sh";
 in
 {
-  environment.etc."nextcloud-admin-pass".text = "CHANGEME";
+  sops.secrets.nextcloud-admin-password = {
+    owner = "nextcloud";
+    group = "nextcloud";
+  };
+  # environment.etc."nextcloud-admin-pass".text = "CHANGEME";
   # systemd.tmpfiles.rules = [
   #   "f /var/lib/nextcloud/config/CAN_INSTALL 0644 nextcloud nextcloud - -"
   # ];
@@ -18,7 +22,7 @@ in
       database.createLocally = true;
       config = {
         dbtype = "pgsql";
-        adminpassFile = "/etc/nextcloud-admin-pass";
+        adminpassFile = config.sops.secrets.nextcloud-admin-password.path;
       };
       appstoreEnable = true;
       autoUpdateApps.enable = true;
@@ -28,6 +32,7 @@ in
       extraAppsEnable = true;
       maxUploadSize = "10G";
       settings = {
+        # uncomment to display logs in nextcloud app
         # log_type = "file";
         trusted_domains = [
           "${hostname}.bbl.systems"

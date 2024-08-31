@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
     sops.secrets = {
-      minio_creds = {
+      minio-creds = {
         owner = "minio";
         group = "minio";
       };
@@ -13,7 +13,7 @@
       browser = true;
       consoleAddress = ":9001";
       listenAddress = ":9000";
-      rootCredentialsFile = config.sops.secrets.minio_creds.path;
+      rootCredentialsFile = config.sops.secrets.minio-creds.path;
       configDir = "/var/lib/minio/config";
       dataDir = [
         "/var/lib/minio/data"
