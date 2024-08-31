@@ -1,9 +1,10 @@
 { config, inputs, ... }: let
   secretsPath = builtins.toString inputs.mySecrets;
   homeDir = config.home.homeDirectory;
+  homeKeyPath = "${homeDir}/.config/sops/age/keys.txt";
 in {
   sops = {
-    age.keyFile = "${homeDir}/.config/sops/age/keys.txt";
+    age.keyFile = if builtins.pathExists homeKeyPath then homeKeyPath else null;
 
     defaultSopsFile = "${secretsPath}/secrets.yaml";
     validateSopsFiles = false;
