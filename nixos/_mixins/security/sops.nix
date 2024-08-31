@@ -14,7 +14,7 @@ in {
       generateKey = true;
     };
     secrets = {
-      minio_secret_key = { };
+      minio_creds = { };
       "public_keys/ratatoskr" = {
         path = "${homeDir}/.ssh/id_ratatoskr.pub";
       };
