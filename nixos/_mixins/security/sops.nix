@@ -1,8 +1,6 @@
 
-{ inputs, pkgs, username, ... }: let
-  inherit (pkgs.stdenv) isDarwin;
+{ inputs, ... }: let
   secretsPath = builtins.toString inputs.mySecrets;
-  homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in {
   sops = {
     defaultSopsFile = "${secretsPath}/secrets.yaml";
@@ -15,12 +13,6 @@ in {
     };
     secrets = {
       minio_creds = { };
-      "public_keys/ratatoskr" = {
-        path = "${homeDir}/.ssh/id_ratatoskr.pub";
-      };
-      "public_keys/ratatoskr_sk" = {
-        path = "${homeDir}/.ssh/id_ratatoskr_sk.pub";
-      };
     };
   };
 
