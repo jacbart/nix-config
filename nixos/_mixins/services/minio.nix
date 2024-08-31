@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
     sops.secrets = {
-      minio_secret_key = {
+      minio_creds = {
         owner = config.services.minio.user;
         group = config.services.minio.group;
       };
@@ -13,9 +13,7 @@
       browser = true;
       consoleAddress = ":9001";
       listenAddress = ":9000";
-      accessKey = "minio";
-      secretKey = builtins.readFile config.sops.secrets.minio_secret_key.path;
-      rootCredentialsFile = config.sops.secrets.minio_secret_key.path;
+      rootCredentialsFile = config.sops.secrets.minio_creds.path;
       configDir = "/var/lib/minio/config";
       dataDir = [
         "/var/lib/minio/data"
