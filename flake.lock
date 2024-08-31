@@ -139,10 +139,10 @@
     "mySecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1725085277,
-        "narHash": "sha256-XBwyeR0CZWttU/CFSfqixvna1GDd1vjda9vgJ6TMgUA=",
+        "lastModified": 1725123599,
+        "narHash": "sha256-x0QbqkGuaoQHFUEcuBhkfi5H+Gztp7kENoyUD0ANk58=",
         "ref": "main",
-        "rev": "94c8f58b63b9fd5d98e45d9bb9aaf80cd8820b00",
+        "rev": "fe3a561374d00c2e58323d33bb846b2276caea7e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/jacbart/nix-secrets.git"
@@ -241,11 +241,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1724855419,
-        "narHash": "sha256-WXHSyOF4nBX0cvHN3DfmEMcLOVdKH6tnMk9FQ8wTNRc=",
+        "lastModified": 1725001927,
+        "narHash": "sha256-eV+63gK0Mp7ygCR0Oy4yIYSNcum2VQwnZamHxYTNi+M=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ae2fc9e0e42caaf3f068c1bfdc11c71734125e06",
+        "rev": "6e99f2a27d600612004fbd2c3282d614bfee6421",
         "type": "github"
       },
       "original": {
