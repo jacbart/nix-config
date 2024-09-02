@@ -1,6 +1,6 @@
-default_flags: gswpI
+default_flags: -gspI --tree
 
-terminal_title: "-= {file-name} =-"
+terminal_title: "{file-name}"
 
 date_time_format: %Y/%m/%d %R
 
@@ -10,22 +10,16 @@ initial_mode: command
 
 show_selection_mark: true
 
-###############################################################
-# Column order
-# cols_order, if specified, must be a permutation of the following
-# array. You should keep the name column at the end as it has a
-# variable length.
-#
-# cols_order: [
-#     mark
-#     git
-#     size
-#     permission
-#     date
-#     count
-#     branch
-#     name
-# ]
+cols_order: [
+    mark
+    git
+    size
+    permission
+    date
+    count
+    branch
+    name
+]
 
 true_colors: true
 

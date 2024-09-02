@@ -21,8 +21,9 @@
             fzf
             htmlq
             # hyperfine
+            unstable.infisical
             netcat
-            # nurl
+            nurl
             nix-melt
             mprocs
             procs
