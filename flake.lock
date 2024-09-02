@@ -123,11 +123,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1724668845,
-        "narHash": "sha256-vyTG31twr56yY0MEXN2ncK3L63gTwqHCz2i8nSt8OIM=",
+        "lastModified": 1725299167,
+        "narHash": "sha256-lWHBdzMsiXYxWnjP2AvLf8Pb5jdOhnJYHj2p3sxfPOc=",
         "owner": "feschber",
         "repo": "lan-mouse",
-        "rev": "9248007986ade8a0690ce37bccbf463927d2df6b",
+        "rev": "1f7a7309eb05fe33ac122d2c97997f0ffff24e1a",
         "type": "github"
       },
       "original": {
@@ -139,10 +139,10 @@
     "mySecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1725136207,
-        "narHash": "sha256-uTdm/XZbIIa1lVTdFe2r3Zl/O3YMsaIzGqS3fyxBqAI=",
+        "lastModified": 1725317234,
+        "narHash": "sha256-6gOI/6CWpVdEAk6dxi6EM72X86AWnFu4+uEM8CfF36I=",
         "ref": "main",
-        "rev": "1b0ff70da1929fdfd75b1d8c2be18ae2fad3c0df",
+        "rev": "089a687022852e9333c460988c8be23822fb695a",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/jacbart/nix-secrets.git"

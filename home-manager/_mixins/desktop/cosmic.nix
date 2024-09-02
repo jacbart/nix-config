@@ -7,7 +7,7 @@
 
   home = {
     packages = with pkgs; [
-      unstable.ladybird
+      # unstable.ladybird
       unstable.bitwarden-desktop
       unstable.element-desktop
       unstable.libreoffice-qt6-fresh # office document viewer
@@ -17,6 +17,6 @@
       vlc # multi-media viewer
     ];
 
-    file."${config.xdg.dataHome}/images/moose-orange-bg.jpg".source = ./moose-orange-bg.jpg;
+    file."${config.xdg.dataHome}/images/elk-orange-bg.jpg".source = ./elk-orange-bg.jpg;
   };
 }
