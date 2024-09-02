@@ -4,11 +4,12 @@
     sops.secrets."minio/root/access-key" = {};
     sops.secrets."minio/root/secret-key" = {};
     sops.templates."minio-root-creds" = {
+      owner = "minio";
       content = ''
       MINIO_ROOT_USER="${config.sops.placeholder."minio/root/access-key"}"
       MINIO_ROOT_PASSWORD="${config.sops.placeholder."minio/root/secret-key"}"
       '';
-      path = "%r/minio-root-creds";
+      path = "/etc/nixos/minio-root-creds";
     };
     
     services.minio = {

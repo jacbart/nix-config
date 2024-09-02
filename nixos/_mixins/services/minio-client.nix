@@ -2,6 +2,11 @@
   inherit (pkgs.stdenv) isDarwin;
   homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in {
+  systemd.tmpfiles.rules = [
+    "d ${homeDir}/.mc 0755 ${username}"
+    "d ${homeDir}/.mc/share 0755 ${username}"
+  ];
+
   sops.secrets."minio/root/access-key" = { };
   sops.secrets."minio/root/secret-key" = { };
   sops.secrets."minio/nixbuilder/access-key" = { };

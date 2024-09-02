@@ -1,5 +1,6 @@
 { config, pkgs, hostname, ... }:
 let
+  subdomain = "cloud";
   domain = "meep.sh";
 in
 {
@@ -16,7 +17,7 @@ in
     nextcloud = {
       enable = true;
       https = false;
-      hostName = "${hostname}.${domain}";
+      hostName = "${subdomain}.${domain}";
       package = pkgs.nextcloud29;
       configureRedis = true;
       database.createLocally = true;
