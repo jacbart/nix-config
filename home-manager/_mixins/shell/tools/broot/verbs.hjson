@@ -73,5 +73,11 @@ verbs: [
         invocation: gtr
         execution: ":focus {git-root}"
     }
+
+    {
+        invocation: tp
+        key: ctrl-p
+        execution: ":toggle_preview"
+    }
 ]
 
