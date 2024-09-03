@@ -2,7 +2,7 @@
 {
   imports = [
     ../_mixins/hardware/rockpro64.nix
-    ./nginx.nix
+    # ./nginx.nix
     # (import ./disks.nix { })
     # ../_mixins/services/binary-cache.nix
     ../_mixins/services/minio.nix

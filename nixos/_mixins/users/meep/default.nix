@@ -1,8 +1,8 @@
 { config, desktop, username, lib, pkgs, ... }:
 let
-  inherit (pkgs.stdenv) isDarwin;
+  # inherit (pkgs.stdenv) isDarwin;
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-  homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
+  # homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
 {
   imports = [ ]
