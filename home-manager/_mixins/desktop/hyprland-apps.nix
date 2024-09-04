@@ -18,7 +18,7 @@
       vlc # multi-media viewer
     ];
 
-    file."${config.xdg.dataHome}/images/moose-orange-bg.jpg".source = ./moose-orange-bg.jpg;
+    file."${config.xdg.dataHome}/images/bg.jpg".source = ./bg.jpg;
   };
   
   programs = {
@@ -35,7 +35,7 @@
 
         background = [
           {
-            path = "${config.xdg.dataHome}/images/moose-orange-bg";
+            path = "${config.xdg.dataHome}/images/bg.jpg";
             blur_passes = 3;
             blur_size = 8;
           }

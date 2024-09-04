@@ -16,7 +16,7 @@
       gparted
       vlc # multi-media viewer
     ];
-
-    file."${config.xdg.dataHome}/images/elk-orange-bg.jpg".source = ./elk-orange-bg.jpg;
+    file."${config.xdg.dataHome}/images/bg.jpg".source = ./bg.jpg;
   };
+
 }
