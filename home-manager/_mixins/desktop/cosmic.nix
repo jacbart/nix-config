@@ -16,7 +16,7 @@
       gparted
       vlc # multi-media viewer
     ];
-    file."${config.xdg.dataHome}/images/bg.jpg".source = ./bg.jpg;
+    file."${config.home.homeDirectory}/Pictures/wallpapers/bg.jpg".source = ./bg.jpg;
   };
 
 }
