@@ -1,61 +1,57 @@
-{ ... }: {
+_: {
+  imports = [ ./acme.nix ];
+
+  users.users.nginx.extraGroups = [ "acme" ];
+
   services.nginx = {
     enable = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
-    # other Nginx options
+    logError = "stderr info";
     virtualHosts = {
-      "ca.meep.com" =  {
-        forceSSL = true;
+      # "bbl.systems" = {
+      #   # forceSSL = true;
+      #   addSSL = true;
+      #   useACMEHost = "bbl.systems";
+      #   # All serverAliases will be added as extra domain names on the certificate.
+      #   serverAliases = [ "*.bbl.systems" ];
+      #   acmeRoot = "/var/lib/acme/challenges-bbl";
+      #   locations."/" = { root = "/var/www/bbl.systems"; };
+      #   # listen = [ { addr = "0.0.0.0"; port = 443; ssl = true;} { addr = "[::0]"; port = 443; ssl = true;} ];
+      #   #sslCertificate = "/var/lib/acme/bbl.systems/fullchain.pem";
+      #   #sslCertificateKey = "/var/lib/acme/bbl.systems/key.pem";
+      #   #sslTrustedCertificate = "/var/lib/acme/bbl.systems/chain.pem";
+      # };
+      # "bbl.systems80" = {
+      #   serverName = "bbl.systems";
+      #   serverAliases = [ "*.bbl.systems" ];
+      #   locations."/.well-known/acme-challenge" = {
+      #     root = "/var/lib/acme/challenges-bbl";
+      #     extraConfig = ''
+      #       auth_basic off;
+      #     '';
+      #   };
+      #   locations."/" = { return = "301 https://$host$request_uri"; };
+      #   listen = [ { addr = "0.0.0.0"; port = 80; } { addr = "[::0]"; port = 80; } ];
+      # };
+      "meep.sh" = {
+        addSSL = true;
+        useACMEHost = "meep.sh";
+        serverAliases = [ "*.meep.sh" ];
+        acmeRoot = null;
         locations."/" = {
-          proxyPass = "http://127.0.0.1:9443";
-          proxyWebsockets = true; # needed if you need to use WebSocket
-          extraConfig =
-            # required when the target is also TLS server with multiple hosts
-            "proxy_ssl_server_name on;" +
-            # required when the server wants to use HTTP Authentication
-            "proxy_pass_header Authorization;"
-            ;
+          proxyPass = "http://localhost:9001";
         };
       };
-      "cloud.meep.com" =  {
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:443";
-          proxyWebsockets = true; # needed if you need to use WebSocket
-          extraConfig =
-            # required when the target is also TLS server with multiple hosts
-            "proxy_ssl_server_name on;" +
-            # required when the server wants to use HTTP Authentication
-            "proxy_pass_header Authorization;"
-            ;
+      "meep.sh80" = {
+        serverName = "meep.sh";
+        serverAliases = [ "*.meep.sh" ];
+        locations."/.well-known/acme-challenge" = {
+          root = "/var/lib/acme/challenges-meep";
+          extraConfig = ''
+            auth_basic off;
+          '';
         };
-      };
-      "s3.meep.com" =  {
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:9000";
-          proxyWebsockets = true; # needed if you need to use WebSocket
-          extraConfig =
-            # required when the target is also TLS server with multiple hosts
-            "proxy_ssl_server_name on;" +
-            # required when the server wants to use HTTP Authentication
-            "proxy_pass_header Authorization;"
-            ;
-        };
-      };
-      "minio.meep.sh" =  {
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:9001";
-          proxyWebsockets = true; # needed if you need to use WebSocket
-          extraConfig =
-            # required when the target is also TLS server with multiple hosts
-            "proxy_ssl_server_name on;" +
-            # required when the server wants to use HTTP Authentication
-            "proxy_pass_header Authorization;"
-            ;
-        };
+        locations."/" = { return = "301 https://$host$request_uri"; };
+        listen = [ { addr = "0.0.0.0"; port = 80; } { addr = "[::0]"; port = 80; } ];
       };
     };
   };

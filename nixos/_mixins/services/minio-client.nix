@@ -19,7 +19,7 @@ in {
       "version": "10",
       "aliases": {
         "s3": {
-          "url": "http://maple.meep.sh:9000",
+          "url": "https://s3.meep.sh",
           "accessKey": "${config.sops.placeholder."minio/root/access-key"}",
           "secretKey": "${config.sops.placeholder."minio/root/secret-key"}",
           "api": "s3v4",

@@ -169,7 +169,7 @@
 
       # personal substituters
       extra-substituters = [
-        "http://maple.meep.sh:9000/nix-cache/"
+        "https://s3.meep.sh/nix-cache/"
       ];
       extra-trusted-public-keys = [
         "maple.meep.sh-1:LsJ7If/cRuw+5fcQuWDQoLg5E2B0RONoLCpD5SxVDgA="

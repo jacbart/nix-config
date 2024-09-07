@@ -4,10 +4,9 @@
     ../_mixins/hardware/rockpro64.nix
     # ./nginx.nix
     # (import ./disks.nix { })
-    # ../_mixins/services/binary-cache.nix
     ../_mixins/services/minio.nix
     ../_mixins/services/nextcloud-server.nix
-    ../_mixins/services/step-ca.nix
+    # ../_mixins/services/step-ca.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
@@ -30,8 +29,8 @@
   networking = {
     hostId = "01d4f038";
     hosts = {
-      "127.0.0.1" = [ "maple" "maple.meep.sh" "s3.meep.sh" "ca.meep.sh" "cloud.meep.sh" "minio.meep.sh"  ];
-      "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" ];
+      "127.0.0.1" = [ "maple" "maple.meep.sh" "s3" "cloud" "minio"  ];
+      "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" "s3.meep.sh" ];
     };
     firewall = {
       enable = true;

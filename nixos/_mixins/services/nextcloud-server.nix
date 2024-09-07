@@ -1,4 +1,4 @@
-{ config, pkgs, hostname, ... }:
+{ config, pkgs, lib, ... }:
 let
   subdomain = "cloud";
   domain = "meep.sh";
@@ -14,6 +14,15 @@ in
   # ];
   
   services = {
+    # nginx = {
+    #   enable = true;
+    #   virtualHosts = {
+    #     "${subdomain}.${domain}" = {
+    #       enableACME = true;
+    #       acmeRoot = null;
+    #     };
+    #   };
+    # };
     nextcloud = {
       enable = true;
       https = false;
@@ -35,10 +44,11 @@ in
       settings = {
         # uncomment to display logs in nextcloud app
         # log_type = "file";
-        trusted_domains = [
-          "${hostname}.bbl.systems"
-          "${hostname}"
-        ];
+        # trusted_domains = [
+        #   "${hostname}.bbl.systems"
+        #   "${hostname}"
+        # ];
+        overwriteprotocol = "https";
         enabledPreviewProviders = [
           "OC\\Preview\\BMP"
           "OC\\Preview\\GIF"
