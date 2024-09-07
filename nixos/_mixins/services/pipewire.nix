@@ -1,12 +1,12 @@
 { desktop, lib, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    # alsa-utils
+    alsa-utils
     # pulseaudio
     # pulsemixer
   ] ++ lib.optionals (desktop != null) [
     # pavucontrol
-    pwvucontrol
+    # pwvucontrol
   ];
 
   sound.enable = true;
