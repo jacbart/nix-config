@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   nix.distributedBuilds = true;
-  nix.settings.builders-use-substitutes = true;
+  # nix.settings.builders-use-substitutes = true;
 
   nix.buildMachines = [
     {

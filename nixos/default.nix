@@ -173,10 +173,10 @@
       warn-dirty = false;
 
       # personal substituters
-      extra-substituters = [
+      substituters = [
         "https://s3.meep.sh/nix-cache/"
       ];
-      extra-trusted-public-keys = [
+      trusted-public-keys = [
         "maple.meep.sh-1:LsJ7If/cRuw+5fcQuWDQoLg5E2B0RONoLCpD5SxVDgA="
       ];
     };
