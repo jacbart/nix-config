@@ -8,7 +8,7 @@
       hostName = "boojum.meep.sh";
       sshUser = "remotebuild";
       sshKey = "/root/.ssh/builder_boojum";
-      system = pkgs.stdenv.hostPlatform;
+      system = "x86_64-linux";
       supportedFeatures = [ "nixos-test" "big-parallel" "kvm" ];
     }
   ];
