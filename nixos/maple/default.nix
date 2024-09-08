@@ -6,6 +6,7 @@
     # (import ./disks.nix { })
     ../_mixins/services/minio.nix
     ../_mixins/services/nextcloud-server.nix
+    ../_mixins/services/hydra.nix
     # ../_mixins/services/step-ca.nix
   ];
 
@@ -29,12 +30,12 @@
   networking = {
     hostId = "01d4f038";
     hosts = {
-      "127.0.0.1" = [ "maple" "maple.meep.sh" "s3" "cloud" "minio"  ];
+      "127.0.0.1" = [ "maple" "maple.meep.sh" "s3" "cloud" "minio" "hydra"  ];
       "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" "s3.meep.sh" ];
     };
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 9000 9001 ];
+      allowedTCPPorts = [ 80 443 3000 9000 9001 ];
     };
   };
 

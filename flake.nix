@@ -15,6 +15,9 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    hydra.url = "github:NixOS/hydra";
+    hydra.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
     nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -39,6 +42,7 @@
     { self
     , nix-formatter-pack
     , nixpkgs
+    , hydra
     , vscode-server
     , lan-mouse
     , nixos-cosmic

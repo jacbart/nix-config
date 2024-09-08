@@ -160,6 +160,11 @@
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
+      allowed-uris = [
+        "github:"
+        "git+https://github.com/"
+        "git+ssh://github.com/"
+      ];
 
       # Avoid unwanted garbage collection when using nix-direnv
       keep-outputs = true;
