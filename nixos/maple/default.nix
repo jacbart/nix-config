@@ -3,6 +3,7 @@
   imports = [
     ../_mixins/hardware/rockpro64.nix
     # ./nginx.nix
+    ./distributed-builds.nix
     # (import ./disks.nix { })
     ../_mixins/services/minio.nix
     ../_mixins/services/nextcloud-server.nix
