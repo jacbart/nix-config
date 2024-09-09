@@ -9,5 +9,14 @@
 
   users.groups.remotebuild = {};
 
-  nix.settings.trusted-users = [ "remotebuild" ];
+  nix = {
+    nrBuildUsers = 32;
+    settings = {
+      trusted-users = [ "remotebuild" ];
+      min-free = "10G";
+      max-free = "20G";
+      max-jobs = "auto";
+      cores = 0;
+    };
+  };
 }

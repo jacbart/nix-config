@@ -31,7 +31,7 @@
   sops.secrets."minio/nixbuilder/secret-key" = { };
   sops.secrets."minio/nixbuilder/region" = { };
   
-  sops.templates."mc-boto-creds" = {
+  sops.templates."hydra-boto-creds" = {
     owner = "hydra";
     content = ''
     [default]
@@ -41,7 +41,7 @@
     path = "/var/lib/hydra/.aws/credentials";
   };
 
-  sops.templates."mc-boto-conf" = {
+  sops.templates."hydra-boto-conf" = {
     owner = "hydra";
     content = ''
     [profile default]
