@@ -11,6 +11,7 @@ in {
   sops.secrets."minio/root/secret-key" = { };
   sops.secrets."minio/nixbuilder/access-key" = { };
   sops.secrets."minio/nixbuilder/secret-key" = { };
+  sops.secrets."minio/nixbuilder/region" = { };
 
   sops.templates."dot-mc-config.json" = {
     owner = username;
@@ -39,6 +40,15 @@ in {
     aws_secret_access_key=${config.sops.placeholder."minio/nixbuilder/secret-key"}
     '';
     path = "${homeDir}/.aws/credentials";
+  };
+
+  sops.templates."mc-boto-conf" = {
+    owner = username;
+    content = ''
+    [profile nixbuilder]
+    region=${config.sops.placeholder."minio/nixbuilder/region"}
+    '';
+    path = "${homeDir}/.aws/config";
   };
 
   environment.systemPackages = [ pkgs.minio-client ];
