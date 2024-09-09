@@ -14,7 +14,7 @@
     
     services.minio = {
       enable = true;
-      package = pkgs.minio;
+      package = pkgs.unstable.minio;
       region = "us-az-phx";
       browser = true;
       consoleAddress = ":9001";

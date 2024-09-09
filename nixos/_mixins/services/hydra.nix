@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   systemd.tmpfiles.rules = [
-    # "d /etc/aws 0644 hydra root"
-    "f /etc/nixos/secret.key 0644 hydra root"
+    "d /var/lib/hydra/.aws 0644 hydra hydra"
+    "f /etc/nixos/secret.key 0644 hydra"
   ];
 
   services.hydra = {
@@ -50,8 +50,8 @@
     path = "/var/lib/hydra/.aws/config";
   };
 
-  # environment.variables = {
-  #   AWS_CONFIG_FILE = "/etc/aws/config";
-  #   AWS_SHARED_CREDENTIALS_FILE = "/etc/aws/credentials";
-  # };
+  environment.variables = {
+    AWS_CONFIG_FILE = "~/.aws/config";
+    AWS_SHARED_CREDENTIALS_FILE = "~/.aws/credentials";
+  };
 }
