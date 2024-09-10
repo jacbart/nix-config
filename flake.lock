@@ -327,11 +327,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1725845699,
-        "narHash": "sha256-kbl/Gnll6Cgyk3S2+Je9dbabBBNdB/dKCUcQiXLi1lw=",
+        "lastModified": 1725932078,
+        "narHash": "sha256-IATccCX01KHY3QDYmpCMu70WRWxJH4V7z9vp71RlSAs=",
         "owner": "lilyinstarlight",
         "repo": "nixos-cosmic",
-        "rev": "b0b8a91e3c15780ec98025dd71a560c0a2c7582c",
+        "rev": "0452cc841e9b30160ae48db636164fb7a6d6bb72",
         "type": "github"
       },
       "original": {
@@ -356,13 +356,36 @@
         "type": "github"
       }
     },
+    "nixos-uconsole": {
+      "inputs": {
+        "nixos-hardware": [
+          "nixos-hardware"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1713005358,
+        "narHash": "sha256-XnfiT4aC4GbHhr0XOnajvYtOO+h1OPhc2ek1RAnhgPw=",
+        "ref": "refs/heads/main",
+        "rev": "51ee23e73e5ee2306a755516a47481f9fa9264f5",
+        "revCount": 14,
+        "type": "git",
+        "url": "https://git.vdx.hu/voidcontext/nixos-uconsole"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.vdx.hu/voidcontext/nixos-uconsole"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1725693463,
-        "narHash": "sha256-ZPzhebbWBOr0zRWW10FfqfbJlan3G96/h3uqhiFqmwg=",
+        "lastModified": 1725826545,
+        "narHash": "sha256-L64N1rpLlXdc94H+F6scnrbuEu+utC03cDDVvvJGOME=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "68e7dce0a6532e876980764167ad158174402c6f",
+        "rev": "f4c846aee8e1e29062aa8514d5e0ab270f4ec2f9",
         "type": "github"
       },
       "original": {
@@ -390,11 +413,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1725693463,
-        "narHash": "sha256-ZPzhebbWBOr0zRWW10FfqfbJlan3G96/h3uqhiFqmwg=",
+        "lastModified": 1725826545,
+        "narHash": "sha256-L64N1rpLlXdc94H+F6scnrbuEu+utC03cDDVvvJGOME=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "68e7dce0a6532e876980764167ad158174402c6f",
+        "rev": "f4c846aee8e1e29062aa8514d5e0ab270f4ec2f9",
         "type": "github"
       },
       "original": {
@@ -514,6 +537,7 @@
         "nix-formatter-pack": "nix-formatter-pack",
         "nixos-cosmic": "nixos-cosmic",
         "nixos-hardware": "nixos-hardware",
+        "nixos-uconsole": "nixos-uconsole",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
@@ -550,11 +574,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1725762472,
-        "narHash": "sha256-thdxLVdcfrJNMFV3Ej9mDIh6QgHyoYswiW0SFNwod8A=",
+        "lastModified": 1725848835,
+        "narHash": "sha256-u4lCr+tOEWhsFiww5G04U5jUNzaQJi0/ZMIDGiLeT14=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "57a1564c924ee4acbffe0ad3d65c7e90d3e77cd8",
+        "rev": "2ef910a6276a2f34513d18f2f826a8dea72c3b3f",
         "type": "github"
       },
       "original": {
@@ -571,11 +595,11 @@
         "nixpkgs-stable": "nixpkgs-stable_2"
       },
       "locked": {
-        "lastModified": 1725765163,
-        "narHash": "sha256-rfd2c47iVSFI6bRYy5l8wRijRBaYDeU7dM8XCDUGqlA=",
+        "lastModified": 1725922448,
+        "narHash": "sha256-ruvh8tlEflRPifs5tlpa0gkttzq4UtgXkJQS7FusgFE=",
         "owner": "mic92",
         "repo": "sops-nix",
-        "rev": "b68757cd2c3fa66d6ccaa0d046ce42a9324e0070",
+        "rev": "cede1a08039178ac12957733e97ab1006c6b6892",
         "type": "github"
       },
       "original": {
