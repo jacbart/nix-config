@@ -1,15 +1,16 @@
-{ pkgs, ... }:
+_:
 {
   nix.distributedBuilds = true;
   nix.settings.builders-use-substitutes = true;
+
+  nix.settings.trusted-users = [ "remotebuild" ];
 
   nix.buildMachines = [
     {
       hostName = "localhost";
       system = "aarch64-linux";
-      supportedFeatures = [ "nixos-test" ];
+      supportedFeatures = [ "benchmark" "big-parallel" "gccarch-armv8-a" "kvm" "nixos-test" ];
       protocol = null;
-      maxJobs = 2;
       speedFactor = 1;
     }
     {
@@ -17,9 +18,8 @@
       sshUser = "remotebuild";
       sshKey = "/root/.ssh/builder_boojum";
       systems = [ "x86_64-linux" ];
-      supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" ];
+      supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" "ca-derivations" ];
       protocol = "ssh-ng";
-      maxJobs = 4;
       speedFactor = 4;
     }
   ];

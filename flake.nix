@@ -23,6 +23,10 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    nixos-uconsole.url = "git+https://git.vdx.hu/voidcontext/nixos-uconsole";
+    nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
+
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -46,6 +50,8 @@
     , vscode-server
     , lan-mouse
     , nixos-cosmic
+    , nixos-hardware
+    , nixos-uconsole
     , ...
     } @ inputs:
     let

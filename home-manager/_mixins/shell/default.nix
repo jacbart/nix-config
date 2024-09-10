@@ -16,13 +16,16 @@
         Host boojum
             HostName boojum.meep.sh
             User meep
-            Port 22
             IdentityFile ~/.ssh/id_ratatoskr
+
+        Host remoteboojum
+            HostName boojum.meep.sh
+            User remotebuild
+            IdentityFile ~/.ssh/builder_boojum
 
         Host maple
             HostName maple.meep.sh
             User ratatoskr
-            Port 22
             IdentityFile ~/.ssh/id_ratatoskr
     '';
 

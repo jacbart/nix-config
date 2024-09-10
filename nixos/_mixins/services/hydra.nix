@@ -50,8 +50,5 @@
     path = "/var/lib/hydra/.aws/config";
   };
 
-  environment.variables = {
-    AWS_CONFIG_FILE = "~/.aws/config";
-    AWS_SHARED_CREDENTIALS_FILE = "~/.aws/credentials";
-  };
+  environment.systemPackages = with pkgs; [ hydra-cli ];
 }
