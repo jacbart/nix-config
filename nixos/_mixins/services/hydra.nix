@@ -50,5 +50,5 @@
     path = "/var/lib/hydra/.aws/config";
   };
 
-  environment.systemPackages = with pkgs; [ hydra-cli ];
+  # environment.systemPackages = with pkgs; [ hydra-cli ];
 }

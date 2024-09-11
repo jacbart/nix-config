@@ -20,6 +20,7 @@ _:
       systems = [ "x86_64-linux" ];
       supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" "ca-derivations" ];
       protocol = "ssh-ng";
+      maxJobs = 2;
       speedFactor = 4;
     }
   ];
