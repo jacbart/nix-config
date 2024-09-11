@@ -87,7 +87,7 @@
         #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
         #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
         boojum = libx.mkHost { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
-        ash = libx.mkHost { hostname = "ash"; username = "meep"; desktop = "hyprland"; };
+        ash = libx.mkHost { hostname = "ash"; username = "meep"; };
         # Servers
         maple = libx.mkHost { hostname = "maple"; username = "ratatoskr"; };
       };

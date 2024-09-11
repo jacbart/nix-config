@@ -28,6 +28,9 @@
         };
       }
       inputs.nixos-cosmic.nixosModules.default
+    ]) ++ (inputs.nixpkgs.lib.optionals (builtins.elem hostname [ "ash" ] ) [
+      inputs.nixos-uconsole.nixosModules.default
+      inputs.nixos-uconsole.nixosModules."kernel-6.1-potatomania"
     ]);
   };
 

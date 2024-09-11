@@ -11,9 +11,6 @@ in
         content = {
           type = "gpt";
           partitions = {
-            p1 = {
-              size = "30M";
-            };
             root = {
               name = "nixos";
               size = "100%";
