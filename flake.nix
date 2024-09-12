@@ -23,7 +23,7 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nixos-uconsole.url = "git+https://git.vdx.hu/voidcontext/nixos-uconsole";
+    nixos-uconsole.url = "git+https://git.vdx.hu/voidcontext/nixos-uconsole?ref=improve-ergonomy";
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
 

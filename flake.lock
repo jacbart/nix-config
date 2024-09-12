@@ -434,15 +434,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1713005358,
-        "narHash": "sha256-XnfiT4aC4GbHhr0XOnajvYtOO+h1OPhc2ek1RAnhgPw=",
-        "ref": "refs/heads/main",
-        "rev": "51ee23e73e5ee2306a755516a47481f9fa9264f5",
-        "revCount": 14,
+        "lastModified": 1725483512,
+        "narHash": "sha256-RWu2b7QzIkjQloGhb0r3VOYunfRbkPaZ7VkXuFB3P50=",
+        "ref": "improve-ergonomy",
+        "rev": "ee4b3383fe136166e72a1e790548bae25c1bc18b",
+        "revCount": 15,
         "type": "git",
         "url": "https://git.vdx.hu/voidcontext/nixos-uconsole"
       },
       "original": {
+        "ref": "improve-ergonomy",
         "type": "git",
         "url": "https://git.vdx.hu/voidcontext/nixos-uconsole"
       }
