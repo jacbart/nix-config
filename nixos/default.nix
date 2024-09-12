@@ -156,7 +156,6 @@
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     optimise.automatic = true;
-    package = pkgs.unstable.nix;
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
@@ -174,7 +173,7 @@
 
       # personal substituters
       substituters = [
-        "s3://s3.meep.sh/nix-cache/"
+        "https://s3.meep.sh/nix-cache/"
       ];
       trusted-public-keys = [
         "maple.meep.sh-1:LsJ7If/cRuw+5fcQuWDQoLg5E2B0RONoLCpD5SxVDgA="

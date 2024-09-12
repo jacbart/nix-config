@@ -18,6 +18,7 @@
     modules = [
       ../nixos
       inputs.sops-nix.nixosModules.sops
+      inputs.lix-module.nixosModules.default
     ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [
       installer
     ]) ++ (inputs.nixpkgs.lib.optionals (desktop == "cosmic") [

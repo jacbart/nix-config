@@ -36,6 +36,9 @@
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
+    lix-module.inputs.nixpkgs.follows = "nixpkgs";
+
     #### Personal repos ####
     mySecrets = {
       url = "git+ssh://git@github.com/jacbart/nix-secrets.git?ref=main&shallow=1";
@@ -52,6 +55,7 @@
     , nixos-cosmic
     , nixos-hardware
     , nixos-uconsole
+    , lix-module
     , ...
     } @ inputs:
     let
