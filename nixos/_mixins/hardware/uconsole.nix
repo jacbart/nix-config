@@ -7,7 +7,7 @@
   # This list of modules is not entirely minified, but represents
   # a set of modules that is required for the display to work in stage-1.
   # Further minification can be done, but requires trial-and-error mainly.
-  boot.initrd.availableKernelModules = [  ]
+  boot.initrd.availableKernelModules = [  ];
   boot.initrd.kernelModules = [
     # uConsole modules
 
@@ -15,6 +15,7 @@
 
   # The default powersave makes the wireless connection unusable.
   networking.networkmanager.wifi.powersave = lib.mkDefault false;
+  nixpkgs.hostPlatform = "aarch64-linux";
 
   powerManager.cpuFreqGovernor = lib.mkDefault "ondemand";
 }
