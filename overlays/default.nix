@@ -11,10 +11,6 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
-    piModFix = {
-      makeModulesClosure = x:
-        prev.makeModulesClosure (x // { allowMissing = true; });
-    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
