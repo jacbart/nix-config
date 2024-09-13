@@ -3,7 +3,7 @@
   networking = {
     networkmanager = {
       enable = true;
-      insertNameservers = [ "192.168.1.1" "1.1.1.1" "9.9.9.9" ];
+      insertNameservers = [ "192.168.0.120" "1.1.1.1" "9.9.9.9" ];
       wifi = {
         backend = "iwd";
         powersave = false;

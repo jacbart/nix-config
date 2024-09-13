@@ -112,7 +112,7 @@
   networking = {
     hostName = hostname;
     useDHCP = lib.mkDefault true;
-    networkmanager.enable = true;
+    networkmanager.enable = lib.mkDefault true;
   };
 
   nixpkgs = {
