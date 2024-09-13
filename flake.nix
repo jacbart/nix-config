@@ -119,7 +119,7 @@
       # Custom packages and modifications, exported as overlays
       overlays = (import ./overlays { inherit inputs; })
         ++ (final: super: {
-          prev.makeModulesClosure = x:
+          makeModulesClosure = x:
             super.makeModulesClosure (x // { allowMissing = true; });
         });
 
