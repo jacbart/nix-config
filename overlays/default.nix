@@ -11,7 +11,13 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
+    rpiFix = (_final: super: {
+      prev.makeModulesClosure = x:
+        super.makeModulesClosure (x // { allowMissing = true; });
+    });
   };
+
+  
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
