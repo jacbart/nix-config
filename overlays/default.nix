@@ -11,6 +11,7 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
+    makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
   };
 
   
