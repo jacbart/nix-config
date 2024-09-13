@@ -11,10 +11,6 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
-    rpiFix = (_final: super: {
-      prev.makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
-    });
   };
 
   
