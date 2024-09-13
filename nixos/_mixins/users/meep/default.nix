@@ -52,4 +52,6 @@ in
     packages = [ pkgs.home-manager ];
     shell = pkgs.zsh;
   };
+
+  nix.settings.trusted-users = [ "meep" ];
 }
