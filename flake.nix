@@ -76,7 +76,7 @@
         "nixos@iso-uconsole" = libx.mkHome { hostname = "iso-uconsole"; username = "nixos"; };
         # Workstations
         "meep@boojum" = libx.mkHome { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
-        "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; platform = "aarch64-linux"; };
+        "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; desktop = "cosmic"; platform = "aarch64-linux"; };
         "jackbartlett@jackjrny" = libx.mkHome { hostname = "jackjrny"; username = "jackbartlett"; platform = "aarch64-darwin"; };
         # Servers
         "ratatoskr@maple" = libx.mkHome { hostname = "maple"; username = "ratatoskr"; platform = "aarch64-linux"; };
@@ -92,7 +92,7 @@
         #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
         #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
         boojum = libx.mkHost { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
-        ash = libx.mkHost { hostname = "ash"; username = "meep"; };
+        ash = libx.mkHost { hostname = "ash"; username = "meep"; desktop = "cosmic"; };
         # Servers
         maple = libx.mkHost { hostname = "maple"; username = "ratatoskr"; };
       };
