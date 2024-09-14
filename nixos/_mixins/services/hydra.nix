@@ -25,7 +25,7 @@
 
   # users.groups.hydra = {};
 
-  nix.settings.trusted-users = [ "hydra" ];
+  nix.settings.trusted-users = [ "hydra" "remotebuild" ];
 
   sops.secrets."minio/nixbuilder/access-key" = { };
   sops.secrets."minio/nixbuilder/secret-key" = { };
