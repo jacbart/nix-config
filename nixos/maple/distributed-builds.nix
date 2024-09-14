@@ -6,13 +6,13 @@ _:
   nix.settings.trusted-users = [ "remotebuild" ];
 
   nix.buildMachines = [
-    {
-      hostName = "localhost";
-      system = "aarch64-linux";
-      supportedFeatures = [ "benchmark" "big-parallel" "gccarch-armv8-a" "kvm" "nixos-test" ];
-      protocol = null;
-      speedFactor = 1;
-    }
+    # {
+    #   hostName = "localhost";
+    #   system = "aarch64-linux";
+    #   supportedFeatures = [ "benchmark" "big-parallel" "gccarch-armv8-a" "kvm" "nixos-test" ];
+    #   protocol = null;
+    #   speedFactor = 1;
+    # }
     {
       hostName = "boojum.meep.sh";
       sshUser = "remotebuild";
