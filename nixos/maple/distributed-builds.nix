@@ -23,5 +23,15 @@ _:
       maxJobs = 2;
       speedFactor = 4;
     }
+    {
+      hostName = "ash.meep.sh";
+      sshUser = "remotebuild";
+      sshKey = "/root/.ssh/builder_ash";
+      systems = [ "aarch64-linux" ];
+      supportedFeatures = [ "nixos-test" "benchmark" ];
+      protocol = "ssh-ng";
+      maxJobs = 1;
+      speedFactor = 1;
+    }
   ];
 }
