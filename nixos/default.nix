@@ -1,4 +1,4 @@
-{ config, desktop, hostname, inputs, lib, modulesPath, outputs, pkgs, stateVersion, username, ... }: {
+{ config, desktop, hostname, inputs, lib, modulesPath, outputs, pkgs, stateVersion, username, platform, ... }: {
   imports = [
     inputs.disko.nixosModules.disko
     inputs.vscode-server.nixosModules.default
@@ -7,12 +7,12 @@
     ./${hostname}
     ./_mixins/services/firewall.nix
     ./_mixins/services/openssh.nix
-    ./_mixins/services/smartmon.nix
     ./_mixins/users/root
     ./_mixins/security
   ]
   ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
-  ++ lib.optional (desktop != null) ./_mixins/desktop;
+  ++ lib.optional (desktop != null) ./_mixins/desktop
+  ++ lib.optional (hostname != "ash") ./_mixins/services/smartmon.nix;
 
   boot = {
     consoleLogLevel = 0;
@@ -122,15 +122,6 @@
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -210,4 +201,6 @@
     '';
   };
   system.stateVersion = stateVersion;
+  
+  nixpkgs.hostPlatform = platform;
 }

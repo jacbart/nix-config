@@ -1,6 +1,7 @@
 { config, desktop, username, lib, pkgs, ... }:
 let
   # inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv) system;
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   # homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
@@ -9,20 +10,19 @@ in
   ++ lib.optionals (desktop != null) [
     ../../desktop/${desktop}.nix
     ../../desktop/${desktop}-apps.nix
-    ../../desktop/vscode.nix
+    # ../../desktop/vscode.nix
   ];
 
   environment.systemPackages = with pkgs; [
     age
   ] ++ lib.optionals (desktop != null) [
+    unstable.firefox-unwrapped
+  ] ++ lib.optionals (desktop != null && system != "aarch64-linux") [    
     gimp-with-plugins
     zoom-us
-
-    # Fast moving apps use the unstable branch
     unstable.discord
     unstable.google-chrome
     unstable.slack
-    unstable.firefox-unwrapped
   ];
 
   sops.secrets.meep-password.neededForUsers = true;
@@ -53,5 +53,5 @@ in
     shell = pkgs.zsh;
   };
 
-  nix.settings.trusted-users = [ "meep" ];
+  nix.settings.trusted-users = [ username ];
 }

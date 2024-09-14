@@ -15,5 +15,4 @@
 
   # The default powersave makes the wireless connection unusable.
   networking.networkmanager.wifi.powersave = lib.mkDefault false;
-  nixpkgs.hostPlatform = "aarch64-linux";
 }
