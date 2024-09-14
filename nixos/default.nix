@@ -153,6 +153,7 @@
       allowed-uris = [
         "github:"
         "git+https://github.com/"
+        "git+https://git.vdx.hu/"
         "git+ssh://github.com/"
       ];
 
