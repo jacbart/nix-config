@@ -92,7 +92,7 @@
         #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
         #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
         boojum = libx.mkHost { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
-        ash = libx.mkHost { hostname = "ash"; username = "meep"; };
+        ash = libx.mkHost { hostname = "ash"; username = "meep"; desktop = "cosmic"; };
         # Servers
         maple = libx.mkHost { hostname = "maple"; username = "ratatoskr"; };
       };
@@ -118,10 +118,6 @@
 
       # Custom packages and modifications, exported as overlays
       overlays = (import ./overlays { inherit inputs; });
-        # ++ [(final: super: {
-        #   makeModulesClosure = x:
-        #     super.makeModulesClosure (x // { allowMissing = true; });
-        # })];
 
       # Custom packages; acessible via 'nix build', 'nix shell', etc
       packages = libx.forAllSystems (system:
