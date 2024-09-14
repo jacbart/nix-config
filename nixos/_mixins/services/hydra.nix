@@ -10,7 +10,7 @@
     hydraURL = "https://hydra.meep.sh";
     notificationSender = "ratatoskr@meep.sh";
     extraConfig = ''
-      store_uri = s3://nix-cache?&endpoint=s3.meep.sh&compression=zstd&parallel-compression=true&write-nar-listing=1&ls-compression=br&log-compression=br&secret-key=/etc/nixos/secret.key
+      store_uri = s3://nix-cache?&endpoint=s3.meep.sh&compression=zstd&parallel-compression=true&write-nar-listing=1&ls-compression=br&log-compression=br&secret-key=/etc/nixos/secret.key&trust=true
       upload_logs_to_binary_cache = true
     '';
     useSubstitutes = true;

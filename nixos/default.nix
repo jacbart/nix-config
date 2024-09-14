@@ -165,7 +165,7 @@
 
       # personal substituters
       substituters = [
-        "https://s3.meep.sh/nix-cache?trust=true"
+        "https://s3.meep.sh/nix-cache"
       ];
       trusted-public-keys = [
         "maple.meep.sh-1:LsJ7If/cRuw+5fcQuWDQoLg5E2B0RONoLCpD5SxVDgA=" # maple
