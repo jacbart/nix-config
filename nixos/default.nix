@@ -165,10 +165,12 @@
 
       # personal substituters
       substituters = [
-        "https://s3.meep.sh/nix-cache/"
+        "https://s3.meep.sh/nix-cache?trust=true"
       ];
       trusted-public-keys = [
-        "maple.meep.sh-1:LsJ7If/cRuw+5fcQuWDQoLg5E2B0RONoLCpD5SxVDgA="
+        "maple.meep.sh-1:LsJ7If/cRuw+5fcQuWDQoLg5E2B0RONoLCpD5SxVDgA=" # maple
+        "s3.meep.sh-2:P0roq43phk+GPx8j96sOsMLS0HkwXdHEEGy6Evjof70=" # ash
+        "s3.meep.sh-3:mcrDvp6CZgkpq+/aRB18b6XtJywHSPkSZWr4NrnVGOc=" # boojum
       ];
     };
   };
