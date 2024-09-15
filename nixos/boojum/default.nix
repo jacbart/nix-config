@@ -5,6 +5,7 @@
     (import ./disks.nix { })
     ./remote-builder.nix
     ../_mixins/hardware/systemd-boot.nix
+    ../_mixins/services/qemu.nix
     ../_mixins/services/docker.nix
     ../_mixins/services/bluetooth.nix
     ../_mixins/services/pipewire.nix

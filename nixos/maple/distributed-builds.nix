@@ -18,7 +18,7 @@ _:
       protocol = "ssh";
       sshUser = "remotebuild";
       sshKey = "/root/.ssh/builder_boojum";
-      systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" "aarch64-linux" "riscv64" "arm" ];
       supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" ];
       maxJobs = 2;
       speedFactor = 4;
