@@ -18,10 +18,10 @@
             User meep
             IdentityFile ~/.ssh/id_ratatoskr
 
-        Host remoteboojum
-            HostName boojum.meep.sh
-            User remotebuild
-            IdentityFile ~/.ssh/builder_boojum
+        Host ash
+            HostName ash.meep.sh
+            User meep
+            IdentityFile ~/.ssh/id_ratatoskr
 
         Host maple
             HostName maple.meep.sh
