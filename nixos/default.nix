@@ -55,13 +55,13 @@
       rsync
     ];
     systemPackages = with pkgs; [
+      bottom
       kexec-tools
       pciutils
       psmisc
       sops
       unzip
       usbutils
-      wget
     ];
     variables = {
       EDITOR = "hx";

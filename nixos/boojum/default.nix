@@ -27,11 +27,6 @@
     resumeDevice = "/dev/disk/by-label/nixos";
   };
 
-  environment.systemPackages = with pkgs; [
-    helix
-    bottom
-  ];
-
   programs.tmux = {
     enable = true;
     clock24 = true;
