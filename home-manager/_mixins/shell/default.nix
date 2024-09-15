@@ -1,10 +1,4 @@
-{ config, username, ... }:
-# let
-    # helper function for generating a shell (minimal, server, desktop)
-    # mkDotenv = { type ? "minimal" }: {
-        
-    # };
-# in
+{ ... }:
 {
     imports = [
         ./tools # cli/tui tools or services
@@ -28,8 +22,4 @@
             User ratatoskr
             IdentityFile ~/.ssh/id_ratatoskr
     '';
-
-    # systemd.tmpfiles.rules = [
-    #     "f ${config.home.homeDirectory} 0600 ${username}"
-    # ];
 }

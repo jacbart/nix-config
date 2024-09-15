@@ -1,4 +1,4 @@
-_:
+{ ... }:
 {
   nix.distributedBuilds = true;
   nix.settings.builders-use-substitutes = true;
@@ -34,4 +34,15 @@ _:
       speedFactor = 2;
     }
   ];
+
+  programs.ssh.knownHosts = {
+    boojum = {
+      extraHostNames = [ "boojum.meep.sh" "192.168.1.3" ];
+      publicKeyFile = ../boojum/remotebuild.pub;
+    };
+    ash = {
+      extraHostNames = [ "ash.meep.sh" "192.168.1.4" ];
+      publicKeyFile = ../ash/remotebuild.pub;
+    };
+  };
 }
