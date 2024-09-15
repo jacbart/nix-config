@@ -16,7 +16,7 @@ _:
     {
       hostName = "boojum.meep.sh";
       sshUser = "remotebuild";
-      sshKey = "/root/.ssh/builder_boojum";
+      sshKey = "/var/lib/hydra/.ssh/builder_boojum";
       systems = [ "x86_64-linux" ];
       supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" "ca-derivations" ];
       protocol = "ssh-ng";
@@ -26,12 +26,12 @@ _:
     {
       hostName = "ash.meep.sh";
       sshUser = "remotebuild";
-      sshKey = "/root/.ssh/builder_ash";
+      sshKey = "/var/lib/hydra/.ssh/builder_ash";
       systems = [ "aarch64-linux" ];
       supportedFeatures = [ "nixos-test" "benchmark" ];
       protocol = "ssh-ng";
       maxJobs = 1;
-      speedFactor = 1;
+      speedFactor = 2;
     }
   ];
 }

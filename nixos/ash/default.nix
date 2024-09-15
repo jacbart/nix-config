@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ../_mixins/hardware/uconsole.nix
+    ./remote-builder.nix
   ];
 
   fileSystems = { 
