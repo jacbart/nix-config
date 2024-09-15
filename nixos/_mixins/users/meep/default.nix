@@ -53,5 +53,5 @@ in
     shell = pkgs.zsh;
   };
 
-  nix.settings.trusted-users = [ username ];
+  nix.settings.trusted-users = [ "meep" ];
 }

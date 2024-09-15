@@ -8,28 +8,28 @@ _:
   nix.buildMachines = [
     {
       hostName = "localhost";
+      protocol = null;
       system = "aarch64-linux";
       supportedFeatures = [ "benchmark" "big-parallel" "gccarch-armv8-a" "kvm" "nixos-test" ];
-      protocol = null;
       speedFactor = 1;
     }
     {
       hostName = "boojum.meep.sh";
+      protocol = "ssh";
       sshUser = "remotebuild";
-      sshKey = "/var/lib/hydra/.ssh/builder_boojum";
+      sshKey = "/root/.ssh/builder_boojum";
       systems = [ "x86_64-linux" ];
-      supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" "ca-derivations" ];
-      protocol = "ssh-ng";
+      supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" ];
       maxJobs = 2;
       speedFactor = 4;
     }
     {
       hostName = "ash.meep.sh";
+      protocol = "ssh";
       sshUser = "remotebuild";
-      sshKey = "/var/lib/hydra/.ssh/builder_ash";
+      sshKey = "/root/.ssh/builder_ash";
       systems = [ "aarch64-linux" ];
       supportedFeatures = [ "nixos-test" "benchmark" ];
-      protocol = "ssh-ng";
       maxJobs = 1;
       speedFactor = 2;
     }
