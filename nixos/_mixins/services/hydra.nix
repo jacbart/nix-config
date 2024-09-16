@@ -6,7 +6,7 @@
 
   services.hydra = {
     enable = true;
-    package = pkgs.hydra_unstable;
+    package = pkgs.unstable.hydra;
     hydraURL = "https://hydra.meep.sh";
     notificationSender = "ratatoskr@meep.sh";
     extraConfig = ''

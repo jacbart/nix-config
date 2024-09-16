@@ -17,7 +17,7 @@
       hostName = "boojum.meep.sh";
       protocol = "ssh";
       sshUser = "remotebuild";
-      sshKey = "/root/.ssh/builder_boojum";
+      sshKey = "~/.ssh/builder_boojum";
       systems = [ "x86_64-linux" ];
       supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" ];
       maxJobs = 2;
@@ -27,7 +27,7 @@
       hostName = "ash.meep.sh";
       protocol = "ssh";
       sshUser = "remotebuild";
-      sshKey = "/root/.ssh/builder_ash";
+      sshKey = "~/.ssh/builder_ash";
       systems = [ "aarch64-linux" ];
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" ];
       maxJobs = 1;
