@@ -149,7 +149,7 @@
     optimise.automatic = true;
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
       allowed-uris = [
         "github:"
         "git+https://github.com/"
