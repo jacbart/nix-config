@@ -13,6 +13,10 @@
 
   ];
 
+  services.xserver.xrandrHeads = [
+    { monitorConfig = ''Option "Rotate" "right"''; output = "DSI-1"; }
+  ];
+
   # The default powersave makes the wireless connection unusable.
   networking.networkmanager.wifi.powersave = lib.mkDefault false;
 }
