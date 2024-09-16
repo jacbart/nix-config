@@ -1,7 +1,11 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [
     ../_mixins/hardware/uconsole.nix
     ./remote-builder.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    unstable.nxengine-evo
   ];
 
   fileSystems = { 

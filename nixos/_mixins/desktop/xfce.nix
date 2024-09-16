@@ -5,6 +5,6 @@
       xterm.enable = false;
       xfce.enable = true;
     };
-    displayManager.defaultSession = "xfce";
   };
+  services.displayManager.defaultSession = "xfce";
 }
