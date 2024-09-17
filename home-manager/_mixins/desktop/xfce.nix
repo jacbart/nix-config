@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, ... }: {
+  imports = [
+    ./firefox.nix
+  ];
 
-{
   gtk = {
     enable = true;
       iconTheme = {
