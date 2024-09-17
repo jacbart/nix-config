@@ -73,7 +73,7 @@
         "nixos@iso-desktop" = libx.mkHome { hostname = "iso-desktop"; username = "nixos"; desktop = "cosmic"; };
         # Workstations
         "meep@boojum" = libx.mkHome { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
-        "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; platform = "aarch64-linux"; };
+        "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; desktop = "xfce"; platform = "aarch64-linux"; };
         "jackbartlett@jackjrny" = libx.mkHome { hostname = "jackjrny"; username = "jackbartlett"; platform = "aarch64-darwin"; };
         # Servers
         "ratatoskr@maple" = libx.mkHome { hostname = "maple"; username = "ratatoskr"; platform = "aarch64-linux"; };
