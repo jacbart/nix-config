@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ../_mixins/hardware/uconsole.nix
+    # ../_mixins/services/flatpak.nix
     ./remote-builder.nix
   ];
 

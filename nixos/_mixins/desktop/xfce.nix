@@ -1,6 +1,7 @@
 { pkgs, lib, ... }: {
   hardware = {
     bluetooth.enable = true;
+    pulseaudio.enable = true;
   };
   programs.ssh.startAgent = lib.mkForce false;
 
@@ -25,14 +26,14 @@
   services = {
     blueman.enable = true;
     gnome.gnome-keyring.enable = true;
-    pipewire = {
-      enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-      pulse.enable = true;
-    };
+    # pipewire = {
+    #   enable = true;
+    #   alsa = {
+    #     enable = true;
+    #     support32Bit = true;
+    #   };
+    #   pulse.enable = true;
+    # };
     xserver = {
       enable = true;
       excludePackages = with pkgs; [
