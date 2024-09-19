@@ -1,6 +1,5 @@
 { config, ... }: {
-  sops.secrets."wireguard/server/endpoint" = {};
-  sops.secrets."wireguard/server/public" = {};
+  sops.secrets."wireguard/ash/psKey" = {};
   sops.secrets."wireguard/ash/private" = {};
 
   networking.wg-quick.interfaces = {
@@ -11,9 +10,10 @@
       
       peers = [
         {
-          publicKey = config.sops.secrets."wireguard/server/public".path;
+          publicKey = "aGYKutq/jSiCOnjgJ0nZaM25qfMnEh3lHoyxwLGCVxo=";
+          presharedKeyFile = config.sops.secrets."wireguard/ash/psKey".path;
           allowedIPs = [ "0.0.0.0/0" "::/0" ];
-          endpoint = config.sops.secrets."wireguard/server/endpoint";
+          endpoint = "wg.meep.sh:51999";
           persistentKeepalive = 25;
         }
       ];
