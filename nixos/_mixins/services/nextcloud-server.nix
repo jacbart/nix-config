@@ -8,21 +8,8 @@ in
     owner = "nextcloud";
     group = "nextcloud";
   };
-  # environment.etc."nextcloud-admin-pass".text = "CHANGEME";
-  # systemd.tmpfiles.rules = [
-  #   "f /var/lib/nextcloud/config/CAN_INSTALL 0644 nextcloud nextcloud - -"
-  # ];
   
   services = {
-    # nginx = {
-    #   enable = true;
-    #   virtualHosts = {
-    #     "${subdomain}.${domain}" = {
-    #       enableACME = true;
-    #       acmeRoot = null;
-    #     };
-    #   };
-    # };
     nextcloud = {
       enable = true;
       https = false;
@@ -42,12 +29,6 @@ in
       extraAppsEnable = true;
       maxUploadSize = "10G";
       settings = {
-        # uncomment to display logs in nextcloud app
-        # log_type = "file";
-        # trusted_domains = [
-        #   "${hostname}.bbl.systems"
-        #   "${hostname}"
-        # ];
         overwriteprotocol = "https";
         enabledPreviewProviders = [
           "OC\\Preview\\BMP"
