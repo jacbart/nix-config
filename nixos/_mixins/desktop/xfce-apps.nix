@@ -4,22 +4,15 @@
       alacritty
       alacritty-theme
       blueman
-      deja-dup
-      drawing
       elementary-xfce-icon-theme
-      evince
       foliate
       font-manager
       gnome.file-roller
       gnome.gnome-disk-utility
       libqalculate
-      libreoffice
-      orca
       pavucontrol
-      qalculate-gtk
       wmctrl
       xclip
-      xcolor
       xcolor
       xdo
       xdotool

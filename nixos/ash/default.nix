@@ -1,14 +1,11 @@
 { pkgs, ... }: {
   imports = [
     ../_mixins/hardware/uconsole.nix
-    # ../_mixins/services/flatpak.nix
     ./remote-builder.nix
     ./wireguard.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    unstable.nxengine-evo
-  ];
+  environment.systemPackages = [ pkgs.wireshark ];
 
   fileSystems = { 
     "/" = {
