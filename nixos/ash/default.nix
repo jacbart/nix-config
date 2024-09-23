@@ -2,10 +2,12 @@
   imports = [
     ../_mixins/hardware/uconsole.nix
     ./remote-builder.nix
-    ./wireguard.nix
+    # ./wireguard.nix
   ];
 
-  environment.systemPackages = [ pkgs.wireshark ];
+  environment.systemPackages = [
+    pkgs.wireshark
+  ];
 
   fileSystems = { 
     "/" = {
@@ -16,6 +18,10 @@
       ];
     };
   };
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 16*1024;
+  } ];
 
   networking = {
     hosts = {
