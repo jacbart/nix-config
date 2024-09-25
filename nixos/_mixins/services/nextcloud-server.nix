@@ -21,6 +21,13 @@ in
         dbtype = "pgsql";
         adminpassFile = config.sops.secrets.nextcloud-admin-password.path;
       };
+      phpOptions = lib.mkForce {
+        "opcache.revalidate_freq" = 4;
+        "opcache.interned_strings_buffer" = 512;
+        "opcache.memory_consumption" = 1024;
+        "maintenance_window_start" = 1;
+        "apc.enable_cli" = 1;
+      };
       appstoreEnable = true;
       autoUpdateApps.enable = true;
       extraApps = {
@@ -30,6 +37,7 @@ in
       maxUploadSize = "10G";
       settings = {
         overwriteprotocol = "https";
+        default_phone_region = "US";
         enabledPreviewProviders = [
           "OC\\Preview\\BMP"
           "OC\\Preview\\GIF"

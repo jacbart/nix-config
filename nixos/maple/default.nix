@@ -8,7 +8,6 @@
     ../_mixins/services/minio.nix
     ../_mixins/services/nextcloud-server.nix
     ../_mixins/services/hydra.nix
-    # ../_mixins/services/step-ca.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
