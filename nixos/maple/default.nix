@@ -7,7 +7,7 @@
     # (import ./disks.nix { })
     ../_mixins/services/minio.nix
     ../_mixins/services/nextcloud-server.nix
-    ../_mixins/services/hydra.nix
+    # ../_mixins/services/hydra.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
@@ -28,7 +28,7 @@
   };
   swapDevices = [ {
     device = "/var/lib/swapfile";
-    size = 8*1024;
+    size = 16*1024;
   } ];
 
   networking = {
