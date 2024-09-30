@@ -10,6 +10,12 @@ in
   };
   
   services = {
+    # nginx.virtualHosts."${subdomain}.${domain}" = {
+    #   listen = [
+    #     { addr = "0.0.0.0"; port = 8080; }
+    #     { addr = "[::0]";  port = 8080; }
+    #   ];
+    # };
     nextcloud = {
       enable = true;
       https = false;
@@ -37,7 +43,7 @@ in
       appstoreEnable = true;
       autoUpdateApps.enable = true;
       extraApps = with pkgs.nextcloud29Packages.apps; {
-        inherit bookmarks cookbook notes notify_push music maps onlyoffice phonetrack previewgenerator spreed deck contacts calendar tasks twofactor_webauthn twofactor_nextcloud_notification;
+        inherit bookmarks cookbook notes notify_push music maps phonetrack previewgenerator spreed deck contacts calendar tasks twofactor_webauthn twofactor_nextcloud_notification;
       };
       extraAppsEnable = true;
       settings = {
