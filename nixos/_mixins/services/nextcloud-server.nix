@@ -36,9 +36,11 @@ in
         "maintenance_window_start" = 1;
         "apc.enable_cli" = 1;
         "output_buffering" = 0;
-        "memory_limit" = "10240M";
-        "upload_max_filesize" = "10240M";
-        "post_max_size" = "10240M";
+        "memory_limit" = "102400M";
+        "upload_max_filesize" = "102400M";
+        "post_max_size" = "102400M";
+        "max_input_time" = 360000;
+        "max_execution_time" = 360000;
       };
       appstoreEnable = true;
       autoUpdateApps.enable = true;

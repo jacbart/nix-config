@@ -7,6 +7,7 @@
     # (import ./disks.nix { })
     ../_mixins/services/minio.nix
     ../_mixins/services/nextcloud-server.nix
+    ../_mixins/services/audiobookshelf.nix
     # ../_mixins/services/hydra.nix
   ];
 
