@@ -7,7 +7,6 @@
 
   environment.systemPackages = [
     pkgs.wireshark
-    pkgs.nxengine-evo
   ];
 
   fileSystems = { 
