@@ -30,8 +30,8 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
-    lan-mouse.url = "github:feschber/lan-mouse";
-    lan-mouse.inputs.nixpkgs.follows = "nixpkgs";
+    # lan-mouse.url = "github:feschber/lan-mouse";
+    # lan-mouse.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -51,7 +51,7 @@
     , nixpkgs
     , hydra
     , vscode-server
-    , lan-mouse
+    # , lan-mouse
     , nixos-cosmic
     , nixos-hardware
     , nixos-uconsole
