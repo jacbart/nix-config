@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: let
+  nx = pkgs.callPackage ../../pkgs/nxengine { };
+in {
   imports = [
     ../_mixins/hardware/uconsole.nix
     ./remote-builder.nix
@@ -6,6 +8,7 @@
   ];
 
   environment.systemPackages = [
+    nx
     pkgs.wireshark
   ];
 
