@@ -3,11 +3,15 @@
   SDL2,
   SDL2_mixer,
   SDL2_image,
+  SDL2_ttf,
+  SDL2_gfx,
+  SDL2_net,
   callPackage,
   cmake,
+  libcxx,
   pkg-config,
-  ninja,
   fetchFromGitHub,
+  fetchpatch,
   libpng,
   libjpeg,
   stdenv,
@@ -15,7 +19,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "nxengine-evo";
-  version = "2.6.5";
+  version = "2.6.5-1";
 
   src = fetchFromGitHub {
     owner = "nxengine";
@@ -24,10 +28,18 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-UufvtfottD9DrnjN9xhAlkNdW5Ha+vZwf/4uKDtF5ho=";
   };
 
+  patches = [
+    # Fix missing cstdint include
+    (fetchpatch {
+      url = "https://github.com/nxengine/nxengine-evo/commit/0076ebb11bcfec5dc5e2e923a50425f1a33a4133.patch";
+      hash = "sha256-8j3fFFw8DMljV7aAFXE+eA+vkbz1HdFTMAJmk3BRU04=";
+    })
+  ];
+
   nativeBuildInputs = [
     SDL2
     cmake
-    ninja
+    libcxx
     pkg-config
   ];
 
@@ -35,22 +47,31 @@ stdenv.mkDerivation (finalAttrs: {
     SDL2
     SDL2_mixer
     SDL2_image
+    SDL2_ttf
+    SDL2_gfx
+    SDL2_net
     libpng
     libjpeg
   ];
-
+  
   strictDeps = true;
+
+  buildPhase = ''
+    cmake -DCMAKE_BUILD_TYPE=Release ..
+    make
+    cd ..
+  '';
 
   installPhase = ''
     runHook preInstall
 
-    cd ..
     mkdir -p $out/bin/ $out/share/nxengine/
-    install bin/* $out/bin/
-  '' + ''
-    cp -r ${finalAttrs.finalPackage.assets}/share/nxengine/data $out/share/nxengine/data
+
+    cp -r ${finalAttrs.finalPackage.assets}/share/nxengine/data $out/share/nxengine/
     chmod -R a=r,a+X $out/share/nxengine/data
-  '' + ''
+
+    cp ./build/nxengine-evo $out/bin/
+
     runHook postInstall
   '';
 
