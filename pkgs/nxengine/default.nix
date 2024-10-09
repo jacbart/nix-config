@@ -15,7 +15,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "nxengine-evo";
-  version = "2.6.5-1";
+  version = "2.6.5";
 
   src = fetchFromGitHub {
     owner = "nxengine";

@@ -2,5 +2,5 @@
 # Build them using 'nix build .#example' or (legacy) 'nix-build -A example'
 
 { pkgs ? (import ../nixpkgs.nix) { } }: {
-  nx = pkgs.callPackage ./nxengine-evo { };
+  nx = pkgs.callPackage ./nxengine { };
 }
