@@ -1,0 +1,24 @@
+diff --git a/src/graphics/Renderer.cpp b/src/graphics/Renderer.cpp
+index 38c26ab..d727115 100644
+--- a/src/graphics/Renderer.cpp
++++ b/src/graphics/Renderer.cpp
+@@ -226,6 +226,7 @@ const Graphics::gres_t *Renderer::getResolutions(bool full_list)
+          {(char *)"1600x1200", 1600, 1200, 320, 240, 5, false, true},
+          // widescreen
+          {(char *)"480x272", 480, 272, 480, 272, 1, true, true},
++         {(char *)"1280x720", 1280, 720, 427, 240, 3, true, true},
+          {(char *)"1360x768", 1360, 768, 454, 256, 3, true, true},
+          {(char *)"1366x768", 1366, 768, 455, 256, 3, true, true},
+          {(char *)"1440x900", 1440, 900, 480, 300, 3, true, true},
+diff --git a/src/siflib/sectStringArray.h b/src/siflib/sectStringArray.h
+index d7a7fd6..116f00c 100644
+--- a/src/siflib/sectStringArray.h
++++ b/src/siflib/sectStringArray.h
+@@ -1,6 +1,7 @@
+ 
+ #ifndef _SECT_STRINGARRAY_H
+ #define _SECT_STRINGARRAY_H
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
