@@ -34,6 +34,11 @@ stdenv.mkDerivation (finalAttrs: {
       url = "https://github.com/nxengine/nxengine-evo/commit/0076ebb11bcfec5dc5e2e923a50425f1a33a4133.patch";
       hash = "sha256-8j3fFFw8DMljV7aAFXE+eA+vkbz1HdFTMAJmk3BRU04=";
     })
+    # add missing uconsole resolution
+    (fetchpatch {
+      url = "https://github.com/nxengine/nxengine-evo/commit/01329e6d284862220d02ebd5ea0cfe33c4f50ce1.patch";
+      hash = "sha256-8j3fFFw8DMljV7aAFXE+eA+vkbz1HdFTMAJmk3BRU04=";
+    })
   ];
 
   nativeBuildInputs = [
