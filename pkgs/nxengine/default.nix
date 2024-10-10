@@ -24,22 +24,23 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "nxengine";
     repo = "nxengine-evo";
-    rev = "v${finalAttrs.version}";
+    # rev = "v${finalAttrs.version}";
+    rev = "f8fb001fa86c72af50c1fb2b4495d80c2a4159e7";
     hash = "sha256-UufvtfottD9DrnjN9xhAlkNdW5Ha+vZwf/4uKDtF5ho=";
   };
 
-  patches = [
-    # Fix missing cstdint include
-    (fetchpatch {
-      url = "https://github.com/nxengine/nxengine-evo/commit/0076ebb11bcfec5dc5e2e923a50425f1a33a4133.patch";
-      hash = "sha256-8j3fFFw8DMljV7aAFXE+eA+vkbz1HdFTMAJmk3BRU04=";
-    })
-    # add missing uconsole resolution
-    (fetchpatch {
-      url = "https://github.com/nxengine/nxengine-evo/commit/01329e6d284862220d02ebd5ea0cfe33c4f50ce1.patch";
-      hash = "sha256-8j3fFFw8DMljV7aAFXE+eA+vkbz1HdFTMAJmk3BRU04=";
-    })
-  ];
+  # patches = [
+  #   # Fix missing cstdint include
+  #   (fetchpatch {
+  #     url = "https://github.com/nxengine/nxengine-evo/commit/0076ebb11bcfec5dc5e2e923a50425f1a33a4133.patch";
+  #     hash = "sha256-8j3fFFw8DMljV7aAFXE+eA+vkbz1HdFTMAJmk3BRU04=";
+  #   })
+  #   # add missing uconsole resolution
+  #   (fetchpatch {
+  #     url = "https://github.com/nxengine/nxengine-evo/commit/01329e6d284862220d02ebd5ea0cfe33c4f50ce1.patch";
+  #     hash = "sha256-8j3fFFw8DMljV7aAFXE+eA+vkbz1HdFTMAJmk3BRU04=";
+  #   })
+  # ];
 
   nativeBuildInputs = [
     SDL2
@@ -76,6 +77,7 @@ stdenv.mkDerivation (finalAttrs: {
     chmod -R a=r,a+X $out/share/nxengine/data
 
     cp ./build/nxengine-evo $out/bin/
+    ln -s $out/bin/nxengine-evo $out/bin/nx
 
     runHook postInstall
   '';
