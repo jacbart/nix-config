@@ -24,7 +24,7 @@
   security.pam.services.gdm.enableGnomeKeyring = true;
   services.displayManager.defaultSession = "xfce";
   services = {
-    blueman.enable = true;
+    blueman.enable = false;
     gnome.gnome-keyring.enable = true;
     # pipewire = {
     #   enable = true;
@@ -52,5 +52,5 @@
     };
   };
 
-  sound.enable = true; 
+  sound.enable = true;
 }

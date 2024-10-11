@@ -9,7 +9,6 @@ in {
 
   environment.systemPackages = [
     nx
-    pkgs.wireshark
   ];
 
   fileSystems = { 
