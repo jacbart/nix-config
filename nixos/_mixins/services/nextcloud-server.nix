@@ -20,7 +20,7 @@ in
       enable = true;
       https = false;
       hostName = "${subdomain}.${domain}";
-      package = pkgs.nextcloud29;
+      package = pkgs.nextcloud30;
       configureRedis = true;
       database.createLocally = true;
       config = {
@@ -44,12 +44,12 @@ in
       };
       appstoreEnable = true;
       autoUpdateApps.enable = true;
-      extraApps = with pkgs.nextcloud29Packages.apps; {
-        inherit bookmarks cookbook notes notify_push music maps phonetrack previewgenerator spreed deck contacts calendar tasks twofactor_webauthn twofactor_nextcloud_notification;
+      extraApps = with pkgs.nextcloud30Packages.apps; {
+        inherit bookmarks cookbook notes notify_push memories music previewgenerator deck contacts calendar tasks twofactor_webauthn unroundedcorners;
       };
       extraAppsEnable = true;
       settings = {
-        log_type = "file";
+        # log_type = "file";
         overwriteprotocol = "https";
         default_phone_region = "US";
         enabledPreviewProviders = [

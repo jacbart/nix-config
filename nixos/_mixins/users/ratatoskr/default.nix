@@ -30,6 +30,8 @@ in
     ++ ifExists [
       "docker"
       "podman"
+      "nextcloud"
+      "hydra"
     ];
     hashedPasswordFile = config.sops.secrets.ratatoskr-password.path;
     homeMode = "0755";
