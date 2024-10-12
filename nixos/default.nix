@@ -56,6 +56,7 @@
     ];
     systemPackages = with pkgs; [
       bottom
+      cyme
       kexec-tools
       pciutils
       psmisc
