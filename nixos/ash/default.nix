@@ -6,7 +6,7 @@
   ];
 
   environment.systemPackages = [
-    pkgs.nx
+    pkgs.uconsole-nx
   ];
 
   fileSystems = { 
