@@ -11,7 +11,6 @@
   libcxx,
   pkg-config,
   fetchFromGitHub,
-  fetchpatch,
   libpng,
   libjpeg,
   stdenv,
@@ -64,10 +63,10 @@ stdenv.mkDerivation (finalAttrs: {
     runHook preInstall
 
     mkdir -p $out/bin/ $out/share/nxengine/
-
+  '' ++ ''
     cp -r ${finalAttrs.finalPackage.assets}/share/nxengine/data $out/share/nxengine/
     chmod -R a=r,a+X $out/share/nxengine/data
-
+  '' ++ ''
     cp ./build/nxengine-evo $out/bin/
     ln -s $out/bin/nxengine-evo $out/bin/nx
 

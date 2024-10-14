@@ -2,7 +2,10 @@
 { inputs, ... }:
 {
   # This one brings our custom packages from the 'pkgs' directory
-  additions = final: _prev: import ../pkgs { pkgs = final; };
+  local-packages = final: _prev: import ../pkgs { pkgs = final; };
+  script-packages = final: _prev: {
+    scripts = import ../scripts { pkgs = final; };
+  };
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.

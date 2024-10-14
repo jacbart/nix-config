@@ -10,8 +10,7 @@ in
   environment.systemPackages = with pkgs; [
     age
   ] ++ lib.optionals (desktop != null) [
-    unstable.google-chrome
-    unstable.firefox-unwrapped
+    unstable.firefox
   ];
 
   sops.secrets.ratatoskr-password.neededForUsers = true;

@@ -120,7 +120,8 @@
     # You can add overlays here
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
+      outputs.overlays.local-packages
+      outputs.overlays.script-packages
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
     ];

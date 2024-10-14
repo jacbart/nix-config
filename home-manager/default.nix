@@ -10,12 +10,12 @@ in
     inputs.sops-nix.homeManagerModules.sops
 
     # You can also split up your configuration and import pieces of it here:
-    ./_mixins/core
-    ./_mixins/shell
+    ./core
+    ./shell
   ]
-  ++ lib.optional (builtins.isPath (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
-  ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}/hosts/${hostname}.nix")) ./_mixins/users/${username}/hosts/${hostname}.nix
-  ++ lib.optional (desktop != null) ./_mixins/desktop;
+  ++ lib.optional (builtins.isPath (./. + "/users/${username}")) ./users/${username}
+  ++ lib.optional (builtins.pathExists (./. + "/users/${username}/hosts/${hostname}.nix")) ./users/${username}/hosts/${hostname}.nix
+  ++ lib.optional (desktop != null) ./desktop;
 
   home = {
     activation.report-changes = config.lib.dag.entryAnywhere ''
@@ -32,10 +32,10 @@ in
   news.display = "silent";
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
+      outputs.overlays.local-packages
+      outputs.overlays.script-packages
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
     ];

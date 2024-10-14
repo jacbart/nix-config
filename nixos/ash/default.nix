@@ -1,6 +1,4 @@
-{ pkgs, ... }: let
-  nx = pkgs.callPackage ../../pkgs/nxengine { };
-in {
+{ pkgs, ... }: {
   imports = [
     ../_mixins/hardware/uconsole.nix
     ./remote-builder.nix
@@ -8,7 +6,7 @@ in {
   ];
 
   environment.systemPackages = [
-    nx
+    pkgs.nx
   ];
 
   fileSystems = { 
