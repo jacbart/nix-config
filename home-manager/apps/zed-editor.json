@@ -1,0 +1,28 @@
+{
+  "ui_font_size": 18,
+  "buffer_font_size": 18,
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Light",
+    "dark": "Sandcastle"
+  },
+  "cursor_shape": "underscore",
+  "load_direnv": "shell_hook",
+  "tab_bar": {
+    "show": true,
+    "show_nav_history_buttons": false
+  },
+  "tabs": {
+    "close_position": "right",
+    "file_icons": false,
+    "git_status": true,
+    "activate_on_close": "history"
+  },
+  "file_types": {
+    "HCL": ["hcl", "jaws", "koi"]
+  },
+  "journal": {
+    "path": "~/workspace/journal",
+    "hour_format": "hour24"
+  },
+}

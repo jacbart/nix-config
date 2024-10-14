@@ -3,4 +3,5 @@
 
 { pkgs ? (import ../nixpkgs.nix) { } }: {
   nx = pkgs.callPackage ./nxengine { };
+  zed-editor = pkgs.callPackage ./zed-editor { };
 }

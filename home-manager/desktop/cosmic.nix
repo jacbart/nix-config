@@ -8,6 +8,7 @@
 
   home = {
     packages = with pkgs; [
+      unstable.freetube
       # unstable.ladybird
       unstable.bitwarden-desktop
       unstable.element-desktop
