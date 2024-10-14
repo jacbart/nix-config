@@ -16,7 +16,7 @@ in
   environment.systemPackages = with pkgs; [
     age
   ] ++ lib.optionals (desktop != null) [
-    unstable.firefox-unwrapped
+    unstable.firefox
   ] ++ lib.optionals (desktop != null && system != "aarch64-linux") [    
     gimp-with-plugins
     zoom-us

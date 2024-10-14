@@ -1,10 +1,11 @@
 { config, pkgs, ... }: {
   imports = [
-    ./dunst.nix # notifications
-    ./eww.nix # panels and widgets
-    ./kitty.nix # terminal
-    # ./lan-mouse.nix # virtual kvm
-    ./rofi-wayland.nix # app launcher
+    ../apps/dunst.nix # notifications
+    ../apps/eww.nix # panels and widgets
+    ../apps/kitty.nix # terminal
+    # ../apps/lan-mouse.nix # virtual kvm
+    ../apps/rofi-wayland.nix # app launcher
+    ../../scripts
   ];
 
   home = {
@@ -18,7 +19,7 @@
       vlc # multi-media viewer
     ];
 
-    file."${config.xdg.dataHome}/images/bg.jpg".source = ./bg.jpg;
+    file."${config.xdg.dataHome}/images/bg.jpg".source = ../files/bg.jpg;
   };
   
   programs = {

@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   imports = [
-    ./firefox.nix
+    ../apps/firefox.nix
   ];
 
   gtk = {

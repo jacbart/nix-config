@@ -1,12 +1,14 @@
 { config, pkgs, ... }: {
   imports = [
-    ./firefox.nix
-    ./rustdesk.nix
+    ../apps/firefox.nix
+    # ../apps/rustdesk.nix
+    ../apps/zen-editor.nix
     ../services/nextcloud-client.nix
   ];
 
   home = {
     packages = with pkgs; [
+      unstable.freetube
       # unstable.ladybird
       unstable.bitwarden-desktop
       unstable.element-desktop
@@ -16,7 +18,7 @@
       gparted
       vlc # multi-media viewer
     ];
-    file."${config.home.homeDirectory}/Pictures/wallpapers/bg.jpg".source = ./bg.jpg;
+    file."${config.home.homeDirectory}/Pictures/wallpapers/bg.jpg".source = ../files/bg.jpg;
   };
 
 }

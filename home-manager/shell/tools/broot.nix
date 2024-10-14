@@ -2,6 +2,7 @@
     home.packages = with pkgs; [
         broot
         mupdf-headless
+        scripts.br
     ];
     home.file = {
         # add broot config

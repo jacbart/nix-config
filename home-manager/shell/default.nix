@@ -1,9 +1,12 @@
-{ ... }:
+{ pkgs, ... }:
 {
     imports = [
         ./tools # cli/tui tools or services
-        ./scripts # shellApplications
         ./zsh.nix # zsh config
+    ];
+
+    home.packages = with pkgs; [
+        scripts.journal
     ];
 
     home.file.".ssh/config".text = ''
