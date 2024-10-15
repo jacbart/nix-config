@@ -2,7 +2,7 @@
   imports = [
     ../apps/firefox.nix
     # ../apps/rustdesk.nix
-    ../apps/zen-editor.nix
+    ../apps/zed-editor.nix
     ../services/nextcloud-client.nix
   ];
 
