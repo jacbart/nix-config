@@ -2,7 +2,7 @@
 , pkgs
 , rustPlatform
 , fetchFromGitHub }:
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage rec {
     pname = "mazter";
     version = "1.0.0";
 
@@ -18,7 +18,7 @@ rustPlatform.buildRustPackage {
         hash = "sha256-PLDhz9ge2O/HINnnHliMrS0NL8BCqOvOSgLPrdixbZw=";
     };
 
-    cargoLock.lockFile = ./Cargo.lock;
+    cargoLock.lockFile = "${src}/Cargo.lock";
 
     meta = with lib; {
         description = "Mazes in your terminal";
