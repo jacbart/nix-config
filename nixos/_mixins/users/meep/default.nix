@@ -1,28 +1,25 @@
-{ config, desktop, username, lib, pkgs, ... }:
+{ config, desktop, lib, pkgs, ... }:
 let
-  # inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) system;
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-  # homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
 {
   imports = [ ]
   ++ lib.optionals (desktop != null) [
     ../../desktop/${desktop}.nix
     ../../desktop/${desktop}-apps.nix
-    # ../../desktop/vscode.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    age
+  environment.systemPackages = [
+    pkgs.age
   ] ++ lib.optionals (desktop != null) [
-    unstable.firefox
-  ] ++ lib.optionals (desktop != null && system != "aarch64-linux") [    
-    gimp-with-plugins
-    zoom-us
-    unstable.discord
-    unstable.google-chrome
-    unstable.slack
+    pkgs.unstable.firefox
+  ] ++ lib.optionals (desktop != null && system != "aarch64-linux") [
+    pkgs.gimp-with-plugins
+    pkgs.zoom-us
+    pkgs.unstable.discord
+    pkgs.unstable.google-chrome
+    pkgs.unstable.slack
   ];
 
   sops.secrets.meep-password.neededForUsers = true;

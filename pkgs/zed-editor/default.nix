@@ -103,7 +103,7 @@ rustPlatform.buildRustPackage rec {
   ];
 
   cargoLock = {
-    lockFile = ./Cargo.lock;
+    lockFile = builtins.toPath "${src}/Cargo.lock";
     outputHashes = {
       "alacritty_terminal-0.24.1-dev" = "sha256-b4oSDhsAAYjpYGfFgA1Q1642JoJQ9k5RTsPgFUpAFmc=";
     };

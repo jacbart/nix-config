@@ -49,13 +49,6 @@
     { self
     , nix-formatter-pack
     , nixpkgs
-    , hydra
-    , vscode-server
-    # , lan-mouse
-    , nixos-cosmic
-    , nixos-hardware
-    , nixos-uconsole
-    , lix-module
     , ...
     } @ inputs:
     let
