@@ -10,7 +10,7 @@
     packages = with pkgs; [
       unstable.freetube
       # unstable.ladybird
-      unstable.bitwarden-desktop
+      bitwarden-desktop
       unstable.element-desktop
       unstable.libreoffice-qt6-fresh # office document viewer
       unstable.geeqie # image veiwer
