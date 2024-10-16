@@ -4,4 +4,5 @@
 { pkgs ? (import ../nixpkgs.nix) { } }: {
   uconsole-nx = pkgs.callPackage ./nxengine { };
   zed-editor = pkgs.callPackage ./zed-editor { };
+  mazter = pkgs.callPackage ./mazter { };
 }

@@ -4,10 +4,21 @@
   "theme": {
     "mode": "system",
     "light": "Ayu Light",
-    "dark": "Sandcastle"
+    "dark": "Ayu Dark"
   },
-  "cursor_shape": "underscore",
+  "cursor_blink": true,
+  "cursor_shape": "bar",
+  "current_line_highlight": "all",
+  "tab_size": 4,
+  "autosave": "after_delay",
   "load_direnv": "shell_hook",
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware"
+  },
+  "ensure_final_newline_on_save": true,
+  "remove_trailing_whitespace_on_save": true,
+  "show_whitespaces": "selection",
   "tab_bar": {
     "show": true,
     "show_nav_history_buttons": false
@@ -25,4 +36,52 @@
     "path": "~/workspace/journal",
     "hour_format": "hour24"
   },
+  "assistant": {
+    "version": "2",
+    "enabled": true,
+    "button": true,
+    "dock": "right",
+    "default_width": 640,
+    "default_height": 320,
+    "default_model": {
+      "provider": "openai",
+      "model": "gpt-4o"
+    }
+  },
+  "terminal": {
+    "font_family": "FiraCode Nerd Font Mono",
+    "blinking": "off"
+  },
+  "languages": {
+    "C": {
+      "format_on_save": "language_server",
+      "preferred_line_length": 64,
+      "soft_wrap": "preferred_line_length"
+    }
+  },
+  "lsp": {
+    "gopls": {
+      "enabled": true,
+      "settings": {
+        "gopls": {
+          "staticcheck": true
+        }
+      }
+    },
+    "rust-analyzer": {
+      "enabled": true,
+      "cargo": {
+        "allFeatures": true
+      }
+    },
+    "tsserver": {
+      "enabled": true
+    },
+    "clangd": {
+      "enabled": true,
+      "completion": {
+        "includeFixIts": true
+      }
+    }
+  }
 }

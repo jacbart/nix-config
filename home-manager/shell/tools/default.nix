@@ -16,6 +16,7 @@
         packages = with pkgs; [
             angle-grinder
             dogdns
+            dysk
             fastfetch
             fd
             fzf
@@ -25,6 +26,7 @@
             netcat
             nurl
             nix-melt
+            mazter
             mprocs
             procs
             ripgrep
