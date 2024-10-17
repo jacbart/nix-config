@@ -7,6 +7,7 @@
 
   environment.systemPackages = [
     pkgs.uconsole-nx
+    pkgs.mazter
   ];
 
   fileSystems = { 
