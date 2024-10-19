@@ -5,4 +5,5 @@
   uconsole-nx = pkgs.callPackage ./nxengine { };
   zed-editor = pkgs.callPackage ./zed-editor { };
   mazter = pkgs.callPackage ./mazter { };
+  pmg = pkgs.callPackage ./portmaster-games { };
 }
