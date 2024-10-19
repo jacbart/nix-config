@@ -34,9 +34,10 @@ pkgs.stdenv.mkDerivation rec {
     '';
 
     installPhase = ''
-        mkdir -p $out
+        mkdir -p $out/bin
         cd ..
         cp -r source $out/PortMaster
+        ln -s $out/PortMaster/PortMaster.sh $out/bin/pmg
     '';
 
     meta = with lib; {
@@ -44,5 +45,6 @@ pkgs.stdenv.mkDerivation rec {
         homepage = "https://github.com/PortsMaster/PortMaster-GUI";
         license = licenses.mit;
         maintainers = with maintainers; [ jacbart ];
+        mainProgram = "pmg";
     };
 }
