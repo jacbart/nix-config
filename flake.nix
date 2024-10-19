@@ -6,6 +6,8 @@
     # See 'unstable-packages' overlay in 'overlays/default.nix'.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -21,8 +23,6 @@
     nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
     nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
     nixos-uconsole.url = "git+https://git.vdx.hu/voidcontext/nixos-uconsole?ref=improve-ergonomy";
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
@@ -36,7 +36,7 @@
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1.tar.gz";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
 
     #### Personal repos ####
