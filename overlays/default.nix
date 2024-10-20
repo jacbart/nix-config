@@ -15,6 +15,15 @@
   uconsole-mods = _final: prev: {
     # needed for raspberry pi
     makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });    
+    # retroarch controls
+    retroarch-joypad-autoconfig = prev.retroarch-joypad-autoconfig.overrideAttrs {
+      src = prev.fetchFromGitHub {
+        owner = "jacbart";
+        repo = "retroarch-joypad-autoconfig";
+        rev = "7733b32317046ac0e4a2897f45fb1c9844986190";
+        hash = "sha256-j7Cu66PU+mY3c6ojTmdYPKZlUMbL9L4xoyJP4gQaLqU=";
+      };
+    };
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
