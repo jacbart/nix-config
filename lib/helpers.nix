@@ -5,7 +5,7 @@
     extraSpecialArgs = {
       inherit inputs outputs desktop hostname platform username stateVersion;
     };
-    modules = [ 
+    modules = [
       ../home-manager
     ];
   };
@@ -19,6 +19,8 @@
       ../nixos
       inputs.sops-nix.nixosModules.sops
       inputs.lix-module.nixosModules.default
+      inputs.nix-ld.nixosModules.nix-ld
+      { programs.nix-ld.dev.enable = true; }
     ] ++ (inputs.nixpkgs.lib.optionals (installer != null) [
       installer
     ]) ++ (inputs.nixpkgs.lib.optionals (desktop == "cosmic") [

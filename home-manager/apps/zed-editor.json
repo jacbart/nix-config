@@ -51,37 +51,5 @@
   "terminal": {
     "font_family": "FiraCode Nerd Font Mono",
     "blinking": "off"
-  },
-  "languages": {
-    "C": {
-      "format_on_save": "language_server",
-      "preferred_line_length": 64,
-      "soft_wrap": "preferred_line_length"
-    }
-  },
-  "lsp": {
-    "gopls": {
-      "enabled": true,
-      "settings": {
-        "gopls": {
-          "staticcheck": true
-        }
-      }
-    },
-    "rust-analyzer": {
-      "enabled": true,
-      "cargo": {
-        "allFeatures": true
-      }
-    },
-    "tsserver": {
-      "enabled": true
-    },
-    "clangd": {
-      "enabled": true,
-      "completion": {
-        "includeFixIts": true
-      }
-    }
   }
 }

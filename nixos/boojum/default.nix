@@ -12,6 +12,8 @@
     ../_mixins/services/minio-client.nix
   ];
 
+  environment.systemPackages = [ pkgs.ludo ];
+
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];

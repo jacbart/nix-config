@@ -12,7 +12,7 @@
       taplo # TOML language server
       terraform-ls # language server for [ .hcl, .tf, .tfvars, .koi, .jaws ]
       yaml-language-server # YAML language server
-      # vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
+      vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
     ];
 
     file.".dprint.json".text = ''
@@ -38,7 +38,7 @@
         language-server = {
           gopls = {
             command = "gopls";
-            config =  { 
+            config =  {
               "gofumpt" = true;
               "local" = "goimports";
               "semanticTokens" = true;
@@ -63,7 +63,7 @@
                 "rangeVariableTypes" = true;
               };
             };
-          }; 
+          };
         };
         language = [{
             name = "go";

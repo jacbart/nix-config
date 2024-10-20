@@ -48,11 +48,11 @@
 
   environment = {
     # Eject nano and perl from the system
-    defaultPackages = with pkgs; lib.mkForce [
-      gitMinimal
-      home-manager
-      helix
-      rsync
+    defaultPackages = lib.mkForce [
+      pkgs.gitMinimal
+      pkgs.home-manager
+      pkgs.helix
+      pkgs.rsync
     ];
     systemPackages = with pkgs; [
       bottom
@@ -206,6 +206,6 @@
     '';
   };
   system.stateVersion = stateVersion;
-  
+
   nixpkgs.hostPlatform = platform;
 }
