@@ -22,6 +22,5 @@
     programs.nix-ld.dev.libraries = with pkgs; [
         openal # ludo
         libGL # ludo
-        libstdcxx5 # zeditor
     ];
 }
