@@ -9,7 +9,7 @@
   "cursor_blink": true,
   "cursor_shape": "bar",
   "current_line_highlight": "all",
-  "tab_size": 4,
+  "tab_size": 2,
   "autosave": "after_delay",
   "load_direnv": "shell_hook",
   "indent_guides": {
