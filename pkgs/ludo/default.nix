@@ -17,7 +17,7 @@ buildGo123Module rec {
 
     vendorHash = null;
 
-    nativeBuildInputs = [ pkg-config ];
+    nativeBuildInputs = [ pkg-config mesa ];
     buildInputs = [
         openal
         gcc
