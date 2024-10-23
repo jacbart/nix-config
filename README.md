@@ -1,4 +1,4 @@
-# [NixOS] & [Home Manager] Configurations
+# NixOS & Home Manager Configurations
 
 > inspiration from [wimpysworld nix-config](https://github.com/wimpysworld/nix-config)
 
@@ -7,13 +7,13 @@
 
 This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for configuring my computers and home environment. These are the computers this configuration currently manages:
 
-| Hostname |     OEM     |            Model             |  OS   |   Role   | Status  |
-| :------- | :---------: | :--------------------------: | :---: | :------: | :------ |
-| boojum   |   Lenovo    |        Thinkpad Gen 6        | NixOS |  Laptop  | working |
-| jryjack  |    Apple    |     Macbook Pro M1 2020      | macOS |  Laptop  | tbn     |
-| cork     |    WSL2     |              VM              |       |    VM    | tbn     |
-| maple    |   Pine64    |         [RockPro64]          | NixOS |   NAS    | working |
-| ash      | Clockworkpi | [uConsole (CM-4, 4G Module)] | NixOS | Handheld | tbn     |
+| Hostname |     OEM     |            Model             |  OS   |   Role   | Status            |
+| :------- | :---------: | :--------------------------: | :---: | :------: | :---------------- |
+| boojum   |   Lenovo    |        Thinkpad Gen 6        | NixOS |  Laptop  | working           |
+| jryjack  |    Apple    |     Macbook Pro M1 2020      | MacOS |  Laptop  | home manager      |
+| cork     |    WSL2     |              VM              |       |    VM    | tbn               |
+| maple    |   Pine64    |         [RockPro64]          | NixOS |   NAS    | working           |
+| ash      | Clockworkpi | [uConsole (CM-4, 4G Module)] | NixOS | Handheld | partially working |
 
 [uConsole (CM-4, 4G Module)]: https://www.clockworkpi.com/uconsole
 [RockPro64]: https://www.pine64.org/rockpro64/
@@ -52,16 +52,16 @@ The [nixos/_mixins] and [home-manager/_mixins] are a collection of composited co
 
 If the target system is booted from something other than the .iso image created by this flake, you can still install the system using the following:
 
-```bash
-curl -sL https://raw.githubusercontent.com/jacbart/nix-config/main/scripts/install.sh | bash -s <hostname> <username>
-```
+<!-- ```bash -->
+<!-- curl -sL https://raw.githubusercontent.com/jacbart/nix-config/main/scripts/install.sh | bash -s <hostname> <username> -->
+<!-- ``` -->
 
 ## Applying Changes
 
 I clone this repo to `~/workspace/personal/nix-config`. NixOS and Home Manager changes are applied separately because I have some non-NixOS hosts.
 
 ```bash
-gh repo clone jacbart/nix-config ~/workspace/personal/nix-config
+git clone jacbart/nix-config ~/workspace/personal/nix-config
 ```
 
 ### NixOS
