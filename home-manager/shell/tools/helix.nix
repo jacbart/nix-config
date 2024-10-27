@@ -1,7 +1,7 @@
 { pkgs, ...}: {
   home = {
     packages = with pkgs; [
-      # most used lsp's for helix
+      # my personally most used lsp's for helix
       dockerfile-language-server-nodejs # dockerfile language server
       # gofumpt # go formatter
       gopls # go language server
@@ -66,19 +66,24 @@
           };
         };
         language = [{
-            name = "go";
-            roots = [ "go.work" "go.mod" ];
-            auto-format = true;
-            comment-token = "//";
-            language-servers = [ "gopls" ];
+          name = "go";
+          roots = [ "go.work" "go.mod" ];
+          auto-format = true;
+          comment-tokens = [ "//" ];
+          block-comment-tokens = { start = "/*"; end = "*/"; };
+          language-servers = [ "gopls" ];
         } {
-            name = "hcl";
-            file-types = ["tf" "tfvars" "hcl" "koi" "jaws"];
-            auto-format = true;
+          name = "hcl";
+          file-types = ["tf" "tfvars" "hcl" "koi" "jaws"];
+          auto-format = true;
         } {
-            name = "markdown";
-            formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
-            auto-format = true;
+          name = "markdown";
+          formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
+          auto-format = true;
+        } {
+          name = "yaml";
+          file-types = ["yaml" "yml"];
+          auto-format = true;
         }];
       };
       settings = {

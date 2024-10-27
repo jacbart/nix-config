@@ -2,7 +2,8 @@
     imports = [
     ]
     ++ lib.optional (builtins.pathExists (./. + "/${desktop}.nix")) ./${desktop}.nix
-    ++ lib.optional (builtins.pathExists (./. + "/${desktop}-apps.nix")) ./${desktop}-apps.nix;
+    ++ lib.optional (builtins.pathExists (./. + "/${desktop}-apps.nix")) ./${desktop}-apps.nix
+    ++ lib.optional (pkgs.stdenv.isLinux) ./ld.nix;
 
     boot = {
     kernelParams = [ "loglevel=4" ];
@@ -18,11 +19,4 @@
             driSupport = true;
         };
     };
-
-    programs.nix-ld.dev.libraries = with pkgs; [
-        libstdcxx5 # zed
-        openal # ludo
-        libGL # ludo
-        wlroots # ludo wayland
-    ];
 }
