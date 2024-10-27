@@ -4,15 +4,16 @@
     inputs.vscode-server.nixosModules.default
 
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./${hostname}
-    ./_mixins/services/firewall.nix
-    ./_mixins/services/openssh.nix
-    ./_mixins/users/root
-    ./_mixins/security
+    ./hosts/${hostname}
+    ./libraries
+    ./services/firewall.nix
+    ./services/openssh.nix
+    ./users/root
+    ./security
   ]
-  ++ lib.optional (builtins.pathExists (./. + "/_mixins/users/${username}")) ./_mixins/users/${username}
-  ++ lib.optional (desktop != null) ./_mixins/desktop
-  ++ lib.optional (hostname != "ash") ./_mixins/services/smartmon.nix;
+  ++ lib.optional (builtins.pathExists (./. + "/users/${username}")) ./users/${username}
+  ++ lib.optional (desktop != null) ./desktop
+  ++ lib.optional (hostname != "ash") ./services/smartmon.nix;
 
   boot = {
     consoleLogLevel = 0;

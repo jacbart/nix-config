@@ -27,12 +27,10 @@ This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for confi
 - [scripts]: Helper scripts
 - [shells]: [Nix shell environments using direnv](https://determinate.systems/posts/nix-direnv) for infrequently used tools
 
-The [nixos/_mixins] and [home-manager/_mixins] are a collection of composited configurations based on the arguments defined in [flake.nix].
+The [nixos] and [home-manager] are a collection of composited configurations based on the arguments defined in [flake.nix].
 
-[home-manager]: ./home-manager
 [nixos]: ./nixos
-[nixos/_mixins]: ./nixos/_mixins
-[home-manager/_mixins]: ./home-manager/_mixins
+[home-manager]: ./home-manager
 [flake.nix]: ./flake.nix
 [scripts]: ./scripts
 [shells]: ./shells

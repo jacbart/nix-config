@@ -4,12 +4,12 @@
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
     (import ./disks.nix { })
     ./remote-builder.nix
-    ../_mixins/hardware/systemd-boot.nix
-    ../_mixins/services/qemu.nix
-    ../_mixins/services/docker.nix
-    ../_mixins/services/bluetooth.nix
-    ../_mixins/services/pipewire.nix
-    ../_mixins/services/minio-client.nix
+    ../../hardware/systemd-boot.nix
+    ../../services/qemu.nix
+    ../../services/docker.nix
+    ../../services/bluetooth.nix
+    ../../services/pipewire.nix
+    ../../services/minio-client.nix
   ];
 
   boot = {

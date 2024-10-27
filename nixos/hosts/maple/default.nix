@@ -1,14 +1,14 @@
 { config, pkgs, lib, ... }:
 {
   imports = [
-    ../_mixins/hardware/rockpro64.nix
+    ../../hardware/rockpro64.nix
     # ./nginx.nix
     ./distributed-builds.nix
     # (import ./disks.nix { })
-    ../_mixins/services/minio.nix
-    ../_mixins/services/nextcloud-server.nix
-    ../_mixins/services/audiobookshelf.nix
-    # ../_mixins/services/hydra.nix
+    ../../services/minio.nix
+    ../../services/nextcloud-server.nix
+    ../../services/audiobookshelf.nix
+    # ../../services/hydra.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)

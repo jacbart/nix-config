@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   imports = [
-    ../_mixins/hardware/uconsole.nix
+    ../../hardware/uconsole.nix
     ./remote-builder.nix
     # ./wireguard.nix
   ];
@@ -14,7 +14,7 @@
     })
   ];
 
-  fileSystems = { 
+  fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
