@@ -1,5 +1,6 @@
-{ pkgs, ... }: {
-  # environment.systemPackages = with pkgs; [
-  #   departure-mono
+{ ... }: {
+  imports = [ ./ld.nix ];
+  # environment.systemPackages = [
+  #   pkgs.departure-mono
   # ];
 }

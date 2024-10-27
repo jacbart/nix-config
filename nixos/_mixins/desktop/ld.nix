@@ -1,9 +1,7 @@
 { pkgs, lib, ... }: let
-  inherit (pkgs) system;
+  isX86_64 = pkgs.system == "x86_64-linux";
 in {
   programs.nix-ld.dev.libraries = [
-    # pkgs.openal # ludo
-    # pkgs.libGL # ludo
-    # pkgs.wlroots # ludo wayland
-  ] ++ lib.optional (if system == "x86_64-linux" then pkgs.libstdcxx5 else null); # zed
+  ]
+  ++ lib.optional isX86_64 pkgs.libstdcxx5;
 }
