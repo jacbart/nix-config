@@ -20,6 +20,7 @@
     };
 
     programs.nix-ld.dev.libraries = with pkgs; [
+        libstdcxx5 # zed
         openal # ludo
         libGL # ludo
         wlroots # ludo wayland

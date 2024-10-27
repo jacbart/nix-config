@@ -4,7 +4,7 @@
       # most used lsp's for helix
       dockerfile-language-server-nodejs # dockerfile language server
       # gofumpt # go formatter
-      # gopls # go language server
+      gopls # go language server
       nil # nix language server
       marksman # markdown language server
       markdown-oxide # markdown language server
