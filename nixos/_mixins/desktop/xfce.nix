@@ -1,8 +1,4 @@
 { pkgs, lib, ... }: {
-  hardware = {
-    bluetooth.enable = true;
-    pulseaudio.enable = true;
-  };
   programs.ssh.startAgent = lib.mkForce false;
 
   programs = {
