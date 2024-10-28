@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   imports = [
-    ./rofi.nix
+    ./../apps/rofi.nix
   ];
 
   environment = {
