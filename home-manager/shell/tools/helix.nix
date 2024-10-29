@@ -69,7 +69,7 @@
           name = "go";
           roots = [ "go.work" "go.mod" ];
           auto-format = true;
-          comment-tokens = [ "//" ];
+          comment-token = "//";
           block-comment-tokens = { start = "/*"; end = "*/"; };
           language-servers = [ "gopls" ];
         } {
