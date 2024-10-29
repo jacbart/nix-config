@@ -87,7 +87,7 @@
         }];
       };
       settings = {
-        theme = "ayu_dark";
+        theme = "gruvbox_dark_hard";
         editor = {
           shell = ["zsh" "-c"];
           line-number = "absolute";
