@@ -3,5 +3,5 @@
 in {
   programs.nix-ld.dev.libraries = [
   ]
-  ++ lib.optional isX86_64 pkgs.libstdcxx5;
+  ++ lib.optional isX86_64 pkgs.stdenv.cc.cc.lib;
 }
