@@ -3,8 +3,8 @@
   "buffer_font_size": 18,
   "theme": {
     "mode": "system",
-    "light": "Ayu Light",
-    "dark": "Ayu Dark"
+    "light": "Gruvbox Light",
+    "dark": "Gruvbox Dark"
   },
   "cursor_blink": true,
   "cursor_shape": "bar",
@@ -30,7 +30,11 @@
     "activate_on_close": "history"
   },
   "file_types": {
-    "HCL": ["hcl", "jaws", "koi"]
+    "HCL": [
+      "hcl",
+      "jaws",
+      "koi"
+    ]
   },
   "journal": {
     "path": "~/workspace/journal",
