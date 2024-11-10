@@ -16,6 +16,8 @@ in {
     pkgs.vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
   ] ++ lib.optionals isLinux [ pkgs.unstable.zed-editor ];
 
+  # fix weird nix bin name
+  programs.zsh.shellAliases = { zed = "zeditor"; };
   # add in settings.json
   home.file."${config.xdg.configHome}/zed/settings.json".text = builtins.readFile ./zed-editor.json;
 }
