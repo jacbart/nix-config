@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1731060864,
-        "narHash": "sha256-aYE7oAYZ+gPU1mPNhM0JwLAQNgjf0/JK1BF1ln2KBgk=",
+        "lastModified": 1731274291,
+        "narHash": "sha256-cZ0QMpv5p2a6WEE+o9uu0a4ma6RzQDOQTbm7PbixWz8=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "5e40e02978e3bd63c2a6a9fa6fa8ba0e310e747f",
+        "rev": "486250f404f4a4f4f33f8f669d83ca5f6e6b7dfc",
         "type": "github"
       },
       "original": {
@@ -185,10 +185,10 @@
     "mySecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1726708131,
-        "narHash": "sha256-2sXMCKuvAmDHl7KR83DfKKB/S7FvuoHugPOQx+prKz0=",
+        "lastModified": 1731291694,
+        "narHash": "sha256-m1WxnEJeoUZumwiUXeMeRXc0rkCgIgw5qRf0aEDZPtQ=",
         "ref": "main",
-        "rev": "bfefb6d1893bc3e907de6353f27b47127d85b69b",
+        "rev": "7c2600a33bc72c777ef4ba4c45f1b2d99c04a5c6",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/jacbart/nix-secrets.git"
@@ -293,11 +293,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1731210504,
-        "narHash": "sha256-QE5qfTcJk1XBwTxoW3nJ2PWJ/YRppy8IiwsqLwnu4A0=",
+        "lastModified": 1731289077,
+        "narHash": "sha256-8Waya6WKqgWkYqbr1zkuyd1vNKgQb/QxfHLSMzp/LqU=",
         "owner": "lilyinstarlight",
         "repo": "nixos-cosmic",
-        "rev": "aa9d41c105d715974b86f8cf64f84e0995d5e747",
+        "rev": "274f08b587d403940cd8d8da13a89ee094d3bc96",
         "type": "github"
       },
       "original": {

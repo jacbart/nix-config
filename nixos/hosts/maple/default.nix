@@ -9,6 +9,7 @@
     ../../services/nextcloud-server.nix
     ../../services/audiobookshelf.nix
     # ../../services/hydra.nix
+    ../../services/zitadel.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
