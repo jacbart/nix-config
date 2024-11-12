@@ -1,6 +1,6 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
-    powertop
-    anytype
+  home.packages = [
+    pkgs.powertop
+    pkgs.unstable.anytype
   ];
 }

@@ -6,7 +6,7 @@
       # gofumpt # go formatter
       gopls # go language server
       nil # nix language server
-      marksman # markdown language server
+      # marksman # markdown language server
       markdown-oxide # markdown language server
       dprint # code formatter [ markdown ]
       taplo # TOML language server
@@ -15,15 +15,15 @@
       vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
     ];
 
-    file.".dprint.json".text = ''
-    {
-      "markdown": {
-      },
-      "plugins": [
-        "https://plugins.dprint.dev/markdown-0.17.1.wasm",
-      ]
-    }
-    '';
+    # file.".dprint.json".text = ''
+    # {
+    #   "markdown": {
+    #   },
+    #   "plugins": [
+    #     "https://plugins.dprint.dev/markdown-0.17.1.wasm",
+    #   ]
+    # }
+    # '';
 
     sessionVariables = {
       EDITOR = "hx";
@@ -76,11 +76,13 @@
           name = "hcl";
           file-types = ["tf" "tfvars" "hcl" "koi" "jaws"];
           auto-format = true;
-        } {
-          name = "markdown";
-          formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
-          auto-format = true;
-        } {
+        }
+        #  {
+        #   name = "markdown";
+        #   formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
+        #   auto-format = true;
+        # }
+         {
           name = "yaml";
           file-types = ["yaml" "yml"];
           auto-format = true;
