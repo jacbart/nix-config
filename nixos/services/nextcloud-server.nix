@@ -8,23 +8,20 @@ in
     owner = "nextcloud";
     group = "nextcloud";
   };
-  
+
+  imports = [ ./postgresql.nix ];
+
   services = {
-    # nginx.virtualHosts."${subdomain}.${domain}" = {
-    #   listen = [
-    #     { addr = "0.0.0.0"; port = 8080; }
-    #     { addr = "[::0]";  port = 8080; }
-    #   ];
-    # };
     nextcloud = {
       enable = true;
       https = false;
       hostName = "${subdomain}.${domain}";
       package = pkgs.nextcloud30;
       configureRedis = true;
-      database.createLocally = true;
+      database.createLocally = false; # Use postgresql.nix as db
       config = {
         dbtype = "pgsql";
+        dbhost = "/run/postgresql";
         adminpassFile = config.sops.secrets.nextcloud-admin-password.path;
       };
       phpOptions = lib.mkForce {

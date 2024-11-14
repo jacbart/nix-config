@@ -1,15 +1,20 @@
-{ config, pkgs, ... }: let
+{ config
+, pkgs
+, ... }:
+let
   domain = "meep.sh";
   user = "zitadel";
   group = "zitadel";
-in {
+in
+{
   sops.secrets.zitadel-master-key = {
     owner = user;
     group = group;
   };
-  
+
   imports = [
-    ./cockroachdb.nix
+    # ./cockroachdb.nix
+    ./postgresql.nix
   ];
 
   services.zitadel = {
@@ -25,7 +30,21 @@ in {
       ExternalPort = 443;
       ExternalDomain = "zitadel.${domain}";
       ExternalSecure = true;
-      Database.cockroach.Host = "localhost:26257";
+      Database.postgres = {
+        Host = "localhost";
+        Port = 5432;
+        Database = "zitadel";
+        MaxOpenConns = 15;
+        MaxIdleConns = 12;
+        MaxConnLifetime = "30m";
+        MaxConnIdleTime = "5m";
+        User = {
+          Username = "zitadel";
+        };
+        Admin = {
+          Username = "root";
+        };
+      };
       Telemetry.Enabled = false;
     };
   };
