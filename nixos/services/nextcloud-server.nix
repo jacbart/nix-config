@@ -42,7 +42,7 @@ in
       appstoreEnable = true;
       autoUpdateApps.enable = false;
       extraApps = with pkgs.nextcloud30Packages.apps; {
-        inherit bookmarks cookbook notes notify_push music previewgenerator deck contacts calendar tasks twofactor_webauthn unroundedcorners;
+        inherit bookmarks cookbook notes notify_push maps music previewgenerator contacts calendar tasks twofactor_webauthn unroundedcorners;
       };
       extraAppsEnable = true;
       settings = {

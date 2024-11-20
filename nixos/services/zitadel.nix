@@ -30,6 +30,7 @@ in
       ExternalPort = 443;
       ExternalDomain = "zitadel.${domain}";
       ExternalSecure = true;
+      TLS.Enabled = false;
       Database.postgres = {
         Host = "localhost";
         Port = 5432;
@@ -40,12 +41,36 @@ in
         MaxConnIdleTime = "5m";
         User = {
           Username = "zitadel";
+          Password = "zitadel";
+          SSL.Mode = "disable";
         };
         Admin = {
-          Username = "root";
+          Username = "postgres";
+          Password = "postgres";
+          SSL.Mode = "disable";
         };
       };
       Telemetry.Enabled = false;
+    };
+    steps = {
+      FirstInstance = {
+        Skip = false;
+        DefaultLanguage = "en";
+        InstanceName = "ZITADEL";
+        Org = {
+          Name = "z";
+          Human = {
+            UserName = "jack";
+            FirstName = "Jack";
+            LastName = "Bartlett";
+            Email = {
+              Address = "jack@meep.sh";
+              Verified = true;
+            };
+            Password = "Password!23";
+          };
+        };
+      };
     };
   };
 }

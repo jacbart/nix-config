@@ -9,7 +9,8 @@
     ../../services/nextcloud-server.nix
     ../../services/audiobookshelf.nix
     # ../../services/hydra.nix
-    # ../../services/zitadel.nix
+    ../../services/zitadel.nix
+    # ../../services/netbird.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
@@ -36,7 +37,7 @@
   networking = {
     hostId = "01d4f038";
     hosts = {
-      "127.0.0.1" = [ "maple" "maple.meep.sh"  ];
+      "127.0.0.1" = [ "maple" "maple.meep.sh" ];
       "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" ];
     };
     firewall = {
