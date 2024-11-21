@@ -188,8 +188,6 @@
         rebuild-home = "home-manager switch -b backup --flake $HOME/workspace/personal/nix-config";
         rebuild-host = "sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config";
         rebuild-lock = "pushd $HOME/workspace/personal/nix-config && nix flake update && popd";
-        rebuild-iso-console = "sudo true && pushd $HOME/workspace/personal/nix-config && nix build .#nixosConfigurations.iso-console.config.system.build.isoImage && set ISO (head -n1 result/nix-support/hydra-build-products | cut -d'/' -f6) && sudo cp result/iso/$ISO ~/Quickemu/nixos-console/nixos.iso && popd";
-        rebuild-iso-desktop = "sudo true && pushd $HOME/workspace/personal/nix-config && nix build .#nixosConfigurations.iso-desktop.config.system.build.isoImage && set ISO (head -n1 result/nix-support/hydra-build-products | cut -d'/' -f6) && sudo cp result/iso/$ISO ~/Quickemu/nixos-desktop/nixos.iso && popd";
       };
     };
   };

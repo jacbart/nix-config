@@ -16,10 +16,7 @@
     NIXOS_OZONE_WL = "1";
   };
 
-  hardware = {
-    # Opengl
-    opengl.enable = true;
-  };
+  hardware.graphics.enable = true;
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = with pkgs; [

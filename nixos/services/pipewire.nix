@@ -2,7 +2,6 @@
   environment.systemPackages = with pkgs; [ 
     alsa-utils
   ];
-  sound.enable = true;
   hardware = {
     pulseaudio.enable = lib.mkForce false;
   };

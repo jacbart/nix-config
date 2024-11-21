@@ -47,6 +47,4 @@
       desktopManager.xfce.enable = true;
     };
   };
-
-  sound.enable = true;
 }

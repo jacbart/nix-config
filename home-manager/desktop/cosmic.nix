@@ -8,13 +8,11 @@
 
   home = {
     packages = with pkgs; [
-      # unstable.freetube
-      # unstable.ladybird
       bitwarden-desktop
-      unstable.element-desktop
-      unstable.libreoffice-qt6-fresh # office document viewer
-      unstable.geeqie # image veiwer
-      unstable.wl-clipboard # wl-copy and wl-paste
+      element-desktop
+      # libreoffice-qt6-fresh # office document viewer
+      geeqie # image veiwer
+      wl-clipboard # wl-copy and wl-paste
       vlc # multi-media viewer
     ];
     file."${config.home.homeDirectory}/Pictures/wallpapers/bg.jpg".source = ../files/bg.jpg;

@@ -1,7 +1,7 @@
 {
   description = "NixOS and Home Manager Configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     # You can access packages and modules from different nixpkgs revs at the same time.
     # See 'unstable-packages' overlay in 'overlays/default.nix'.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -14,7 +14,7 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-ld.url = "github:Mic92/nix-ld";
@@ -39,7 +39,7 @@
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1.tar.gz";
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
 
     #### Personal repos ####
@@ -65,8 +65,6 @@
     # home-manager switch -b backup --flake $HOME/workspace/personal/nix-config
     # nix build .#homeConfigurations."meep@boojum".activationPackage
     homeConfigurations = {
-      # .iso images
-      "nixos@iso-desktop" = libx.mkHome { hostname = "iso-desktop"; username = "nixos"; desktop = "cosmic"; };
       # Workstations
       "meep@boojum" = libx.mkHome { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
       "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; desktop = "xfce"; platform = "aarch64-linux"; };
@@ -77,7 +75,6 @@
     nixosConfigurations = {
       # .iso images
       #  - nix build .#nixosConfigurations.{iso-console|iso-desktop}.config.system.build.isoImage
-      iso-desktop = libx.mkHost { hostname = "iso-desktop"; username = "nixos"; installer = nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares.nix"; };
       # Workstations
       #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
       #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
