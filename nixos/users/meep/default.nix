@@ -9,11 +9,10 @@ let
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
-  imports =
-    lib.optionals (desktop != null) [
-      ../../desktop/${desktop}.nix
-      ../../desktop/${desktop}-apps.nix
-    ];
+  imports = lib.optionals (desktop != null) [
+    ../../desktop/${desktop}.nix
+    ../../desktop/${desktop}-apps.nix
+  ];
 
   environment.systemPackages =
     [

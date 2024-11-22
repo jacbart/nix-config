@@ -22,7 +22,7 @@
   boot.loader.generic-extlinux-compatible.enable = true;
   # zfs
   boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.zfs.extraPools = [ "trunk" ];
   services.zfs.autoScrub.enable = true;
   services.zfs.trim.enable = true;
