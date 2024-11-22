@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}: {
+{ pkgs, ... }: {
   services.headscale = {
     enable = true;
     package = pkgs.headscale;
