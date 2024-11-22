@@ -1,44 +1,53 @@
-{ config, desktop, lib, pkgs, ... }:
+{ config
+, desktop
+, lib
+, pkgs
+, ...
+}:
 let
   inherit (pkgs.stdenv) system;
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
-  imports = [ ]
-  ++ lib.optionals (desktop != null) [
-    ../../desktop/${desktop}.nix
-    ../../desktop/${desktop}-apps.nix
-  ];
+  imports =
+    lib.optionals (desktop != null) [
+      ../../desktop/${desktop}.nix
+      ../../desktop/${desktop}-apps.nix
+    ];
 
-  environment.systemPackages = [
-    pkgs.age
-  ] ++ lib.optionals (desktop != null) [
-    pkgs.unstable.firefox
-  ] ++ lib.optionals (desktop != null && system != "aarch64-linux") [
-    pkgs.gimp-with-plugins
-    pkgs.zoom-us
-    pkgs.unstable.discord
-    pkgs.unstable.google-chrome
-    pkgs.unstable.slack
-  ];
+  environment.systemPackages =
+    [
+      pkgs.age
+    ]
+    ++ lib.optionals (desktop != null) [
+      pkgs.unstable.firefox
+    ]
+    ++ lib.optionals (desktop != null && system != "aarch64-linux") [
+      pkgs.gimp-with-plugins
+      pkgs.zoom-us
+      pkgs.unstable.discord
+      pkgs.unstable.google-chrome
+      pkgs.unstable.slack
+    ];
 
   sops.secrets.meep-password.neededForUsers = true;
   users.mutableUsers = false;
 
   users.users.meep = {
     description = "Meep";
-    extraGroups = [
-      "audio"
-      "input"
-      "networkmanager"
-      "users"
-      "video"
-      "wheel"
-    ]
-    ++ ifExists [
-      "docker"
-      "podman"
-    ];
+    extraGroups =
+      [
+        "audio"
+        "input"
+        "networkmanager"
+        "users"
+        "video"
+        "wheel"
+      ]
+      ++ ifExists [
+        "docker"
+        "podman"
+      ];
     hashedPasswordFile = config.sops.secrets.meep-password.path;
     homeMode = "0755";
     isNormalUser = true;

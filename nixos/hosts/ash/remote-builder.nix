@@ -9,7 +9,7 @@
     openssh.authorizedKeys.keyFiles = [ ./remotebuild.pub ];
   };
 
-  users.groups.remotebuild = {};
+  users.groups.remotebuild = { };
 
   nix = {
     nrBuildUsers = 32;

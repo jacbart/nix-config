@@ -12,8 +12,8 @@ in
           type = "gpt";
           partitions = {
             idloader = {
-                name = "idloader";
-                size = "8M";
+              name = "idloader";
+              size = "8M";
             };
             uboot = {
               name = "uboot";

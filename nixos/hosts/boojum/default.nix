@@ -1,5 +1,9 @@
-{ config, inputs, lib, pkgs, ... }:
-{
+{ config
+, inputs
+, lib
+, pkgs
+, ...
+}: {
   imports = [
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
     (import ./disks.nix { })
@@ -23,7 +27,7 @@
       "resume_offset=533760"
       "nosgx"
     ];
-    supportedFilesystems = lib.mkForce ["btrfs"];
+    supportedFilesystems = lib.mkForce [ "btrfs" ];
     kernelPackages = pkgs.linuxPackages_latest;
     resumeDevice = "/dev/disk/by-label/nixos";
   };

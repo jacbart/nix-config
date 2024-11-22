@@ -1,8 +1,13 @@
-{ config, pkgs, ... }: let
+{ config
+, pkgs
+, ...
+}:
+let
   # stepDir = "/var/lib/step-ca";
   user = "step-ca";
   # group = "step-ca";
-in {
+in
+{
   # systemd.tmpfiles.rules = [
   #   "d ${stepDir} 0755 ${user} ${group}"
   #   "d ${stepDir}/certs 0755 ${user} ${group}"

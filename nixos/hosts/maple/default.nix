@@ -1,5 +1,8 @@
-{ config, pkgs, lib, ... }:
-{
+{ config
+, pkgs
+, lib
+, ...
+}: {
   imports = [
     ../../hardware/rockpro64.nix
     # ./nginx.nix
@@ -29,10 +32,12 @@
     device = "/dev/disk/by-label/NIXOS_SD";
     fsType = "ext4";
   };
-  swapDevices = [ {
-    device = "/var/lib/swapfile";
-    size = 16*1024;
-  } ];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   networking = {
     hostId = "01d4f038";

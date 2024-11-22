@@ -1,6 +1,7 @@
 { config
 , pkgs
-, ... }:
+, ...
+}:
 let
   domain = "meep.sh";
   user = "zitadel";
@@ -9,7 +10,7 @@ in
 {
   sops.secrets.zitadel-master-key = {
     owner = user;
-    group = group;
+    inherit group;
   };
 
   imports = [
@@ -21,8 +22,8 @@ in
     enable = true;
     package = pkgs.unstable.zitadel;
     openFirewall = true;
-    user = user;
-    group = group;
+    inherit user;
+    inherit group;
     masterKeyFile = config.sops.secrets.zitadel-master-key.path;
     tlsMode = "external";
     settings = {

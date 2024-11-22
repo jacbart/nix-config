@@ -1,7 +1,16 @@
-{ config, pkgs, username, ... }: let
+{ config
+, pkgs
+, username
+, ...
+}:
+let
   inherit (pkgs.stdenv) isDarwin;
-  homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
-in {
+  homeDir =
+    if isDarwin
+    then "/Users/${username}"
+    else "/home/${username}";
+in
+{
   systemd.tmpfiles.rules = [
     "d ${homeDir}/.mc 0755 ${username}"
     "d ${homeDir}/.mc/share 0755 ${username}"
@@ -16,18 +25,18 @@ in {
   sops.templates."dot-mc-config.json" = {
     owner = username;
     content = ''
-    {
-      "version": "10",
-      "aliases": {
-        "s3": {
-          "url": "https://s3.meep.sh",
-          "accessKey": "${config.sops.placeholder."minio/root/access-key"}",
-          "secretKey": "${config.sops.placeholder."minio/root/secret-key"}",
-          "api": "s3v4",
-          "path": "auto"
+      {
+        "version": "10",
+        "aliases": {
+          "s3": {
+            "url": "https://s3.meep.sh",
+            "accessKey": "${config.sops.placeholder."minio/root/access-key"}",
+            "secretKey": "${config.sops.placeholder."minio/root/secret-key"}",
+            "api": "s3v4",
+            "path": "auto"
+          }
         }
       }
-    }
     '';
     path = "${homeDir}/.mc/config.json";
   };
@@ -35,9 +44,9 @@ in {
   sops.templates."mc-boto-creds" = {
     owner = username;
     content = ''
-    [nixbuilder]
-    aws_access_key_id=${config.sops.placeholder."minio/nixbuilder/access-key"}
-    aws_secret_access_key=${config.sops.placeholder."minio/nixbuilder/secret-key"}
+      [nixbuilder]
+      aws_access_key_id=${config.sops.placeholder."minio/nixbuilder/access-key"}
+      aws_secret_access_key=${config.sops.placeholder."minio/nixbuilder/secret-key"}
     '';
     path = "${homeDir}/.aws/credentials";
   };
@@ -45,8 +54,8 @@ in {
   sops.templates."mc-boto-conf" = {
     owner = username;
     content = ''
-    [profile nixbuilder]
-    region=${config.sops.placeholder."minio/nixbuilder/region"}
+      [profile nixbuilder]
+      region=${config.sops.placeholder."minio/nixbuilder/region"}
     '';
     path = "${homeDir}/.aws/config";
   };

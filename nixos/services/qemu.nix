@@ -1,7 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-with lib;
-let
+{ config
+, pkgs
+, lib
+, ...
+}:
+with lib; let
   cfg = config.qemu-user;
   arm = {
     interpreter = "${pkgs.qemu-user-arm}/bin/qemu-arm";
@@ -18,7 +20,8 @@ let
     magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'';
     mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\x00\xff\xfe\xff\xff\xff'';
   };
-in {
+in
+{
   options = {
     qemu-user = {
       arm = mkEnableOption "enable 32bit arm emulation";
@@ -28,7 +31,7 @@ in {
     nix.supportedPlatforms = mkOption {
       type = types.listOf types.str;
       description = "extra platforms that nix will run binaries for";
-      default = [];
+      default = [ ];
     };
   };
   config = mkIf (cfg.arm || cfg.aarch64) {
@@ -36,10 +39,11 @@ in {
       overlays = [ (import ./overlays-foo/qemu) ];
     };
     boot.binfmt.registrations =
-      optionalAttrs cfg.arm { inherit arm; } //
-      optionalAttrs cfg.aarch64 { inherit aarch64; } //
-      optionalAttrs cfg.riscv64 { inherit riscv64; };
-    nix.supportedPlatforms = (optionals cfg.arm [ "armv6l-linux" "armv7l-linux" ])
+      optionalAttrs cfg.arm { inherit arm; }
+      // optionalAttrs cfg.aarch64 { inherit aarch64; }
+      // optionalAttrs cfg.riscv64 { inherit riscv64; };
+    nix.supportedPlatforms =
+      (optionals cfg.arm [ "armv6l-linux" "armv7l-linux" ])
       ++ (optional cfg.aarch64 "aarch64-linux");
     nix.extraOptions = ''
       extra-platforms = ${toString config.nix.supportedPlatforms} i686-linux

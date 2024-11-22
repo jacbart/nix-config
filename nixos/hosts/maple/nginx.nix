@@ -51,7 +51,16 @@ _: {
           '';
         };
         locations."/" = { return = "301 https://$host$request_uri"; };
-        listen = [ { addr = "0.0.0.0"; port = 80; } { addr = "[::0]"; port = 80; } ];
+        listen = [
+          {
+            addr = "0.0.0.0";
+            port = 80;
+          }
+          {
+            addr = "[::0]";
+            port = 80;
+          }
+        ];
       };
     };
   };

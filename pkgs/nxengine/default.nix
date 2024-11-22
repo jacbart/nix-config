@@ -1,21 +1,20 @@
-{
-  lib,
-  SDL2,
-  SDL2_mixer,
-  SDL2_image,
-  SDL2_ttf,
-  SDL2_gfx,
-  SDL2_net,
-  callPackage,
-  cmake,
-  libcxx,
-  pkg-config,
-  fetchFromGitHub,
-  libpng,
-  libjpeg,
-  stdenv,
+{ lib
+, SDL2
+, SDL2_mixer
+, SDL2_image
+, SDL2_ttf
+, SDL2_gfx
+, SDL2_net
+, callPackage
+, cmake
+, libcxx
+, pkg-config
+, fetchFromGitHub
+, libpng
+, libjpeg
+, stdenv
+,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "nxengine-evo";
   version = "2.6.5-1";
@@ -50,7 +49,7 @@ stdenv.mkDerivation (finalAttrs: {
     libpng
     libjpeg
   ];
-  
+
   strictDeps = true;
 
   buildPhase = ''
@@ -59,19 +58,22 @@ stdenv.mkDerivation (finalAttrs: {
     cd ..
   '';
 
-  installPhase = ''
-    runHook preInstall
+  installPhase =
+    ''
+      runHook preInstall
 
-    mkdir -p $out/bin/ $out/share/nxengine/
-  '' + ''
-    cp -r ${finalAttrs.finalPackage.assets}/share/nxengine/data $out/share/nxengine/
-    chmod -R a=r,a+X $out/share/nxengine/data
-  '' + ''
-    cp ./build/nxengine-evo $out/bin/
-    ln -s $out/bin/nxengine-evo $out/bin/nx
+      mkdir -p $out/bin/ $out/share/nxengine/
+    ''
+    + ''
+      cp -r ${finalAttrs.finalPackage.assets}/share/nxengine/data $out/share/nxengine/
+      chmod -R a=r,a+X $out/share/nxengine/data
+    ''
+    + ''
+      cp ./build/nxengine-evo $out/bin/
+      ln -s $out/bin/nxengine-evo $out/bin/nx
 
-    runHook postInstall
-  '';
+      runHook postInstall
+    '';
 
   passthru = {
     assets = callPackage ./assets.nix { };

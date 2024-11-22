@@ -1,6 +1,9 @@
-{ inputs, pkgs, ... }: {
+{ inputs
+, pkgs
+, ...
+}: {
   # add the home manager module
-  imports = [inputs.lan-mouse.homeManagerModules.default];
+  imports = [ inputs.lan-mouse.homeManagerModules.default ];
 
   programs.lan-mouse = {
     enable = true;

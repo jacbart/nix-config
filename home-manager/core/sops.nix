@@ -1,7 +1,12 @@
-{ config, inputs, ... }: let
+{ config
+, inputs
+, ...
+}:
+let
   secretsPath = builtins.toString inputs.mySecrets;
   homeDir = config.home.homeDirectory;
-in {
+in
+{
   sops = {
     age.keyFile = "${homeDir}/.config/sops/age/keys.txt";
 

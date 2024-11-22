@@ -1,14 +1,14 @@
-{ pkgs, ...}: {
+{ pkgs, ... }: {
   home = {
     packages = with pkgs; [
       # my personally most used lsp's for helix
       dockerfile-language-server-nodejs # dockerfile language server
-      # gofumpt # go formatter
+      gofumpt # go formatter
       gopls # go language server
       nil # nix language server
       # marksman # markdown language server
       markdown-oxide # markdown language server
-      dprint # code formatter [ markdown ]
+      # dprint # code formatter [ markdown ]
       taplo # TOML language server
       terraform-ls # language server for [ .hcl, .tf, .tfvars, .koi, .jaws ]
       yaml-language-server # YAML language server
@@ -38,14 +38,14 @@
         language-server = {
           gopls = {
             command = "gopls";
-            config =  {
+            config = {
               "gofumpt" = true;
               "local" = "goimports";
               "semanticTokens" = true;
               "staticcheck" = true;
               "verboseOutput" = true;
               "analyses" = {
-              "fieldalignment" = true;
+                "fieldalignment" = true;
                 "nilness" = true;
                 unusedparams = true;
                 unusedwrite = true;
@@ -65,33 +65,39 @@
             };
           };
         };
-        language = [{
-          name = "go";
-          roots = [ "go.work" "go.mod" ];
-          auto-format = true;
-          comment-token = "//";
-          block-comment-tokens = { start = "/*"; end = "*/"; };
-          language-servers = [ "gopls" ];
-        } {
-          name = "hcl";
-          file-types = ["tf" "tfvars" "hcl" "koi" "jaws"];
-          auto-format = true;
-        }
-        #  {
-        #   name = "markdown";
-        #   formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
-        #   auto-format = true;
-        # }
-         {
-          name = "yaml";
-          file-types = ["yaml" "yml"];
-          auto-format = true;
-        }];
+        language = [
+          {
+            name = "go";
+            roots = [ "go.work" "go.mod" ];
+            auto-format = true;
+            comment-token = "//";
+            block-comment-tokens = {
+              start = "/*";
+              end = "*/";
+            };
+            language-servers = [ "gopls" ];
+          }
+          {
+            name = "hcl";
+            file-types = [ "tf" "tfvars" "hcl" "koi" "jaws" ];
+            auto-format = true;
+          }
+          #  {
+          #   name = "markdown";
+          #   formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
+          #   auto-format = true;
+          # }
+          {
+            name = "yaml";
+            file-types = [ "yaml" "yml" ];
+            auto-format = true;
+          }
+        ];
       };
       settings = {
         theme = "gruvbox_dark_hard";
         editor = {
-          shell = ["zsh" "-c"];
+          shell = [ "zsh" "-c" ];
           line-number = "absolute";
           mouse = true;
           color-modes = true;
@@ -100,9 +106,9 @@
           auto-completion = true;
           auto-format = true;
           statusline = {
-            left = ["mode" "spinner"];
-            center = ["file-name"];
-            right = ["diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type"];
+            left = [ "mode" "spinner" ];
+            center = [ "file-name" ];
+            right = [ "diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type" ];
             separator = "│";
           };
           cursor-shape = {

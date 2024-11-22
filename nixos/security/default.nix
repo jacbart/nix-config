@@ -1,8 +1,10 @@
-{ lib, ... }: let 
+{ lib, ... }:
+let
   certDir = ./certs;
-  certFiles = (builtins.readDir certDir);
+  certFiles = builtins.readDir certDir;
   loadCerts = cert: builtins.readFile (certDir + "/${cert}");
-in {
+in
+{
   imports = [
     ./sops.nix
   ];

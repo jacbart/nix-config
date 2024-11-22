@@ -1,4 +1,7 @@
-{ config, pkgs, ... }: {
+{ config
+, pkgs
+, ...
+}: {
   imports = [
     ../apps/firefox.nix
     # ../apps/rustdesk.nix
@@ -17,5 +20,4 @@
     ];
     file."${config.home.homeDirectory}/Pictures/wallpapers/bg.jpg".source = ../files/bg.jpg;
   };
-
 }

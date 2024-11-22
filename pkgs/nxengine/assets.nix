@@ -1,8 +1,8 @@
 { lib
 , stdenvNoCC
 , fetchzip
+,
 }:
-
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "nxengine-assets";
   version = "2.6.5-1";

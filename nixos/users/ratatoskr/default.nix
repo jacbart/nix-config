@@ -1,37 +1,45 @@
-{ config, desktop, lib, pkgs, ... }:
+{ config
+, desktop
+, lib
+, pkgs
+, ...
+}:
 let
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
-  imports = [ ]
-  ++ lib.optionals (desktop != null) [
-  ];
+  imports =
+    lib.optionals (desktop != null) [
+    ];
 
-  environment.systemPackages = with pkgs; [
-    age
-  ] ++ lib.optionals (desktop != null) [
-    unstable.firefox
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      age
+    ]
+    ++ lib.optionals (desktop != null) [
+      unstable.firefox
+    ];
 
   sops.secrets.ratatoskr-password.neededForUsers = true;
   users.mutableUsers = false;
 
   users.users.ratatoskr = {
     description = "Ratatoskr";
-    extraGroups = [
-      "audio"
-      "input"
-      "networkmanager"
-      "users"
-      "video"
-      "wheel"
-    ]
-    ++ ifExists [
-      "docker"
-      "podman"
-      "nextcloud"
-      "hydra"
-    ];
+    extraGroups =
+      [
+        "audio"
+        "input"
+        "networkmanager"
+        "users"
+        "video"
+        "wheel"
+      ]
+      ++ ifExists [
+        "docker"
+        "podman"
+        "nextcloud"
+        "hydra"
+      ];
     hashedPasswordFile = config.sops.secrets.ratatoskr-password.path;
     homeMode = "0755";
     isNormalUser = true;

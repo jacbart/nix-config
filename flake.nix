@@ -48,68 +48,105 @@
       flake = false;
     };
   };
-  outputs = {
-  self
-  , nix-formatter-pack
-  , nixpkgs
-  , ...
-  } @ inputs:
-  let
-    inherit (self) outputs;
-    inherit (nixpkgs) lib;
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = lib.mkForce "24.05";
-    libx = import ./lib { inherit inputs outputs stateVersion; };
-  in
-  {
-    # home-manager switch -b backup --flake $HOME/workspace/personal/nix-config
-    # nix build .#homeConfigurations."meep@boojum".activationPackage
-    homeConfigurations = {
-      # Workstations
-      "meep@boojum" = libx.mkHome { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
-      "meep@ash" = libx.mkHome { hostname = "ash"; username = "meep"; desktop = "xfce"; platform = "aarch64-linux"; };
-      "jackbartlett@jackjrny" = libx.mkHome { hostname = "jackjrny"; username = "jackbartlett"; platform = "aarch64-darwin"; };
-      # Servers
-      "ratatoskr@maple" = libx.mkHome { hostname = "maple"; username = "ratatoskr"; platform = "aarch64-linux"; };
-    };
-    nixosConfigurations = {
-      # .iso images
-      #  - nix build .#nixosConfigurations.{iso-console|iso-desktop}.config.system.build.isoImage
-      # Workstations
-      #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
-      #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
-      boojum = libx.mkHost { hostname = "boojum"; username = "meep"; desktop = "cosmic"; };
-      ash = libx.mkHost { hostname = "ash"; username = "meep"; desktop = "xfce"; platform = "aarch64-linux"; };
-      # Servers
-      maple = libx.mkHost { hostname = "maple"; username = "ratatoskr"; platform = "aarch64-linux"; };
-    };
-
-    # Devshell for bootstrapping; acessible via 'nix develop'
-    devShells = libx.forAllSystems (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in import ./shell.nix { inherit pkgs; }
-    );
-
-    # nix fmt
-    formatter = libx.forAllSystems (system:
-      nix-formatter-pack.lib.mkFormatter {
-        pkgs = nixpkgs.legacyPackages.${system};
-        config.tools = {
-          alejandra.enable = false;
-          deadnix.enable = true;
-          nixpkgs-fmt.enable = true;
-          statix.enable = true;
+  outputs =
+    { self
+    , nix-formatter-pack
+    , nixpkgs
+    , ...
+    } @ inputs:
+    let
+      inherit (self) outputs;
+      inherit (nixpkgs) lib;
+      # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+      stateVersion = lib.mkForce "24.05";
+      libx = import ./lib { inherit inputs outputs stateVersion; };
+    in
+    {
+      # home-manager switch -b backup --flake $HOME/workspace/personal/nix-config
+      # nix build .#homeConfigurations."meep@boojum".activationPackage
+      homeConfigurations = {
+        # Workstations
+        "meep@boojum" = libx.mkHome {
+          hostname = "boojum";
+          username = "meep";
+          desktop = "cosmic";
         };
-      }
-    );
+        "meep@ash" = libx.mkHome {
+          hostname = "ash";
+          username = "meep";
+          desktop = "xfce";
+          platform = "aarch64-linux";
+        };
+        "jackbartlett@jackjrny" = libx.mkHome {
+          hostname = "jackjrny";
+          username = "jackbartlett";
+          platform = "aarch64-darwin";
+        };
+        # Servers
+        "ratatoskr@maple" = libx.mkHome {
+          hostname = "maple";
+          username = "ratatoskr";
+          platform = "aarch64-linux";
+        };
+      };
+      nixosConfigurations = {
+        # .iso images
+        #  - nix build .#nixosConfigurations.{iso-console|iso-desktop}.config.system.build.isoImage
+        # Workstations
+        #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
+        #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
+        boojum = libx.mkHost {
+          hostname = "boojum";
+          username = "meep";
+          desktop = "cosmic";
+        };
+        ash = libx.mkHost {
+          hostname = "ash";
+          username = "meep";
+          desktop = "xfce";
+          platform = "aarch64-linux";
+        };
+        # Servers
+        maple = libx.mkHost {
+          hostname = "maple";
+          username = "ratatoskr";
+          platform = "aarch64-linux";
+        };
+      };
 
-    # Custom packages and modifications, exported as overlays
-    overlays = (import ./overlays { inherit inputs; });
+      # Devshell for bootstrapping; acessible via 'nix develop'
+      devShells = libx.forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./shell.nix { inherit pkgs; }
+      );
 
-    # Custom packages; acessible via 'nix build', 'nix shell', etc
-    packages = libx.forAllSystems (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in import ./pkgs { inherit pkgs; }
-    );
-  };
+      # nix fmt
+      formatter = libx.forAllSystems (
+        system:
+        nix-formatter-pack.lib.mkFormatter {
+          pkgs = nixpkgs.legacyPackages.${system};
+          config.tools = {
+            alejandra.enable = true;
+            deadnix.enable = true;
+            nixpkgs-fmt.enable = true;
+            statix.enable = true;
+          };
+        }
+      );
+
+      # Custom packages and modifications, exported as overlays
+      overlays = import ./overlays { inherit inputs; };
+
+      # Custom packages; acessible via 'nix build', 'nix shell', etc
+      packages = libx.forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./pkgs { inherit pkgs; }
+      );
+    };
 }

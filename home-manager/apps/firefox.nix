@@ -5,7 +5,7 @@
     # preferencesStatus = "default";
     # preferences = {
     #   accessibility.typeaheadfind.flashBar = 0;
-      
+
     # };
     # languagePacks = [ "en-US" ];
   };

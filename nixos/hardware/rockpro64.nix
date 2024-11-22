@@ -1,6 +1,5 @@
 # This configuration file can be safely imported in your system configuration.
 { lib, ... }: {
-
   boot.initrd.availableKernelModules = [ "ahci" "usbhid" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
