@@ -1,5 +1,4 @@
-{ inputs
-, pkgs
+{ pkgs
 , ...
 }:
 let
@@ -11,17 +10,6 @@ let
       ---
       # For configuration options and examples, please see:
       # https://gethomepage.dev
-
-      - Information:
-          - Github:
-              - abbr: GH
-                href: https://github.com/
-          - StackOverflow:
-              - abbr: SO
-                href: https://stackoverflow.com/
-          - Chatgpt:
-              - abbr: CG
-                href: https://app.chatgpt.com/
 
       - Social:
           - Mastodon:
@@ -35,12 +23,24 @@ let
           - Plex:
               - abbr: PL
                 href: https://app.plex.tv/
+
+      - Homelab:
+        - Nextcloud:
+          - addr: NC
+            href: https://cloud.meep.sh/
+        - AudiobookShelf:
+          - addr: AS
+            href: https://books.meep.sh/
+        - Minio:
+          - addr: MO
+            href: https://minio.meep.sh/
+        - Zitadel:
+          - addr: ZD
+            href: https://zitadel.meep.sh/
     '';
   };
 in
 {
-  imports = [ "${inputs.nixpkgs-unstable}/nixos/modules/services/misc/homepage-dashboard.nix" ];
-
   services.homepage-dashboard = {
     enable = true;
     package = pkgs.unstable.homepage-dashboard;

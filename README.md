@@ -1,5 +1,15 @@
 # NixOS & Home Manager Configurations
 
+<!--toc:start-->
+- [NixOS & Home Manager Configurations](#nixos-home-manager-configurations)
+  - [Structure](#structure)
+  - [Installing](#installing)
+  - [Applying Changes](#applying-changes)
+    - [NixOS](#nixos)
+    - [Home Manager](#home-manager)
+    - [ISO](#iso)
+<!--toc:end-->
+
 > inspiration from [wimpysworld nix-config](https://github.com/wimpysworld/nix-config)
 
 [NixOS]: https://nixos.org/
