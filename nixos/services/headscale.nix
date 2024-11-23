@@ -1,13 +1,14 @@
 { pkgs, ... }: {
   services.headscale = {
     enable = true;
-    package = pkgs.headscale;
-    address = "192.168.1.5";
+    package = pkgs.beta.headscale;
+    address = "0.0.0.0";
     port = 8082;
     user = "headscale";
     group = "headscale";
     settings = {
       server_url = "https://hs.meep.sh:443";
+      dns_config.base_domain = "meep.sh";
       database = {
         type = "postgres";
         postgres = {

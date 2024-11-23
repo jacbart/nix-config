@@ -5,6 +5,7 @@
     # You can access packages and modules from different nixpkgs revs at the same time.
     # See 'unstable-packages' overlay in 'overlays/default.nix'.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
@@ -71,16 +72,17 @@
           username = "meep";
           desktop = "cosmic";
         };
+        "jackbartlett@jackjrny" = libx.mkHome {
+          hostname = "jackjrny";
+          username = "jackbartlett";
+          platform = "aarch64-darwin";
+        };
+        # Handhelds
         "meep@ash" = libx.mkHome {
           hostname = "ash";
           username = "meep";
           desktop = "xfce";
           platform = "aarch64-linux";
-        };
-        "jackbartlett@jackjrny" = libx.mkHome {
-          hostname = "jackjrny";
-          username = "jackbartlett";
-          platform = "aarch64-darwin";
         };
         # Servers
         "ratatoskr@maple" = libx.mkHome {
@@ -100,6 +102,7 @@
           username = "meep";
           desktop = "cosmic";
         };
+        # Handhelds
         ash = libx.mkHost {
           hostname = "ash";
           username = "meep";
