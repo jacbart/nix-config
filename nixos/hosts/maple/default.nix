@@ -8,7 +8,6 @@
     # ./nginx.nix
     ./distributed-builds.nix
     # (import ./disks.nix { })
-    ../../services/homepage.nix
     ../../services/minio.nix
     ../../services/nextcloud-server.nix
     ../../services/audiobookshelf.nix
