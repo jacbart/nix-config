@@ -1,7 +1,7 @@
 _: {
   services.postgresql = {
     enable = true;
-    ensureDatabases = [ "nextcloud" "zitadel" ];
+    ensureDatabases = [ "nextcloud" "zitadel" "headscale" ];
     ensureUsers = [
       {
         name = "nextcloud";
@@ -9,6 +9,10 @@ _: {
       }
       {
         name = "zitadel";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "headscale";
         ensureDBOwnership = true;
       }
     ];
