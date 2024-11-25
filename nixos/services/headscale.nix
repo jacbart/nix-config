@@ -16,7 +16,7 @@ in {
     group = "headscale";
     settings = {
       server_url = "https://hs.${domain}:443";
-      dns_config.base_domain = domain;
+      dns.base_domain = domain;
       database = {
         type = "postgres";
         postgres = {
