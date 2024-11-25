@@ -55,7 +55,7 @@ in
     };
     steps = {
       FirstInstance = {
-        Skip = false;
+        Skip = true;
         DefaultLanguage = "en";
         InstanceName = "ZITADEL";
         Org = {

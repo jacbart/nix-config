@@ -15,25 +15,47 @@ in {
     user = "headscale";
     group = "headscale";
     settings = {
-      server_url = "https://hs.${domain}:443";
-      dns.base_domain = "meep.internal";
+      log = {
+        level = "debug";
+        format = "text";
+      };
+      server_url = "https://hs.${domain}";
+      # metrics_listen_url = "127.0.0.1:9092";
+      grpc_listen_url = "0.0.0.0:50443";
+      grpc_allow_insecure = true;
+      dns = {
+        nameservers.global = [
+          "192.168.0.120"
+        ];
+        base_domain = "net.${domain}";
+      };
       database = {
         type = "postgres";
         postgres = {
           host = "/run/postgresql";
-          port = "5432";
           user = "headscale";
           name = "headscale";
         };
       };
       oidc = {
         only_start_if_oidc_is_available = true;
-        issuer = "zitadel.${domain}";
+        issuer = "https://zitadel.${domain}";
         client_id = "295278622669865221";
         client_secret_path = config.sops.secrets.zitadel-tailscale-client-secret.path;
-        scope = [ "openid" "profile" "email" "custom" ];
-        strip_email_domain = true;
+        scope = [ "openid" "profile" "email" ];
+        # allowed_users = [
+        #   "jack@meep.sh"
+        # ];
       };
     };
   };
+
+  networking.firewall = {
+    allowedUDPPorts = [ config.services.headscale.port 50443 ];
+    allowedTCPPorts = [ config.services.headscale.port 50443 ];
+  };
+
+  environment.systemPackages = [
+    config.services.headscale.package
+  ];
 }

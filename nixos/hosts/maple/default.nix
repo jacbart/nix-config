@@ -14,6 +14,7 @@
     # ../../services/hydra.nix
     ../../services/zitadel.nix
     # ../../services/netbird.nix
+    ../../services/headscale.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
@@ -22,7 +23,7 @@
   boot.loader.generic-extlinux-compatible.enable = true;
   # zfs
   boot.supportedFilesystems = [ "zfs" ];
-  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
   boot.zfs.extraPools = [ "trunk" ];
   services.zfs.autoScrub.enable = true;
   services.zfs.trim.enable = true;

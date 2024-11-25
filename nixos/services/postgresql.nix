@@ -22,6 +22,7 @@ _: {
         superuser_map    ratatoskr   postgres
         superuser_map    postgres    postgres
         superuser_map    zitadel     postgres
+        superuser_map    headscale   postgres
         # Let other names login as themselves
         superuser_map    /^(.*)$     \1
     '';
