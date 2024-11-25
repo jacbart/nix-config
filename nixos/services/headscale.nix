@@ -16,7 +16,7 @@ in {
     group = "headscale";
     settings = {
       server_url = "https://hs.${domain}:443";
-      dns.base_domain = domain;
+      dns.base_domain = "meep.internal";
       database = {
         type = "postgres";
         postgres = {
