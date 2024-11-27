@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./tools # cli/tui tools or services
-    ./zsh.nix # zsh config
+    # ./zsh.nix # zsh config
   ];
 
   home.packages = with pkgs; [

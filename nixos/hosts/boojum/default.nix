@@ -16,6 +16,8 @@
     ../../services/minio-client.nix
   ];
 
+  services.tailscale.enable = true;
+
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
@@ -73,6 +75,11 @@
   };
 
   networking.useDHCP = lib.mkDefault true;
+  networking.firewall = {
+    checkReversePath = "loose";
+    trustedInterfaces = [ "tailscale0" ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
