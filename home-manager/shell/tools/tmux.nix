@@ -36,7 +36,7 @@
 
       set -g status-keys vi
 
-      set -g @themepack 'basic'
+      set -g @themepack 'powerline/default/red'
 
       # Don't exit copy mode when mouse drags
       unbind -T copy-mode-vi MouseDragEnd1Pane

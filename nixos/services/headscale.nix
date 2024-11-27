@@ -1,8 +1,11 @@
 { config
 , pkgs
-, ... }: 
-let domain = "meep.sh";
-in {
+, ...
+}:
+let
+  domain = "meep.sh";
+in
+{
   sops.secrets.zitadel-tailscale-client-secret = {
     owner = "headscale";
     group = "headscale";

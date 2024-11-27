@@ -48,7 +48,7 @@ in
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJJt5PF37jNBpEIan2WXnN23fNiZ2ApC5RxCSXrcNZddAAAABHNzaDo= ratatoskr"
     ];
     packages = [ pkgs.home-manager ];
-    shell = pkgs.zsh;
+    shell = pkgs.nushell;
   };
 
   nix.settings.trusted-users = [ "ratatoskr" ];

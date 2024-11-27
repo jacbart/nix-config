@@ -3,7 +3,7 @@
   programs = {
     nushell = {
       enable = true;
-      package = pkgs.unstable.nushell;
+      package = pkgs.nushell;
       shellAliases = {
         ll = "ls -l";
         la = "ls -la";
@@ -12,17 +12,17 @@
         gs = "git status";
         ga = "git add";
         gcm = "git commit -m";
-        nix-gc = "sudo nix-collect-garbage --delete-older-than 10d && nix-collect-garbage --delete-older-than 10d";
-        rebuild-all = "sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config && home-manager switch -b backup --flake $HOME/workspace/personal/nix-config";
-        rebuild-home = "home-manager switch -b backup --flake $HOME/workspace/personal/nix-config";
-        rebuild-host = "sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config";
-        rebuild-lock = "pushd $HOME/workspace/personal/nix-config && nix flake update && popd";
+        nix-gc = "sudo nix-collect-garbage --delete-older-than 10d and nix-collect-garbage --delete-older-than 10d";
+        # rebuild-all = "sudo nixos-rebuild switch --flake $($env.HOME)/workspace/personal/nix-config and home-manager switch -b backup --flake $($env.HOME)/workspace/personal/nix-config";
+        # rebuild-home = "home-manager switch -b backup --flake $($env.HOME)/workspace/personal/nix-config";
+        # rebuild-host = "sudo nixos-rebuild switch --flake $($env.HOME)/workspace/personal/nix-config";
+        # rebuild-lock = "pushd $($env.HOME)/workspace/personal/nix-config and nix flake update and popd";
       };
     };
 
     carapace = {
       enable = true;
-      package = pkgs.unstable.carapace;
+      package = pkgs.carapace;
       enableNushellIntegration = true;
     };
   };
