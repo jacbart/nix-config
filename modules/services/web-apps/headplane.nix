@@ -6,7 +6,7 @@
 let
   hs-cfg = config.services.headscale;
 
-  settingsFormat = pkgs.formats.yaml {};
+  settingsFormat = pkgs.formats.yaml { };
 in
 {
   options = {
