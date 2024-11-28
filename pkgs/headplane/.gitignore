@@ -1,5 +1,0 @@
-# Ignore .direnv directory
-**/.direnv/
-
-# Ignore nix build files
-result*
