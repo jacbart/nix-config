@@ -46,9 +46,6 @@ in
         client_id = "295278622669865221";
         client_secret_path = config.sops.secrets.zitadel-tailscale-client-secret.path;
         scope = [ "openid" "profile" "email" ];
-        # allowed_users = [
-        #   "jack@meep.sh"
-        # ];
       };
     };
   };
