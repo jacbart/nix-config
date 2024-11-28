@@ -2,7 +2,6 @@
 , lib
 , ...
 }: {
-  imports = [ ../../shell/zsh.nix ];
   services = {
     gpg-agent = {
       enable = true;

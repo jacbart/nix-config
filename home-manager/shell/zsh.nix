@@ -76,9 +76,4 @@ in
       bindkey '^ ' forward-word
     '';
   };
-  programs.carapace = {
-    enable = true;
-    package = pkgs.unstable.carapace;
-    enableZshIntegration = true;
-  };
 }

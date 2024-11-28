@@ -1,8 +1,16 @@
 { pkgs, ... }: {
   imports = [
     ./tools # cli/tui tools or services
-    # ./zsh.nix # zsh config
+    ./zsh.nix # zsh config
+    ./nushell.nix
   ];
+
+  programs.carapace = {
+    enable = true;
+    package = pkgs.unstable.carapace;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
+  };
 
   home.packages = with pkgs; [
     scripts.journal
