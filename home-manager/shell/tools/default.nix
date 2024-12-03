@@ -1,12 +1,12 @@
 { pkgs, ... }: {
   imports = [
     ./bottom.nix
-    ./bitwarden.nix
+    # ./bitwarden.nix
     ./broot.nix
     ./eza.nix
     ./git.nix
     ./helix.nix
-    ./neofetch.nix
+    # ./neofetch.nix
     ./starship.nix
     ./tmux.nix
     ./zoxide.nix
