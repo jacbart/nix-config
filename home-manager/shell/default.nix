@@ -2,7 +2,7 @@
   imports = [
     ./tools # cli/tui tools or services
     ./zsh.nix # zsh config
-    ./nushell.nix
+    ./nushell.nix # nu shell config
   ];
 
   programs.carapace = {
@@ -13,6 +13,7 @@
   };
 
   home.packages = with pkgs; [
+    pax-utils
     scripts.journal
   ];
 
