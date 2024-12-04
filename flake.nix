@@ -59,7 +59,7 @@
       inherit (self) outputs;
       inherit (nixpkgs) lib;
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-      stateVersion = lib.mkForce "24.05";
+      stateVersion = lib.mkForce "24.11";
       libx = import ./lib { inherit inputs outputs stateVersion; };
     in
     {
