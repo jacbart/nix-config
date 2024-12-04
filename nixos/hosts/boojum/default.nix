@@ -14,9 +14,8 @@
     ../../services/bluetooth.nix
     ../../services/pipewire.nix
     ../../services/minio-client.nix
+    ../../services/tailscale.nix
   ];
-
-  services.tailscale.enable = true;
 
   boot = {
     initrd = {
@@ -75,11 +74,6 @@
   };
 
   networking.useDHCP = lib.mkDefault true;
-  networking.firewall = {
-    checkReversePath = "loose";
-    trustedInterfaces = [ "tailscale0" ];
-    allowedUDPPorts = [ config.services.tailscale.port ];
-  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
