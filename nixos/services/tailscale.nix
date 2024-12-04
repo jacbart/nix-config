@@ -1,10 +1,13 @@
 { config
 , lib
 , pkgs ? import <nixpkgs>
-, ... }: let
+, ...
+}:
+let
   inherit (lib) mkDefault;
   login_server = "hs.meep.sh";
-in {
+in
+{
   services.sops.secrets."tailscale/api-key" = { };
 
   services.tailscale = {
