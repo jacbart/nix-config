@@ -8,7 +8,7 @@ let
   login_server = "hs.meep.sh";
 in
 {
-  services.sops.secrets."tailscale/api-key" = { };
+  sops.secrets."tailscale/api-key" = { };
 
   services.tailscale = {
     enable = true;
