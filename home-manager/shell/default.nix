@@ -1,6 +1,11 @@
-{ pkgs, lib, ... }: let
+{ pkgs
+, lib
+, ...
+}:
+let
   inherit (pkgs.stdenv) isLinux;
-in {
+in
+{
   imports = [
     ./tools # cli/tui tools or services
     ./zsh.nix # zsh config
@@ -14,9 +19,11 @@ in {
     enableNushellIntegration = true;
   };
 
-  home.packages = with pkgs; [
-    scripts.journal
-  ] ++ lib.optional isLinux pkgs.pax-utils;
+  home.packages = with pkgs;
+    [
+      scripts.journal
+    ]
+    ++ lib.optional isLinux pkgs.pax-utils;
 
   home.file.".ssh/config".text = ''
     Host boojum
