@@ -19,7 +19,7 @@ in
     useRoutingFeatures = mkDefault "client"; # "none", "client", "server", or "both"
     extraUpFlags = mkDefault [ "--login-server" "https://${login_server}" "--accept-routes" ];
     authKeyFile = config.sops.secrets."tailscale/api-key".path;
-    authKey = mkDefault {
+    authKeyParameters = mkDefault {
       baseURL = "https://${login_server}";
       ephemeral = mkDefault null;
       preauthorized = mkDefault null;
