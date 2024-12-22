@@ -1,10 +1,10 @@
 { pkgs, ... }: {
-  environment.systemPackages = [ pkgs.stable.audiobookshelf ];
+  environment.systemPackages = [ pkgs.audiobookshelf ];
 
   services.audiobookshelf = {
     enable = true;
     port = 8234;
-    package = pkgs.stable.audiobookshelf;
+    package = pkgs.audiobookshelf;
     user = "nextcloud";
     group = "nextcloud";
     openFirewall = true;

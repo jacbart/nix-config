@@ -14,6 +14,8 @@ in
   };
 
   imports = [ ./postgresql.nix ];
+  systemd.services.nextcloud-setup.after = [ "postgresql.service" ];
+  systemd.services.nextcloud-setup.requires = [ "postgresql.service" ];
 
   services = {
     nextcloud = {
@@ -50,9 +52,11 @@ in
       };
       extraAppsEnable = true;
       settings = {
-        # log_type = "file";
+        # log_type = "systemd";
         overwriteprotocol = "https";
         default_phone_region = "US";
+        # trusted_domains = [ "meep.sh" ];
+        # trusted_proxies = [ "cloud.meep.sh" ];
         enabledPreviewProviders = [
           "OC\\Preview\\BMP"
           "OC\\Preview\\GIF"

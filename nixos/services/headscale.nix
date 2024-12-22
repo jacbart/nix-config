@@ -50,6 +50,8 @@ in
     };
   };
 
+  systemd.services.headscale.after = [ "network-online.target" "zitadel.service" ];
+
   networking.firewall = {
     allowedUDPPorts = [ config.services.headscale.port 50443 ];
     allowedTCPPorts = [ config.services.headscale.port 50443 ];

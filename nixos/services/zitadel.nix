@@ -18,9 +18,12 @@ in
     ./postgresql.nix
   ];
 
+  systemd.services.zitadel.after = [ "postgresql.service" ];
+  systemd.services.zitadel.requires = [ "postgresql.service" ];
+
   services.zitadel = {
     enable = true;
-    package = pkgs.unstable.zitadel;
+    package = pkgs.zitadel;
     openFirewall = true;
     inherit user;
     inherit group;
@@ -65,7 +68,7 @@ in
             FirstName = "Jack";
             LastName = "Bartlett";
             Email = {
-              Address = "jack@meep.sh";
+              Address = "jack@${domain}";
               Verified = true;
             };
             Password = "Password!23";

@@ -60,5 +60,5 @@ in
     path = "${homeDir}/.aws/config";
   };
 
-  environment.systemPackages = [ pkgs.stable.minio-client ];
+  environment.systemPackages = [ pkgs.minio-client ];
 }
