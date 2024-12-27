@@ -28,6 +28,7 @@ in
       config = {
         dbtype = "pgsql";
         dbhost = "/run/postgresql";
+        adminuser = "admin";
         adminpassFile = config.sops.secrets.nextcloud-admin-password.path;
       };
       phpOptions = lib.mkForce {
@@ -55,8 +56,7 @@ in
         # log_type = "systemd";
         overwriteprotocol = "https";
         default_phone_region = "US";
-        # trusted_domains = [ "meep.sh" ];
-        # trusted_proxies = [ "cloud.meep.sh" ];
+        trusted_domains = [ "cloud.meep.sh" ];
         enabledPreviewProviders = [
           "OC\\Preview\\BMP"
           "OC\\Preview\\GIF"
