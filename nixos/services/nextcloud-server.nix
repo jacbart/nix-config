@@ -6,16 +6,25 @@
 let
   subdomain = "cloud";
   domain = "meep.sh";
+  user = "nextcloud";
+  group = "nextcloud";
 in
 {
   sops.secrets.nextcloud-admin-password = {
-    owner = "nextcloud";
-    group = "nextcloud";
+    owner = user;
+    inherit group;
   };
 
   imports = [ ./postgresql.nix ];
   systemd.services.nextcloud-setup.after = [ "postgresql.service" ];
   systemd.services.nextcloud-setup.requires = [ "postgresql.service" ];
+
+  systemd.services.nextcloud-setup.serviceConfig = {
+    User = user;
+    Group = group;
+    StateDirectory = "nextcloud";
+    StateDirectoryMode = "0750";
+  };
 
   services = {
     nextcloud = {
@@ -24,11 +33,10 @@ in
       hostName = "${subdomain}.${domain}";
       package = pkgs.nextcloud30;
       configureRedis = true;
-      database.createLocally = false; # Use postgresql.nix as db
+      database.createLocally = false; # Use postgresql.nix to create db
       config = {
         dbtype = "pgsql";
         dbhost = "/run/postgresql";
-        adminuser = "admin";
         adminpassFile = config.sops.secrets.nextcloud-admin-password.path;
       };
       phpOptions = lib.mkForce {
@@ -72,5 +80,5 @@ in
         ];
       };
     };
-  };
+  };  
 }

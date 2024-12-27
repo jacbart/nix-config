@@ -10,6 +10,7 @@ in
     owner = "headscale";
     group = "headscale";
   };
+
   services.headscale = {
     enable = true;
     package = pkgs.headscale;

@@ -8,11 +8,12 @@
     # ./nginx.nix
     ./distributed-builds.nix
     # (import ./disks.nix { })
-    ../../services/zitadel.nix
+    # ../../services/zitadel.nix
+    # ../../services/headscale.nix
     ../../services/minio.nix
+    ../../services/postgresql.nix
     ../../services/nextcloud-server.nix
-    ../../services/headscale.nix
-    ../../services/audiobookshelf.nix
+    # ../../services/audiobookshelf.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
