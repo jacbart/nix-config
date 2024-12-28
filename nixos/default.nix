@@ -18,12 +18,12 @@
 
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hosts/${hostname}
-      ./libraries
       ./services/firewall.nix
       ./services/openssh.nix
       ./users/root
       ./security
     ]
+    ++ lib.optional (platform == "x86_64-linux") ./libraries
     ++ lib.optional (builtins.pathExists (./. + "/users/${username}")) ./users/${username}
     ++ lib.optional (desktop != null) ./desktop
     ++ lib.optional (hostname != "ash") ./services/smartmon.nix;

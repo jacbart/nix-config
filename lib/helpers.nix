@@ -39,9 +39,11 @@
           ../nixos
           inputs.sops-nix.nixosModules.sops
           inputs.lix-module.nixosModules.default
+        ]
+        ++ (inputs.nixpkgs.lib.optionals (platform == "x86_64-linux") [
           inputs.nix-ld.nixosModules.nix-ld
           { programs.nix-ld.dev.enable = true; }
-        ]
+        ])
         ++ (inputs.nixpkgs.lib.optionals (installer != null) [
           installer
         ])
