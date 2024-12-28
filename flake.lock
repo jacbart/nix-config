@@ -263,26 +263,6 @@
         "type": "github"
       }
     },
-    "nix-ld": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1735341044,
-        "narHash": "sha256-ULoitJD5bMu0pFvh35cY5EEYywxj4e2fYOpqZwKB1lk=",
-        "owner": "Mic92",
-        "repo": "nix-ld",
-        "rev": "532718cca4484bd91d8edf8772cb9c34541a8533",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "nix-ld",
-        "type": "github"
-      }
-    },
     "nixos-cosmic": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -434,7 +414,6 @@
         "lix-module": "lix-module",
         "mySecrets": "mySecrets",
         "nix-formatter-pack": "nix-formatter-pack",
-        "nix-ld": "nix-ld",
         "nixos-cosmic": "nixos-cosmic",
         "nixos-hardware": "nixos-hardware",
         "nixos-uconsole": "nixos-uconsole",

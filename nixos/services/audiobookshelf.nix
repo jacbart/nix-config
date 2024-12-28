@@ -1,9 +1,11 @@
-{ pkgs, ... }: let
+{ pkgs, ... }:
+let
   user = "nextcloud";
   group = "nextcloud";
   package = pkgs.unstable.audiobookshelf;
   dataDir = "nextcloud/data/jack/files/Media/Audiobooks"; # path starts with /var/lib/ default is audiobookshelf
-in {
+in
+{
   environment.systemPackages = [ package ];
 
   # Since this is using nextcloud's user we need nextcloud-setup first
