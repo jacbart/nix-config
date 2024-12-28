@@ -13,7 +13,7 @@
     ../../services/minio.nix
     ../../services/postgresql.nix
     ../../services/nextcloud-server.nix
-    # ../../services/audiobookshelf.nix
+    ../../services/audiobooks.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
