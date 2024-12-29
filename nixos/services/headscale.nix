@@ -43,7 +43,7 @@ in
       };
       oidc = {
         only_start_if_oidc_is_available = true;
-        issuer = "https://zitadel.${domain}";
+        issuer = "https://auth.${domain}";
         client_id = "295278622669865221";
         client_secret_path = config.sops.secrets.zitadel-tailscale-client-secret.path;
         scope = [ "openid" "profile" "email" ];
@@ -51,6 +51,7 @@ in
     };
   };
 
+  systemd.services.headscale.requires = [ "zitadel.service" ];
   systemd.services.headscale.after = [ "network-online.target" "zitadel.service" ];
 
   networking.firewall = {

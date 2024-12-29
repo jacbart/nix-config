@@ -3,9 +3,12 @@
 , ...
 }:
 let
+  instance = "maple";
+  subdomain = "auth";
   domain = "meep.sh";
   user = "zitadel";
   group = "zitadel";
+  package = pkgs.zitadel;
 in
 {
   sops.secrets.zitadel-master-key = {
@@ -14,27 +17,31 @@ in
   };
 
   imports = [
-    # ./cockroachdb.nix
     ./postgresql.nix
   ];
 
   systemd.services.zitadel.after = [ "postgresql.service" ];
   systemd.services.zitadel.requires = [ "postgresql.service" ];
 
+  # add zitadel to path
+  environment.systemPackages = [ package ];
+
   services.zitadel = {
     enable = true;
-    package = pkgs.zitadel;
+    inherit package user group;
     openFirewall = true;
-    inherit user;
-    inherit group;
     masterKeyFile = config.sops.secrets.zitadel-master-key.path;
     tlsMode = "external";
     settings = {
       Port = 8123;
       ExternalPort = 443;
-      ExternalDomain = "zitadel.${domain}";
+      ExternalDomain = "${subdomain}.${domain}";
       ExternalSecure = true;
-      TLS.Enabled = false;
+      InstanceHostHeaders = [ 
+        instance
+      ];
+      PublicHostHeaders = [];
+      # TLS.Enabled = false;
       Database.postgres = {
         Host = "localhost";
         Port = 5432;
@@ -58,11 +65,11 @@ in
     };
     steps = {
       FirstInstance = {
-        Skip = true;
+        Skip = false;
         DefaultLanguage = "en";
-        InstanceName = "ZITADEL";
+        InstanceName = instance;
         Org = {
-          Name = "z";
+          Name = "arbor";
           Human = {
             UserName = "jack";
             FirstName = "Jack";
