@@ -184,10 +184,11 @@
         "https://s3.meep.sh/nix-cache"
       ];
       trusted-public-keys = [
-        "s3.meep.sh-1:uq1p0xwqQ+27BixEKQAmH/WF5jWe4hu4DO5xJ2GOy+w=" # maple
-        "s3.meep.sh-2:P0roq43phk+GPx8j96sOsMLS0HkwXdHEEGy6Evjof70=" # ash
-        "s3.meep.sh-3:mcrDvp6CZgkpq+/aRB18b6XtJywHSPkSZWr4NrnVGOc=" # boojum
+        "s3.meep.sh-3:mcrDvp6CZgkpq+/aRB18b6XtJywHSPkSZWr4NrnVGOc="
       ];
+
+      secret-key-files = "/etc/nix/cache.key";
+      post-build-hook = "${pkgs.scripts.upload-to-cache}/bin/upload-to-cache";
     };
   };
 
