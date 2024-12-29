@@ -37,10 +37,10 @@ in
       ExternalPort = 443;
       ExternalDomain = "${subdomain}.${domain}";
       ExternalSecure = true;
-      InstanceHostHeaders = [ 
-        instance
-      ];
-      PublicHostHeaders = [];
+      # InstanceHostHeaders = [
+      #   instance
+      # ];
+      # PublicHostHeaders = [ ];
       # TLS.Enabled = false;
       Database.postgres = {
         Host = "localhost";
