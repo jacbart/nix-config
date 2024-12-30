@@ -1,4 +1,7 @@
-{ config, lib, ... }:
+{ config
+, lib
+, ...
+}:
 let
   certDir = ./certs;
   certFiles = builtins.readDir certDir;
