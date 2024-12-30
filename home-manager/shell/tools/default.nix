@@ -7,26 +7,25 @@
     ./git.nix
     ./helix.nix
     # ./neofetch.nix
-    ./starship.nix
     ./tmux.nix
     ./zoxide.nix
   ];
 
   home = {
     packages = with pkgs; [
-      angle-grinder
+      # angle-grinder
       dogdns
       dysk
       fastfetch
       fd
       fzf
-      htmlq
+      # htmlq
       # hyperfine
       unstable.infisical
       netcat
-      nurl
-      nix-melt
-      mazter
+      # nurl
+      # nix-melt
+      # mazter
       mprocs
       procs
       ripgrep

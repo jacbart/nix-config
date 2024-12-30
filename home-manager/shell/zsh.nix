@@ -15,6 +15,8 @@ let
   modPathStr = lib.strings.concatMapStrings (path: path + ":") modPath;
 in
 {
+  imports = [ ./tools/starship.nix ];
+
   home.packages = with pkgs;
     [
       perl # Required for zplug
