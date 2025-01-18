@@ -188,7 +188,7 @@
       ];
 
       secret-key-files = "/etc/nix/cache.key";
-      post-build-hook = "${pkgs.scripts.upload-to-cache}/bin/upload-to-cache";
+      # post-build-hook = "${pkgs.scripts.upload-to-cache}/bin/upload-to-cache";
     };
   };
 
