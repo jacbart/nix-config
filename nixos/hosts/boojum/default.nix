@@ -15,6 +15,7 @@
     ../../services/pipewire.nix
     ../../services/minio-client.nix
     ../../services/tailscale.nix
+    ./virt.nix
   ];
 
   boot = {
