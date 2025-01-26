@@ -1,58 +1,61 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, nodejs_20
-, pnpm_9
-, ...
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  makeWrapper,
+  nodejs,
+  pnpm_9,
+  git,
+  ...
 }:
-stdenv.mkDerivation (finalAttrs: rec {
+
+stdenv.mkDerivation (finalAttrs: {
   pname = "headplane";
-  version = "0.3.6";
+  version = "0.4.1";
 
   src = fetchFromGitHub {
     owner = "tale";
-    repo = "headplane";
-    rev = version;
-    sha256 = "sha256-o/lQQJxSPPnBAKIQ0J3EbZN1ysqADT1j2xM5bAgPNQA=";
+    repo = finalAttrs.pname;
+    tag = finalAttrs.version;
+    hash = "sha256-2M0OpTIFfsF7khZviaAGIhKV7zEtX2ks6D6xfujmFMk=";
+    leaveDotGit = true;
   };
 
   nativeBuildInputs = [
-    nodejs_20
+    makeWrapper
+    nodejs
     pnpm_9.configHook
+    git
   ];
 
   pnpmDeps = pnpm_9.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-RcuYheZRn/4Y5L93LBiYCXs5hymcfzuYD3o+UNtzTDo=";
+    hash = "sha256-W0ba9xvs1LRKYLjO7Ldmus4RrJiEbiJ7+Zo92/ZOoMQ=";
   };
 
   buildPhase = ''
     runHook preBuild
 
     pnpm build
-
-    chmod u+x ./build/headplane/server.js
+    pnpm prune --prod
 
     runHook postBuild
   '';
 
-  installPhase =
-    ''
-      mkdir -p $out/{src,bin}
-
-      cp -R ./build $out/src/
-      cp -R ./node_modules $out/src/
-      echo '{"type":"module"}' > $out/src/package.json
-    ''
-    + ''
-      cat >> $out/bin/headplane << 'END'
-      #!/usr/bin/env bash
-      cd $(direnv "$0")/../src
-      node ./build/headplane/server.js
-      END
-
-      chmod u+x $out/bin/headplane
-    '';
+  installPhase = ''
+    runHook preInstall
+    mkdir -p $out/{bin,share/headplane}
+    cp -r {build,node_modules} $out/share/headplane/
+    # https://code.tecosaur.net/tec/golgi/src/commit/53f3218c28168c7f619a1fd8de2093fe823d2f83/packages/headplane.nix
+    sed -i 's;/build/source/node_modules/react-router/dist/development/index.mjs;react-router;' $out/share/headplane/build/headplane/server.js
+    sed -i 's;define_process_env_default.PORT;process.env.PORT;' $out/share/headplane/build/headplane/server.js
+    makeWrapper ${lib.getExe nodejs} $out/bin/headplane \
+        --chdir $out/share/headplane \
+        --set BUILD_PATH $out/share/headplane/build \
+        --set NODE_ENV production \
+        --add-flags $out/share/headplane/build/headplane/server.js
+    runHook postInstall
+  '';
 
   HEADSCALE_INTEGRATION = "proc";
 
