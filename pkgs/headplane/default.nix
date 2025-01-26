@@ -4,7 +4,7 @@
   fetchFromGitHub,
   makeWrapper,
   nodejs,
-  pnpm_9,
+  pnpm,
   git,
   ...
 }:
@@ -24,11 +24,11 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     makeWrapper
     nodejs
-    pnpm_9.configHook
+    pnpm.configHook
     git
   ];
 
-  pnpmDeps = pnpm_9.fetchDeps {
+  pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
     hash = "sha256-W0ba9xvs1LRKYLjO7Ldmus4RrJiEbiJ7+Zo92/ZOoMQ=";
   };
