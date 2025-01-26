@@ -8,10 +8,10 @@
     # ./nginx.nix
     ./distributed-builds.nix
     # (import ./disks.nix { })
-    # ../../services/zitadel.nix
-    # ../../services/headscale.nix
     ../../services/minio.nix
     ../../services/postgresql.nix
+    ../../services/zitadel.nix
+    # ../../services/headscale.nix
     ../../services/nextcloud-server.nix
     ../../services/audiobooks.nix
   ];

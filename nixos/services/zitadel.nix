@@ -43,7 +43,7 @@ in
       # PublicHostHeaders = [ ];
       # TLS.Enabled = false;
       Database.postgres = {
-        Host = "localhost";
+        Host = "/run/postgresql";
         Port = 5432;
         Database = "zitadel";
         MaxOpenConns = 15;
@@ -51,13 +51,13 @@ in
         MaxConnLifetime = "30m";
         MaxConnIdleTime = "5m";
         User = {
-          Username = "zitadel";
-          Password = "zitadel";
+          Username = user;
+          # Password = "zitadel";
           SSL.Mode = "disable";
         };
         Admin = {
           Username = "postgres";
-          Password = "postgres";
+          # Password = "postgres";
           SSL.Mode = "disable";
         };
       };
