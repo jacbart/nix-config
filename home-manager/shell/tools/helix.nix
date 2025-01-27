@@ -12,6 +12,7 @@
       taplo # TOML language server
       terraform-ls # language server for [ .hcl, .tf, .tfvars, .koi, .jaws ]
       yaml-language-server # YAML language server
+      typescript-language-server # Typescript 
       vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
     ];
 
@@ -90,6 +91,11 @@
           {
             name = "yaml";
             file-types = [ "yaml" "yml" ];
+            auto-format = true;
+          }
+          {
+            name = "tsx";
+            file-types = [ "tsx" "typescript" ];
             auto-format = true;
           }
         ];
