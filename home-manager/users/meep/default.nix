@@ -2,6 +2,10 @@
 , lib
 , ...
 }: {
+  imports = [
+    ../../apps/ghostty.nix
+  ];
+
   services = {
     gpg-agent = {
       enable = true;

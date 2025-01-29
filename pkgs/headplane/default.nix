@@ -1,14 +1,12 @@
-{
-  lib,
-  stdenv,
-  fetchFromGitHub,
-  makeWrapper,
-  nodejs,
-  pnpm,
-  git,
-  ...
+{ lib
+, stdenv
+, fetchFromGitHub
+, makeWrapper
+, nodejs
+, pnpm
+, git
+, ...
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "headplane";
   version = "0.4.1";
