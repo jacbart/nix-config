@@ -8,6 +8,7 @@
     # ./nginx.nix
     ./distributed-builds.nix
     # (import ./disks.nix { })
+    ../../apps/ghostty.nix # enable xterm_ghostty when ssh from the app
     ../../services/minio.nix
     ../../services/postgresql.nix
     ../../services/zitadel.nix
