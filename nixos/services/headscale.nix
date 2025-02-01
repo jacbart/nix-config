@@ -3,6 +3,7 @@
 , ...
 }:
 let
+  clientid = "";
   domain = "meep.sh";
 in
 {
@@ -44,7 +45,7 @@ in
       oidc = {
         only_start_if_oidc_is_available = true;
         issuer = "https://auth.${domain}";
-        client_id = "295278622669865221";
+        client_id = clientid;
         client_secret_path = config.sops.secrets.zitadel-tailscale-client-secret.path;
         scope = [ "openid" "profile" "email" ];
       };

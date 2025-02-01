@@ -65,7 +65,7 @@ in
     };
     steps = {
       FirstInstance = {
-        Skip = false;
+        Skip = true;
         DefaultLanguage = "en";
         InstanceName = instance;
         Org = {
@@ -81,6 +81,22 @@ in
             Password = "Password!23";
           };
         };
+      };
+    };
+  };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts."${subdomain}.${domain}" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8123";
+        proxyWebsockets = true; # needed if you need to use WebSocket
+        extraConfig =
+          # required when the target is also TLS server with multiple hosts
+          "proxy_ssl_server_name on;" +
+          # required when the server wants to use HTTP Authentication
+          "proxy_pass_header Authorization;"
+          ;
       };
     };
   };
