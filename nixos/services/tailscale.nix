@@ -12,7 +12,7 @@ in
   services.tailscale = {
     enable = true;
     interfaceName = mkDefault "tailscale0";
-    package = mkDefault pkgs.tailscale;
+    package = mkDefault pkgs.unstable.tailscale;
     port = mkDefault 0; # 0 = autoselect
     openFirewall = mkDefault true;
     useRoutingFeatures = mkDefault "client"; # "none", "client", "server", or "both"
