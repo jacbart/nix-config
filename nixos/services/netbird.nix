@@ -7,8 +7,8 @@ let
   user = "root";
   group = "root";
   domain = "meep.sh";
-  netbird_subdomain = "netbird";
-  zitadel_subdomain = "zitadel";
+  netbird_subdomain = "nb";
+  zitadel_subdomain = "auth";
 
   zitadel_client_id = "";
 
@@ -56,6 +56,14 @@ in
     max-port = 65535;
   };
 
+  # wait for zitadel to start
+  systemd.services.netbird-management.after = [ "zitadel.service" ];
+  systemd.services.netbird-management.requires = [ "zitadel.service" ];
+  systemd.services.netbird-signal.after = [ "zitadel.service" ];
+  systemd.services.netbird-signal.requires = [ "zitadel.service" ];
+  systemd.services.coturn.after = [ "zitadel.service" ];
+  systemd.services.coturn.requires = [ "zitadel.service" ];
+
   services.netbird.server = {
     enable = true;
     enableNginx = lib.mkDefault true;
@@ -63,10 +71,7 @@ in
 
     dashboard = {
       enable = true;
-      # enableNginx = lib.mkForce true;
-      # domain = lib.mkForce "${netbird_subdomain}.${domain}";
-      # managementServer = lib.mkForce "https://${netbird_subdomain}.${domain}";
-      package = pkgs.unstable.netbird-dashboard;
+      package = pkgs.netbird-dashboard;
       settings = {
         AUTH_AUTHORITY = "https://${zitadel_subdomain}.${domain}";
         AUTH_AUDIENCE = zitadel_client_id;
@@ -90,12 +95,12 @@ in
     };
 
     signal = {
-      package = pkgs.unstable.netbird;
+      package = pkgs.netbird;
     };
 
     management = {
       oidcConfigEndpoint = "https://${zitadel_subdomain}.${domain}/.well-known/openid-configuration";
-      package = pkgs.unstable.netbird;
+      package = pkgs.netbird;
       turnDomain = "turn.${domain}";
       turnPort = 3478;
       logLevel = "DEBUG";
@@ -147,12 +152,11 @@ in
           "Engine" = "sqlite";
         };
         "HttpConfig" = {
-          "Address" = "192.168.1.5:8011";
           "AuthIssuer" = "https://${zitadel_subdomain}.${domain}";
           "AuthAudience" = zitadel_client_id;
           "AuthKeysLocation" = "https://${zitadel_subdomain}.${domain}/oauth/v2/keys";
           "OIDCConfigEndpoint" = "https://${zitadel_subdomain}.${domain}/.well-known/openid-configuration";
-          "IdpSignKeyRefreshEnabled" = true;
+          "IdpSignKeyRefreshEnabled" = false;
         };
         "IdpManagerConfig" = {
           "ManagerType" = "zitadel";
