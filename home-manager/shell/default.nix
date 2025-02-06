@@ -27,18 +27,22 @@ in
 
   home.file.".ssh/config".text = ''
     Host boojum
-        HostName boojum.meep.sh
+        HostName boojum
         User meep
         IdentityFile ~/.ssh/id_ratatoskr
 
     Host ash
-        HostName ash.meep.sh
+        HostName ash
         User meep
         IdentityFile ~/.ssh/id_ratatoskr
 
     Host maple
-        HostName maple.meep.sh
+        HostName maple
         User ratatoskr
         IdentityFile ~/.ssh/id_ratatoskr
+
+    Host mac
+        HostName jackjrny
+        User jackbartlett
   '';
 }
