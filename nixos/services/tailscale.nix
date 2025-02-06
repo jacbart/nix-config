@@ -5,10 +5,9 @@
 }:
 let
   inherit (lib) mkDefault;
-  login_server = "hs.meep.sh";
 in
 {
-  sops.secrets."tailscale/api-key" = { };
+  sops.secrets."tailscale/auth-key" = { };
 
   services.tailscale = {
     enable = true;
@@ -17,12 +16,7 @@ in
     port = mkDefault 0; # 0 = autoselect
     openFirewall = mkDefault true;
     useRoutingFeatures = mkDefault "client"; # "none", "client", "server", or "both"
-    extraUpFlags = mkDefault [ "--login-server" "https://${login_server}" "--accept-routes" ];
-    authKeyFile = config.sops.secrets."tailscale/api-key".path;
-    authKeyParameters = mkDefault {
-      baseURL = "https://${login_server}";
-      ephemeral = mkDefault null;
-      preauthorized = mkDefault null;
-    };
+    extraUpFlags = mkDefault [ "--accept-routes" ];
+    authKeyFile = config.sops.secrets."tailscale/auth-key".path;
   };
 }

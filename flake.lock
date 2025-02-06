@@ -185,10 +185,10 @@
     "mySecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1737927457,
-        "narHash": "sha256-oucWbZ2EJWjvcTSg6HfoaUC1nV1gm9j/7v8UQR+h0UQ=",
+        "lastModified": 1738879324,
+        "narHash": "sha256-MpPMl0sqNCBAx0IS4zlJ4WA2ahuVztgofTILRQir8IM=",
         "ref": "main",
-        "rev": "b78a947c2339257379b5e436a1e7424ec274f598",
+        "rev": "e33ea4eb3ce1a1bbc6620a49c56bdac4ccc64a01",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/jacbart/nix-secrets.git"
