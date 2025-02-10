@@ -16,8 +16,8 @@ in
   };
 
   imports = [ ./postgresql.nix ];
-  systemd.services.nextcloud-setup.after = [ "postgresql.service" ];
-  systemd.services.nextcloud-setup.requires = [ "postgresql.service" ];
+  systemd.services.nextcloud-setup.after = [ "postgresql.service" "zitadel.service" ];
+  systemd.services.nextcloud-setup.requires = [ "postgresql.service" "zitadel.service" ];
 
   systemd.services.nextcloud-setup.serviceConfig = {
     User = user;
@@ -32,6 +32,7 @@ in
       https = false;
       hostName = "${subdomain}.${domain}";
       package = pkgs.nextcloud30;
+      maxUploadSize = "10G";
       configureRedis = true;
       database.createLocally = false; # Use postgresql.nix to create db
       config = {
@@ -56,15 +57,28 @@ in
       };
       appstoreEnable = true;
       autoUpdateApps.enable = false;
-      extraApps = with pkgs.nextcloud30Packages.apps; {
-        inherit bookmarks cookbook notes notify_push maps music previewgenerator contacts calendar tasks twofactor_webauthn unroundedcorners;
+      extraApps = {
+        inherit (pkgs.unstable.nextcloud30Packages.apps)
+          bookmarks
+          calendar
+          contacts
+          cookbook
+          maps
+          music
+          notes
+          notify_push
+          previewgenerator
+          sociallogin
+          tasks
+          twofactor_webauthn
+          unroundedcorners
+          ;
       };
       extraAppsEnable = true;
       settings = {
-        # log_type = "systemd";
         overwriteprotocol = "https";
         default_phone_region = "US";
-        trusted_domains = [ "cloud.meep.sh" ];
+        trusted_domains = [ "${subdomain}.${domain}" ];
         enabledPreviewProviders = [
           "OC\\Preview\\BMP"
           "OC\\Preview\\GIF"
