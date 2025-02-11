@@ -72,6 +72,7 @@
       bottom
       cyme
       kexec-tools
+      kiwix-tools
       pciutils
       psmisc
       sops
