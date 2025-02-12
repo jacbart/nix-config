@@ -7,13 +7,10 @@
     ../../services/tailscale.nix
     # ../../services/fail2ban.nix
     ./distributed-builds.nix
-    # (import ./disks.nix { })
     ../../apps/ghostty.nix # enable xterm_ghostty
     ../../services/minio.nix
     ../../services/postgresql.nix
     ../../services/zitadel.nix
-    # ../../services/headscale.nix
-    # ../../services/netbird.nix
     ../../services/nextcloud-server.nix
     ../../services/audiobooks.nix
   ];
