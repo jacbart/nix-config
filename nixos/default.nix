@@ -182,9 +182,11 @@
       # personal substituters
       substituters = [
         "https://s3.meep.sh/nix-cache"
+        "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
         "s3.meep.sh-3:mcrDvp6CZgkpq+/aRB18b6XtJywHSPkSZWr4NrnVGOc="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
 
       secret-key-files = "/etc/nix/cache.key";
