@@ -102,13 +102,23 @@
       };
       settings = {
         theme = "gruvbox_dark_hard";
+        keys.normal = {
+          A.g = [ ":run-shell-command git diff" ];
+          space = {
+            w = ":w";
+            q = ":q";
+            i = ":toggle lsp.display-inlay-hints";
+            esc = [ "collapse_selection" "keep_primary_selection" ];
+          };
+        };
         editor = {
           shell = [ "zsh" "-c" ];
           line-number = "absolute";
           mouse = true;
+          popup-border = "all";
           color-modes = true;
           auto-pairs = true;
-          bufferline = "multiple";
+          bufferline = "always";
           auto-completion = true;
           auto-format = true;
           statusline = {
