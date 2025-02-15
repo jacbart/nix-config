@@ -5,6 +5,7 @@
       dockerfile-language-server-nodejs # dockerfile language server
       gofumpt # go formatter
       gopls # go language server
+      helix-gpt # code completion LSP for Helix
       nil # nix language server
       # marksman # markdown language server
       markdown-oxide # markdown language server
