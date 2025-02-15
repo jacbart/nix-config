@@ -56,7 +56,7 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   nixpkgs.config.allowBroken = true;
-  
+
   nix.settings = {
     max-jobs = 3;
     cores = 6;

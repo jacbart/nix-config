@@ -58,7 +58,8 @@ in
       appstoreEnable = true;
       autoUpdateApps.enable = false;
       extraApps = {
-        inherit (pkgs.unstable.nextcloud30Packages.apps)
+        inherit
+          (pkgs.unstable.nextcloud30Packages.apps)
           bookmarks
           calendar
           contacts
