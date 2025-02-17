@@ -38,6 +38,15 @@
       enable = true;
       languages = {
         language-server = {
+          # gpt = {
+          #   command = "helix-gpt";
+          #   args = [
+          #     "--handler" "ollama"
+          #     "--ollamaEndpoint" "https://llm.meep.sh"
+          #     "--ollamaModel" "mistral"
+          #     "--logFile" "/tmp/helix-gpt.log"
+          #   ];
+          # };
           gopls = {
             command = "gopls";
             config = {
@@ -84,6 +93,12 @@
             file-types = [ "tf" "tfvars" "hcl" "koi" "jaws" ];
             auto-format = true;
           }
+          {
+            name = "nix";
+            auto-format = true;
+            file-types = [ "nix" ];
+            language-servers = [ "nil" ];
+          }
           #  {
           #   name = "markdown";
           #   formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
@@ -93,6 +108,12 @@
             name = "yaml";
             file-types = [ "yaml" "yml" ];
             auto-format = true;
+          }
+          {
+            name = "rust";
+            file-types = [ "rs" ];
+            auto-format = true;
+            language-servers = [ "rust-analyzer" ];
           }
           {
             name = "tsx";

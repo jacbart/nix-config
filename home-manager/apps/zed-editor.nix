@@ -25,7 +25,7 @@ in
     ++ lib.optionals isLinux [ pkgs.unstable.zed-editor ];
 
   # fix weird nix bin name
-  programs.zsh.shellAliases = { zed = "zeditor"; };
+  # programs.zsh.shellAliases = { zed = "zeditor"; };
   # add in settings.json
   home.file."${config.xdg.configHome}/zed/settings.json".text = builtins.readFile ./zed-editor.json;
 }

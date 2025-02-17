@@ -30,15 +30,24 @@
     "activate_on_close": "history"
   },
   "file_types": {
-    "HCL": [
-      "hcl",
-      "jaws",
-      "koi"
-    ]
+    "HCL": ["hcl", "jaws", "koi"]
   },
   "journal": {
     "path": "~/workspace/journal",
     "hour_format": "hour24"
+  },
+  "language_models": {
+    "ollama": {
+      "api_url": "https://llm.meep.sh",
+      "available_models": [
+        {
+          "name": "mistral",
+          "display_name": "mistral latest",
+          "max_tokens": 16384,
+          "keep_alive": "120s"
+        }
+      ]
+    }
   },
   "assistant": {
     "version": "2",
@@ -48,8 +57,8 @@
     "default_width": 640,
     "default_height": 320,
     "default_model": {
-      "provider": "openai",
-      "model": "gpt-4o"
+      "provider": "ollama",
+      "model": "mistral"
     }
   },
   "terminal": {

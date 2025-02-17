@@ -8,6 +8,8 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -76,6 +78,11 @@
           username = "jackbartlett";
           platform = "aarch64-darwin";
         };
+        # VMs
+        "meep@cork" = libx.mkHome {
+          hostname = "cork";
+          username = "meep";
+        };
         # Handhelds
         "meep@ash" = libx.mkHome {
           hostname = "ash";
@@ -100,6 +107,11 @@
           hostname = "boojum";
           username = "meep";
           desktop = "cosmic";
+        };
+        # VMs
+        cork = libx.mkHost {
+          hostname = "cork";
+          username = "meep";
         };
         # Handhelds
         ash = libx.mkHost {
