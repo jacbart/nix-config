@@ -9,6 +9,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
