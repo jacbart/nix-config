@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ config
+, pkgs
+, ...
+}: {
   home = {
     packages = with pkgs; [
       # my personally most used lsp's for helix
@@ -6,26 +9,22 @@
       gofumpt # go formatter
       gopls # go language server
       # helix-gpt # code completion LSP for Helix
-      nil # nix language server
       # marksman # markdown language server
       markdown-oxide # markdown language server
-      # dprint # code formatter [ markdown ]
+      nil # nix language server
+      nixfmt-rfc-style # nix formatter
+      nodePackages.prettier # code formatter
+      shfmt # Bash formatter
+      stylua # lua formatter
+      sqls # SQL language server
       taplo # TOML language server
       terraform-ls # language server for [ .hcl, .tf, .tfvars, .koi, .jaws ]
-      yaml-language-server # YAML language server
       typescript-language-server # Typescript
       vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
+      yaml-language-server # YAML language server
     ];
 
-    # file.".dprint.json".text = ''
-    # {
-    #   "markdown": {
-    #   },
-    #   "plugins": [
-    #     "https://plugins.dprint.dev/markdown-0.17.1.wasm",
-    #   ]
-    # }
-    # '';
+    file."${config.xdg.configHome}/sqls/config.yml".text = builtins.readFile ./sqls.yaml;
 
     sessionVariables = {
       EDITOR = "hx";
@@ -38,6 +37,9 @@
       enable = true;
       languages = {
         language-server = {
+          sqls = {
+            command = "sqls";
+          };
           # gpt = {
           #   command = "helix-gpt";
           #   args = [
@@ -50,14 +52,14 @@
           gopls = {
             command = "gopls";
             config = {
-              "gofumpt" = true;
-              "local" = "goimports";
-              "semanticTokens" = true;
-              "staticcheck" = true;
-              "verboseOutput" = true;
-              "analyses" = {
-                "fieldalignment" = true;
-                "nilness" = true;
+              gofumpt = true;
+              local = "goimports";
+              semanticTokens = true;
+              staticcheck = true;
+              verboseOutput = true;
+              analyses = {
+                fieldalignment = true;
+                nilness = true;
                 unusedparams = true;
                 unusedwrite = true;
                 useany = true;
@@ -65,21 +67,39 @@
               usePlaceholders = true;
               completeUnimported = true;
               hints = {
-                "assignVariableType" = true;
-                "compositeLiteralFields" = true;
-                "compositeLiteralTypes" = true;
-                "constantValues" = true;
-                "functionTypeParameters" = true;
-                "parameterNames" = true;
-                "rangeVariableTypes" = true;
+                assignVariableType = true;
+                compositeLiteralFields = true;
+                compositeLiteralTypes = true;
+                constantValues = true;
+                functionTypeParameters = true;
+                parameterNames = true;
+                rangeVariableTypes = true;
               };
             };
           };
         };
         language = [
           {
+            name = "bash";
+            indent = {
+              tab-width = 2;
+              unit = "  ";
+            };
+            formatter = {
+              command = "shfmt";
+              args = [
+                "-i"
+                "2"
+              ];
+            };
+            auto-format = true;
+          }
+          {
             name = "go";
-            roots = [ "go.work" "go.mod" ];
+            roots = [
+              "go.work"
+              "go.mod"
+            ];
             auto-format = true;
             comment-token = "//";
             block-comment-tokens = {
@@ -90,23 +110,102 @@
           }
           {
             name = "hcl";
-            file-types = [ "tf" "tfvars" "hcl" "koi" "jaws" ];
+            file-types = [
+              "tf"
+              "tfvars"
+              "hcl"
+              "koi"
+              "jaws"
+            ];
+            auto-format = true;
+          }
+          {
+            name = "json";
+            formatter = {
+              command = "prettier";
+              args = [
+                "--parser"
+                "json"
+              ];
+            };
+          }
+          {
+            name = "javascript";
+            formatter = {
+              command = "prettier";
+              args = [
+                "--parser"
+                "javascript"
+              ];
+            };
             auto-format = true;
           }
           {
             name = "nix";
             auto-format = true;
             file-types = [ "nix" ];
+            formatter.command = "nixfmt";
             language-servers = [ "nil" ];
           }
-          #  {
-          #   name = "markdown";
-          #   formatter = { command = "dprint"; args = ["fmt" "--stdin" "md"]; };
-          #   auto-format = true;
-          # }
+          {
+            name = "markdown";
+            formatter = {
+              command = "prettier";
+              args = [
+                "--parser"
+                "markdown"
+              ];
+            };
+            auto-format = true;
+          }
+          {
+            name = "html";
+            formatter = {
+              command = "prettier";
+              args = [
+                "--parser"
+                "html"
+              ];
+            };
+          }
+          {
+            name = "css";
+            formatter = {
+              command = "prettier";
+              args = [
+                "--parser"
+                "css"
+              ];
+            };
+          }
+          {
+            name = "lua";
+            formatter = {
+              command = "stylua";
+              args = [
+                "-"
+              ];
+            };
+          }
+          {
+            name = "sql";
+            file-types = [ "sql" ];
+            formatter = {
+              command = "prettier";
+              args = [
+                "--parser"
+                ""
+              ];
+            };
+            auto-format = false;
+            language-servers = [ "sqls" ];
+          }
           {
             name = "yaml";
-            file-types = [ "yaml" "yml" ];
+            file-types = [
+              "yaml"
+              "yml"
+            ];
             auto-format = true;
           }
           {
@@ -116,8 +215,22 @@
             language-servers = [ "rust-analyzer" ];
           }
           {
+            name = "toml";
+            formatter = {
+              command = "taplo";
+              args = [
+                "format"
+                "-"
+              ];
+            };
+            auto-format = true;
+          }
+          {
             name = "tsx";
-            file-types = [ "tsx" "typescript" ];
+            file-types = [
+              "tsx"
+              "typescript"
+            ];
             auto-format = true;
           }
         ];
@@ -130,11 +243,17 @@
             w = ":w";
             q = ":q";
             i = ":toggle lsp.display-inlay-hints";
-            esc = [ "collapse_selection" "keep_primary_selection" ];
+            esc = [
+              "collapse_selection"
+              "keep_primary_selection"
+            ];
           };
         };
         editor = {
-          shell = [ "zsh" "-c" ];
+          shell = [
+            "zsh"
+            "-c"
+          ];
           line-number = "absolute";
           mouse = true;
           popup-border = "all";
@@ -144,9 +263,19 @@
           auto-completion = true;
           auto-format = true;
           statusline = {
-            left = [ "mode" "spinner" ];
+            left = [
+              "mode"
+              "spinner"
+            ];
             center = [ "file-name" ];
-            right = [ "diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type" ];
+            right = [
+              "diagnostics"
+              "selections"
+              "position"
+              "file-encoding"
+              "file-line-ending"
+              "file-type"
+            ];
             separator = "│";
           };
           cursor-shape = {

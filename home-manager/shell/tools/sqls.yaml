@@ -1,0 +1,6 @@
+# Set to true to use lowercase keywords instead of uppercase.
+lowercaseKeywords: false
+connections:
+  - alias: dsn_local
+    driver: postgresql
+    dataSourceName: postgres://postgres:postgres@localhost:5432/postgres

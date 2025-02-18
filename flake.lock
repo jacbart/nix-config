@@ -133,11 +133,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1739751010,
-        "narHash": "sha256-jZuHZqJ1HBr0vUzWsEY7LV9PTasJJeykwnKPIZWxEsY=",
+        "lastModified": 1739907437,
+        "narHash": "sha256-yBLVNhbGM/WmHUEa0mCw7mFfa5blxWZGlqP6F6PgQnY=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "c92342d12f94a6575231f53c3fecdffe0aa744f0",
+        "rev": "18c0d762109549351ecf622cde34514351a72492",
         "type": "github"
       },
       "original": {
@@ -222,11 +222,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1739746614,
-        "narHash": "sha256-TBoHqnIdVWhsBcL05vO2B1hSl9m//5Mz2NU+PMk3h3Y=",
+        "lastModified": 1739899400,
+        "narHash": "sha256-q/RgA4bB7zWai4oPySq9mch7qH14IEeom2P64SXdqHs=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "674a87462cb93f605d4fbeef607d3453e7e5a7d8",
+        "rev": "e310c19a1aeb1ce1ed4d41d5ab2d02db596e0918",
         "type": "github"
       },
       "original": {
@@ -283,11 +283,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1739847682,
-        "narHash": "sha256-YvAKu47G5jOH715jw2dkfFxTj4Hdx4DnA7b6aDLrExQ=",
+        "lastModified": 1739909000,
+        "narHash": "sha256-DsepQ7ApA4li8td4QFTmX2qs4gvCLfoN7Mlaifmji7Y=",
         "owner": "lilyinstarlight",
         "repo": "nixos-cosmic",
-        "rev": "cd7563ca23e71bc61a199a0a7ebabb861c3c821c",
+        "rev": "5516035bb36dbb19f2bbe7b9cea6922db395e100",
         "type": "github"
       },
       "original": {

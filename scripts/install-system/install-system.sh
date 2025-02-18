@@ -38,7 +38,7 @@ fi
 # Check if the machine we're provisioning expects a keyfile to unlock a disk.
 # If it does, generate a new key, and write to a known location.
 if grep -q "data.keyfile" "nixos/$TARGET_HOST/disks.nix"; then
-  echo -n "$(head -c32 /dev/random | base64)" > /tmp/data.keyfile
+  echo -n "$(head -c32 /dev/random | base64)" >/tmp/data.keyfile
 fi
 
 echo "WARNING! The disks in $TARGET_HOST are about to get wiped"
