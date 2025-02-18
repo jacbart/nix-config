@@ -39,6 +39,9 @@
     # lan-mouse.url = "github:feschber/lan-mouse";
     # lan-mouse.inputs.nixpkgs.follows = "nixpkgs";
 
+    # sunbeam.url = "github:pomdtr/sunbeam?ref=v1.0.1";
+    # sunbeam.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
 

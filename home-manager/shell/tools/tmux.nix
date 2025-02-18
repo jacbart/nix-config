@@ -32,8 +32,8 @@
       bind _ split-window -v -f -c '#{pane_current_path}'
       bind - split-window -v -c '#{pane_current_path}'
 
-      # set -g default-terminal "xterm-256color"
-      set -g default-terminal "xterm-ghostty"
+      set -g default-terminal "xterm-256color"
+      # set -g default-terminal "xterm-ghostty"
       set-option -sa terminal-overrides ",xterm*:Tc"
       set-option -g mouse on
 
@@ -57,13 +57,13 @@
 
       # Journal
       unbind e
-      bind e display-popup -E "tmux new-session -A -s 'Journal' 'hx $HOME/workspace/journal/$(date "+%Y-%m-%d").md'"
+      bind e display-popup -E "tmux new-session -A -s 'Journal' 'cd $HOME/workspace/journal && hx $(date "+%Y-%m-%d").md'"
       # Simple shell popup
       unbind P
       bind P display-popup -E "tmux new-session -A -s 'Shell' '$SHELL'"
       # Broot popup
       unbind f
-      bind f display-popup -y 45 -h 90% -E "tmux new-session -A -s 'broot' 'broot --no-tree'"
+      bind f display-popup -y 45 -h 80% -E -d '#{pane_current_path}' "tmux new-session -A -s 'Files' 'broot --no-tree'"
       # Broot new window
       unbind F
       bind F new-window -n "broot" -c "#{pane_current_path}" "broot"
