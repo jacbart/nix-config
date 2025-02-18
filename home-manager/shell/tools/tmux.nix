@@ -51,7 +51,9 @@
       unbind T
       bind T command-prompt -p "(rename-pane)" -I "#T" "select-pane -T '%%'"
 
-      bind-key e run-shell 'tmux popup -E "hx $HOME/workspace/journal/$(date "+%Y-%m-%d").md"'
+      bind e display-popup -E "tmux new-session -A -s 'Journal' 'hx $HOME/workspace/journal/$(date "+%Y-%m-%d").md'"
+      bind f display-popup -y 45 -h 90% -E "tmux new-session -A -s 'broot' 'broot --no-tree'"
+      bind F new-window -n "broot" -c "#{pane_current_path}" "broot"
 
       run '~/.tmux/plugins/tpm/tpm'
     '';
