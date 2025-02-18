@@ -28,6 +28,7 @@
       # mazter
       mprocs
       procs
+      rainfrog
       ripgrep
       sd
       xh
