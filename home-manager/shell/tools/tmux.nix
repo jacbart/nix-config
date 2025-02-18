@@ -13,7 +13,7 @@
 
       # List of plugins
       set -g @plugin 'tmux-plugins/tmux-sensible'
-      set -g @plugin 'jimeh/tmux-themepack'
+      set -g @plugin 'egel/tmux-gruvbox'
       set -g @plugin 'nhdaly/tmux-better-mouse-mode'
 
       # Smart pane switching with awareness of vim splits
@@ -36,7 +36,8 @@
 
       set -g status-keys vi
 
-      set -g @themepack 'powerline/default/red'
+      set -g @tmux-gruvbox 'dark256'
+      set -g @tmux-gruvbox-statusbar-alpha 'true'
 
       # Don't exit copy mode when mouse drags
       unbind -T copy-mode-vi MouseDragEnd1Pane
