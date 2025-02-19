@@ -26,7 +26,6 @@ in
   programs.zsh = {
     enable = true;
     sessionVariables = {
-      STOW_DIR = "$HOME/.dotfiles/stowpkgs";
       ZSHDATADIR = "${config.xdg.dataHome}/zsh";
       PATH = "${modPathStr}";
     };
