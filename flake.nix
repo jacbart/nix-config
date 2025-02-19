@@ -102,7 +102,7 @@
         };
         "jack@unicron" = libx.mkHome {
           hostname = "unicron";
-          username = "ratatoskr";
+          username = "jack";
         };
       };
       nixosConfigurations = {
