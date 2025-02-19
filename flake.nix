@@ -64,7 +64,7 @@
       inherit (self) outputs;
       inherit (nixpkgs) lib;
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-      stateVersion = lib.mkForce "24.11";
+      stateVersion = lib.mkDefault "24.11";
       libx = import ./lib { inherit inputs outputs stateVersion; };
     in
     {
@@ -99,6 +99,10 @@
           hostname = "maple";
           username = "ratatoskr";
           platform = "aarch64-linux";
+        };
+        "jack@unicron" = libx.mkHome {
+          hostname = "unicron";
+          username = "ratatoskr";
         };
       };
       nixosConfigurations = {
