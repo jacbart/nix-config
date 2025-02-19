@@ -8,7 +8,7 @@
       dockerfile-language-server-nodejs # dockerfile language server
       gofumpt # go formatter
       gopls # go language server
-      helix-gpt # code completion LSP for LLM's in Helix
+      # helix-gpt # code completion LSP for LLM's in Helix
       # marksman # markdown language server
       markdown-oxide # markdown language server
       nil # nix language server
@@ -40,19 +40,19 @@
           sqls = {
             command = "sqls";
           };
-          gpt = {
-            command = "helix-gpt";
-            args = [
-              "--handler"
-              "ollama"
-              "--ollamaEndpoint"
-              "http://127.0.0.1:11434"
-              "--ollamaModel"
-              "phi3:3.8b"
-              "--logFile"
-              "/tmp/helix-gpt.log"
-            ];
-          };
+          # gpt = {
+          #   command = "helix-gpt";
+          #   args = [
+          #     "--handler"
+          #     "ollama"
+          #     "--ollamaEndpoint"
+          #     "http://127.0.0.1:11434"
+          #     "--ollamaModel"
+          #     "phi3:3.8b"
+          #     "--logFile"
+          #     "/tmp/helix-gpt.log"
+          #   ];
+          # };
           gopls = {
             command = "gopls";
             config = {
@@ -97,7 +97,7 @@
               ];
             };
             auto-format = true;
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "go";
@@ -111,7 +111,7 @@
               start = "/*";
               end = "*/";
             };
-            language-servers = [ "gopls" "gpt" ];
+            language-servers = [ "gopls" ];
           }
           {
             name = "hcl";
@@ -133,7 +133,7 @@
                 "json"
               ];
             };
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "javascript";
@@ -145,14 +145,14 @@
               ];
             };
             auto-format = true;
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "nix";
             auto-format = false;
             file-types = [ "nix" ];
             formatter.command = "nixfmt";
-            language-servers = [ "nil" "gpt" ];
+            language-servers = [ "nil" ];
           }
           {
             name = "markdown";
@@ -164,7 +164,7 @@
               ];
             };
             auto-format = true;
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "html";
@@ -175,7 +175,7 @@
                 "html"
               ];
             };
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "css";
@@ -186,7 +186,7 @@
                 "css"
               ];
             };
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "lua";
@@ -196,7 +196,7 @@
                 "-"
               ];
             };
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "sql";
@@ -209,7 +209,7 @@
               ];
             };
             auto-format = false;
-            language-servers = [ "sqls" "gpt" ];
+            language-servers = [ "sqls" ];
           }
           {
             name = "yaml";
@@ -218,13 +218,13 @@
               "yml"
             ];
             auto-format = true;
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "rust";
             file-types = [ "rs" ];
             auto-format = true;
-            language-servers = [ "rust-analyzer" "gpt" ];
+            language-servers = [ "rust-analyzer" ];
           }
           {
             name = "toml";
@@ -236,7 +236,7 @@
               ];
             };
             auto-format = true;
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
           {
             name = "tsx";
@@ -245,7 +245,7 @@
               "typescript"
             ];
             auto-format = true;
-            language-servers = [ "gpt" ];
+            # language-servers = [ "gpt" ];
           }
         ];
       };
