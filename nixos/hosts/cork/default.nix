@@ -1,11 +1,10 @@
-{ nixos-wsl, ... }: {
+{ nixos-wsl, stateVersion, ... }: {
   imports = [
-    nixos-wsl.nixosModules.default
-    {
-      system.stateVersion = "24.11";
+    (nixos-wsl.nixosModules.default{
+      system.stateVersion = stateVersion;
       wsl.enable = true;
       wsl.defaultUser = "meep";
-    }
+    })
   ];
 
   nixpkgs.config.allowBroken = true;

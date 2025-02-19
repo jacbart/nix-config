@@ -83,9 +83,9 @@
           platform = "aarch64-darwin";
         };
         # VMs
-        "meep@cork" = libx.mkHome {
+        "nixos@cork" = libx.mkHome {
           hostname = "cork";
-          username = "meep";
+          username = "nixos";
         };
         # Handhelds
         "meep@ash" = libx.mkHome {
@@ -117,10 +117,10 @@
           desktop = "cosmic";
         };
         # VMs
-        cork = libx.mkHost {
-          hostname = "cork";
-          username = "meep";
-        };
+        # cork = libx.mkHost {
+        #   hostname = "cork";
+        #   username = "nixos";
+        # };
         # Handhelds
         ash = libx.mkHost {
           hostname = "ash";
