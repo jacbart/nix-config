@@ -46,9 +46,9 @@
           #     "--handler"
           #     "ollama"
           #     "--ollamaEndpoint"
-          #     "http://127.0.0.1:11434"
+          #     "http://100.78.207.83:11434"
           #     "--ollamaModel"
-          #     "phi3:3.8b"
+          #     "phi4"
           #     "--logFile"
           #     "/tmp/helix-gpt.log"
           #   ];
