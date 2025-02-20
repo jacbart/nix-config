@@ -44,5 +44,10 @@ in
     Host mac
         HostName jackjrny
         User jackbartlett
+
+    Host unicron
+        HostName unicron
+        User jack
+        IdentityFile ~/.ssh/id_ratatoskr
   '';
 }
