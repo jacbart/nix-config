@@ -2,17 +2,18 @@
   services = {
     openssh = {
       enable = true;
+      openFirewall = true;
       settings = {
-        PasswordAuthentication = false;
+        PasswordAuthentication = lib.mkDefault true;
         PermitRootLogin = lib.mkDefault "no";
       };
     };
     sshguard = {
       enable = true;
-      # whitelist = [
-      # ];
+      whitelist = [
+        "100.100.100.100/10"
+      ];
     };
   };
   programs.ssh.startAgent = lib.mkDefault true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
 }
