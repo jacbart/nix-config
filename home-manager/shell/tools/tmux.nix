@@ -32,8 +32,8 @@
       bind _ split-window -v -f -c '#{pane_current_path}'
       bind - split-window -v -c '#{pane_current_path}'
 
-      set -g default-terminal "xterm-256color"
-      # set -g default-terminal "xterm-ghostty"
+      # set -g default-terminal "xterm-256color"
+      set -g default-terminal "xterm-ghostty"
       set-option -sa terminal-overrides ",xterm*:Tc"
       set-option -g mouse on
 

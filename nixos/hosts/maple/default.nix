@@ -7,7 +7,7 @@
     ../../services/tailscale.nix
     # ../../services/fail2ban.nix
     ./distributed-builds.nix
-    ../../apps/ghostty.nix # enable xterm_ghostty
+    ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/minio.nix
     ../../services/postgresql.nix
     ../../services/zitadel.nix

@@ -28,6 +28,7 @@ in
     sessionVariables = {
       ZSHDATADIR = "${config.xdg.dataHome}/zsh";
       PATH = "${modPathStr}";
+      TERM = "xterm-ghostty";
     };
     shellAliases = {
       cd = "z";
