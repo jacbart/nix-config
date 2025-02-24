@@ -20,6 +20,7 @@ in
   home.packages = with pkgs;
     [
       perl # Required for zplug
+      htmlq
     ]
     ++ lib.optional isLinux unstable.tlrc;
 
