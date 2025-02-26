@@ -15,6 +15,8 @@
       element-desktop
       # libreoffice-qt6-fresh # office document viewer
       geeqie # image veiwer
+      unstable.freetube # youtube
+      unstable.pipeline # peertube - peer to peer video
       wl-clipboard # wl-copy and wl-paste
       vlc # multi-media viewer
     ];
