@@ -5,6 +5,7 @@
   imports = [
     ../apps/firefox.nix
     # ../apps/rustdesk.nix
+    ../apps/lan-mouse.nix # virtual kvm
     ../apps/zed-editor.nix
     ../services/nextcloud-client.nix
   ];

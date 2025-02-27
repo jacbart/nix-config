@@ -4,6 +4,7 @@
 }: {
   # add the home manager module
   imports = [ inputs.lan-mouse.homeManagerModules.default ];
+  home.packages = [ pkgs.wlroots ];
 
   programs.lan-mouse = {
     enable = true;
@@ -11,12 +12,12 @@
     package = inputs.lan-mouse.packages.${pkgs.stdenv.hostPlatform.system}.default;
     # Optional configuration in nix syntax, see config.toml for available options
     settings = {
-      frontend = "Cli";
+      frontend = "cli";
       capture-backend = "layer-shell";
       release_bind = [ "KeyA" "KeyS" "KeyD" "KeyF" ];
       port = 4242;
       left = {
-        hostname = "jackjrny.local";
+        hostname = "jackjrny";
         ips = [ "192.168.1.54" ];
         port = 4242;
       };
