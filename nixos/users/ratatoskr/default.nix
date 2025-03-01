@@ -15,6 +15,7 @@ in
   environment.systemPackages = with pkgs;
     [
       age
+      scripts.add-zim
     ]
     ++ lib.optionals (desktop != null) [
       unstable.firefox
