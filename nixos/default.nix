@@ -26,7 +26,7 @@
     ++ lib.optional (platform == "x86_64-linux") ./libraries
     ++ lib.optional (builtins.pathExists (./. + "/users/${username}")) ./users/${username}
     ++ lib.optional (desktop != null) ./desktop
-    ++ lib.optional (hostname != "ash") ./services/smartmon.nix;
+    ++ lib.optional (hostname == "maple") ./services/smartmon.nix;
 
   boot = {
     consoleLogLevel = 0;

@@ -13,20 +13,25 @@
     ../../services/zitadel.nix
     ../../services/nextcloud-server.nix
     ../../services/audiobooks.nix
+    ../../services/smartmon.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
-  # zfs
+  ## ZFS
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelPackages = pkgs.linuxPackages_6_6;
   boot.zfs.extraPools = [ "trunk" ];
-  services.zfs.autoScrub.enable = true;
-  services.zfs.trim.enable = true;
   boot.zfs.forceImportRoot = false;
 
+  services.zfs.autoScrub.enable = true;
+  services.zfs.trim.enable = true;
+
+  environment.systemPackages = [ pkgs.zfs ];
+
+  # Fstab
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_SD";
     fsType = "ext4";
@@ -49,10 +54,6 @@
       allowedTCPPorts = [ 80 443 3000 9000 9001 ];
     };
   };
-
-  environment.systemPackages = with pkgs; [
-    zfs
-  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   nixpkgs.config.allowBroken = true;
