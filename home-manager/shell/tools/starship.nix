@@ -3,7 +3,7 @@ _: {
     enable = true;
     # Configuration written to ~/.config/starship.toml
     settings = {
-      format = "$username$hostname$sudo$directory$git_branch$git_state$git_status$fill$helm$kubernetes$golang$rust$terraform$nix_shell$jobs$cmd_duration$time$line_break$character";
+      format = "$username$hostname$sudo$directory$git_branch$git_state$git_status$fill$helm$kubernetes$golang$rust$nodejs$pulumi$terraform$nix_shell$jobs$cmd_duration$time$line_break$character";
       command_timeout = 1000;
 
       sudo = {
@@ -67,14 +67,14 @@ _: {
       };
 
       rust = {
-        disabled = false;
+        format = " [$symbol($version)]($style)";
       };
 
       nix_shell = {
-        disabled = false;
-        impure_msg = "[impure shell](bold red)";
-        pure_msg = "[pure shell](bold green)";
-        format = " via [$symbol$state( \($name\))](bold blue)";
+        impure_msg = "[impure](bold red) ";
+        pure_msg = "[pure](bold green) ";
+        symbol = "❄️ ";
+        format = " [$symbol$state(\($name\))](bold blue)";
       };
 
       terraform = {
@@ -101,7 +101,7 @@ _: {
       time = {
         disabled = false;
         use_12hr = false;
-        format = " at [$time]($style)";
+        format = " at [$time](bold yellow) ";
         utc_time_offset = "local";
       };
     };
