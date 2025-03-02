@@ -40,9 +40,17 @@
   swapDevices = [
     {
       device = "/var/lib/swapfile";
+      priority = 0;
       size = 16 * 1024;
     }
   ];
+
+  # zram Swap
+  zramSwap = {
+    enable = true;
+    priority = 10;
+    memoryPercent = 100;
+  };
 
   networking = {
     hostId = "01d4f038";

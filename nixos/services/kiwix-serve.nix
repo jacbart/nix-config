@@ -19,7 +19,7 @@ in {
   users.groups."${group}" = { };
 
   systemd.services.kiwix = {
-    description = "Serve ZIM files with kiwix";
+    description = "Host ZIM files on the web with kiwix-serve";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
@@ -32,7 +32,6 @@ in {
         ${package}/bin/kiwix-serve --library \
           --port ${builtins.toString port} \
           --address ${listenAddress} \
-          --blockexternal \
           --monitorLibrary \
           ./library.xml
       '';
