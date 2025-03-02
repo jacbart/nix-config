@@ -255,8 +255,6 @@
         keys.normal = {
           A.g = [ ":run-shell-command git diff" ];
           space = {
-            w = ":w";
-            q = ":q";
             i = ":toggle lsp.display-inlay-hints";
             esc = [
               "collapse_selection"
