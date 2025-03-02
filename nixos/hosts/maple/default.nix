@@ -9,7 +9,7 @@
     ./distributed-builds.nix
     ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/minio.nix
-    ../../services/kiwix-server.nix
+    ../../services/kiwix-serve.nix
     ../../services/postgresql.nix
     ../../services/zitadel.nix
     ../../services/nextcloud-server.nix

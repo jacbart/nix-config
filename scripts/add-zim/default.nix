@@ -9,6 +9,7 @@ pkgs.writeShellApplication {
     xh
     gum
     fzf
+    htmlq
   ];
   text = builtins.readFile ./${name}.sh;
 }

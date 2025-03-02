@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 KIWIX_USER="kiwix"
 KIWIX_DIR="/var/lib/kiwix/"
