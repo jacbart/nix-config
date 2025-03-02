@@ -79,6 +79,7 @@
                 parameterNames = true;
                 rangeVariableTypes = true;
               };
+              # buildFlags = [ "-tags=" ];
             };
           };
         };
