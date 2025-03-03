@@ -56,6 +56,9 @@ in
       enable = true;
       plugins = [
         {
+          name = "jeffreytse/zsh-vi-mode";
+        }
+        {
           name = "plugins/fzf";
           tags = [ "from:oh-my-zsh" ];
         }
