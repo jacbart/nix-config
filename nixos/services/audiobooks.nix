@@ -1,5 +1,8 @@
 { pkgs, ... }: {
   imports = [ ./audiobookshelf.nix ];
 
-  environment.systemPackages = [ pkgs.unstable.libation ];
+  environment.systemPackages = [
+    pkgs.unstable.libation
+    pkgs.libro
+  ];
 }
