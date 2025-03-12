@@ -14,6 +14,7 @@
       nil # nix language server
       nixfmt-rfc-style # nix formatter
       nodePackages.prettier # code formatter
+      serpl # find and replace ala VS Code
       shfmt # Bash formatter
       stylua # lua formatter
       sqls # SQL language server
@@ -253,7 +254,10 @@
       settings = {
         theme = "gruvbox_dark_hard";
         keys.normal = {
-          A.g = [ ":run-shell-command git diff" ];
+          A = {
+            r = [ ":run-shell-command serpl" ];
+            g = [ ":run-shell-command git diff" ];
+          };
           space = {
             i = ":toggle lsp.display-inlay-hints";
             esc = [
