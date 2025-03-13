@@ -14,6 +14,7 @@
       nil # nix language server
       nixfmt-rfc-style # nix formatter
       nodePackages.prettier # code formatter
+      serpl # find and replace
       shfmt # Bash formatter
       stylua # lua formatter
       sqls # SQL language server
@@ -255,6 +256,7 @@
         keys.normal = {
           A = {
             g = [ ":run-shell-command git diff" ];
+            # r = [ ":new" ":insert-output serpl" ":buffer-close!" ":redraw" ];
           };
           space = {
             i = ":toggle lsp.display-inlay-hints";

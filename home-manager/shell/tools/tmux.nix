@@ -3,7 +3,6 @@
     # Install tmux
     packages = [ 
       pkgs.tmux
-      pkgs.serpl
     ];
 
     # Fetch the tmux plugin manager (tpm) and place it in the ~/.tmux/plugins/tpm directory
@@ -70,9 +69,6 @@
       # Broot new window
       unbind F
       bind F new-window -n "broot" -c "#{pane_current_path}" "broot"
-      # serpl find and replace ala VS Code
-      unbind R
-      bind R display-popup -E "tmux new-session -A -s 'Find and Replace' 'serpl'"
 
       run '~/.tmux/plugins/tpm/tpm'
     '';
