@@ -3,6 +3,6 @@
 
   environment.systemPackages = [
     pkgs.unstable.libation
-    pkgs.libro
+    # pkgs.libro
   ];
 }
