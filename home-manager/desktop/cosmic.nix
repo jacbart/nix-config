@@ -6,7 +6,7 @@
     # ../apps/firefox.nix
     # ../apps/rustdesk.nix
     # ../apps/lan-mouse.nix # virtual kvm
-    ../apps/zed-editor.nix
+    # ../apps/zed-editor.nix
     ../services/nextcloud-client.nix
   ];
 
@@ -20,6 +20,7 @@
       unstable.pipeline # peertube - peer to peer video
       wl-clipboard # wl-copy and wl-paste
       vlc # multi-media viewer
+      librewolf
       vivaldi
     ];
     file."${config.home.homeDirectory}/Pictures/wallpapers/bg.jpg".source = ../files/bg.jpg;
