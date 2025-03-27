@@ -18,7 +18,7 @@
         user = {
           name = "jacbart";
           email = "jacbart@gmail.com";
-          signingkey = "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIF4nyZ9WdHRf6yy6IlB/qJbNLIf3Sp9umUjm1pHhIAvAAAABHNzaDo= jacbart@gmail.com";
+          signingkey = "~/.ssh/id_git";
         };
         alias = {
           lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
@@ -29,7 +29,7 @@
         };
         core = {
           editor = "hx";
-          sshCommand = "ssh -i ~/.ssh/id_git_sk -i ~/.ssh/id_git";
+          sshCommand = "ssh -i ~/.ssh/id_git";
         };
         url = {
           "git@github.com:jacbart" = {
@@ -52,14 +52,15 @@
           defaultBranch = "main";
         };
         gpg.format = "ssh";
-      # delta = {
-      #     enable = true;
-      #     options = {
-      #         features = "decorations";
-      #         navigate = true;
-      #         side-by-side = true;
-      #     };
-      # };
+        commit.gpgsign = true;
+        # delta = {
+        #     enable = true;
+        #     options = {
+        #         features = "decorations";
+        #         navigate = true;
+        #         side-by-side = true;
+        #     };
+        # };
       };
     };
   };

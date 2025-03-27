@@ -5,13 +5,14 @@
 }:
 let
   inherit (pkgs.stdenv) isLinux isDarwin;
-  modPath =
-    [
-      "$PATH"
-      "$HOME/bin"
-      "$HOME/go/bin"
-    ]
-    ++ lib.optional isDarwin "/opt/homebrew/bin";
+  modPath = [
+    "$HOME/.local/bin"
+    "$HOME/go/bin"
+  ]
+  ++ lib.optional isDarwin "/opt/homebrew/bin"
+  ++ [
+    "$PATH"
+  ];
   modPathStr = lib.strings.concatMapStrings (path: path + ":") modPath;
 in
 {
