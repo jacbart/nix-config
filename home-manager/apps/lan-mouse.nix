@@ -4,7 +4,6 @@
 }: {
   # add the home manager module
   imports = [ inputs.lan-mouse.homeManagerModules.default ];
-  home.packages = [ pkgs.wlroots ];
 
   programs.lan-mouse = {
     enable = true;
@@ -18,7 +17,7 @@
       port = 4242;
       left = {
         hostname = "jackjrny";
-        ips = [ "192.168.1.54" ];
+        ips = [ "192.168.1.3" ];
         port = 4242;
       };
     };
