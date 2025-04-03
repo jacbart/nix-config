@@ -80,7 +80,7 @@
                 parameterNames = true;
                 rangeVariableTypes = true;
               };
-              # buildFlags = [ "-tags=" ];
+              # buildFlags = [ "-tags=ignore" ];
             };
           };
         };
