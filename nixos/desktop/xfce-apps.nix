@@ -5,8 +5,9 @@
 
   environment = {
     systemPackages = with pkgs; [
-      alacritty
-      alacritty-theme
+      ghostty
+      # alacritty
+      # alacritty-theme
       # blueman
       elementary-xfce-icon-theme
       font-manager
