@@ -14,6 +14,7 @@
     ../../services/zitadel.nix
     ../../services/nextcloud-server.nix
     ../../services/audiobooks.nix
+    ../../services/dendrite.nix
     ../../services/smartmon.nix
   ];
 
@@ -21,18 +22,21 @@
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
+
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
   ## ZFS
   boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
   boot.zfs.extraPools = [ "trunk" ];
   boot.zfs.forceImportRoot = false;
 
+  # zfs services
   services.zfs.autoScrub.enable = true;
   services.zfs.trim.enable = true;
 
+  # zfs tools
   environment.systemPackages = [ pkgs.zfs ];
 
-  # Fstab
+  # fstab
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_SD";
     fsType = "ext4";
