@@ -24,6 +24,7 @@
         private_key = config.sops.secrets."matrix/private_key".path;
       };
       client_api.registration_disabled = true;
+      client_api.registration_shared_secret = "$REGISTRATION_SHARED_SECRET";
     };
   };
   # systemd.services.dendrite = {
