@@ -29,4 +29,7 @@
   systemd.services.dendrite = {
     serviceConfig.SupplementaryGroups = [ config.users.groups.dendrite.name ];
   };
+  systemd.tmpfiles.rules = [
+    "d /var/lib/dendrite 0755 ${config.users.users.dendrite.name} ${config.users.groups.dendrite.name}"
+  ];
 }
