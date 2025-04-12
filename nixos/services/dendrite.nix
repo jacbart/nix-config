@@ -2,7 +2,7 @@
   users.users.dendrite = {
     isSystemUser = true;
     group = config.users.groups.dendrite.name;
-    home = "/var/lib/dendrite";
+    home = "/var/lib/private/dendrite";
   };
   users.groups.dendrite = { };
   sops.secrets."matrix/private_key" = {
@@ -26,10 +26,10 @@
       client_api.registration_disabled = true;
     };
   };
-  systemd.services.dendrite = {
-    serviceConfig.SupplementaryGroups = [ config.users.groups.dendrite.name ];
-  };
-  systemd.tmpfiles.rules = [
-    "d /var/lib/dendrite 0755 ${config.users.users.dendrite.name} ${config.users.groups.dendrite.name}"
-  ];
+  # systemd.services.dendrite = {
+  #   serviceConfig.SupplementaryGroups = [ config.users.groups.dendrite.name ];
+  # };
+  # systemd.tmpfiles.rules = [
+  #   "d /var/lib/private/dendrite 0755 ${config.users.users.dendrite.name} ${config.users.groups.dendrite.name}"
+  # ];
 }
