@@ -1,12 +1,17 @@
 { config, pkgs, ... }: {
-  users.groups.matrix = { };
+  users.users.dendrite = {
+    isSystemUser = true;
+    group = config.users.groups.dendrite.name;
+    home = "/var/lib/dendrite";
+  };
+  users.groups.dendrite = { };
   sops.secrets."matrix/private_key" = {
     mode = "0440";
-    group = config.users.groups.matrix.name;
+    group = config.users.groups.dendrite.name;
   };
   sops.secrets."matrix/env_file" = {
     mode = "0440";
-    group = config.users.groups.matrix.name;
+    group = config.users.groups.dendrite.name;
   };
   environment.systemPackages = [ pkgs.dendrite ];
   services.dendrite = {
@@ -22,6 +27,6 @@
     };
   };
   systemd.services.dendrite = {
-    serviceConfig.SupplementaryGroups = [ config.users.groups.matrix.name ];
+    serviceConfig.SupplementaryGroups = [ config.users.groups.dendrite.name ];
   };
 }
