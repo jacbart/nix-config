@@ -49,5 +49,11 @@ in
         HostName unicron
         User jack
         IdentityFile ~/.ssh/id_ratatoskr
+
+    Host oak
+        HostName oak
+        User root
+        Port 3048
+        IdentityFile ~/.ssh/id_do
   '';
 }
