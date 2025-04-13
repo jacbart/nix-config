@@ -4,8 +4,9 @@
 }: {
   imports = [
     (modulesPath + "/virtualisation/digital-ocean-image.nix")
-    # (modulesPath + "/virtualisation/digital-ocean-config.nix")
+    ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/fail2ban.nix
+    ../../services/tailscale.nix
   ];
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";
