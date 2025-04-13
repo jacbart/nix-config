@@ -5,7 +5,7 @@
   imports = [
     ../../hardware/rockpro64.nix
     ../../services/tailscale.nix
-    # ../../services/fail2ban.nix
+    ../../services/fail2ban.nix
     ./distributed-builds.nix
     ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/minio.nix

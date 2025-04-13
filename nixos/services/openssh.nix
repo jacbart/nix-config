@@ -5,7 +5,9 @@
       openFirewall = true;
       settings = {
         PasswordAuthentication = lib.mkDefault true;
-        PermitRootLogin = lib.mkDefault "no";
+        PermitRootLogin = lib.mkDefault "prohibit-password";
+        UseDns = lib.mkDefault true;
+        X11Forwarding = lib.mkDefault false;
       };
     };
     sshguard = {

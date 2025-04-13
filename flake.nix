@@ -42,7 +42,7 @@
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-2.tar.gz";
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-3.tar.gz";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
 
     #### Personal repos ####
@@ -101,6 +101,10 @@
           hostname = "unicron";
           username = "jack";
         };
+        "ratatoskr@oak" = libx.mkHome {
+          hostname = "oak";
+          username = "ratatoskr";
+        };
       };
       nixosConfigurations = {
         # .iso images
@@ -130,6 +134,10 @@
           hostname = "maple";
           username = "ratatoskr";
           platform = "aarch64-linux";
+        };
+        oak = libx.mkHost {
+          hostname = "oak";
+          username = "ratatoskr";
         };
       };
 

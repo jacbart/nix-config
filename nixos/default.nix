@@ -25,8 +25,7 @@
     ]
     ++ lib.optional (platform == "x86_64-linux") ./libraries
     ++ lib.optional (builtins.pathExists (./. + "/users/${username}")) ./users/${username}
-    ++ lib.optional (desktop != null) ./desktop
-    ++ lib.optional (hostname == "maple") ./services/smartmon.nix;
+    ++ lib.optional (desktop != null) ./desktop;
 
   boot = {
     consoleLogLevel = 0;
@@ -51,7 +50,7 @@
       LC_TIME = "en_US.UTF-8";
     };
   };
-  time.timeZone = "America/Phoenix";
+  time.timeZone = lib.mkDefault "America/Phoenix";
 
   # Only install the docs I use
   documentation.enable = true;
@@ -179,13 +178,15 @@
 
       warn-dirty = false;
 
-      # personal substituters
       substituters = [
         "https://s3.meep.sh/nix-cache"
+        "https://cache.lix.systems"
         "https://nix-community.cachix.org"
+        "https://cache.nixos.org"
       ];
       trusted-public-keys = [
         "s3.meep.sh-3:mcrDvp6CZgkpq+/aRB18b6XtJywHSPkSZWr4NrnVGOc="
+        "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
 

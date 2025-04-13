@@ -1,0 +1,31 @@
+{ modulesPath
+, lib
+, ...
+}: {
+  imports = [
+    (modulesPath + "/virtualisation/digital-ocean-image.nix")
+    # (modulesPath + "/virtualisation/digital-ocean-config.nix")
+    ../../services/fail2ban.nix
+  ];
+
+  virtualisation.digitalOceanImage.compressionMethod = "bzip2";
+  networking = {
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ ];
+    };
+  };
+
+  services.openssh = {
+    ports = [ 3048 ];
+    settings.PasswordAuthentication = lib.mkForce false;
+    settings.PermitRootLogin = lib.mkForce "yes";
+  };
+  time.timeZone = lib.mkForce "Europe/Berlin";
+
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = 1024 * 2; # 2GB
+  }];
+}
