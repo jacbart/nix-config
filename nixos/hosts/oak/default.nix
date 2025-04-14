@@ -11,6 +11,20 @@
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";
   networking = {
+    hostId = "e1U8fB38";
+    hosts = {
+      "127.0.0.1" = [
+        "localhost"
+        "oak"
+        "oak.meep.sh"
+      ];
+      "100.81.146.101" = [
+        "s3.meep.sh"
+        "matrix.meep.sh"
+      ];
+    };
+    nameservers = [ "127.0.0.1" "100.81.146.101" ];
+    networkmanager.dns = "none";
     firewall = {
       enable = true;
       allowedTCPPorts = [ ];
