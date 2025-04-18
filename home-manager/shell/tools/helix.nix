@@ -9,6 +9,7 @@
       gofumpt # go formatter
       gopls # go language server
       # helix-gpt # code completion LSP for LLM's in Helix
+      # lsp-ai # code completion LSP for LLM's
       # marksman # markdown language server
       markdown-oxide # markdown language server
       nil # nix language server
@@ -41,6 +42,31 @@
           sqls = {
             command = "sqls";
           };
+          # lsp-ai = {
+          #   command = "lsp-ai";
+          #   config = {
+          #     memory = {
+          #       file_store = { };
+          #     };
+          #     models.model1 = {
+          #       type = "ollama";
+          #       model = "qwen2.5-coder:1.5b-base";
+          #       # chat_endpoint = "https://llm.bbl.systems/api/chat";
+          #       # generate_endpoint = "https://llm.bbl.systems/api/generate";
+          #       max_requests_per_second = "128";
+          #     };
+          #     completion = {
+          #       model = "model1";
+          #       parameters = {
+          #         max_tokens = 64;
+          #         max_context = 1024;
+          #         options = {
+          #           num_predict = 32;
+          #         };
+          #       };
+          #     };
+          #   };
+          # };
           # gpt = {
           #   command = "helix-gpt";
           #   args = [
@@ -166,7 +192,7 @@
               ];
             };
             auto-format = true;
-            # language-servers = [ "gpt" ];
+            # language-servers = [ "lsp-ai" ];
           }
           {
             name = "html";
