@@ -220,11 +220,11 @@
     },
     "mypkgs": {
       "locked": {
-        "lastModified": 1743805885,
-        "narHash": "sha256-j/RLiSckuc+ccmlw4MXgckaGAzwUvATn/+f5k99VoZU=",
+        "lastModified": 1745032553,
+        "narHash": "sha256-wbc9eEnJFfGps7BAX6cgZFQIaF56FXVxQf75iNOA4nI=",
         "owner": "jacbart",
         "repo": "nixpkgs",
-        "rev": "b9e55db00adbcce19ae1630e8691192d66036441",
+        "rev": "0eca726400d5808b8794aa3e65eca002939cba34",
         "type": "github"
       },
       "original": {
