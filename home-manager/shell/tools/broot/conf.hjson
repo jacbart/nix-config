@@ -83,11 +83,13 @@ ext_colors: {
     hcl: rgb(255, 155, 251)
     conf: rgb(255, 155, 251)
     toml: rgb(255, 155, 251)
+    mod: rgb(255, 155, 251)
     jaws: rgb(255, 155, 251)
     koi: rgb(255, 155, 251)
     # red
     env: rgb(245, 86, 86)
     secret: rgb(245, 86, 86)
+    sum: rgb(245, 86, 86)
     lock: rgb(245, 86, 86)
     # light green
     sh: rgb(29, 224, 163)
