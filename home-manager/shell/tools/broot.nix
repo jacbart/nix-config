@@ -3,7 +3,7 @@
 , ...
 }: {
   home.packages = with pkgs; [
-    broot
+    unstable.broot
     mupdf-headless
     scripts.br
   ];
