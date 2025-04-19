@@ -11,7 +11,7 @@
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";
   networking = {
-    hostId = "e1U8fB38";
+    # hostId = "";
     hosts = {
       "127.0.0.1" = [
         "localhost"
