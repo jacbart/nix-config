@@ -9,6 +9,7 @@ in
 {
   sops.secrets."tailscale/auth-key" = { };
 
+  systemd.services.tailscaled.after = ["systemd-networkd-wait-online.service"];
   services.tailscale = {
     enable = true;
     interfaceName = mkDefault "tailscale0";
