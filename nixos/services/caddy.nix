@@ -12,7 +12,7 @@
     # https://serverfault.com/a/899964
     AmbientCapabilities = [ "CAP_NET_BIND_SERVICE" ];
   };
-  systemd.services.caddy.after = ["tailscaled.service"];
+  systemd.services.caddy.after = [ "tailscaled.service" ];
 
   sops.templates.Caddyfile = {
     restartUnits = [ "caddy.service" ];
@@ -42,7 +42,6 @@
     owner = "caddy";
     group = "caddy";
   };
-
 
   services.caddy = {
     enable = true;

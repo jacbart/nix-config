@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   imports = [
     ../../hardware/uconsole.nix
     ./remote-builder.nix

@@ -41,8 +41,10 @@
   };
   time.timeZone = lib.mkForce "Europe/Berlin";
 
-  swapDevices = [{
-    device = "/swap/swapfile";
-    size = 1024 * 2; # 2GB
-  }];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 1024 * 2; # 2GB
+    }
+  ];
 }

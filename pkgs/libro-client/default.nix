@@ -3,7 +3,8 @@
 , stdenv
 , bun
 , makeWrapper
-, ... }: 
+, ...
+}:
 stdenv.mkDerivation rec {
   pname = "libro";
   version = "1.0.0";
@@ -14,8 +15,8 @@ stdenv.mkDerivation rec {
     hash = "sha256-jloyUYZ7k/SzXHjF6Jx0wBzj5jInpiEO+j/lniRz3Gw=";
   };
 
-  nativeBuildInputs = [ 
-    bun 
+  nativeBuildInputs = [
+    bun
     makeWrapper
   ];
 

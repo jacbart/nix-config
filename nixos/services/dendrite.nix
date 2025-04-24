@@ -1,4 +1,7 @@
-{ config, pkgs, ... }: {
+{ config
+, pkgs
+, ...
+}: {
   users.users.dendrite = {
     isSystemUser = true;
     group = config.users.groups.dendrite.name;

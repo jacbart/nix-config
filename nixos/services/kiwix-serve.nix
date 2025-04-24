@@ -1,5 +1,4 @@
-{ pkgs
-, ... }:
+{ pkgs, ... }:
 let
   user = "kiwix";
   group = "kiwix";
@@ -7,7 +6,8 @@ let
   package = pkgs.kiwix-tools;
   port = 3636;
   listenAddress = "0.0.0.0";
-in {
+in
+{
   environment.systemPackages = [ package ];
 
   users.users."${user}" = {

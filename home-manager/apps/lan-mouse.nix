@@ -14,13 +14,15 @@
       capture-backend = "layer-shell";
       release_bind = [ "KeyA" "KeyS" "KeyD" "KeyF" ];
       port = 4242;
-      clients = [{
-        position = "left";
-        hostname = "jackjrny";
-        activate_on_startup = true;
-        ips = [ "192.168.1.3" "100.127.159.128" ];
-        port = 4242;
-      }];
+      clients = [
+        {
+          position = "left";
+          hostname = "jackjrny";
+          activate_on_startup = true;
+          ips = [ "192.168.1.3" "100.127.159.128" ];
+          port = 4242;
+        }
+      ];
     };
   };
 }

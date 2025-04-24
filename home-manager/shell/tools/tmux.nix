@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home = {
     # Install tmux
-    packages = [ 
+    packages = [
       pkgs.tmux
     ];
 

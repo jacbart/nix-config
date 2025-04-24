@@ -3,7 +3,7 @@
   #   "fail2ban/filter.d/caddy-status.conf".text = ''
   #     [Definition]
   #     failregex = ^.*"remote_ip":"<HOST>",.*?"status":(?:401|403|500),.*$
-  #     ignoreregex = 
+  #     ignoreregex =
   #     datepattern = LongEpoch
   #   '';
   # };
