@@ -35,6 +35,17 @@
     resumeDevice = "/dev/disk/by-label/nixos";
   };
 
+  
+  networking = {
+    # hostId = "";
+    hosts = {
+      "127.0.0.2" = [
+        "boojum.meep.sh"
+        "remote.dev"
+      ];
+    };
+  };
+
   programs.tmux = {
     enable = true;
     clock24 = true;
