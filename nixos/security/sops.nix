@@ -1,6 +1,6 @@
 { inputs, ... }:
 let
-  secretsPath = builtins.toString inputs.mySecrets;
+  secretsPath = builtins.toString inputs.secrets;
 in
 {
   sops = {

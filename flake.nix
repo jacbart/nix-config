@@ -24,6 +24,9 @@
     # nix-ld.url = "github:Mic92/nix-ld";
     # nix-ld.inputs.nixpkgs.follows = "nixpkgs";
 
+    # patched caddy with cloudflare provider
+    caddy-with-modules.url = "github:jacbart/nixos-caddy-patched";
+
     hydra.url = "github:NixOS/hydra";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -46,7 +49,7 @@
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
 
     #### Personal repos ####
-    mySecrets = {
+    secrets = {
       url = "git+ssh://git@github.com/jacbart/nix-secrets.git?ref=main&shallow=1";
       flake = false;
     };

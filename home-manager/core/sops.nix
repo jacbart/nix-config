@@ -3,7 +3,7 @@
 , ...
 }:
 let
-  secretsPath = builtins.toString inputs.mySecrets;
+  secretsPath = builtins.toString inputs.secrets;
   homeDir = config.home.homeDirectory;
 in
 {
