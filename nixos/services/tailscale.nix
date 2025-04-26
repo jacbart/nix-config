@@ -9,6 +9,12 @@ in
 {
   sops.secrets."tailscale/auth-key" = { };
 
+  systemd.services.NetworkManager-wait-online = {
+    serviceConfig = {
+      ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+    };
+  };
+
   systemd.services.tailscaled.after = [ "systemd-networkd-wait-online.service" ];
   services.tailscale = {
     enable = true;
