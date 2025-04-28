@@ -7,7 +7,7 @@
     ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/fail2ban.nix
     ../../services/tailscale.nix
-    ../../services/caddy.nix
+    # ../../services/caddy.nix
   ];
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";

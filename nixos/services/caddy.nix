@@ -24,10 +24,9 @@
       }
       matrix.meep.sh {
         log {
-          output file /var/log/caddy/access-matrix.meep.sh.log
+          output file /var/log/caddy/access-wildcard.meep.sh.log
         }
         forward_proxy {
-          basic_auth jack ${config.sops.placeholder."caddy_users/jack_pass"}
           hide_via
           disable_insecure_upstreams_check
           serve_pac /anerlour.pac
@@ -35,7 +34,7 @@
           max_idle_conns          3
           max_idle_conns_per_host 2
 
-          upstream http://
+          upstream https://matrix.meep.sh
         }
       }
     '';
