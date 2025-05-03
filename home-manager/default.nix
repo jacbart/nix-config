@@ -70,7 +70,7 @@ in
       # To make nix3 commands consistent with your flake
       registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
-      package = pkgs.unstable.nix;
+      package = pkgs.lix;
       settings = {
         auto-optimise-store = true;
         experimental-features = [ "nix-command" "flakes" ];
