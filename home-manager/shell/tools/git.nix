@@ -35,6 +35,9 @@
           "git@github.com:jacbart" = {
             insteadOf = "https://github.com/jacbart";
           };
+          "git@github.com:taybart" = {
+            insteadOf = "https://github.com/taybart";
+          };
           "git@github.com:journeyai" = {
             insteadOf = "https://github.com/journeyai";
           };
