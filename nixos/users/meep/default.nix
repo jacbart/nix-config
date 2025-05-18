@@ -5,7 +5,6 @@
 , ...
 }:
 let
-  inherit (pkgs.stdenv) system;
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
@@ -17,25 +16,15 @@ in
   environment.systemPackages =
     [
       pkgs.age
-    ]
-    ++ lib.optionals (desktop != null) [
-      pkgs.unstable.firefox
-    ]
-    ++ lib.optionals (desktop != null && system != "aarch64-linux") [
-      pkgs.gimp-with-plugins
-      pkgs.zoom-us
-      pkgs.unstable.discord
-      pkgs.unstable.google-chrome
-      pkgs.unstable.slack
-      pkgs.unstable.ollama
+      # pkgs.unstable.ollama
     ];
 
-  services.ollama = {
-    enable = true;
-    # host = "0.0.0.0";
-    openFirewall = true;
-    loadModels = [ "phi3:3.8b" ];
-  };
+  # services.ollama = {
+  #   enable = true;
+  #   # host = "0.0.0.0";
+  #   openFirewall = true;
+  #   loadModels = [ "phi3:3.8b" ];
+  # };
 
   sops.secrets.meep-password.neededForUsers = true;
   users.mutableUsers = false;
