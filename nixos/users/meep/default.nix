@@ -13,11 +13,10 @@ in
     ../../desktop/${desktop}-apps.nix
   ];
 
-  environment.systemPackages =
-    [
-      pkgs.age
-      # pkgs.unstable.ollama
-    ];
+  environment.systemPackages = [
+    pkgs.age
+    # pkgs.unstable.ollama
+  ];
 
   # services.ollama = {
   #   enable = true;

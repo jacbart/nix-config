@@ -35,7 +35,6 @@
     resumeDevice = "/dev/disk/by-label/nixos";
   };
 
-  
   networking = {
     # hostId = "";
     hosts = {
