@@ -78,7 +78,7 @@ in
       expireDuplicatesFirst = true;
       path = "${config.xdg.dataHome}/zsh/history";
     };
-    initExtra = ''
+    initContent = ''
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff5f00"
       bindkey '^E' autosuggest-accept
       bindkey '^ ' forward-word
