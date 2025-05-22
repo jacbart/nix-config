@@ -15,7 +15,7 @@
     packages = with pkgs; [
       # angle-grinder
       dogdns
-      dysk
+      # dysk # disable for m1 mac
       fastfetch
       fd
       fzf
