@@ -19,7 +19,7 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # nix-ld.url = "github:Mic92/nix-ld";
@@ -65,7 +65,7 @@
       inherit (self) outputs;
       inherit (nixpkgs) lib;
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-      stateVersion = lib.mkDefault "24.11";
+      stateVersion = lib.mkDefault "25.05";
       libx = import ./lib { inherit inputs outputs stateVersion; };
     in
     {
