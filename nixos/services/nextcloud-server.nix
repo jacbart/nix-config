@@ -31,7 +31,7 @@ in
       enable = true;
       https = false;
       hostName = "${subdomain}.${domain}";
-      package = pkgs.nextcloud30;
+      package = pkgs.nextcloud31;
       maxUploadSize = "10G";
       configureRedis = true;
       database.createLocally = false; # Use postgresql.nix to create db
@@ -59,7 +59,7 @@ in
       autoUpdateApps.enable = false;
       extraApps = {
         inherit
-          (pkgs.unstable.nextcloud30Packages.apps)
+          (pkgs.unstable.nextcloud31Packages.apps)
           bookmarks
           calendar
           contacts
@@ -67,7 +67,7 @@ in
           maps
           music
           notes
-          notify_push
+          # notify_push
           previewgenerator
           sociallogin
           tasks
