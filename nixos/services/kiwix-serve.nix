@@ -5,7 +5,7 @@ let
   dataDir = "kiwix";
   package = pkgs.kiwix-tools;
   port = 3636;
-  listenAddress = "0.0.0.0";
+  listenAddress = "192.168.1.5";
 in
 {
   environment.systemPackages = [ package ];
@@ -33,7 +33,7 @@ in
           --port ${builtins.toString port} \
           --address ${listenAddress} \
           --monitorLibrary \
-          ./library.xml
+          /var/lib/${dataDir}/library.xml
       '';
       Restart = "on-failure";
     };
