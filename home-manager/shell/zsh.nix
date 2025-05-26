@@ -48,6 +48,7 @@ in
       gs = "git status";
       ga = "git add";
       gcm = "git commit -m";
+      clock = "while :; do printf '\r%s ' \"$(date +%r)\"; sleep 1 ; done";
       nix-gc = lib.mkDefault "sudo nix-collect-garbage --delete-older-than 10d && nix-collect-garbage --delete-older-than 10d";
       rebuild-all = lib.mkDefault "sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config && home-manager switch -b backup --flake $HOME/workspace/personal/nix-config";
       rebuild-home = lib.mkDefault "home-manager switch -b backup --flake $HOME/workspace/personal/nix-config";
