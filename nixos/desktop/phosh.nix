@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.phosh = {
     enable = true;
@@ -6,9 +6,6 @@
     group = "users";
     phocConfig.xwayland = "immediate";
   };
-  environment.systemPackages = [
-    pkgs.power-profiles-daemon
-  ];
 
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "meep";

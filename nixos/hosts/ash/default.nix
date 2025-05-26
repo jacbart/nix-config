@@ -1,18 +1,18 @@
-{ lib, ... }: {
+{ lib, pkgs, ... }: {
   imports = [
     ../../hardware/uconsole.nix
     ./remote-builder.nix
-    ../../services/tailscale.nix
+    # ../../services/tailscale.nix
   ];
 
-  # environment.systemPackages = [
-  #   pkgs.uconsole-nx
-  #   (pkgs.retroarch.override {
-  #     cores = [
-  #       pkgs.libretro.mgba
-  #     ];
-  #   })
-  # ];
+  environment.systemPackages = [
+    pkgs.uconsole-nx
+    (pkgs.retroarch.override {
+      cores = [
+        pkgs.libretro.mgba
+      ];
+    })
+  ];
 
   fileSystems = {
     "/" = {
