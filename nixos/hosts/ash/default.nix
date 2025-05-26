@@ -1,9 +1,8 @@
-{ ... }: {
+{ lib, ... }: {
   imports = [
     ../../hardware/uconsole.nix
     ./remote-builder.nix
     ../../services/tailscale.nix
-    # ./wireguard.nix
   ];
 
   # environment.systemPackages = [
@@ -33,18 +32,18 @@
 
   networking = {
     hosts = {
-      "127.0.0.1" = [ "ash" "ash.meep.sh" ];
+      "127.0.0.2" = [ "ash.meep.sh" ];
       "192.168.0.120" = [ "mesquite" "mesquite.meep.sh" ];
     };
     wireless.iwd = {
-      enable = true;
+      enable = lib.mkDefault true;
       settings = {
         Network = {
-          EnableIPv6 = true;
-          RoutePriorityOffset = 300;
+          EnableIPv6 = lib.mkDefault true;
+          RoutePriorityOffset = lib.mkDefault 300;
         };
         Settings = {
-          AutoConnect = true;
+          AutoConnect = lib.mkDefault true;
         };
       };
     };

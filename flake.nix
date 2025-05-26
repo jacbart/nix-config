@@ -1,7 +1,6 @@
 {
   description = "NixOS and Home Manager Configuration";
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     # You can access packages and modules from different nixpkgs revs at the same time.
     # See 'unstable-packages' overlay in 'overlays/default.nix'.
@@ -28,6 +27,8 @@
     # patched caddy with cloudflare provider
     caddy-with-modules.url = "github:jacbart/nixos-caddy-patched";
 
+    lan-mouse.url = "github:feschber/lan-mouse";
+
     hydra.url = "github:NixOS/hydra";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -38,15 +39,10 @@
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
 
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-
-    lan-mouse.url = "github:feschber/lan-mouse";
-
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0-3.tar.gz";
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.0.tar.gz";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
 
     #### Personal repos ####
@@ -92,7 +88,7 @@
         "meep@ash" = libx.mkHome {
           hostname = "ash";
           username = "meep";
-          desktop = "xfce";
+          desktop = "phosh";
           platform = "aarch64-linux";
         };
         # Servers

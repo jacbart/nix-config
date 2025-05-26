@@ -14,7 +14,6 @@
   imports =
     [
       inputs.disko.nixosModules.disko
-      inputs.vscode-server.nixosModules.default
 
       (modulesPath + "/installer/scan/not-detected.nix")
       ./hosts/${hostname}
