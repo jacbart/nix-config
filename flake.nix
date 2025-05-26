@@ -126,7 +126,7 @@
         ash = libx.mkHost {
           hostname = "ash";
           username = "meep";
-          desktop = "xfce";
+          desktop = "phosh";
           platform = "aarch64-linux";
         };
         # Servers
