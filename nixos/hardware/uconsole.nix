@@ -15,20 +15,20 @@
   boot.initrd.kernelModules = [ ];
 
   #rotate screen
-  services.xserver = {
-    resolutions = [
-      {
-        x = 720;
-        y = 1280;
-      }
-    ];
-    xrandrHeads = [
-      {
-        monitorConfig = ''Option "Rotate" "right"'';
-        output = "DSI-1";
-      }
-    ];
-  };
+  # services.xserver = {
+  #   resolutions = [
+  #     {
+  #       x = 720;
+  #       y = 1280;
+  #     }
+  #   ];
+  #   xrandrHeads = [
+  #     {
+  #       monitorConfig = ''Option "Rotate" "right"'';
+  #       output = "DSI-1";
+  #     }
+  #   ];
+  # };
 
   # The default powersave makes the wireless connection unusable.
   networking.networkmanager.wifi.powersave = lib.mkDefault false;
