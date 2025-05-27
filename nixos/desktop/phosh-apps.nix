@@ -6,7 +6,8 @@
     pkgs.evince # document viewer
     pkgs.nautilus # files
     pkgs.gnome-disk-utility
-    pkgs.gnome-calender
+    pkgs.gnome-calendar
+    pkgs.gnome-calculator
     pkgs.gnome-console # term
     pkgs.gnome-contacts
     pkgs.gnome-clocks

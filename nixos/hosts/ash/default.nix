@@ -7,11 +7,11 @@
 
   environment.systemPackages = [
     pkgs.uconsole-nx
-    (pkgs.retroarch.override {
-      cores = [
-        pkgs.libretro.mgba
-      ];
-    })
+    # (pkgs.retroarch.override {
+    #   cores = [
+    #     pkgs.libretro.mgba
+    #   ];
+    # })
   ];
 
   fileSystems = {
