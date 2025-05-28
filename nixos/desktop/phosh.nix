@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.phosh = {
     enable = true;
@@ -6,6 +6,10 @@
     group = "users";
     phocConfig.xwayland = "immediate";
   };
+
+  environment.gnome.excludePackages = [
+    pkgs.squeekboard
+  ];
 
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "meep";
