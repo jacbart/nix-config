@@ -23,6 +23,12 @@
         hash = "sha256-j7Cu66PU+mY3c6ojTmdYPKZlUMbL9L4xoyJP4gQaLqU=";
       };
     };
+    squeekboard = prev.squeekboard.overrideAttrs (old: {
+      postInstall = (old.postInstall or "") + ''
+        rm $out/bin/squeekboard
+        touch $out/bin/squeekboard
+      '';
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
