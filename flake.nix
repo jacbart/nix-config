@@ -27,6 +27,8 @@
     # patched caddy with cloudflare provider
     caddy-with-modules.url = "github:jacbart/nixos-caddy-patched";
 
+    jaws.url = "github:jacbart/jaws";
+
     lan-mouse.url = "github:feschber/lan-mouse";
 
     hydra.url = "github:NixOS/hydra";
