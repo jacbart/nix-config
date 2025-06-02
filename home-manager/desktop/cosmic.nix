@@ -22,7 +22,6 @@
       wl-clipboard # wl-copy and wl-paste
       vlc # multi-media viewer
       unstable.librewolf
-      unstable.vivaldi
 
       gimp-with-plugins
       unstable.zoom-us
