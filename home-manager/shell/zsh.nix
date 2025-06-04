@@ -23,6 +23,7 @@ in
     [
       perl # Required for zplug
       htmlq
+      nh # nix helper cli
     ]
     ++ lib.optional isLinux unstable.tlrc;
 
@@ -50,9 +51,9 @@ in
       gcm = "git commit -m";
       clock = "while :; do printf '\r%s ' \"$(date +%r)\"; sleep 1 ; done";
       nix-gc = lib.mkDefault "sudo nix-collect-garbage --delete-older-than 10d && nix-collect-garbage --delete-older-than 10d";
-      rebuild-all = lib.mkDefault "sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config && home-manager switch -b backup --flake $HOME/workspace/personal/nix-config";
-      rebuild-home = lib.mkDefault "home-manager switch -b backup --flake $HOME/workspace/personal/nix-config";
-      rebuild-host = lib.mkDefault "sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config";
+      rebuild-all = lib.mkDefault "nh os switch $HOME/workspace/personal/nix-config --ask && nh home switch -b backup $HOME/workspace/personal/nix-config --ask";
+      rebuild-home = lib.mkDefault "nh home switch -b backup $HOME/workspace/personal/nix-config --ask";
+      rebuild-host = lib.mkDefault "nh os switch $HOME/workspace/personal/nix-config --ask";
       rebuild-lock = lib.mkDefault "pushd $HOME/workspace/personal/nix-config && nix flake update && popd";
     };
     zplug = {
