@@ -23,7 +23,7 @@ in
     [
       perl # Required for zplug
       htmlq
-      nh # nix helper cli
+      unstable.nh # nix helper cli
     ]
     ++ lib.optional isLinux unstable.tlrc;
 
