@@ -23,6 +23,10 @@
         "s3.meep.sh"
         "matrix.meep.sh"
         "mesquite.meep.sh"
+        "books.meep.sh"
+        "auth.meep.sh"
+        "minio.meep.sh"
+        "cloud.meep.sh"
       ];
     };
     nameservers = [ "127.0.0.1" "100.81.146.101" ];

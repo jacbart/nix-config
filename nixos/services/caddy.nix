@@ -17,24 +17,14 @@
   sops.templates.Caddyfile = {
     restartUnits = [ "caddy.service" ];
     content = ''
-      {
+      books.meep.sh {
+        reverse_proxy 100.81.146.101:443
         log {
-          level ERROR
+          output file /var/log/caddy/access-books.meep.sh.log
+          format json
         }
-      }
-      matrix.meep.sh {
-        log {
-          output file /var/log/caddy/access-wildcard.meep.sh.log
-        }
-        forward_proxy {
-          hide_via
-          disable_insecure_upstreams_check
-          serve_pac /anerlour.pac
-
-          max_idle_conns          3
-          max_idle_conns_per_host 2
-
-          upstream https://matrix.meep.sh
+        tls {
+          on_demand
         }
       }
     '';
