@@ -17,9 +17,9 @@
       clients = [
         {
           position = "left";
-          hostname = "jackjrny";
+          hostname = "jackjrny.local";
           activate_on_startup = true;
-          ips = [ "192.168.0.115" "100.127.159.128" ];
+          ips = [ "192.168.0.224" "100.127.159.128" ];
           port = 4242;
         }
       ];
