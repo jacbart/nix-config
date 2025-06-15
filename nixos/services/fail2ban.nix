@@ -17,9 +17,7 @@
       # Whitelist some subnets
       # "192.168.1.0/24"
       "192.168.0.0/24"
-      "192.168.4.0/24"
       "100.100.100.100/10"
-      "nb.meep.sh"
     ];
     bantime = "24h"; # Ban IPs for one day on the first ban
     bantime-increment = {

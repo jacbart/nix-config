@@ -1,6 +1,8 @@
 { pkgs, ... }:
 let
   package = pkgs.unstable.audiobookshelf;
+  subdomain = "books";
+  domain = "meep.sh";
 in
 {
   environment.systemPackages = [ package ];
@@ -12,8 +14,24 @@ in
   services.audiobookshelf = {
     enable = true;
     inherit package;
-    host = "0.0.0.0";
+    host = "127.0.0.1";
     port = 8234;
-    openFirewall = true;
+    openFirewall = false;
+  };
+
+  services.nginx = {
+    enable = true;
+    virtualHosts."${subdomain}.${domain}" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8234";
+        proxyWebsockets = true; # needed if you need to use WebSocket
+        extraConfig =
+          # required when the target is also TLS server with multiple hosts
+          "proxy_ssl_server_name on;"
+          +
+          # required when the server wants to use HTTP Authentication
+          "proxy_pass_header Authorization;";
+      };
+    };
   };
 }
