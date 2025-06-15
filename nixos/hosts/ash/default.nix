@@ -33,7 +33,7 @@
   networking = {
     hosts = {
       "127.0.0.2" = [ "ash.meep.sh" ];
-      "192.168.0.120" = [ "mesquite" "mesquite.meep.sh" ];
+      # "192.168.0.120" = [ "mesquite" "mesquite.meep.sh" ];
     };
     wireless.iwd = {
       enable = lib.mkDefault true;

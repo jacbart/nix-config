@@ -60,7 +60,7 @@
     hostId = "01d4f038";
     hosts = {
       "127.0.0.2" = [ "maple.meep.sh" ];
-      "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" ];
+      # "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" ];
     };
     firewall = {
       enable = true;

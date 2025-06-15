@@ -5,7 +5,7 @@ let
   dataDir = "kiwix";
   package = pkgs.kiwix-tools;
   port = 3636;
-  listenAddress = "192.168.1.5";
+  listenAddress = "192.168.0.44";
 in
 {
   environment.systemPackages = [ package ];

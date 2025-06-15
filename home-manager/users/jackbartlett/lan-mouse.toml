@@ -3,5 +3,5 @@ port = 4242
 release_bind = ["KeyA", "KeyS", "KeyD", "KeyF"]
 [left]
 hostname = "jackjrny"
-ips = ["192.168.1.4"]
+ips = ["192.168.0.78"]
 port = 4242

@@ -19,6 +19,10 @@
     ./virt.nix
   ];
 
+  environment.systemPackages = [
+    pkgs.uucp
+  ];
+
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
