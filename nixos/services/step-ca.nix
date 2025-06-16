@@ -29,7 +29,7 @@ in
     openFirewall = true;
     package = pkgs.step-ca;
     intermediatePasswordFile = config.sops.secrets."step_ca/password".path;
-    address = "127.0.0.1";
+    address = "127.0.0.2";
     port = 8443;
     settings = builtins.fromJSON (builtins.readFile ./step-ca.json);
   };

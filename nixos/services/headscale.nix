@@ -25,7 +25,7 @@ in
         format = "text";
       };
       server_url = "https://hs.${domain}";
-      # metrics_listen_url = "127.0.0.1:9092";
+      # metrics_listen_url = "127.0.0.2:9092";
       grpc_listen_url = "0.0.0.0:50443";
       grpc_allow_insecure = true;
       dns = {

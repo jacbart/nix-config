@@ -6,7 +6,7 @@ let
   domain = "meep.sh";
   package = pkgs.kiwix-tools;
   port = 3636;
-  listenAddress = "127.0.0.1";
+  listenAddress = "127.0.0.2";
 in
 {
   environment.systemPackages = [ package ];
@@ -47,7 +47,7 @@ in
       addSSL = true;
       useACMEHost = domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:3636";
+        proxyPass = "http://127.0.0.2:3636";
         proxyWebsockets = true; # needed if you need to use WebSocket
         extraConfig =
           # required when the target is also TLS server with multiple hosts
