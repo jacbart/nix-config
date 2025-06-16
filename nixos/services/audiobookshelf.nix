@@ -14,7 +14,7 @@ in
   services.audiobookshelf = {
     enable = true;
     inherit package;
-    host = "127.0.0.1";
+    host = "127.0.0.2";
     port = 8234;
     openFirewall = false;
   };
@@ -22,8 +22,10 @@ in
   services.nginx = {
     enable = true;
     virtualHosts."${subdomain}.${domain}" = {
+      addSSL = true;
+      useACMEHost = domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8234";
+        proxyPass = "http://127.0.0.2:8234";
         proxyWebsockets = true; # needed if you need to use WebSocket
         extraConfig =
           # required when the target is also TLS server with multiple hosts

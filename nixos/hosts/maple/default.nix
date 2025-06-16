@@ -3,6 +3,7 @@
 , ...
 }: {
   imports = [
+    ../../security/acme.nix
     ../../hardware/rockpro64.nix
     ../../services/tailscale.nix
     ../../services/fail2ban.nix
@@ -59,12 +60,24 @@
   networking = {
     hostId = "01d4f038";
     hosts = {
-      "127.0.0.2" = [ "maple.meep.sh" ];
+      "127.0.0.2" = [
+        "maple.meep.sh"
+        "auth.meep.sh"
+        "books.meep.sh"
+        "cloud.meep.sh"
+        "minio.meep.sh"
+        "s3.meep.sh"
+        "wiki.meep.sh"
+      ];
+      "100.78.207.83" = [
+        "unicron"
+        "unicron.bbl.systems"
+      ];
       # "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" ];
     };
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 3000 8008 9000 9001 ];
+      allowedTCPPorts = [ 80 443 ];
     };
   };
 

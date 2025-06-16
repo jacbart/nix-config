@@ -29,12 +29,13 @@ in
   services.zitadel = {
     enable = true;
     inherit package user group;
-    openFirewall = true;
+    openFirewall = false;
     masterKeyFile = config.sops.secrets.zitadel-master-key.path;
     tlsMode = "external";
     settings = {
       Port = 8123;
       ExternalPort = 443;
+      # ExternalPort = 8123;
       ExternalDomain = "${subdomain}.${domain}";
       ExternalSecure = true;
       # InstanceHostHeaders = [
@@ -84,12 +85,13 @@ in
       };
     };
   };
-
   services.nginx = {
     enable = true;
-    virtualHosts."${subdomain}.${domain}" = {
+    virtualHosts."auth.${domain}" = {
+      addSSL = true;
+      useACMEHost = domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:8123";
+        proxyPass = "http://127.0.0.2:8123";
         proxyWebsockets = true; # needed if you need to use WebSocket
         extraConfig =
           # required when the target is also TLS server with multiple hosts
