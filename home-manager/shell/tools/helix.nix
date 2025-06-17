@@ -149,8 +149,9 @@
               "hcl"
               "koi"
               "jaws"
+              "rest"
             ];
-            auto-format = true;
+            auto-format = false;
           }
           {
             name = "json";
