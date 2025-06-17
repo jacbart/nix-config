@@ -53,12 +53,10 @@ in
         MaxConnIdleTime = "5m";
         User = {
           Username = user;
-          # Password = "zitadel";
           SSL.Mode = "disable";
         };
         Admin = {
           Username = "postgres";
-          # Password = "postgres";
           SSL.Mode = "disable";
         };
       };
@@ -90,15 +88,12 @@ in
     virtualHosts."auth.${domain}" = {
       addSSL = true;
       useACMEHost = domain;
+      http2 = true;
       locations."/" = {
-        proxyPass = "http://127.0.0.2:8123";
-        proxyWebsockets = true; # needed if you need to use WebSocket
         extraConfig =
-          # required when the target is also TLS server with multiple hosts
-          "proxy_ssl_server_name on;"
+          "grpc_pass grpc://127.0.0.2:8123;"
           +
-          # required when the server wants to use HTTP Authentication
-          "proxy_pass_header Authorization;";
+          "grpc_set_header Host $host;";
       };
     };
   };
