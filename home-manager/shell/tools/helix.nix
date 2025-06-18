@@ -300,11 +300,13 @@
           ];
           line-number = "absolute";
           mouse = true;
+          scroll-lines = 1;
           popup-border = "all";
           color-modes = true;
           auto-pairs = true;
           bufferline = "always";
           auto-completion = true;
+          path-completion = true;
           auto-format = true;
           statusline = {
             left = [
