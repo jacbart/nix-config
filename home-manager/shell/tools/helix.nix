@@ -5,6 +5,7 @@
   home = {
     packages = with pkgs; [
       # personally most used lsp's for helix
+      delve # golang debugger
       dockerfile-language-server-nodejs # dockerfile language server
       gofumpt # go formatter
       gopls # go language server
