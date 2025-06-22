@@ -17,15 +17,7 @@ in
   environment.systemPackages = [
     pkgs.age
     inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default
-    # pkgs.unstable.ollama
   ];
-
-  # services.ollama = {
-  #   enable = true;
-  #   # host = "0.0.0.0";
-  #   openFirewall = true;
-  #   loadModels = [ "phi3:3.8b" ];
-  # };
 
   sops.secrets.meep-password.neededForUsers = true;
   users.mutableUsers = false;

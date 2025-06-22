@@ -4,11 +4,10 @@
 }: {
   home = {
     packages = with pkgs; [
-      # my personally most used lsp's for helix
+      # personally most used lsp's for helix
       dockerfile-language-server-nodejs # dockerfile language server
       gofumpt # go formatter
       gopls # go language server
-      # helix-gpt # code completion LSP for LLM's in Helix
       # lsp-ai # code completion LSP for LLM's
       # marksman # markdown language server
       markdown-oxide # markdown language server
@@ -51,34 +50,30 @@
           #     models.model1 = {
           #       type = "ollama";
           #       model = "qwen2.5-coder:1.5b-base";
-          #       # chat_endpoint = "https://llm.bbl.systems/api/chat";
-          #       # generate_endpoint = "https://llm.bbl.systems/api/generate";
-          #       max_requests_per_second = "128";
           #     };
           #     completion = {
           #       model = "model1";
           #       parameters = {
-          #         max_tokens = 64;
-          #         max_context = 1024;
+          #         max_context = 2000;
           #         options = {
           #           num_predict = 32;
           #         };
           #       };
           #     };
+          #     chat = [{
+          #       trigger = "!C";
+          #       action_display_name = "Chat";
+          #       model = "model1";
+          #       parameters = {
+          #         max_context = 4096;
+          #         max_tokens = 1024;
+          #         messages = [{
+          #           role = "system";
+          #           content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately";
+          #         }];
+          #       };
+          #     }];
           #   };
-          # };
-          # gpt = {
-          #   command = "helix-gpt";
-          #   args = [
-          #     "--handler"
-          #     "ollama"
-          #     "--ollamaEndpoint"
-          #     "http://100.78.207.83:11434"
-          #     "--ollamaModel"
-          #     "phi4"
-          #     "--logFile"
-          #     "/tmp/helix-gpt.log"
-          #   ];
           # };
           gopls = {
             command = "gopls";
@@ -125,7 +120,6 @@
               ];
             };
             auto-format = true;
-            # language-servers = [ "gpt" ];
           }
           {
             name = "go";
@@ -162,7 +156,6 @@
                 "json"
               ];
             };
-            # language-servers = [ "gpt" ];
           }
           {
             name = "javascript";
@@ -174,7 +167,6 @@
               ];
             };
             auto-format = true;
-            # language-servers = [ "gpt" ];
           }
           {
             name = "nix";
@@ -193,7 +185,6 @@
               ];
             };
             auto-format = true;
-            # language-servers = [ "lsp-ai" ];
           }
           {
             name = "html";
@@ -204,7 +195,6 @@
                 "html"
               ];
             };
-            # language-servers = [ "gpt" ];
           }
           {
             name = "css";
@@ -215,7 +205,6 @@
                 "css"
               ];
             };
-            # language-servers = [ "gpt" ];
           }
           {
             name = "lua";
@@ -225,7 +214,6 @@
                 "-"
               ];
             };
-            # language-servers = [ "gpt" ];
           }
           {
             name = "sql";
@@ -247,7 +235,6 @@
               "yml"
             ];
             auto-format = true;
-            # language-servers = [ "gpt" ];
           }
           {
             name = "rust";
@@ -265,7 +252,6 @@
               ];
             };
             auto-format = true;
-            # language-servers = [ "gpt" ];
           }
           {
             name = "tsx";
@@ -274,7 +260,6 @@
               "typescript"
             ];
             auto-format = true;
-            # language-servers = [ "gpt" ];
           }
         ];
       };
@@ -283,8 +268,9 @@
         keys.normal = {
           A = {
             g = [ ":run-shell-command git diff" ];
-            # r = [ ":new" ":insert-output serpl" ":buffer-close!" ":redraw" ];
           };
+          "{" = [ "goto_prev_paragraph" "collapse_selection" ];
+          "}" = [ "goto_next_paragraph" "collapse_selection" ];
           space = {
             i = ":toggle lsp.display-inlay-hints";
             esc = [
