@@ -18,7 +18,7 @@
       # List of plugins
       set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'egel/tmux-gruvbox'
-      # set -g @plugin 'nhdaly/tmux-better-mouse-mode'
+      set -g @plugin 'nhdaly/tmux-better-mouse-mode'
 
       # Window Splitting
       unbind %
