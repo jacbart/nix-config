@@ -29,7 +29,7 @@ in
   services = {
     nextcloud = {
       enable = true;
-      https = false;
+      https = true;
       hostName = "${subdomain}.${domain}";
       package = pkgs.nextcloud31;
       maxUploadSize = "10G";
@@ -77,7 +77,7 @@ in
       };
       extraAppsEnable = true;
       settings = {
-        overwriteprotocol = "https";
+        # overwriteprotocol = "https";
         default_phone_region = "US";
         trusted_domains = [ "${subdomain}.${domain}" ];
         enabledPreviewProviders = [
@@ -94,6 +94,13 @@ in
           "OC\\Preview\\HEIC"
         ];
       };
+    };
+  };
+  services.nginx = {
+    enable = true;
+    virtualHosts."${subdomain}.${domain}" = {
+      addSSL = true;
+      useACMEHost = domain;
     };
   };
 }
