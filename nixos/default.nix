@@ -165,7 +165,7 @@
     optimise.automatic = true;
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+      experimental-features = [ "nix-command" "flakes" ];
       allowed-uris = [
         "github:"
         "git+https://github.com/"
@@ -180,13 +180,13 @@
       warn-dirty = false;
 
       substituters = [
-        # "https://s3.meep.sh/nix-cache"
+        "https://s3.meep.sh/nix-cache"
         "https://cache.lix.systems"
         "https://nix-community.cachix.org"
         "https://cache.nixos.org"
       ];
       trusted-public-keys = [
-        # "s3.meep.sh-3:mcrDvp6CZgkpq+/aRB18b6XtJywHSPkSZWr4NrnVGOc="
+        "s3.meep.sh-3:mcrDvp6CZgkpq+/aRB18b6XtJywHSPkSZWr4NrnVGOc="
         "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
