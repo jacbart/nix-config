@@ -21,8 +21,10 @@ in
 
   home.packages = with pkgs;
     [
+      mdbook # markdown books
+      uv ruff # python scripts
       perl # Required for zplug
-      htmlq
+      htmlq # parser for html
       unstable.nh # nix helper cli
     ]
     ++ lib.optional isLinux unstable.tlrc;
@@ -59,9 +61,6 @@ in
     zplug = {
       enable = true;
       plugins = [
-        # {
-        #   name = "jeffreytse/zsh-vi-mode";
-        # }
         {
           name = "plugins/fzf";
           tags = [ "from:oh-my-zsh" ];
