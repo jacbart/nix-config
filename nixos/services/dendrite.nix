@@ -60,13 +60,13 @@ in {
           '';
         };
       };
-      "matrix.${domain}" = {
-        addSSL = true;
-        useACMEHost = domain;
-        locations."/_matrix/" = {
-          proxyPass = "http://127.0.0.1:8008";
-        };
-      };
+      # "matrix.${domain}" = {
+      #   addSSL = true;
+      #   useACMEHost = domain;
+      #   locations."/_matrix/" = {
+      #     proxyPass = "http://127.0.0.1:8008";
+      #   };
+      # };
     };
   };
 }

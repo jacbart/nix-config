@@ -74,14 +74,14 @@ in {
     "f /var/lib/${dataDir}/local.db 0600 ${user} ${group}"
   ];
 
-  services.nginx = {
-    enable = true;
-    virtualHosts."mx.${domain}" = {
-      addSSL = true;
-      useACMEHost = domain;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:25";
-      };
-    };
-  };
+  # services.nginx = {
+  #   enable = true;
+  #   virtualHosts."mx.${domain}" = {
+  #     addSSL = true;
+  #     useACMEHost = domain;
+  #     locations."/" = {
+  #       proxyPass = "http://127.0.0.1:25";
+  #     };
+  #   };
+  # };
 }

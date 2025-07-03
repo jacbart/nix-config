@@ -17,10 +17,20 @@
   sops.templates.Caddyfile = {
     restartUnits = [ "caddy.service" ];
     content = ''
-      books.meep.sh {
-        reverse_proxy 100.81.146.101:443
+      matrix.meep.sh {
+        reverse_proxy maple.meep.sh:8008
         log {
-          output file /var/log/caddy/access-books.meep.sh.log
+          output file /var/log/caddy/access-matrix.meep.sh.log
+          format json
+        }
+        tls {
+          on_demand
+        }
+      }
+      mx.meep.sh {
+        reverse_proxy maple.meep.sh:25
+        log {
+          output file /var/log/caddy/access-mx.meep.sh.log
           format json
         }
         tls {

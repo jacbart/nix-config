@@ -7,7 +7,7 @@
     ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/fail2ban.nix
     ../../services/tailscale.nix
-    # ../../services/caddy.nix
+    ../../services/caddy.nix
   ];
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";
@@ -16,11 +16,11 @@
     hosts = {
       "127.0.0.2" = [
         "oak.meep.sh"
+        "matrix.meep.sh"
       ];
       "100.116.178.48" = [
         "maple.meep.sh"
         "s3.meep.sh"
-        "matrix.meep.sh"
         "books.meep.sh"
         "auth.meep.sh"
         "minio.meep.sh"
