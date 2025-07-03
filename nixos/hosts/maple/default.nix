@@ -16,6 +16,7 @@
     ../../services/nextcloud-server.nix
     ../../services/audiobooks.nix
     ../../services/dendrite.nix
+    ../../services/postmoogle.nix
     ../../services/smartmon.nix
   ];
 
@@ -68,6 +69,7 @@
         "minio.meep.sh"
         "s3.meep.sh"
         "wiki.meep.sh"
+        "matrix.meep.sh"
       ];
       "100.78.207.83" = [
         "unicron"
