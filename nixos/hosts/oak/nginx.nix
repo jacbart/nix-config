@@ -8,13 +8,12 @@ in
     enable = true;
     virtualHosts = {
       "${domain}" = {
-        # enableACME = true;
-        # forceSSL = true;
         addSSL = true;
         useACMEHost = domain;
         locations."/.well-known/matrix/server" = {
           extraConfig = ''
-            default_type application/json;
+            default_type applicaiton/json;
+            add_header "Access-Control-Allow-Origin" *;
             return 200 '{ "m.server": "matrix.${domain}:443" }';
           '';
         };
@@ -22,14 +21,14 @@ in
           extraConfig = ''
             default_type applicaiton/json;
             add_header "Access-Control-Allow-Origin" *;
-            return 200 '{ "m.homeserver": { "base_url": "https://matrix.${domain}" } }';
+            return 200 '{ "m.homeserver": { "base_url": "https://matrix.${domain}:443" } }';
           '';
         };
       };
       "matrix.${domain}" = {
         addSSL = true;
         useACMEHost = domain;
-        locations."/_matrix/" = {
+        locations."/_matrix" = {
           proxyPass = "http://${address}:8008";
           extraConfig = ''
             proxy_set_header X-Forwarded-For $remote_addr;
