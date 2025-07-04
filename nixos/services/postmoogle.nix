@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: let
+{ config
+, pkgs
+, ...
+}:
+let
   user = "moogle";
   group = "moogle";
   dataDir = "postmoogle";
@@ -8,7 +12,8 @@
     owner = user;
     inherit group;
   };
-in {
+in
+{
   environment.systemPackages = [
     package
     pkgs.sqlite
@@ -25,7 +30,7 @@ in {
   };
 
   sops.secrets."postmoogle/shared-secret" = secretOpts;
-  sops.secrets."postmoogle/data-secret" = secretOpts; 
+  sops.secrets."postmoogle/data-secret" = secretOpts;
   sops.secrets."postmoogle/dkim/private-key" = secretOpts;
   sops.secrets."postmoogle/dkim/signature" = secretOpts;
 
@@ -59,7 +64,7 @@ in {
       StateDirectory = dataDir;
       WorkingDirectory = "/var/lib/${dataDir}";
       ExecStart = ''
-        ${package}/bin/postmoogle 
+        ${package}/bin/postmoogle
       '';
       Restart = "on-failure";
     };

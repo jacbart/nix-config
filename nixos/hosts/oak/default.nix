@@ -4,10 +4,12 @@
 }: {
   imports = [
     (modulesPath + "/virtualisation/digital-ocean-image.nix")
+    ../../security/acme.nix
     ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/fail2ban.nix
     ../../services/tailscale.nix
-    ../../services/caddy.nix
+    # ../../services/caddy.nix
+    ./nginx.nix
   ];
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";
@@ -17,6 +19,7 @@
       "127.0.0.2" = [
         "oak.meep.sh"
         "matrix.meep.sh"
+        "mx.meep.sh"
       ];
       "100.116.178.48" = [
         "maple.meep.sh"
@@ -31,7 +34,7 @@
     networkmanager.dns = "none";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ ];
+      allowedTCPPorts = [ 443 ];
       allowedUDPPorts = [ ];
     };
   };

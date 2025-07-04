@@ -1,5 +1,4 @@
 { config, ... }: {
-  
   sops.secrets."cloudflare_api_key" = {
     group = "nginx";
   };

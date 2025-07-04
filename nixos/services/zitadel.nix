@@ -92,8 +92,7 @@ in
       locations."/" = {
         extraConfig =
           "grpc_pass grpc://127.0.0.2:8123;"
-          +
-          "grpc_set_header Host $host;";
+          + "grpc_set_header Host $host;";
       };
     };
   };

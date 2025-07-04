@@ -1,9 +1,11 @@
 { config
 , pkgs
 , ...
-}: let
+}:
+let
   domain = "meep.sh";
-in {
+in
+{
   imports = [ ./minio-client.nix ];
 
   sops.secrets."minio/root/access-key" = { };

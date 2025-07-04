@@ -28,7 +28,7 @@
         }
       }
       mx.meep.sh {
-        reverse_proxy maple.meep.sh:25
+        reverse_proxy maple.meep.sh:443
         log {
           output file /var/log/caddy/access-mx.meep.sh.log
           format json

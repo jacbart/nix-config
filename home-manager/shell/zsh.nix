@@ -22,7 +22,8 @@ in
   home.packages = with pkgs;
     [
       mdbook # markdown books
-      uv ruff # python scripts
+      uv
+      ruff # python scripts
       perl # Required for zplug
       htmlq # parser for html
       unstable.nh # nix helper cli

@@ -1,4 +1,4 @@
-{ pkgs, ... }:{
+{ pkgs, ... }: {
   environment.systemPackages = [
     pkgs.baobab # disk usage
     pkgs.decibels # audio player

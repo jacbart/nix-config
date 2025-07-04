@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   nix.distributedBuilds = true;
   nix.settings.builders-use-substitutes = true;
 
