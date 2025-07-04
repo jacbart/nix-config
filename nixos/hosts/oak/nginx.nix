@@ -31,6 +31,12 @@ in
         useACMEHost = domain;
         locations."/_matrix/" = {
           proxyPass = "http://${address}:8008";
+          extraConfig = ''
+            proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header Host $host:$server_port;
+            client_max_body_size 50M;
+          '';
         };
       };
       "mx.${domain}" = {

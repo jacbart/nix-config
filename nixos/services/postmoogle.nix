@@ -12,6 +12,7 @@ let
     owner = user;
     inherit group;
   };
+  proxies = "100.116.178.48";
 in
 {
   environment.systemPackages = [
@@ -49,6 +50,8 @@ in
       export POSTMOOGLE_ADMINS="@*:${domain}"
       export POSTMOOGLE_DKIM_PRIVKEY="${config.sops.placeholder."postmoogle/dkim/private-key"}"
       export POSTMOOGLE_DKIM_SIGNATURE="${config.sops.placeholder."postmoogle/dkim/signature"}"
+      export POSTMOOGLE_PORT=25
+      export POSTMOOGLE_PROXIES="${proxies}"
     '';
     path = "/var/lib/${dataDir}/.env";
   };
