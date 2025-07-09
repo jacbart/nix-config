@@ -1,11 +1,14 @@
 _:
 let
+  port = 443;
   domain = "meep.sh";
   address = "100.116.178.48";
 in
 {
   services.nginx = {
     enable = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
     virtualHosts = {
       "${domain}" = {
         addSSL = true;
@@ -14,20 +17,26 @@ in
           extraConfig = ''
             default_type applicaiton/json;
             add_header "Access-Control-Allow-Origin" *;
-            return 200 '{ "m.server": "matrix.${domain}:443" }';
+            return 200 '{ "m.server": "matrix.${domain}:${builtins.toString(port)}" }';
           '';
         };
         locations."/.well-known/matrix/client" = {
           extraConfig = ''
             default_type applicaiton/json;
             add_header "Access-Control-Allow-Origin" *;
-            return 200 '{ "m.homeserver": { "base_url": "https://matrix.${domain}:443" } }';
+            return 200 '{ "m.homeserver": { "base_url": "https://matrix.${domain}:${builtins.toString(port)}" } }';
           '';
         };
       };
       "matrix.${domain}" = {
         addSSL = true;
         useACMEHost = domain;
+        http2 = true;
+        listen = [{
+          addr = "0.0.0.0";
+          port = port;
+          ssl = true;
+        }];
         locations."/_matrix" = {
           proxyPass = "http://${address}:8008";
           extraConfig = ''

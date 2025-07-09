@@ -9,7 +9,7 @@
     ../../services/fail2ban.nix
     ../../services/tailscale.nix
     # ../../services/caddy.nix
-    ./nginx.nix
+    # ./nginx.nix
   ];
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";
@@ -34,7 +34,7 @@
     networkmanager.dns = "none";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 443 ];
+      # allowedTCPPorts = [ 443 ];
       allowedUDPPorts = [ ];
     };
   };
