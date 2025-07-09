@@ -2,7 +2,9 @@
 let
   port = 443;
   domain = "meep.sh";
-  address = "100.116.178.48"; # maple
+  proxyDomain = "proxy.${domain}";
+  # address = "100.116.178.48"; # maple
+  address = "matrix.${domain}";
 in
 {
   services.nginx = {
@@ -15,7 +17,7 @@ in
       "${domain}" = {
         default = true;
         addSSL = true;
-        useACMEHost = domain;
+        useACMEHost = proxyDomain;
         locations."/robots.txt" = {
           extraConfig = ''
             rewrite ^/(.*)  $1;
@@ -42,7 +44,7 @@ in
         useACMEHost = domain;
         http2 = true;
         locations."/_matrix" = {
-          proxyPass = "http://${address}:8008";
+          proxyPass = "https://${address}:443";
           proxyWebsockets = true;
           extraConfig = ''
             proxy_ssl_server_name on;

@@ -3,7 +3,7 @@
 , ...
 }: {
   imports = [
-    ../../security/acme.nix
+    ../../security/acme-base.nix
     ../../hardware/rockpro64.nix
     ../../services/tailscale.nix
     ../../services/fail2ban.nix
