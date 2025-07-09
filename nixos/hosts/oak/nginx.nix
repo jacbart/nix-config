@@ -1,7 +1,7 @@
 {...}:
 let
   domain = "meep.sh";
-  maple = "100.116.178.48";
+  maple = "[fd7a:115c:a1e0::9601:b230]";
 in
 {
   services.nginx = {
