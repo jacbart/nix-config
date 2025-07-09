@@ -9,7 +9,7 @@
     ../../services/fail2ban.nix
     ../../services/tailscale.nix
     # ../../services/caddy.nix
-    # ./nginx.nix
+    ./nginx.nix
   ];
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";
@@ -20,6 +20,7 @@
         "oak.meep.sh"
         "matrix.meep.sh"
         "mx.meep.sh"
+        "tun.meep.sh"
       ];
       "100.116.178.48" = [
         "maple.meep.sh"
@@ -34,8 +35,8 @@
     networkmanager.dns = "none";
     firewall = {
       enable = true;
-      # allowedTCPPorts = [ 443 ];
-      allowedUDPPorts = [ ];
+      allowedTCPPorts = [ 443 ];
+      allowedUDPPorts = [ 443 ];
     };
   };
 
