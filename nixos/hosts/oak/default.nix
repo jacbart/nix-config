@@ -8,7 +8,6 @@
     ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/fail2ban.nix
     ../../services/tailscale.nix
-    # ../../services/caddy.nix
     ./nginx.nix
   ];
 
@@ -35,8 +34,8 @@
     networkmanager.dns = "none";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 443 ];
-      allowedUDPPorts = [ 443 ];
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ ];
     };
   };
 
