@@ -14,7 +14,7 @@ in
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     virtualHosts = {
-      "${domain}" = {
+      "${proxyDomain}" = {
         default = true;
         addSSL = true;
         useACMEHost = proxyDomain;
@@ -39,9 +39,9 @@ in
           '';
         };
       };
-      "matrix.${domain}" = {
+      "matrix.${proxyDomain}" = {
         addSSL = true;
-        useACMEHost = domain;
+        useACMEHost = proxyDomain;
         http2 = true;
         locations."/_matrix" = {
           proxyPass = "https://${address}:443";
@@ -63,9 +63,9 @@ in
       #     proxyPass = "http://${address}:25";
       #   };
       # };
-      "tun.${domain}" = {
+      "tun.${proxyDomain}" = {
         addSSL = true;
-        useACMEHost = domain;
+        useACMEHost = proxyDomain;
         locations."/" = {
           proxyPass = "http://127.0.0.1:9000";
           proxyWebsockets = true; # needed if you need to use WebSocket
