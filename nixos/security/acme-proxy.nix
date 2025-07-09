@@ -7,7 +7,7 @@
     acceptTerms = true;
     defaults.email = "jacbart@gmail.com";
     certs = {
-      "meep.sh" = {
+      "proxy.meep.sh" = {
         domain = "*.proxy.meep.sh";
         group = "nginx";
         dnsProvider = "cloudflare";

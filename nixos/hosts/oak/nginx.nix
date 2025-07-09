@@ -2,9 +2,9 @@
 let
   port = 443;
   domain = "meep.sh";
-  proxyDomain = "proxy.${domain}";
+  proxyDomain = "proxy.meep.sh";
   # address = "100.116.178.48"; # maple
-  address = "matrix.${domain}";
+  address = "matrix.meep.sh";
 in
 {
   services.nginx = {
@@ -15,7 +15,6 @@ in
     recommendedTlsSettings = true;
     virtualHosts = {
       "${proxyDomain}" = {
-        default = true;
         addSSL = true;
         useACMEHost = proxyDomain;
         locations."/robots.txt" = {
@@ -52,7 +51,7 @@ in
             proxy_set_header X-Forwarded-For $remote_addr;
             proxy_set_header X-Forwarded-Proto $scheme;
             proxy_set_header Host $host:$server_port;
-            client_max_body_size 50M;
+            client_max_body_size 512M;
           '';
         };
       };

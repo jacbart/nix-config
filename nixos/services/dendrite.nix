@@ -69,9 +69,8 @@ in
     recommendedTlsSettings = true;
     virtualHosts = {
       "${domain}" = {
-        default = true;
         addSSL = true;
-        useACMEHost = proxyDomain;
+        useACMEHost = domain;
         locations."/robots.txt" = {
           extraConfig = ''
             rewrite ^/(.*)  $1;
@@ -106,7 +105,7 @@ in
             proxy_set_header X-Forwarded-For $remote_addr;
             proxy_set_header X-Forwarded-Proto $scheme;
             proxy_set_header Host $host:$server_port;
-            client_max_body_size 50M;
+            client_max_body_size 512M;
           '';
         };
       };
