@@ -16,7 +16,7 @@
     ../../services/nextcloud-server.nix
     ../../services/audiobooks.nix
     ../../services/dendrite.nix
-    ../../services/postmoogle.nix
+    # ../../services/postmoogle.nix
     ../../services/smartmon.nix
   ];
 
