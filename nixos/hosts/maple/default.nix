@@ -69,7 +69,6 @@
         "minio.meep.sh"
         "s3.meep.sh"
         "wiki.meep.sh"
-        "matrix.meep.sh"
       ];
       "100.78.207.83" = [
         "unicron"
