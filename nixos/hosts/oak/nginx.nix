@@ -1,7 +1,7 @@
 {...}:
 let
   domain = "meep.sh";
-  maple = "[fd7a:115c:a1e0::9601:b230]";
+  maple = "100.116.178.48";
 in
 {
   services.nginx = {
@@ -18,12 +18,12 @@ in
       "${domain}" = {
         addSSL = true;
         useACMEHost = domain;
-        locations."/robots.txt" = {
-          extraConfig = ''
-            rewrite ^/(.*)  $1;
-            return 200 "User-agent: *\nDisallow: /";
-          '';
-        };
+        # locations."/robots.txt" = {
+        #   extraConfig = ''
+        #     rewrite ^/(.*)  $1;
+        #     return 200 "User-agent: *\nDisallow: /";
+        #   '';
+        # };
         locations."/.well-known/matrix/server" = {
           extraConfig = ''
             default_type applicaiton/json;
@@ -35,20 +35,20 @@ in
           extraConfig = ''
             default_type applicaiton/json;
             add_header "Access-Control-Allow-Origin" *;
-            return 200 '{ "m.homeserver": { "base_url": "https://matrix.${domain}:443" } }';
+            return 200 '{ "m.homeserver": { "base_url": "https://matrix.${domain}" } }';
           '';
         };
       };
       "matrix.${domain}" = {
         addSSL = true;
-        useACMEHost = domain;
+        useACMEHost = "matrix.${domain}";
         locations."/_matrix" = {
           proxyPass = "http://matrix-server";
         };
       };
       "tun.${domain}" = {
         addSSL = true;
-        useACMEHost = domain;
+        useACMEHost = "tun.${domain}";
         locations."/" = {
           proxyPass = "http://tunnel";
         };

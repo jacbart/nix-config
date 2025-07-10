@@ -4,7 +4,7 @@
 }: {
   imports = [
     (modulesPath + "/virtualisation/digital-ocean-image.nix")
-    ../../security/acme-base.nix
+    ../../security/acme-proxy.nix
     ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/fail2ban.nix
     ../../services/tailscale.nix
@@ -34,7 +34,7 @@
     networkmanager.dns = "none";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ ];
+      allowedTCPPorts = [ 80 443 ];
       allowedUDPPorts = [ ];
     };
   };

@@ -7,8 +7,20 @@
     acceptTerms = true;
     defaults.email = "jacbart@gmail.com";
     certs = {
-      "proxy.meep.sh" = {
-        domain = "*.proxy.meep.sh";
+      "meep.sh" = {
+        domain = "meep.sh";
+        group = "nginx";
+        dnsProvider = "cloudflare";
+        environmentFile = config.sops.secrets."cloudflare_api_key".path;
+      };
+      "matrix.meep.sh" = {
+        domain = "matrix.meep.sh";
+        group = "nginx";
+        dnsProvider = "cloudflare";
+        environmentFile = config.sops.secrets."cloudflare_api_key".path;
+      };
+      "tun.meep.sh" = {
+        domain = "tun.meep.sh";
         group = "nginx";
         dnsProvider = "cloudflare";
         environmentFile = config.sops.secrets."cloudflare_api_key".path;
