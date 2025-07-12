@@ -9,6 +9,7 @@ let
     [
       "$HOME/.local/bin"
       "$HOME/go/bin"
+      "$HOME/.cargo/bin"
     ]
     ++ lib.optional isDarwin "/opt/homebrew/bin"
     ++ [
