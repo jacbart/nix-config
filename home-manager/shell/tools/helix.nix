@@ -274,6 +274,7 @@
           "}" = [ "goto_next_paragraph" "collapse_selection" ];
           space = {
             i = ":toggle lsp.display-inlay-hints";
+            W = ":write";
             esc = [
               "collapse_selection"
               "keep_primary_selection"

@@ -26,7 +26,6 @@
           ck = "cz check";
           cl = "cz changelog";
           cv = "cz version";
-          trees = "!trees";
         };
         core = {
           editor = "hx";
