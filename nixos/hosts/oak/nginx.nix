@@ -1,4 +1,4 @@
-{...}:
+_:
 let
   domain = "meep.sh";
   maple = "100.116.178.48";
