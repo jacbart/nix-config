@@ -12,6 +12,7 @@ in
     recommendedTlsSettings = true;
     upstreams = {
       "matrix-server".servers."${maple}:8008" = { };
+      "auth-server".servers."${maple}:8008" = { };
       "tunnel".servers."127.0.0.1:9000" = { };
     };
     virtualHosts = {
