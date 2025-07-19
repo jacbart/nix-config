@@ -1,7 +1,9 @@
-{ config
-, pkgs
-, ...
-}: {
+{
+  config,
+  pkgs,
+  ...
+}:
+{
   systemd.tmpfiles.rules = [
     "d /var/lib/hydra/.aws 0644 hydra hydra"
     "f /etc/nixos/secret.key 0644 hydra"
@@ -28,7 +30,10 @@
 
   # users.groups.hydra = {};
 
-  nix.settings.trusted-users = [ "hydra" "remotebuild" ];
+  nix.settings.trusted-users = [
+    "hydra"
+    "remotebuild"
+  ];
 
   sops.secrets."minio/nixbuilder/access-key" = { };
   sops.secrets."minio/nixbuilder/secret-key" = { };

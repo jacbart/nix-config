@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.cockroachdb = {
     enable = true;
     package = pkgs.cockroachdb-bin;

@@ -1,6 +1,7 @@
-{ config
-, pkgs
-, ...
+{
+  config,
+  pkgs,
+  ...
 }:
 let
   instance = "maple";
@@ -90,9 +91,7 @@ in
       useACMEHost = domain;
       http2 = true;
       locations."/" = {
-        extraConfig =
-          "grpc_pass grpc://127.0.0.2:8123;"
-          + "grpc_set_header Host $host;";
+        extraConfig = "grpc_pass grpc://127.0.0.2:8123;" + "grpc_set_header Host $host;";
       };
     };
   };

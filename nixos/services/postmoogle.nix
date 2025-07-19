@@ -1,6 +1,7 @@
-{ config
-, pkgs
-, ...
+{
+  config,
+  pkgs,
+  ...
 }:
 let
   user = "moogle";
@@ -27,7 +28,10 @@ in
   };
 
   users.groups."${group}" = {
-    members = [ user "ratatoskr" ];
+    members = [
+      user
+      "ratatoskr"
+    ];
   };
 
   sops.secrets."postmoogle/shared-secret" = secretOpts;

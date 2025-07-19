@@ -18,7 +18,12 @@ _: {
       sshUser = "remotebuild";
       sshKey = "~/.ssh/builder_boojum";
       systems = [ "x86_64-linux" ];
-      supportedFeatures = [ "nixos-test" "big-parallel" "kvm" "benchmark" ];
+      supportedFeatures = [
+        "nixos-test"
+        "big-parallel"
+        "kvm"
+        "benchmark"
+      ];
       maxJobs = 2;
       speedFactor = 4;
     }

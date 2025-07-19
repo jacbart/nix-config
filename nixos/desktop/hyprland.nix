@@ -1,7 +1,9 @@
-{ pkgs
-, username
-, ...
-}: {
+{
+  pkgs,
+  username,
+  ...
+}:
+{
   imports = [
   ];
 

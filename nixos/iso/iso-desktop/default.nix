@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   imports = [
     # ../../services/bluetooth.nix
     ../../services/pipewire.nix

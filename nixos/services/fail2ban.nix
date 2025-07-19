@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   # environment.etc = {
   #   "fail2ban/filter.d/caddy-status.conf".text = ''
   #     [Definition]

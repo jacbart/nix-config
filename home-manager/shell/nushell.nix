@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [ ./tools/starship.nix ];
   programs = {
     nushell = {

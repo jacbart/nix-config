@@ -1,6 +1,7 @@
-{ lib
-, hostname
-, ...
+{
+  lib,
+  hostname,
+  ...
 }:
 let
   hosts = [
@@ -12,10 +13,8 @@ in
   networking = {
     firewall = {
       enable = true;
-      allowedTCPPorts =
-        lib.optionals (builtins.elem hostname hosts) tcpPorts;
-      allowedUDPPorts =
-        lib.optionals (builtins.elem hostname hosts) udpPorts;
+      allowedTCPPorts = lib.optionals (builtins.elem hostname hosts) tcpPorts;
+      allowedUDPPorts = lib.optionals (builtins.elem hostname hosts) udpPorts;
     };
   };
 }

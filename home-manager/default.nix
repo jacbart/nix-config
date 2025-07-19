@@ -1,13 +1,14 @@
-{ config
-, desktop
-, hostname
-, inputs
-, lib
-, outputs
-, pkgs
-, stateVersion
-, username
-, ...
+{
+  config,
+  desktop,
+  hostname,
+  inputs,
+  lib,
+  outputs,
+  pkgs,
+  stateVersion,
+  username,
+  ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;
@@ -25,17 +26,16 @@ in
       ./shell
     ]
     ++ lib.optional (builtins.isPath (./. + "/users/${username}")) ./users/${username}
-    ++ lib.optional (builtins.pathExists (./. + "/users/${username}/hosts/${hostname}.nix")) ./users/${username}/hosts/${hostname}.nix
+    ++ lib.optional (builtins.pathExists (
+      ./. + "/users/${username}/hosts/${hostname}.nix"
+    )) ./users/${username}/hosts/${hostname}.nix
     ++ lib.optional (desktop != null) ./desktop;
 
   home = {
     activation.report-changes = config.lib.dag.entryAnywhere ''
       ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath
     '';
-    homeDirectory =
-      if isDarwin
-      then "/Users/${username}"
-      else "/home/${username}";
+    homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
     sessionPath = [ "$HOME/.local/bin" ];
     inherit stateVersion;
     inherit username;
@@ -63,21 +63,25 @@ in
   };
 
   nix =
-    if isDarwin
-    then { }
-    else {
-      # This will add each flake input as a registry
-      # To make nix3 commands consistent with your flake
-      registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    if isDarwin then
+      { }
+    else
+      {
+        # This will add each flake input as a registry
+        # To make nix3 commands consistent with your flake
+        registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
-      package = pkgs.lix;
-      settings = {
-        auto-optimise-store = true;
-        experimental-features = [ "nix-command" "flakes" ];
-        # Avoid unwanted garbage collection when using nix-direnv
-        keep-outputs = true;
-        keep-derivations = true;
-        warn-dirty = false;
+        package = pkgs.lix;
+        settings = {
+          auto-optimise-store = true;
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+          # Avoid unwanted garbage collection when using nix-direnv
+          keep-outputs = true;
+          keep-derivations = true;
+          warn-dirty = false;
+        };
       };
-    };
 }

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [ ./audiobookshelf.nix ];
 
   environment.systemPackages = [

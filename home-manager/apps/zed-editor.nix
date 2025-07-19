@@ -1,7 +1,9 @@
-{ config
-, pkgs
-, ...
-}: {
+{
+  config,
+  pkgs,
+  ...
+}:
+{
   home.packages = [
     pkgs.unstable.zed-editor
     pkgs.nixd # nix deamon

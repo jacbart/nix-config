@@ -1,19 +1,19 @@
-{ lib
-, SDL2
-, SDL2_mixer
-, SDL2_image
-, SDL2_ttf
-, SDL2_gfx
-, SDL2_net
-, callPackage
-, cmake
-, libcxx
-, pkg-config
-, fetchFromGitHub
-, libpng
-, libjpeg
-, stdenv
-,
+{
+  lib,
+  SDL2,
+  SDL2_mixer,
+  SDL2_image,
+  SDL2_ttf,
+  SDL2_gfx,
+  SDL2_net,
+  callPackage,
+  cmake,
+  libcxx,
+  pkg-config,
+  fetchFromGitHub,
+  libpng,
+  libjpeg,
+  stdenv,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "nxengine-evo";

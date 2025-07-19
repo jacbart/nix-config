@@ -1,8 +1,10 @@
-{ config
-, pkgs
-, lib
-, ...
-}: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   imports = [
     ./hyprland-apps.nix
   ];
@@ -132,8 +134,8 @@
         ++ (
           # workspaces
           # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-          builtins.concatLists (builtins.genList
-            (
+          builtins.concatLists (
+            builtins.genList (
               x:
               let
                 ws =
@@ -148,8 +150,8 @@
                 "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
                 "$mod SHIFT, ${ws}, exec, dunstify -h string:x-canonical-private-synchronous:ws \"Moved => Workspace ${toString (x + 1)}\""
               ]
-            )
-            10)
+            ) 10
+          )
         );
       binde = [
         # cycle windows

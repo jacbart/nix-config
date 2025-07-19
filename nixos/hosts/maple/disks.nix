@@ -1,4 +1,11 @@
-{ disks ? [ "/dev/mmcblk2" "/dev/sda" "/dev/sdb" ], ... }:
+{
+  disks ? [
+    "/dev/mmcblk2"
+    "/dev/sda"
+    "/dev/sdb"
+  ],
+  ...
+}:
 let
   defaultExt4Opts = [ "defaults" ];
 in

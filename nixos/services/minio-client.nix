@@ -1,14 +1,12 @@
-{ config
-, pkgs
-, username
-, ...
+{
+  config,
+  pkgs,
+  username,
+  ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;
-  homeDir =
-    if isDarwin
-    then "/Users/${username}"
-    else "/home/${username}";
+  homeDir = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
 {
   systemd.tmpfiles.rules = [

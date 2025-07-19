@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   user = "root";
@@ -109,7 +110,10 @@ in
       # singleAccountModeDomain = "${netbird_subdomain}.${domain}";
       disableSingleAccountMode = true;
       disableAnonymousMetrics = true;
-      extraOptions = [ "--metrics-port" "9094" ];
+      extraOptions = [
+        "--metrics-port"
+        "9094"
+      ];
 
       settings = {
         Stuns = [

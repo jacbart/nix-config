@@ -1,18 +1,19 @@
-{ config
-, desktop
-, lib
-, pkgs
-, ...
+{
+  config,
+  desktop,
+  lib,
+  pkgs,
+  ...
 }:
 let
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
-  imports =
-    lib.optionals (desktop != null) [
-    ];
+  imports = lib.optionals (desktop != null) [
+  ];
 
-  environment.systemPackages = with pkgs;
+  environment.systemPackages =
+    with pkgs;
     [
       age
       scripts.add-zim

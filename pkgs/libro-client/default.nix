@@ -1,9 +1,10 @@
-{ lib
-, pkgs
-, stdenv
-, bun
-, makeWrapper
-, ...
+{
+  lib,
+  pkgs,
+  stdenv,
+  bun,
+  makeWrapper,
+  ...
 }:
 stdenv.mkDerivation rec {
   pname = "libro";

@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs ? import <nixpkgs>
-, ...
+{
+  config,
+  lib,
+  pkgs ? import <nixpkgs>,
+  ...
 }:
 let
   inherit (lib) mkDefault;
@@ -11,7 +12,10 @@ in
 
   systemd.services.NetworkManager-wait-online = {
     serviceConfig = {
-      ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q" ];
+      ExecStart = [
+        ""
+        "${pkgs.networkmanager}/bin/nm-online -q"
+      ];
     };
   };
 

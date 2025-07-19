@@ -1,16 +1,18 @@
-{ config
-, desktop
-, hostname
-, inputs
-, lib
-, modulesPath
-, outputs
-, pkgs
-, stateVersion
-, username
-, platform
-, ...
-}: {
+{
+  config,
+  desktop,
+  hostname,
+  inputs,
+  lib,
+  modulesPath,
+  outputs,
+  pkgs,
+  stateVersion,
+  username,
+  platform,
+  ...
+}:
+{
   imports =
     [
       inputs.disko.nixosModules.disko
@@ -106,9 +108,19 @@
       antialias = true;
       defaultFonts = {
         serif = [ "Source Serif" ];
-        sansSerif = [ "Work Sans" "Fira Sans" "FiraGO" ];
-        monospace = [ "FiraCode Nerd Font Mono" "SauceCodePro Nerd Font Mono" ];
-        emoji = [ "Joypixels" "Noto Color Emoji" ];
+        sansSerif = [
+          "Work Sans"
+          "Fira Sans"
+          "FiraGO"
+        ];
+        monospace = [
+          "FiraCode Nerd Font Mono"
+          "SauceCodePro Nerd Font Mono"
+        ];
+        emoji = [
+          "Joypixels"
+          "Noto Color Emoji"
+        ];
       };
       enable = true;
       hinting = {
@@ -165,7 +177,10 @@
     optimise.automatic = true;
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       allowed-uris = [
         "github:"
         "git+https://github.com/"

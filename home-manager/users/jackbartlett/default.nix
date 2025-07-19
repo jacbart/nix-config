@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   imports = [
     # ../../apps/wezterm.nix
     ../../apps/zed-editor.nix

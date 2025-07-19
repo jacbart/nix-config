@@ -14,7 +14,10 @@
   nix = {
     nrBuildUsers = 32;
     settings = {
-      trusted-users = [ "remotebuild" "@wheel" ];
+      trusted-users = [
+        "remotebuild"
+        "@wheel"
+      ];
       min-free = 10 * 1024 * 1024;
       max-free = 50 * 1024 * 1024;
       max-jobs = "auto";

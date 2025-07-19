@@ -1,7 +1,9 @@
-{ config
-, pkgs
-, ...
-}: {
+{
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ../apps/dunst.nix # notifications
     ../apps/eww.nix # panels and widgets

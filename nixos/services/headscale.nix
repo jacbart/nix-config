@@ -1,6 +1,7 @@
-{ config
-, pkgs
-, ...
+{
+  config,
+  pkgs,
+  ...
 }:
 let
   clientid = "";
@@ -47,17 +48,30 @@ in
         issuer = "https://auth.${domain}";
         client_id = clientid;
         client_secret_path = config.sops.secrets.zitadel-tailscale-client-secret.path;
-        scope = [ "openid" "profile" "email" ];
+        scope = [
+          "openid"
+          "profile"
+          "email"
+        ];
       };
     };
   };
 
   systemd.services.headscale.requires = [ "zitadel.service" ];
-  systemd.services.headscale.after = [ "network-online.target" "zitadel.service" ];
+  systemd.services.headscale.after = [
+    "network-online.target"
+    "zitadel.service"
+  ];
 
   networking.firewall = {
-    allowedUDPPorts = [ config.services.headscale.port 50443 ];
-    allowedTCPPorts = [ config.services.headscale.port 50443 ];
+    allowedUDPPorts = [
+      config.services.headscale.port
+      50443
+    ];
+    allowedTCPPorts = [
+      config.services.headscale.port
+      50443
+    ];
   };
 
   environment.systemPackages = [

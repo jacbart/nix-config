@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.flatpak.enable = true;
   systemd.services.configure-flathub-repo = {
     wantedBy = [ "multi-user.target" ];

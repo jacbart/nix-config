@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   sops.secrets."wireguard/ash/psKey" = { };
   sops.secrets."wireguard/ash/private" = { };
 

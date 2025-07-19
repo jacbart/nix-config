@@ -1,7 +1,9 @@
-{ pkgs
-, lib
-, ...
-}: {
+{
+  pkgs,
+  lib,
+  ...
+}:
+{
   programs.ssh.startAgent = lib.mkForce false;
 
   programs = {

@@ -1,6 +1,7 @@
-{ pkgs
-, lib
-, ...
+{
+  pkgs,
+  lib,
+  ...
 }:
 let
   inherit (pkgs.stdenv) isLinux;
@@ -19,7 +20,8 @@ in
     enableNushellIntegration = true;
   };
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       scripts.journal
     ]

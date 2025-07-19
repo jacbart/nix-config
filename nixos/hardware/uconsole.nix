@@ -1,9 +1,11 @@
 # This configuration file can be safely imported in your system configuration.
-{ pkgs
-, lib
-, outputs
-, ...
-}: {
+{
+  pkgs,
+  lib,
+  outputs,
+  ...
+}:
+{
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   boot.kernelParams = [
     "snd_bcm2835.enable_compat_alsa=0"

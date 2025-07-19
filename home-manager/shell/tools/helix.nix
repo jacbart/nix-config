@@ -1,7 +1,9 @@
-{ config
-, pkgs
-, ...
-}: {
+{
+  config,
+  pkgs,
+  ...
+}:
+{
   home = {
     packages = with pkgs; [
       # personally most used lsp's for helix
@@ -171,7 +173,7 @@
           }
           {
             name = "nix";
-            auto-format = false;
+            auto-format = true;
             file-types = [ "nix" ];
             formatter.command = "nixfmt";
             language-servers = [ "nil" ];
@@ -265,13 +267,19 @@
         ];
       };
       settings = {
-        theme = "gruvbox_dark_hard";
+        theme = "gruvbox";
         keys.normal = {
           A = {
             g = [ ":run-shell-command git diff" ];
           };
-          "{" = [ "goto_prev_paragraph" "collapse_selection" ];
-          "}" = [ "goto_next_paragraph" "collapse_selection" ];
+          "{" = [
+            "goto_prev_paragraph"
+            "collapse_selection"
+          ];
+          "}" = [
+            "goto_next_paragraph"
+            "collapse_selection"
+          ];
           space = {
             i = ":toggle lsp.display-inlay-hints";
             W = ":write";

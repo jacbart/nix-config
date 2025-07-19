@@ -34,9 +34,6 @@
     hydra.url = "github:NixOS/hydra";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
-    nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
-
     nixos-uconsole.url = "git+https://git.vdx.hu/voidcontext/nixos-uconsole?ref=kernel-6.6";
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
@@ -54,11 +51,11 @@
     };
   };
   outputs =
-    { self
-    , nix-formatter-pack
-    , nixpkgs
-    , ...
-    } @ inputs:
+    {
+      self,
+      nixpkgs,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       inherit (nixpkgs) lib;
@@ -153,18 +150,7 @@
       );
 
       # nix fmt
-      formatter = libx.forAllSystems (
-        system:
-        nix-formatter-pack.lib.mkFormatter {
-          pkgs = nixpkgs.legacyPackages.${system};
-          config.tools = {
-            alejandra.enable = true;
-            deadnix.enable = true;
-            nixpkgs-fmt.enable = true;
-            statix.enable = true;
-          };
-        }
-      );
+      formatter = libx.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
       # Custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };

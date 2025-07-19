@@ -1,7 +1,12 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.postgresql = {
     enable = true;
-    ensureDatabases = [ "nextcloud" "zitadel" "headscale" ];
+    ensureDatabases = [
+      "nextcloud"
+      "zitadel"
+      "headscale"
+    ];
     ensureUsers = [
       {
         name = "nextcloud";

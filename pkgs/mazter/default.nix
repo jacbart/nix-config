@@ -1,8 +1,8 @@
-{ lib
-, pkgs
-, rustPlatform
-, fetchFromGitHub
-,
+{
+  lib,
+  pkgs,
+  rustPlatform,
+  fetchFromGitHub,
 }:
 let
   name = "mazter";

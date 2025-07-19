@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   inherit (pkgs.stdenv) isLinux isDarwin;
@@ -20,7 +21,8 @@ in
 {
   imports = [ ./tools/starship.nix ];
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       mdbook # markdown books
       uv
@@ -63,10 +65,10 @@ in
     zplug = {
       enable = true;
       plugins = [
-        {
-          name = "plugins/fzf";
-          tags = [ "from:oh-my-zsh" ];
-        }
+        # {
+        #   name = "plugins/fzf";
+        #   tags = [ "from:oh-my-zsh" ];
+        # }
         {
           name = "plugins/git";
           tags = [ "from:oh-my-zsh" ];

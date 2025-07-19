@@ -1,9 +1,11 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.qemu-user;
   arm = {
     interpreter = "${pkgs.qemu-user-arm}/bin/qemu-arm";
@@ -43,11 +45,17 @@ in
       // optionalAttrs cfg.aarch64 { inherit aarch64; }
       // optionalAttrs cfg.riscv64 { inherit riscv64; };
     nix.supportedPlatforms =
-      (optionals cfg.arm [ "armv6l-linux" "armv7l-linux" ])
+      (optionals cfg.arm [
+        "armv6l-linux"
+        "armv7l-linux"
+      ])
       ++ (optional cfg.aarch64 "aarch64-linux");
     nix.extraOptions = ''
       extra-platforms = ${toString config.nix.supportedPlatforms} i686-linux
     '';
-    nix.sandboxPaths = [ "/run/binfmt" ] ++ (optional cfg.arm "${pkgs.qemu-user-arm}") ++ (optional cfg.aarch64 "${pkgs.qemu-user-arm64}");
+    nix.sandboxPaths =
+      [ "/run/binfmt" ]
+      ++ (optional cfg.arm "${pkgs.qemu-user-arm}")
+      ++ (optional cfg.aarch64 "${pkgs.qemu-user-arm64}");
   };
 }

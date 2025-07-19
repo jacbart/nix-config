@@ -1,7 +1,9 @@
-{ config
-, lib
-, ...
-}: {
+{
+  config,
+  lib,
+  ...
+}:
+{
   imports = [
     ../../apps/ghostty.nix
   ];

@@ -1,7 +1,9 @@
-{ modulesPath
-, lib
-, ...
-}: {
+{
+  modulesPath,
+  lib,
+  ...
+}:
+{
   imports = [
     (modulesPath + "/virtualisation/digital-ocean-image.nix")
     ../../security/acme-proxy.nix
@@ -34,7 +36,10 @@
     networkmanager.dns = "none";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 ];
+      allowedTCPPorts = [
+        80
+        443
+      ];
       allowedUDPPorts = [ ];
     };
   };

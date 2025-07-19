@@ -1,7 +1,16 @@
-{ disks ? [ "/dev/mmcblk0" ], ... }:
+{
+  disks ? [ "/dev/mmcblk0" ],
+  ...
+}:
 let
-  vfatOpts = [ "nofail" "noauto" ];
-  ext4Opts = [ "x-initrd" "mount" ];
+  vfatOpts = [
+    "nofail"
+    "noauto"
+  ];
+  ext4Opts = [
+    "x-initrd"
+    "mount"
+  ];
 in
 {
   disko.devices = {

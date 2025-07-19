@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   subdomain = "cloud";
@@ -16,8 +17,14 @@ in
   };
 
   imports = [ ./postgresql.nix ];
-  systemd.services.nextcloud-setup.after = [ "postgresql.service" "zitadel.service" ];
-  systemd.services.nextcloud-setup.requires = [ "postgresql.service" "zitadel.service" ];
+  systemd.services.nextcloud-setup.after = [
+    "postgresql.service"
+    "zitadel.service"
+  ];
+  systemd.services.nextcloud-setup.requires = [
+    "postgresql.service"
+    "zitadel.service"
+  ];
 
   systemd.services.nextcloud-setup.serviceConfig = {
     User = user;
@@ -58,8 +65,7 @@ in
       appstoreEnable = true;
       autoUpdateApps.enable = false;
       extraApps = {
-        inherit
-          (pkgs.unstable.nextcloud31Packages.apps)
+        inherit (pkgs.unstable.nextcloud31Packages.apps)
           bookmarks
           calendar
           contacts

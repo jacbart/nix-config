@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
@@ -6,7 +7,11 @@
     theme = "DarkBlue";
     location = "center";
     extraConfig = {
-      combi-modes = [ "drun" "window" "ssh" ];
+      combi-modes = [
+        "drun"
+        "window"
+        "ssh"
+      ];
     };
   };
 }

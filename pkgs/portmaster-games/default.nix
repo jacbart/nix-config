@@ -1,6 +1,6 @@
-{ pkgs
-, lib
-,
+{
+  pkgs,
+  lib,
 }:
 pkgs.stdenv.mkDerivation rec {
   pname = "PortMaster";

@@ -1,8 +1,10 @@
-{ config
-, inputs
-, pkgs
-, ...
-}: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+{
   sops.secrets."caddy_users/jack_pass" = {
     owner = "caddy";
     group = "caddy";
@@ -49,5 +51,8 @@
     configFile = config.sops.templates.Caddyfile.path;
   };
   # Open Firewall for caddy
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 }
