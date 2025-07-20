@@ -19,7 +19,7 @@
       # dysk # disable for m1 mac
       fastfetch
       fd
-      # fzf
+      fzf
       # htmlq
       # hyperfine
       unstable.infisical
@@ -58,10 +58,10 @@
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
-    # fzf = {
-    #   enable = true;
-    #   enableZshIntegration = true;
-    # };
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
     home-manager.enable = true;
     info.enable = true;
     jq.enable = true;

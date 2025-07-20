@@ -28,6 +28,8 @@
     caddy-with-modules.url = "github:jacbart/nixos-caddy-patched";
 
     jaws.url = "github:jacbart/jaws";
+    ff.url = "github:jacbart/ff";
+    trees.url = "github:jacbart/trees";
 
     lan-mouse.url = "github:feschber/lan-mouse";
 
@@ -37,9 +39,6 @@
     nixos-uconsole.url = "git+https://git.vdx.hu/voidcontext/nixos-uconsole?ref=kernel-6.6";
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
-
-    # nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-    # nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";

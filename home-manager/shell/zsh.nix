@@ -5,6 +5,8 @@
   ...
 }:
 let
+  # ff = inputs.ff.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  # trees = inputs.trees.packages.${pkgs.stdenv.hostPlatform.system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
   modPath =
     [
@@ -30,6 +32,8 @@ in
       perl # Required for zplug
       htmlq # parser for html
       unstable.nh # nix helper cli
+      # trees # git worktrees simplified
+      # ff # not so percise search
     ]
     ++ lib.optional isLinux unstable.tlrc;
 
@@ -65,10 +69,10 @@ in
     zplug = {
       enable = true;
       plugins = [
-        # {
-        #   name = "plugins/fzf";
-        #   tags = [ "from:oh-my-zsh" ];
-        # }
+        {
+          name = "plugins/fzf";
+          tags = [ "from:oh-my-zsh" ];
+        }
         {
           name = "plugins/git";
           tags = [ "from:oh-my-zsh" ];
