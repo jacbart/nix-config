@@ -2,7 +2,7 @@
 {
   imports = [
     # ../../apps/wezterm.nix
-    ../../apps/zed-editor.nix
+    # ../../apps/zed-editor.nix
   ];
 
   # home.packages = [ pkgs.pulumi ];
