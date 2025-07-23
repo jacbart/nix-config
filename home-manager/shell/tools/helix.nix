@@ -39,6 +39,7 @@
   programs = {
     helix = {
       enable = true;
+      package = pkgs.unstable.helix;
       languages = {
         language-server = {
           sqls = {
