@@ -58,22 +58,21 @@ stdenv.mkDerivation (finalAttrs: {
     cd ..
   '';
 
-  installPhase =
-    ''
-      runHook preInstall
+  installPhase = ''
+    runHook preInstall
 
-      mkdir -p $out/bin/ $out/share/nxengine/
-    ''
-    + ''
-      cp -r ${finalAttrs.finalPackage.assets}/share/nxengine/data $out/share/nxengine/
-      chmod -R a=r,a+X $out/share/nxengine/data
-    ''
-    + ''
-      cp ./build/nxengine-evo $out/bin/
-      ln -s $out/bin/nxengine-evo $out/bin/nx
+    mkdir -p $out/bin/ $out/share/nxengine/
+  ''
+  + ''
+    cp -r ${finalAttrs.finalPackage.assets}/share/nxengine/data $out/share/nxengine/
+    chmod -R a=r,a+X $out/share/nxengine/data
+  ''
+  + ''
+    cp ./build/nxengine-evo $out/bin/
+    ln -s $out/bin/nxengine-evo $out/bin/nx
 
-      runHook postInstall
-    '';
+    runHook postInstall
+  '';
 
   passthru = {
     assets = callPackage ./assets.nix { };

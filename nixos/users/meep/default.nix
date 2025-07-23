@@ -25,19 +25,18 @@ in
 
   users.users.meep = {
     description = "Meep";
-    extraGroups =
-      [
-        "audio"
-        "input"
-        "networkmanager"
-        "users"
-        "video"
-        "wheel"
-      ]
-      ++ ifExists [
-        "docker"
-        "podman"
-      ];
+    extraGroups = [
+      "audio"
+      "input"
+      "networkmanager"
+      "users"
+      "video"
+      "wheel"
+    ]
+    ++ ifExists [
+      "docker"
+      "podman"
+    ];
     hashedPasswordFile = config.sops.secrets.meep-password.path;
     homeMode = "0755";
     isNormalUser = true;

@@ -25,12 +25,10 @@
       };
     };
     squeekboard = prev.squeekboard.overrideAttrs (old: {
-      postInstall =
-        (old.postInstall or "")
-        + ''
-          rm $out/bin/squeekboard
-          touch $out/bin/squeekboard
-        '';
+      postInstall = (old.postInstall or "") + ''
+        rm $out/bin/squeekboard
+        touch $out/bin/squeekboard
+      '';
     });
   };
 

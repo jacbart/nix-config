@@ -52,33 +52,32 @@
           stateVersion
           ;
       };
-      modules =
-        [
-          ../nixos
-          inputs.sops-nix.nixosModules.sops
-          inputs.lix-module.nixosModules.default
-        ]
-        ++ (inputs.nixpkgs.lib.optionals (platform == "x86_64-linux") [
-          # inputs.nix-ld.nixosModules.nix-ld
-          # { programs.nix-ld.dev.enable = true; }
-          { programs.nix-ld.enable = true; }
-        ])
-        ++ (inputs.nixpkgs.lib.optionals (installer != null) [
-          installer
-        ])
-        # ++ (inputs.nixpkgs.lib.optionals (desktop == "cosmic") [
-        #   {
-        #     nix.settings = {
-        #       substituters = [ "https://cosmic.cachix.org/" ];
-        #       trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-        #     };
-        #   }
-        #   inputs.nixos-cosmic.nixosModules.default
-        # ])
-        ++ (inputs.nixpkgs.lib.optionals (builtins.elem hostname [ "ash" ]) [
-          inputs.nixos-uconsole.nixosModules.default
-          inputs.nixos-uconsole.nixosModules."kernel-6.1-potatomania"
-        ]);
+      modules = [
+        ../nixos
+        inputs.sops-nix.nixosModules.sops
+        inputs.lix-module.nixosModules.default
+      ]
+      ++ (inputs.nixpkgs.lib.optionals (platform == "x86_64-linux") [
+        # inputs.nix-ld.nixosModules.nix-ld
+        # { programs.nix-ld.dev.enable = true; }
+        { programs.nix-ld.enable = true; }
+      ])
+      ++ (inputs.nixpkgs.lib.optionals (installer != null) [
+        installer
+      ])
+      # ++ (inputs.nixpkgs.lib.optionals (desktop == "cosmic") [
+      #   {
+      #     nix.settings = {
+      #       substituters = [ "https://cosmic.cachix.org/" ];
+      #       trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+      #     };
+      #   }
+      #   inputs.nixos-cosmic.nixosModules.default
+      # ])
+      ++ (inputs.nixpkgs.lib.optionals (builtins.elem hostname [ "ash" ]) [
+        inputs.nixos-uconsole.nixosModules.default
+        inputs.nixos-uconsole.nixosModules."kernel-6.1-potatomania"
+      ]);
     };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [

@@ -53,9 +53,10 @@ in
     nix.extraOptions = ''
       extra-platforms = ${toString config.nix.supportedPlatforms} i686-linux
     '';
-    nix.sandboxPaths =
-      [ "/run/binfmt" ]
-      ++ (optional cfg.arm "${pkgs.qemu-user-arm}")
-      ++ (optional cfg.aarch64 "${pkgs.qemu-user-arm64}");
+    nix.sandboxPaths = [
+      "/run/binfmt"
+    ]
+    ++ (optional cfg.arm "${pkgs.qemu-user-arm}")
+    ++ (optional cfg.aarch64 "${pkgs.qemu-user-arm64}");
   };
 }

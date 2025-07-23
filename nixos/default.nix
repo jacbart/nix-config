@@ -13,20 +13,19 @@
   ...
 }:
 {
-  imports =
-    [
-      inputs.disko.nixosModules.disko
+  imports = [
+    inputs.disko.nixosModules.disko
 
-      (modulesPath + "/installer/scan/not-detected.nix")
-      ./hosts/${hostname}
-      ./services/firewall.nix
-      ./services/openssh.nix
-      ./users/root
-      ./security
-    ]
-    ++ lib.optional (platform == "x86_64-linux") ./libraries
-    ++ lib.optional (builtins.pathExists (./. + "/users/${username}")) ./users/${username}
-    ++ lib.optional (desktop != null) ./desktop;
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ./hosts/${hostname}
+    ./services/firewall.nix
+    ./services/openssh.nix
+    ./users/root
+    ./security
+  ]
+  ++ lib.optional (platform == "x86_64-linux") ./libraries
+  ++ lib.optional (builtins.pathExists (./. + "/users/${username}")) ./users/${username}
+  ++ lib.optional (desktop != null) ./desktop;
 
   boot = {
     consoleLogLevel = 0;

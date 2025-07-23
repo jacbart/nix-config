@@ -8,16 +8,15 @@ let
   # ff = inputs.ff.packages.${pkgs.stdenv.hostPlatform.system}.default;
   # trees = inputs.trees.packages.${pkgs.stdenv.hostPlatform.system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
-  modPath =
-    [
-      "$HOME/.local/bin"
-      "$HOME/go/bin"
-      "$HOME/.cargo/bin"
-    ]
-    ++ lib.optional isDarwin "/opt/homebrew/bin"
-    ++ [
-      "$PATH"
-    ];
+  modPath = [
+    "$HOME/.local/bin"
+    "$HOME/go/bin"
+    "$HOME/.cargo/bin"
+  ]
+  ++ lib.optional isDarwin "/opt/homebrew/bin"
+  ++ [
+    "$PATH"
+  ];
   modPathStr = lib.strings.concatMapStrings (path: path + ":") modPath;
 in
 {

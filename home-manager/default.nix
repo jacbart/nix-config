@@ -16,20 +16,19 @@ in
 {
   # Only import desktop configuration if the host is desktop enabled
   # Only import user specific configuration if they have bespoke settings
-  imports =
-    [
-      # Or modules exported from other flakes (such as nix-colors):
-      inputs.sops-nix.homeManagerModules.sops
+  imports = [
+    # Or modules exported from other flakes (such as nix-colors):
+    inputs.sops-nix.homeManagerModules.sops
 
-      # You can also split up your configuration and import pieces of it here:
-      ./core
-      ./shell
-    ]
-    ++ lib.optional (builtins.isPath (./. + "/users/${username}")) ./users/${username}
-    ++ lib.optional (builtins.pathExists (
-      ./. + "/users/${username}/hosts/${hostname}.nix"
-    )) ./users/${username}/hosts/${hostname}.nix
-    ++ lib.optional (desktop != null) ./desktop;
+    # You can also split up your configuration and import pieces of it here:
+    ./core
+    ./shell
+  ]
+  ++ lib.optional (builtins.isPath (./. + "/users/${username}")) ./users/${username}
+  ++ lib.optional (builtins.pathExists (
+    ./. + "/users/${username}/hosts/${hostname}.nix"
+  )) ./users/${username}/hosts/${hostname}.nix
+  ++ lib.optional (desktop != null) ./desktop;
 
   home = {
     activation.report-changes = config.lib.dag.entryAnywhere ''

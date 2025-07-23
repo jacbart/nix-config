@@ -27,21 +27,20 @@ in
 
   users.users.ratatoskr = {
     description = "Ratatoskr";
-    extraGroups =
-      [
-        "audio"
-        "input"
-        "networkmanager"
-        "users"
-        "video"
-        "wheel"
-      ]
-      ++ ifExists [
-        "docker"
-        "podman"
-        "nextcloud"
-        "hydra"
-      ];
+    extraGroups = [
+      "audio"
+      "input"
+      "networkmanager"
+      "users"
+      "video"
+      "wheel"
+    ]
+    ++ ifExists [
+      "docker"
+      "podman"
+      "nextcloud"
+      "hydra"
+    ];
     hashedPasswordFile = config.sops.secrets.ratatoskr-password.path;
     homeMode = "0755";
     isNormalUser = true;
