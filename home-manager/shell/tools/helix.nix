@@ -4,6 +4,7 @@
   ...
 }:
 {
+  # Home settings
   home = {
     packages = with pkgs; [
       # personally most used lsp's for helix
@@ -11,8 +12,8 @@
       dockerfile-language-server-nodejs # dockerfile language server
       gofumpt # go formatter
       gopls # go language server
+      # llama-cpp # Inference of Meta's LLaMA model (and others) in pure C/C++
       # lsp-ai # code completion LSP for LLM's
-      # marksman # markdown language server
       markdown-oxide # markdown language server
       nil # nix language server
       nixfmt-rfc-style # nix formatter
@@ -51,32 +52,92 @@
           #     memory = {
           #       file_store = { };
           #     };
-          #     models.model1 = {
-          #       type = "ollama";
-          #       model = "qwen2.5-coder:1.5b-base";
+          #     models = {
+          #       # model1 = {
+          #       #   type = "llama_cpp";
+          #       #   repository = "Qwen/Qwen3-4B-GGUF";
+          #       #   name = "Qwen3-4B-Q4_K_M.gguf";
+          #       #   n_ctx = 4096;
+          #       # };
+          #       # model2 = {
+          #       #   type = "llama_cpp";
+          #       #   repository = "unsloth/DeepSeek-R1-0528-Qwen3-8B-GGUF";
+          #       #   name = "DeepSeek-R1-0528-Qwen3-8B-Q4_K_M.gguf";
+          #       #   n_ctx = 4096;
+          #       # };
+          #       model1 = {
+          #         type = "ollama";
+          #         model = "qwen3:1.7b";
+          #       };
+          #       model2 = {
+          #         type = "ollama";
+          #         model = "deepseek-r1:1.5b";
+          #       };
           #     };
           #     completion = {
           #       model = "model1";
           #       parameters = {
-          #         max_context = 2000;
+          #         max_context = 4096;
           #         options = {
           #           num_predict = 32;
           #         };
           #       };
           #     };
-          #     chat = [{
-          #       trigger = "!C";
-          #       action_display_name = "Chat";
-          #       model = "model1";
-          #       parameters = {
-          #         max_context = 4096;
-          #         max_tokens = 1024;
-          #         messages = [{
-          #           role = "system";
-          #           content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately";
-          #         }];
-          #       };
-          #     }];
+          #     actions = [
+          #       {
+          #         action_display_name = "Complete";
+          #         model = "model2";
+          #         parameters = {
+          #           max_context = 4096;
+          #           max_tokens = 4096;
+          #           system = "You are an AI coding assistant. Your task is to complete code snippets. The user's cursor position is marked by \"<CURSOR>\". Follow these steps:\n\n1. Analyze the code context and the cursor position.\n2. Provide your chain of thought reasoning, wrapped in <reasoning> tags. Include thoughts about the cursor position, what needs to be completed, and any necessary formatting.\n3. Determine the appropriate code to complete the current thought, including finishing partial words or lines.\n4. Replace \"<CURSOR>\" with the necessary code, ensuring proper formatting and line breaks.\n5. Wrap your code solution in <answer> tags.\n\nYour response should always include both the reasoning and the answer. Pay special attention to completing partial words or lines before adding new lines of code.";
+          #           messages = [
+          #             {
+          #               role = "user";
+          #               content = "{CODE}";
+          #             }
+          #           ];
+          #         };
+          #         # post_process = {
+          #         #   extractor = "(?s)<answer>(.*?)</answer>";
+          #         # };
+          #       }
+          #       {
+          #         action_display_name = "Refactor";
+          #         model = "model2";
+          #         parameters = {
+          #           max_context = 4096;
+          #           max_tokens = 4096;
+          #           system = "You are an AI coding assistant specializing in code refactoring. Your task is to analyze the given code snippet and provide a refactored version. Follow these steps:\n\n1. Analyze the code context and structure.\n2. Identify areas for improvement, such as code efficiency, readability, or adherence to best practices.\n3. Provide your chain of thought reasoning, wrapped in <reasoning> tags. Include your analysis of the current code and explain your refactoring decisions.\n4. Rewrite the entire code snippet with your refactoring applied.\n5. Wrap your refactored code solution in <answer> tags.\n\nYour response should always include both the reasoning and the refactored code.";
+          #         };
+          #         messages = [
+          #           {
+          #             role = "user";
+          #             content = "{SELECTED_TEXT}";
+          #           }
+          #         ];
+          #         # post_process = {
+          #         #   extractor = "(?s)<answer>(.*?)</answer>";
+          #         # };
+          #       }
+          #     ];
+          #     chat = [
+          #       {
+          #         trigger = "!C";
+          #         action_display_name = "Chat";
+          #         model = "model2";
+          #         parameters = {
+          #           max_context = 4096;
+          #           max_tokens = 1024;
+          #           messages = [
+          #             {
+          #               role = "system";
+          #               content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately given the code context:\n\n{CONTEXT}";
+          #             }
+          #           ];
+          #         };
+          #       }
+          #     ];
           #   };
           # };
           gopls = {
@@ -137,7 +198,10 @@
               start = "/*";
               end = "*/";
             };
-            language-servers = [ "gopls" ];
+            language-servers = [
+              "gopls"
+              # "lsp-ai"
+            ];
           }
           {
             name = "hcl";
@@ -177,7 +241,10 @@
             auto-format = true;
             file-types = [ "nix" ];
             formatter.command = "nixfmt";
-            language-servers = [ "nil" ];
+            language-servers = [
+              "nil"
+              # "lsp-ai"
+            ];
           }
           {
             name = "markdown";
@@ -268,7 +335,7 @@
         ];
       };
       settings = {
-        theme = "gruvbox";
+        theme = "gruvbox_dark_hard";
         keys.normal = {
           A = {
             g = [ ":run-shell-command git diff" ];
@@ -282,6 +349,7 @@
             "collapse_selection"
           ];
           space = {
+            B = ":echo %sh{git blame -L %{cursor_line},+1 %s{buffer_name}}";
             i = ":toggle lsp.display-inlay-hints";
             W = ":write";
             esc = [

@@ -6,7 +6,7 @@
     enableBashIntegration = true;
     enableZshIntegration = true;
     settings = {
-      theme = "dark:gruvbox-material,light:GruvboxLight";
+      theme = "dark:srcery,light:GruvboxLight";
       shell-integration = "zsh";
     };
   };
