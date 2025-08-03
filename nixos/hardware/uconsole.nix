@@ -26,8 +26,9 @@
   #   ];
   #   xrandrHeads = [
   #     {
-  #       monitorConfig = ''Option "Rotate" "right"'';
   #       output = "DSI-1";
+  #       monitorConfig = "Option \"Rotate\" \"right\"";
+  #       primary = true;
   #     }
   #   ];
   # };

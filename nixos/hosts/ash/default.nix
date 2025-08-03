@@ -7,7 +7,7 @@
   imports = [
     ../../hardware/uconsole.nix
     ./remote-builder.nix
-    # ../../services/tailscale.nix
+    ../../services/tailscale.nix
   ];
 
   environment.systemPackages = [
@@ -38,7 +38,15 @@
   networking = {
     hosts = {
       "127.0.0.2" = [ "ash.meep.sh" ];
-      # "192.168.0.120" = [ "mesquite" "mesquite.meep.sh" ];
+      "100.116.178.48" = [
+        "maple.meep.sh"
+        "s3.meep.sh"
+        "books.meep.sh"
+        "auth.meep.sh"
+        "minio.meep.sh"
+        "cloud.meep.sh"
+        "wiki.meep.sh"
+      ];
     };
     wireless.iwd = {
       enable = lib.mkDefault true;

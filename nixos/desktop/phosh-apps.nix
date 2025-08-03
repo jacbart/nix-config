@@ -2,6 +2,7 @@
 {
   environment.systemPackages = [
     pkgs.baobab # disk usage
+    # pkgs.chatty # XMPP & SMS messaging via libpurple and ModemManager
     pkgs.decibels # audio player
     pkgs.epiphany # web browser
     pkgs.evince # document viewer

@@ -5,6 +5,12 @@ _: {
     user = "meep";
     group = "users";
     phocConfig.xwayland = "immediate";
+    phocConfig.outputs = {
+      DSI-1 = {
+        rotate = "90";
+        scale = 1;
+      };
+    };
   };
 
   services.displayManager.autoLogin.enable = true;
