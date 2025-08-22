@@ -12,6 +12,7 @@
       dockerfile-language-server-nodejs # dockerfile language server
       gofumpt # go formatter
       gopls # go language server
+      jdt-language-server # java lsp
       # llama-cpp # Inference of Meta's LLaMA model (and others) in pure C/C++
       # lsp-ai # code completion LSP for LLM's
       markdown-oxide # markdown language server
@@ -224,6 +225,14 @@
                 "json"
               ];
             };
+          }
+          {
+            name = "java";
+            file-types = [
+              "cls"
+              "java"
+            ];
+            auto-format = true;
           }
           {
             name = "javascript";
