@@ -10,8 +10,10 @@
     ../../services/tailscale.nix
   ];
 
-  environment.systemPackages = [
-    pkgs.uconsole-nx
+  environment.systemPackages = with pkgs; [
+    uconsole-nx
+    steam
+    steam-run
     # (pkgs.retroarch.override {
     #   cores = [
     #     pkgs.libretro.mgba
@@ -19,12 +21,8 @@
     # })
   ];
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = false; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = false; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
+  # allow build for x86_64-linux architecture through emulation
+  boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
   fileSystems = {
     "/" = {
