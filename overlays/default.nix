@@ -10,7 +10,15 @@
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
-  modifications = _final: _prev: { };
+  modifications = final: _prev: {
+    # inherit (final.lixPackageSets.stable)
+    #   nixpkgs-review
+    #   nix-direnv
+    #   nix-eval-jobs
+    #   nix-fast-build
+    #   colmena
+    #   ;
+  };
 
   uconsole-mods = _final: prev: {
     # needed for raspberry pi

@@ -160,6 +160,7 @@
   };
 
   nix = {
+    package = pkgs.unstable.lixPackageSets.stable.lix;
     gc = {
       automatic = true;
       options = "--delete-older-than 10d";

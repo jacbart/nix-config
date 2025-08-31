@@ -5,7 +5,6 @@
     # You can access packages and modules from different nixpkgs revs at the same time.
     # See 'unstable-packages' overlay in 'overlays/default.nix'.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    mypkgs.url = "github:jacbart/nixpkgs/nixos-24.11";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
@@ -36,13 +35,9 @@
     hydra.url = "github:NixOS/hydra";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-uconsole.url = "git+https://git.vdx.hu/voidcontext/nixos-uconsole?ref=kernel-6.6";
+    nixos-uconsole.url = "github:jacbart/nixos-uconsole";
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
-
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
-
     #### Personal repos ####
     secrets = {
       url = "git+ssh://git@github.com/jacbart/nix-secrets.git?ref=main&shallow=1";
