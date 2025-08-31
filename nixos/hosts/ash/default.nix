@@ -10,6 +10,28 @@
     ../../services/tailscale.nix
   ];
 
+  # use x86_64 steam and allow unfree license
+  nixpkgs.overlays = [
+    (
+      self: super:
+      let
+        x86pkgs = import pkgs.path {
+          system = "x86_64-linux";
+          config.allowUnfreePredicate =
+            pkg:
+            builtins.elem (lib.getName pkg) [
+              "steam"
+              "steam-original"
+              "steam-runtime"
+            ];
+        };
+      in
+      {
+        inherit (x86pkgs) steam steam-run;
+      }
+    )
+  ];
+
   environment.systemPackages = with pkgs; [
     uconsole-nx
     steam

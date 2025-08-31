@@ -20,40 +20,25 @@
     #   ;
   };
 
-  uconsole-mods =
-    final: prev:
-    let
-      x86pkgs = import final.path {
-        system = "x86_64-linux";
-        config.allowUnfreePredicate =
-          pkg:
-          builtins.elem (inputs.lib.getName pkg) [
-            "steam"
-            "steam-original"
-            "steam-runtime"
-          ];
+  uconsole-mods = final: prev: {
+    # needed for raspberry pi
+    makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
+    # retroarch controls
+    retroarch-joypad-autoconfig = prev.retroarch-joypad-autoconfig.overrideAttrs {
+      src = prev.fetchFromGitHub {
+        owner = "jacbart";
+        repo = "retroarch-joypad-autoconfig";
+        rev = "7733b32317046ac0e4a2897f45fb1c9844986190";
+        hash = "sha256-j7Cu66PU+mY3c6ojTmdYPKZlUMbL9L4xoyJP4gQaLqU=";
       };
-    in
-    {
-      inherit (x86pkgs) steam steam-run;
-      # needed for raspberry pi
-      makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
-      # retroarch controls
-      retroarch-joypad-autoconfig = prev.retroarch-joypad-autoconfig.overrideAttrs {
-        src = prev.fetchFromGitHub {
-          owner = "jacbart";
-          repo = "retroarch-joypad-autoconfig";
-          rev = "7733b32317046ac0e4a2897f45fb1c9844986190";
-          hash = "sha256-j7Cu66PU+mY3c6ojTmdYPKZlUMbL9L4xoyJP4gQaLqU=";
-        };
-      };
-      squeekboard = prev.squeekboard.overrideAttrs (old: {
-        postInstall = (old.postInstall or "") + ''
-          rm $out/bin/squeekboard
-          touch $out/bin/squeekboard
-        '';
-      });
     };
+    squeekboard = prev.squeekboard.overrideAttrs (old: {
+      postInstall = (old.postInstall or "") + ''
+        rm $out/bin/squeekboard
+        touch $out/bin/squeekboard
+      '';
+    });
+  };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
