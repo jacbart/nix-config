@@ -23,6 +23,7 @@
               "steam"
               "steam-original"
               "steam-runtime"
+              "steam-unwrapped"
             ];
         };
       in
