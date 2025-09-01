@@ -6,7 +6,8 @@
 {
   imports = [
     ../../hardware/uconsole.nix
-    ./remote-builder.nix
+    ../distributed-builds.nix
+    # ./remote-builder.nix
     ../../services/tailscale.nix
   ];
 
