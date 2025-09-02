@@ -11,13 +11,13 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: _prev: {
-    # inherit (final.lixPackageSets.stable)
-    #   nixpkgs-review
-    #   nix-direnv
-    #   nix-eval-jobs
-    #   nix-fast-build
-    #   colmena
-    #   ;
+    inherit (final.lixPackageSets.stable)
+      nixpkgs-review
+      nix-direnv
+      nix-eval-jobs
+      nix-fast-build
+      colmena
+      ;
   };
 
   uconsole-mods = final: prev: {
