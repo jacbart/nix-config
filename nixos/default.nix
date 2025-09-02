@@ -160,7 +160,7 @@
   };
 
   nix = {
-    package = pkgs.unstable.lixPackageSets.stable.lix;
+    package = pkgs.lixPackageSets.latest.lix;
     gc = {
       automatic = true;
       options = "--delete-older-than 10d";
@@ -196,13 +196,11 @@
 
       substituters = [
         # "https://s3.meep.sh/nix-cache"
-        "https://cache.lix.systems"
         "https://nix-community.cachix.org"
         "https://cache.nixos.org"
       ];
       trusted-public-keys = [
         # "s3.meep.sh-3:mcrDvp6CZgkpq+/aRB18b6XtJywHSPkSZWr4NrnVGOc="
-        "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
 

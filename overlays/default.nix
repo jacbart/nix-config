@@ -7,13 +7,11 @@
     scripts = import ../scripts { pkgs = final; };
   };
 
-  # This one contains whatever you want to overlay
-  # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: _prev: {
-    inherit (final.lixPackageSets.stable)
+    inherit (final.lixPackageSets.latest)
       nixpkgs-review
-      nix-direnv
+      # nix-direnv
       nix-eval-jobs
       nix-fast-build
       colmena

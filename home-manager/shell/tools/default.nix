@@ -22,12 +22,12 @@
       fzf
       # htmlq
       # hyperfine
-      unstable.infisical
+      # unstable.infisical
       netcat
       # nurl
       # nix-melt
       # mazter
-      mprocs
+      # mprocs
       procs
       rainfrog
       ripgrep
@@ -56,7 +56,10 @@
     direnv = {
       enable = true;
       enableZshIntegration = true;
-      nix-direnv.enable = true;
+      nix-direnv = {
+        enable = true;
+        package = pkgs.lixPackageSets.latest.nix-direnv;
+      };
     };
     fzf = {
       enable = true;
