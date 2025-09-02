@@ -1,4 +1,5 @@
-_: {
+{ ... }:
+{
   nix.distributedBuilds = true;
   nix.settings.builders-use-substitutes = true;
 
@@ -13,7 +14,7 @@ _: {
     #   speedFactor = 1;
     # }
     {
-      hostName = "boojum.meep.sh";
+      hostName = "boojum";
       protocol = "ssh";
       sshUser = "remotebuild";
       sshKey = "~/.ssh/builder_boojum";
@@ -28,7 +29,7 @@ _: {
       speedFactor = 4;
     }
     # {
-    #   hostName = "ash.meep.sh";
+    #   hostName = "ash";
     #   protocol = "ssh";
     #   sshUser = "remotebuild";
     #   sshKey = "~/.ssh/builder_ash";
@@ -41,11 +42,11 @@ _: {
 
   programs.ssh.knownHosts = {
     boojum = {
-      extraHostNames = [ "boojum.meep.sh" ];
+      extraHostNames = [ "boojum" ];
       publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE4MTXIg+HPG7g8ZKCReM2nRMcC3+m3MPStHL5sw9E7H";
     };
     # ash = {
-    #   extraHostNames = [ "ash.meep.sh" ];
+    #   extraHostNames = [ "ash" ];
     #   publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
     # };
   };
