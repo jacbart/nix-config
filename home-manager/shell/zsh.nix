@@ -54,7 +54,6 @@ in
       hm = "home-manager";
       less = "bat --paging=always";
       more = "bat --paging=always";
-      top = "btm --basic --tree --hide_table_gap --dot_marker --mem_as_value";
       gs = "git status";
       ga = "git add";
       gcm = "git commit -m";
