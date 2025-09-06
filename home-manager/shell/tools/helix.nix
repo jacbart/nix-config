@@ -3,6 +3,13 @@
   pkgs,
   ...
 }:
+let
+  helix = pkgs.unstable.helix.overrideAttrs (prev: {
+    patches = (prev.patches or [ ]) ++ [
+      ./patches/helix/clickable-buffer.patch
+    ];
+  });
+in
 {
   # Home settings
   home = {
@@ -41,7 +48,7 @@
   programs = {
     helix = {
       enable = true;
-      package = pkgs.unstable.helix;
+      package = helix;
       languages = {
         language-server = {
           sqls = {
@@ -382,6 +389,10 @@
           auto-completion = true;
           path-completion = true;
           auto-format = true;
+          smart-tab = {
+            enable = false;
+            supersede-menu = false;
+          };
           statusline = {
             left = [
               "mode"

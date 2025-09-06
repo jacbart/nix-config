@@ -64,15 +64,6 @@
       ++ (inputs.nixpkgs.lib.optionals (installer != null) [
         installer
       ])
-      # ++ (inputs.nixpkgs.lib.optionals (desktop == "cosmic") [
-      #   {
-      #     nix.settings = {
-      #       substituters = [ "https://cosmic.cachix.org/" ];
-      #       trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-      #     };
-      #   }
-      #   inputs.nixos-cosmic.nixosModules.default
-      # ])
       ++ (inputs.nixpkgs.lib.optionals (builtins.elem hostname [ "ash" ]) [
         inputs.nixos-uconsole.nixosModules.default
         inputs.nixos-uconsole.nixosModules."kernel-6.1-potatomania"

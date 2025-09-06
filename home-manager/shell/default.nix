@@ -1,6 +1,8 @@
 {
   pkgs,
+  platform,
   lib,
+  inputs,
   ...
 }:
 let
@@ -24,6 +26,7 @@ in
     with pkgs;
     [
       scripts.journal
+      inputs.nix-diff.packages.${platform}.default
     ]
     ++ lib.optional isLinux pkgs.pax-utils;
 
