@@ -389,10 +389,21 @@ in
           auto-completion = true;
           path-completion = true;
           auto-format = true;
+          end-of-line-diagnostics = "hint";
+          inline-diagnostics = {
+            cursor-line = "warning";
+          };
           smart-tab = {
             enable = false;
             supersede-menu = false;
           };
+          gutters.layout = [
+            "diff"
+            "diagnostics"
+            "line-numbers"
+            "spacer"
+          ];
+          gutters.line-numbers.min-width = 1;
           statusline = {
             left = [
               "mode"

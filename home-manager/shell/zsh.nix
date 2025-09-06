@@ -76,6 +76,7 @@ in
           name = "plugins/git";
           tags = [ "from:oh-my-zsh" ];
         }
+        { name = "multirious/zsh-helix-mode"; }
         { name = "zsh-users/zsh-autosuggestions"; }
         { name = "zsh-users/zsh-syntax-highlighting"; }
         { name = "zsh-users/zsh-completions"; }
@@ -87,7 +88,25 @@ in
       path = "${config.xdg.dataHome}/zsh/history";
     };
     initContent = ''
+      ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(
+        zhm_history_prev
+        zhm_history_next
+        zhm_prompt_accept
+        zhm_accept
+        zhm_accept_or_insert_newline
+      )
+      ZSH_AUTOSUGGEST_ACCEPT_WIDGETS+=(
+        zhm_move_right
+        zhm_clear_selection_move_right
+      )
+      ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(
+        zhm_move_next_word_start
+        zhm_move_next_word_end
+      )
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff5f00"
+      zhm-add-update-region-highlight-hook
+      zhm_wrap_widget fzf-completion zhm_fzf_completion
+      bindkey '^I' zhm_fzf_complete
       bindkey '^E' autosuggest-accept
       bindkey '^ ' forward-word
     '';
