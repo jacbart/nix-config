@@ -1,5 +1,5 @@
 diff --git a/helix-term/src/ui/editor.rs b/helix-term/src/ui/editor.rs
-index 9343d55d..ab085abc 100644
+index 9343d55d..50d05f52 100644
 --- a/helix-term/src/ui/editor.rs
 +++ b/helix-term/src/ui/editor.rs
 @@ -29,7 +29,7 @@
@@ -75,6 +75,15 @@ index 9343d55d..ab085abc 100644
                  if let Some((pos, view_id)) = pos_and_view(editor, row, column, true) {
                      let prev_view_id = view!(editor).id;
                      let doc = doc_mut!(editor, &view!(editor, view_id).doc);
+@@ -1511,7 +1528,7 @@ fn render(&mut self, area: Rect, surface: &mut Surface, cx: &mut Context) {
+         cx.editor.resize(editor_area);
+ 
+         if use_bufferline {
+-            Self::render_bufferline(cx.editor, area.with_height(1), surface);
++            self.render_bufferline(cx.editor, area.with_height(1), surface);
+         }
+ 
+         for (view, is_focused) in cx.editor.tree.views() {
 @@ -1606,6 +1623,48 @@ fn cursor(&self, _area: Rect, editor: &Editor) -> (Option<Position>, CursorKind)
      }
  }
