@@ -26,8 +26,7 @@ in
     with pkgs;
     [
       mdbook # markdown books
-      uv
-      ruff # python scripts
+      uv # python package/dep/runtime manager
       perl # Required for zplug
       htmlq # parser for html
       unstable.nh # nix helper cli
@@ -105,7 +104,7 @@ in
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff5f00"
       zhm-add-update-region-highlight-hook
       zhm_wrap_widget fzf-completion zhm_fzf_completion
-      bindkey '^I' zhm_fzf_complete
+      bindkey '^I' zhm_fzf_completion
       bindkey '^E' autosuggest-accept
       bindkey '^ ' forward-word
     '';

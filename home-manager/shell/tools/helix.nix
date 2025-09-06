@@ -26,6 +26,7 @@ in
       nil # nix language server
       nixfmt-rfc-style # nix formatter
       nodePackages.prettier # code formatter
+      ruff # python language server/formatter etc
       serpl # find and replace
       shfmt # Bash formatter
       stylua # lua formatter
@@ -177,6 +178,17 @@ in
               # buildFlags = [ "-tags=ignore" ];
             };
           };
+          rust-analyzer = {
+            command = "rust-analyzer";
+            config.inlayHints = {
+              bindingModeHints.enable = false;
+              closingBraceHints.minLines = 10;
+              closureReturnTypeHints.enable = "with_block";
+              discriminantHints.enable = "fieldless";
+              lifetimeElisionHints.enable = "skip_trivial";
+              typeHints.hideClosureInitialization = false;
+            };
+          };
         };
         language = [
           {
@@ -193,6 +205,16 @@ in
               ];
             };
             auto-format = true;
+          }
+          {
+            name = "css";
+            formatter = {
+              command = "prettier";
+              args = [
+                "--parser"
+                "css"
+              ];
+            };
           }
           {
             name = "go";
@@ -224,6 +246,16 @@ in
             auto-format = false;
           }
           {
+            name = "html";
+            formatter = {
+              command = "prettier";
+              args = [
+                "--parser"
+                "html"
+              ];
+            };
+          }
+          {
             name = "json";
             formatter = {
               command = "prettier";
@@ -253,14 +285,13 @@ in
             auto-format = true;
           }
           {
-            name = "nix";
-            auto-format = true;
-            file-types = [ "nix" ];
-            formatter.command = "nixfmt";
-            language-servers = [
-              "nil"
-              # "lsp-ai"
-            ];
+            name = "lua";
+            formatter = {
+              command = "stylua";
+              args = [
+                "-"
+              ];
+            };
           }
           {
             name = "markdown";
@@ -274,33 +305,48 @@ in
             auto-format = true;
           }
           {
-            name = "html";
-            formatter = {
-              command = "prettier";
-              args = [
-                "--parser"
-                "html"
-              ];
-            };
+            name = "nix";
+            auto-format = true;
+            file-types = [ "nix" ];
+            formatter.command = "nixfmt";
+            language-servers = [
+              "nil"
+            ];
           }
           {
-            name = "css";
+            name = "python";
+            file-types = [
+              "py"
+              "pyi"
+              "pyw"
+              "ptl"
+              "rpy"
+              "cpy"
+              "ipy"
+              "pyt"
+              { glob = ".python_history"; }
+              { glob = ".pythonrc"; }
+            ];
             formatter = {
-              command = "prettier";
+              command = "ruff";
               args = [
-                "--parser"
-                "css"
-              ];
-            };
-          }
-          {
-            name = "lua";
-            formatter = {
-              command = "stylua";
-              args = [
+                "format"
                 "-"
               ];
             };
+            auto-format = true;
+            language-servers = [ "ruff" ];
+          }
+          {
+            name = "rust";
+            scope = "source.rust";
+            roots = [
+              "Cargo.toml"
+              "Cargo.lock"
+            ];
+            file-types = [ "rs" ];
+            auto-format = true;
+            language-servers = [ "rust-analyzer" ];
           }
           {
             name = "sql";
@@ -314,20 +360,6 @@ in
             };
             auto-format = false;
             language-servers = [ "sqls" ];
-          }
-          {
-            name = "yaml";
-            file-types = [
-              "yaml"
-              "yml"
-            ];
-            auto-format = true;
-          }
-          {
-            name = "rust";
-            file-types = [ "rs" ];
-            auto-format = true;
-            language-servers = [ "rust-analyzer" ];
           }
           {
             name = "toml";
@@ -345,6 +377,14 @@ in
             file-types = [
               "tsx"
               "typescript"
+            ];
+            auto-format = true;
+          }
+          {
+            name = "yaml";
+            file-types = [
+              "yaml"
+              "yml"
             ];
             auto-format = true;
           }
