@@ -6,7 +6,7 @@
 let
   helix = pkgs.unstable.helix.overrideAttrs (prev: {
     patches = (prev.patches or [ ]) ++ [
-      ./patches/helix/clickable-buffer.patch
+      "./patches/helix/clickable-buffer.patch"
     ];
   });
 in
