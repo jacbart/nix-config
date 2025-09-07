@@ -1,36 +1,8 @@
-diff --git a/helix-term/src/commands/typed.rs b/helix-term/src/commands/typed.rs
-index 82cad838..20ae7b66 100644
---- a/helix-term/src/commands/typed.rs
-+++ b/helix-term/src/commands/typed.rs
-@@ -204,7 +204,7 @@ fn buffer_gather_paths_impl(editor: &mut Editor, args: Args) -> Vec<DocumentId>
-     document_ids
- }
- 
--fn buffer_close(
-+pub fn buffer_close(
-     cx: &mut compositor::Context,
-     args: Args,
-     event: PromptEvent,
 diff --git a/helix-term/src/ui/editor.rs b/helix-term/src/ui/editor.rs
-index 9343d55d..794bc8df 100644
+index 9343d55d..e3c4b98c 100644
 --- a/helix-term/src/ui/editor.rs
 +++ b/helix-term/src/ui/editor.rs
-@@ -1,5 +1,5 @@
- use crate::{
--    commands::{self, OnKeyCallback, OnKeyCallbackKind},
-+    commands::{self, buffer_close, OnKeyCallback, OnKeyCallbackKind},
-     compositor::{Component, Context, Event, EventResult},
-     events::{OnModeSwitch, PostCommand},
-     handlers::completion::CompletionItem,
-@@ -14,6 +14,7 @@
- };
- 
- use helix_core::{
-+    command_line::Args,
-     diagnostic::NumberOrString,
-     graphemes::{next_grapheme_boundary, prev_grapheme_boundary},
-     movement::Direction,
-@@ -29,7 +30,7 @@
+@@ -29,7 +29,7 @@
      graphics::{Color, CursorKind, Modifier, Rect, Style},
      input::{KeyEvent, MouseButton, MouseEvent, MouseEventKind},
      keyboard::{KeyCode, KeyModifiers},
@@ -39,7 +11,7 @@ index 9343d55d..794bc8df 100644
  };
  use std::{mem::take, num::NonZeroUsize, ops, path::PathBuf, rc::Rc};
  
-@@ -42,6 +43,7 @@ pub struct EditorView {
+@@ -42,6 +42,7 @@ pub struct EditorView {
      pub(crate) last_insert: (commands::MappableCommand, Vec<InsertEvent>),
      pub(crate) completion: Option<Completion>,
      spinners: ProgressSpinners,
@@ -47,7 +19,7 @@ index 9343d55d..794bc8df 100644
      /// Tracks if the terminal window is focused by reaction to terminal focus events
      terminal_focused: bool,
  }
-@@ -66,6 +68,7 @@ pub fn new(keymaps: Keymaps) -> Self {
+@@ -66,6 +67,7 @@ pub fn new(keymaps: Keymaps) -> Self {
              last_insert: (commands::MappableCommand::normal_mode, Vec::new()),
              completion: None,
              spinners: ProgressSpinners::default(),
@@ -55,7 +27,7 @@ index 9343d55d..794bc8df 100644
              terminal_focused: true,
          }
      }
-@@ -559,7 +562,7 @@ pub fn tabstop_highlights(doc: &Document, theme: &Theme) -> Option<OverlayHighli
+@@ -559,7 +561,7 @@ pub fn tabstop_highlights(doc: &Document, theme: &Theme) -> Option<OverlayHighli
      }
  
      /// Render bufferline at the top
@@ -64,7 +36,7 @@ index 9343d55d..794bc8df 100644
          let scratch = PathBuf::from(SCRATCH_BUFFER_NAME); // default filename to use for scratch buffer
          surface.clear_with(
              viewport,
-@@ -582,6 +585,8 @@ pub fn render_bufferline(editor: &Editor, viewport: Rect, surface: &mut Surface)
+@@ -582,6 +584,8 @@ pub fn render_bufferline(editor: &Editor, viewport: Rect, surface: &mut Surface)
          let mut x = viewport.x;
          let current_doc = view!(editor).doc;
  
@@ -73,7 +45,7 @@ index 9343d55d..794bc8df 100644
          for doc in editor.documents() {
              let fname = doc
                  .path()
-@@ -601,9 +606,14 @@ pub fn render_bufferline(editor: &Editor, viewport: Rect, surface: &mut Surface)
+@@ -601,9 +605,14 @@ pub fn render_bufferline(editor: &Editor, viewport: Rect, surface: &mut Surface)
              let used_width = viewport.x.saturating_sub(x);
              let rem_width = surface.area.width.saturating_sub(used_width);
  
@@ -88,7 +60,7 @@ index 9343d55d..794bc8df 100644
  
              if x >= surface.area.right() {
                  break;
-@@ -1125,6 +1135,14 @@ fn handle_mouse_event(
+@@ -1125,6 +1134,14 @@ fn handle_mouse_event(
              MouseEventKind::Down(MouseButton::Left) => {
                  let editor = &mut cxt.editor;
  
@@ -103,7 +75,7 @@ index 9343d55d..794bc8df 100644
                  if let Some((pos, view_id)) = pos_and_view(editor, row, column, true) {
                      let prev_view_id = view!(editor).id;
                      let doc = doc_mut!(editor, &view!(editor, view_id).doc);
-@@ -1177,6 +1195,43 @@ fn handle_mouse_event(
+@@ -1177,6 +1194,33 @@ fn handle_mouse_event(
                  EventResult::Ignored(None)
              }
  
@@ -112,42 +84,32 @@ index 9343d55d..794bc8df 100644
 +
 +                if is_bufferline_visible(editor) && row == 0 {
 +                    if let Some(buffer_info) = self.bufferline_info.get_clicked_buffer(column) {
-+                        // Get the current view
 +                        let view_id = editor.tree.focus;
 +                        let view = editor.tree.get(view_id);
-+
-+                        // Get the document (buffer) associated with the current view
 +                        let current_document_id = view.doc;
 +
-+                        // Remove the document from the editor's documents
-+                        editor.documents.remove(&buffer_info.document_id);
-+
-+                        if current_document_id == buffer_info.document_id {
-+                            // Update the view to show a different document or create a new scratch buffer
-+                            // This is a simplified example; the actual implementation is more complex.
-+                            if let Some(new_doc_id) = editor.documents.keys().next() {
-+                                // Switch to the next available document
++                        if current_document_id != buffer_info.document_id {
++                            if let Some(new_doc_id) = editor.documents.keys().last() {
++                                let view = editor.tree.get_mut(view_id);
++                                view.doc = *new_doc_id;
++                            } else if let Some(new_doc_id) = editor.documents.keys().next() {
 +                                let view = editor.tree.get_mut(view_id);
 +                                view.doc = *new_doc_id;
 +                            } else {
-+                                // No documents left, create a new scratch buffer
-+                                // let new_doc = editor.new_document(Document::default());
-+                                // let view = editor.tree.get_mut(view_id);
-+                                // view.doc = new_doc.id();
++                                return EventResult::Ignored(None);
 +                            }
 +                        }
++                        editor.documents.remove(&buffer_info.document_id);
 +                    }
-+
 +                    return EventResult::Consumed(None);
 +                }
-+
 +                EventResult::Ignored(None)
 +            }
 +
              MouseEventKind::Drag(MouseButton::Left) => {
                  let (view, doc) = current!(cxt.editor);
  
-@@ -1511,7 +1566,7 @@ fn render(&mut self, area: Rect, surface: &mut Surface, cx: &mut Context) {
+@@ -1511,7 +1555,7 @@ fn render(&mut self, area: Rect, surface: &mut Surface, cx: &mut Context) {
          cx.editor.resize(editor_area);
  
          if use_bufferline {
@@ -156,7 +118,7 @@ index 9343d55d..794bc8df 100644
          }
  
          for (view, is_focused) in cx.editor.tree.views() {
-@@ -1606,6 +1661,48 @@ fn cursor(&self, _area: Rect, editor: &Editor) -> (Option<Position>, CursorKind)
+@@ -1606,6 +1650,48 @@ fn cursor(&self, _area: Rect, editor: &Editor) -> (Option<Position>, CursorKind)
      }
  }
  
@@ -205,16 +167,3 @@ index 9343d55d..794bc8df 100644
  fn canonicalize_key(key: &mut KeyEvent) {
      if let KeyEvent {
          code: KeyCode::Char(_),
-diff --git a/helix-view/src/editor.rs b/helix-view/src/editor.rs
-index 27dc4523..b3cfaac6 100644
---- a/helix-view/src/editor.rs
-+++ b/helix-view/src/editor.rs
-@@ -1734,7 +1734,7 @@ pub fn switch(&mut self, id: DocumentId, action: Action) {
-     }
- 
-     /// Generate an id for a new document and register it.
--    fn new_document(&mut self, mut doc: Document) -> DocumentId {
-+    pub fn new_document(&mut self, mut doc: Document) -> DocumentId {
-         let id = self.next_document_id;
-         // Safety: adding 1 from 1 is fine, probably impossible to reach usize max
-         self.next_document_id =
