@@ -393,8 +393,14 @@ in
       settings = {
         theme = "gruvbox_dark_hard";
         keys.normal = {
+          L = [ ":later" ];
           A = {
-            g = [ ":run-shell-command git diff" ];
+            B = [ ":pipe base64 -w 0" ];
+            D = [ ":pipe base64 -d" ];
+            g = [ ":! git diff" ];
+            y = [ ":yank-diagnostic" ];
+            r = [ ":reload" ];
+            R = [ ":reload-all" ];
           };
           "{" = [
             "goto_prev_paragraph"
@@ -405,7 +411,7 @@ in
             "collapse_selection"
           ];
           space = {
-            B = ":echo %sh{git blame -L %{cursor_line},+1 %s{buffer_name}}";
+            B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
             i = ":toggle lsp.display-inlay-hints";
             W = ":write";
             esc = [

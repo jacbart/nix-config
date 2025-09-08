@@ -1,5 +1,5 @@
 diff --git a/helix-term/src/ui/editor.rs b/helix-term/src/ui/editor.rs
-index 9343d55d..e3c4b98c 100644
+index 9343d55d..6cdccd0a 100644
 --- a/helix-term/src/ui/editor.rs
 +++ b/helix-term/src/ui/editor.rs
 @@ -29,7 +29,7 @@
@@ -60,7 +60,7 @@ index 9343d55d..e3c4b98c 100644
  
              if x >= surface.area.right() {
                  break;
-@@ -1125,6 +1134,14 @@ fn handle_mouse_event(
+@@ -1125,6 +1134,13 @@ fn handle_mouse_event(
              MouseEventKind::Down(MouseButton::Left) => {
                  let editor = &mut cxt.editor;
  
@@ -68,14 +68,13 @@ index 9343d55d..e3c4b98c 100644
 +                    if let Some(buffer_info) = self.bufferline_info.get_clicked_buffer(column) {
 +                        editor.switch(buffer_info.document_id, helix_view::editor::Action::Replace);
 +                    }
-+
 +                    return EventResult::Consumed(None);
 +                }
 +
                  if let Some((pos, view_id)) = pos_and_view(editor, row, column, true) {
                      let prev_view_id = view!(editor).id;
                      let doc = doc_mut!(editor, &view!(editor, view_id).doc);
-@@ -1177,6 +1194,33 @@ fn handle_mouse_event(
+@@ -1177,6 +1193,37 @@ fn handle_mouse_event(
                  EventResult::Ignored(None)
              }
  
@@ -88,18 +87,22 @@ index 9343d55d..e3c4b98c 100644
 +                        let view = editor.tree.get(view_id);
 +                        let current_document_id = view.doc;
 +
-+                        if current_document_id != buffer_info.document_id {
-+                            if let Some(new_doc_id) = editor.documents.keys().last() {
-+                                let view = editor.tree.get_mut(view_id);
-+                                view.doc = *new_doc_id;
-+                            } else if let Some(new_doc_id) = editor.documents.keys().next() {
-+                                let view = editor.tree.get_mut(view_id);
-+                                view.doc = *new_doc_id;
-+                            } else {
-+                                return EventResult::Ignored(None);
-+                            }
++                        if editor.documents.len() <= 1 {
++                            return EventResult::Consumed(None);
 +                        }
-+                        editor.documents.remove(&buffer_info.document_id);
++
++                        if current_document_id == buffer_info.document_id {
++                            let new_doc_id = editor
++                                .documents
++                                .keys()
++                                .find(|&id| *id != current_document_id)
++                                .copied()
++                                .unwrap();
++
++                            let view = editor.tree.get_mut(view_id);
++                            view.doc = new_doc_id;
++                        }
++                        let _ = editor.close_document(buffer_info.document_id, false);
 +                    }
 +                    return EventResult::Consumed(None);
 +                }
@@ -109,7 +112,7 @@ index 9343d55d..e3c4b98c 100644
              MouseEventKind::Drag(MouseButton::Left) => {
                  let (view, doc) = current!(cxt.editor);
  
-@@ -1511,7 +1555,7 @@ fn render(&mut self, area: Rect, surface: &mut Surface, cx: &mut Context) {
+@@ -1511,12 +1558,16 @@ fn render(&mut self, area: Rect, surface: &mut Surface, cx: &mut Context) {
          cx.editor.resize(editor_area);
  
          if use_bufferline {
@@ -118,7 +121,18 @@ index 9343d55d..e3c4b98c 100644
          }
  
          for (view, is_focused) in cx.editor.tree.views() {
-@@ -1606,6 +1650,48 @@ fn cursor(&self, _area: Rect, editor: &Editor) -> (Option<Position>, CursorKind)
+-            let doc = cx.editor.document(view.doc).unwrap();
+-            self.render_view(cx.editor, doc, view, area, surface, is_focused);
++            match cx.editor.document(view.doc) {
++                None => (),
++                Some(doc) => {
++                    self.render_view(cx.editor, doc, view, area, surface, is_focused);
++                }
++            };
+         }
+ 
+         if config.auto_info {
+@@ -1606,6 +1657,48 @@ fn cursor(&self, _area: Rect, editor: &Editor) -> (Option<Position>, CursorKind)
      }
  }
  
