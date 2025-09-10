@@ -436,6 +436,7 @@ in
           color-modes = true;
           auto-pairs = true;
           bufferline = "always";
+          rulers = [ 95 ];
           auto-completion = true;
           path-completion = true;
           auto-format = true;
