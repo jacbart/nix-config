@@ -400,7 +400,11 @@ in
             g = [ ":! git diff" ];
             y = [ ":yank-diagnostic" ];
             r = [ ":reload" ];
-            R = [ ":reload-all" ];
+            R = [
+              ":lsp-stop"
+              ":reload-all"
+              ":lsp-restart"
+            ];
           };
           "{" = [
             "goto_prev_paragraph"
