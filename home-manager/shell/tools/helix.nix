@@ -31,6 +31,7 @@ in
       ruff # python language server/formatter etc
       serpl # find and replace
       shfmt # Bash formatter
+      steel # Embedded scheme interpreter in Rust
       stylua # lua formatter
       sqls # SQL language server
       taplo # TOML language server
