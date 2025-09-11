@@ -27,7 +27,7 @@
           hostname = "jackjrny.local";
           activate_on_startup = true;
           ips = [
-            "192.168.0.224"
+            "192.168.0.30"
             "100.127.159.128"
           ];
           port = 4242;
