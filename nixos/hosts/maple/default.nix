@@ -28,7 +28,7 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_15;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_12;
   ## ZFS
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.extraPools = [ "trunk" ];
