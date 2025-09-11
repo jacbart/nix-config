@@ -1,10 +1,12 @@
 {
   config,
   pkgs,
+  inputs,
+  platform,
   ...
 }:
 let
-  helix = pkgs.unstable.helix.overrideAttrs (prev: {
+  helix = inputs.helix.packages.${platform}.default.overrideAttrs (prev: {
     patches = (prev.patches or [ ]) ++ [
       ./patches/helix/clickable-buffer.patch
     ];

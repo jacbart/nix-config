@@ -30,7 +30,8 @@
     ff.url = "github:jacbart/ff";
     trees.url = "github:jacbart/trees";
 
-    nix-diff.url = "github:/Mic92/nix-diff-rs";
+    helix.url = "github:mattwparas/helix/steel-event-system";
+    nix-diff.url = "github:Mic92/nix-diff-rs";
     lan-mouse.url = "github:feschber/lan-mouse";
 
     hydra.url = "github:NixOS/hydra";

@@ -1,5 +1,5 @@
 diff --git a/helix-term/src/ui/editor.rs b/helix-term/src/ui/editor.rs
-index 9343d55d..6cdccd0a 100644
+index ec1f9cfc..3573810c 100644
 --- a/helix-term/src/ui/editor.rs
 +++ b/helix-term/src/ui/editor.rs
 @@ -29,7 +29,7 @@
@@ -27,7 +27,7 @@ index 9343d55d..6cdccd0a 100644
              terminal_focused: true,
          }
      }
-@@ -559,7 +561,7 @@ pub fn tabstop_highlights(doc: &Document, theme: &Theme) -> Option<OverlayHighli
+@@ -592,7 +594,7 @@ pub fn tabstop_highlights(doc: &Document, theme: &Theme) -> Option<OverlayHighli
      }
  
      /// Render bufferline at the top
@@ -36,7 +36,7 @@ index 9343d55d..6cdccd0a 100644
          let scratch = PathBuf::from(SCRATCH_BUFFER_NAME); // default filename to use for scratch buffer
          surface.clear_with(
              viewport,
-@@ -582,6 +584,8 @@ pub fn render_bufferline(editor: &Editor, viewport: Rect, surface: &mut Surface)
+@@ -615,6 +617,8 @@ pub fn render_bufferline(editor: &Editor, viewport: Rect, surface: &mut Surface)
          let mut x = viewport.x;
          let current_doc = view!(editor).doc;
  
@@ -45,7 +45,7 @@ index 9343d55d..6cdccd0a 100644
          for doc in editor.documents() {
              let fname = doc
                  .path()
-@@ -601,9 +605,14 @@ pub fn render_bufferline(editor: &Editor, viewport: Rect, surface: &mut Surface)
+@@ -634,9 +638,14 @@ pub fn render_bufferline(editor: &Editor, viewport: Rect, surface: &mut Surface)
              let used_width = viewport.x.saturating_sub(x);
              let rem_width = surface.area.width.saturating_sub(used_width);
  
@@ -60,7 +60,7 @@ index 9343d55d..6cdccd0a 100644
  
              if x >= surface.area.right() {
                  break;
-@@ -1125,6 +1134,13 @@ fn handle_mouse_event(
+@@ -1162,6 +1171,13 @@ fn handle_mouse_event(
              MouseEventKind::Down(MouseButton::Left) => {
                  let editor = &mut cxt.editor;
  
@@ -74,7 +74,7 @@ index 9343d55d..6cdccd0a 100644
                  if let Some((pos, view_id)) = pos_and_view(editor, row, column, true) {
                      let prev_view_id = view!(editor).id;
                      let doc = doc_mut!(editor, &view!(editor, view_id).doc);
-@@ -1177,6 +1193,37 @@ fn handle_mouse_event(
+@@ -1214,6 +1230,37 @@ fn handle_mouse_event(
                  EventResult::Ignored(None)
              }
  
@@ -112,7 +112,7 @@ index 9343d55d..6cdccd0a 100644
              MouseEventKind::Drag(MouseButton::Left) => {
                  let (view, doc) = current!(cxt.editor);
  
-@@ -1511,12 +1558,16 @@ fn render(&mut self, area: Rect, surface: &mut Surface, cx: &mut Context) {
+@@ -1564,7 +1611,7 @@ fn render(&mut self, area: Rect, surface: &mut Surface, cx: &mut Context) {
          cx.editor.resize(editor_area);
  
          if use_bufferline {
@@ -121,18 +121,7 @@ index 9343d55d..6cdccd0a 100644
          }
  
          for (view, is_focused) in cx.editor.tree.views() {
--            let doc = cx.editor.document(view.doc).unwrap();
--            self.render_view(cx.editor, doc, view, area, surface, is_focused);
-+            match cx.editor.document(view.doc) {
-+                None => (),
-+                Some(doc) => {
-+                    self.render_view(cx.editor, doc, view, area, surface, is_focused);
-+                }
-+            };
-         }
- 
-         if config.auto_info {
-@@ -1606,6 +1657,48 @@ fn cursor(&self, _area: Rect, editor: &Editor) -> (Option<Position>, CursorKind)
+@@ -1659,6 +1706,48 @@ fn cursor(&self, _area: Rect, editor: &Editor) -> (Option<Position>, CursorKind)
      }
  }
  
