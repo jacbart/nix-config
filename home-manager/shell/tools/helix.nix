@@ -1,10 +1,12 @@
 {
   config,
   pkgs,
+  inputs,
+  platform,
   ...
 }:
 let
-  helix = pkgs.unstable.helix.overrideAttrs (prev: {
+  helix = inputs.helix.packages.${platform}.default.overrideAttrs (prev: {
     patches = (prev.patches or [ ]) ++ [
       ./patches/helix/clickable-buffer.patch
     ];
@@ -29,6 +31,7 @@ in
       ruff # python language server/formatter etc
       serpl # find and replace
       shfmt # Bash formatter
+      steel # Embedded scheme interpreter in Rust
       stylua # lua formatter
       sqls # SQL language server
       taplo # TOML language server
