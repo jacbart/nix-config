@@ -2,15 +2,15 @@
   config,
   pkgs,
   inputs,
-  platform,
   ...
 }:
 let
-  helix = inputs.helix.packages.${platform}.default.overrideAttrs (prev: {
-    patches = (prev.patches or [ ]) ++ [
-      ./patches/helix/clickable-buffer.patch
-    ];
-  });
+  # helix = inputs.helix.packages.${pkgs.platform}.helix.overrideAttrs (prev: {
+  #   patches = (prev.patches or [ ]) ++ [
+  #     ./patches/helix/clickable-buffer.patch
+  #   ];
+  # });
+  helix = inputs.helix.packages.${pkgs.system}.helix.override { enableSteel = true; };
 in
 {
   # Home settings
@@ -31,9 +31,10 @@ in
       ruff # python language server/formatter etc
       serpl # find and replace
       shfmt # Bash formatter
+      sqls # SQL language server
       steel # Embedded scheme interpreter in Rust
       stylua # lua formatter
-      sqls # SQL language server
+      systemd-language-server # Language Server for Systemd unit files
       taplo # TOML language server
       terraform-ls # language server for [ .hcl, .tf, .tfvars, .koi, .jaws ]
       typescript-language-server # Typescript

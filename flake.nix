@@ -30,7 +30,7 @@
     ff.url = "github:jacbart/ff";
     trees.url = "github:jacbart/trees";
 
-    helix.url = "github:mattwparas/helix/steel-event-system";
+    helix.url = "github:jacbart/helix/steel-event-system";
     nix-diff.url = "github:Mic92/nix-diff-rs";
     lan-mouse.url = "github:feschber/lan-mouse";
 
