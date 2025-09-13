@@ -8,7 +8,7 @@
 ;; Specialized shell implementation, where % is a wildcard for the current file
 (define (shell cx . args)
   ;; Replace the % with the current file
-  (define expanded (map (lambda (x) (if (equal? x "%") (current-path cx) x)) args))
+  (define expanded (map (lambda (x) (if (equal? x "%") (current-path) x)) args))
   (apply helix.run-shell-command expanded))
 
 ;;@doc

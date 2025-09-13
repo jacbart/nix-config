@@ -411,6 +411,7 @@ in
             r = [ ":reload" ];
             R = [
               ":lsp-stop"
+              ":config-reload"
               ":reload-all"
               ":lsp-restart"
             ];
