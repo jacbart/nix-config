@@ -43,6 +43,8 @@ in
     ];
 
     file."${config.xdg.configHome}/sqls/config.yml".text = builtins.readFile ./sqls.yaml;
+    file."${config.xdg.configHome}/helix/helix.scm".text = builtins.readFile ./helix/helix.scm;
+    file."${config.xdg.configHome}/helix/init.scm".text = builtins.readFile ./helix/init.scm;
 
     sessionVariables = {
       EDITOR = "hx";
@@ -153,6 +155,7 @@ in
           #     ];
           #   };
           # };
+
           gopls = {
             command = "gopls";
             config = {
@@ -162,7 +165,6 @@ in
               staticcheck = true;
               verboseOutput = true;
               analyses = {
-                # fieldalignment = true;
                 nilness = true;
                 unusedparams = true;
                 unusedwrite = true;
@@ -182,6 +184,7 @@ in
               # buildFlags = [ "-tags=ignore" ];
             };
           };
+
           rust-analyzer = {
             command = "rust-analyzer";
             config.inlayHints = {
@@ -194,6 +197,7 @@ in
             };
           };
         };
+
         language = [
           {
             name = "bash";
@@ -394,6 +398,7 @@ in
           }
         ];
       };
+
       settings = {
         theme = "gruvbox_dark_hard";
         keys.normal = {
@@ -419,6 +424,8 @@ in
             "collapse_selection"
           ];
           space = {
+            t = ":open-term";
+            T = ":hide-terminal";
             B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
             i = ":toggle lsp.display-inlay-hints";
             W = ":write";
@@ -428,6 +435,7 @@ in
             ];
           };
         };
+
         editor = {
           shell = [
             "zsh"

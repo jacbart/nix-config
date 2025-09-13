@@ -66,6 +66,7 @@ in
     zplug = {
       enable = true;
       plugins = [
+        { name = "multirious/zsh-helix-mode"; }
         {
           name = "plugins/fzf";
           tags = [ "from:oh-my-zsh" ];
@@ -74,7 +75,6 @@ in
           name = "plugins/git";
           tags = [ "from:oh-my-zsh" ];
         }
-        { name = "multirious/zsh-helix-mode"; }
         { name = "zsh-users/zsh-autosuggestions"; }
         { name = "zsh-users/zsh-syntax-highlighting"; }
         { name = "zsh-users/zsh-completions"; }

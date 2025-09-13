@@ -1,5 +1,5 @@
 {
-  description = "NixOS and Home Manager Configuration";
+  description = "jacbart's NixOS and Home Manager Configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     # You can access packages and modules from different nixpkgs revs at the same time.
