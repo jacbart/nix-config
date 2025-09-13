@@ -440,7 +440,7 @@ in
           color-modes = true;
           auto-pairs = true;
           bufferline = "always";
-          rulers = [ 95 ];
+          rulers = [ 100 ];
           auto-completion = true;
           path-completion = true;
           auto-format = true;
