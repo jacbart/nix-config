@@ -10,7 +10,7 @@ let
   #     ./patches/helix/clickable-buffer.patch
   #   ];
   # });
-  helix = inputs.helix.packages.${pkgs.system}.helix.override { enableSteel = true; };
+  helix = inputs.helix.packages.${pkgs.system}.helix;
 in
 {
   # Home settings
