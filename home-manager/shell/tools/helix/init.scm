@@ -4,6 +4,8 @@
 (when (equal? (command-line) '("hx"))
   (show-splash))
 
+(require (prefix-in navigator. "hx-tmux-navigator/navigator.scm"))
+
 (provide open-term
          new-term
          kill-active-terminal

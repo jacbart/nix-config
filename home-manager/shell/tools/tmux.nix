@@ -75,6 +75,13 @@
       unbind F
       bind-key F new-window -n "broot" -c "#{pane_current_path}" "broot"
 
+      is_hx="ps -o state= -o comm= -t '#{pane_tty}' \
+        | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?hx?x?|fzf)(diff)?$'"
+      bind-key -n 'C-h' if-shell "$is_hx" 'send-keys C-h'  'select-pane -L'
+      bind-key -n 'C-j' if-shell "$is_hx" 'send-keys C-j'  'select-pane -D'
+      bind-key -n 'C-k' if-shell "$is_hx" 'send-keys C-k'  'select-pane -U'
+      bind-key -n 'C-l' if-shell "$is_hx" 'send-keys C-l'  'select-pane -R'
+
       run '~/.tmux/plugins/tpm/tpm'
     '';
   };

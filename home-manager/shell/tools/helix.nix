@@ -435,6 +435,16 @@ in
               "keep_primary_selection"
             ];
           };
+          C-h = [ ":navigator.move-left" ];
+          C-l = [ ":navigator.move-right" ];
+          C-j = [ ":navigator.move-down" ];
+          C-k = [ ":navigator.move-up" ];
+        };
+        keys.insert = {
+          C-h = [ ":navigator.move-left" ];
+          C-l = [ ":navigator.move-right" ];
+          C-j = [ ":navigator.move-down" ];
+          C-k = [ ":navigator.move-up" ];
         };
 
         editor = {
