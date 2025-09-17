@@ -15,7 +15,7 @@
     ../../services/docker.nix
     ../../services/bluetooth.nix
     ../../services/pipewire.nix
-    ../../services/minio-client.nix
+    # ../../services/minio-client.nix
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
     ./virt.nix
