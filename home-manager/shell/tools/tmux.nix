@@ -4,6 +4,7 @@
     # Install tmux
     packages = [
       pkgs.tmux
+      pkgs.gitu # TUI Git client inspired by Magit
     ];
 
     # Fetch the tmux plugin manager (tpm) and place it in the ~/.tmux/plugins/tpm directory
@@ -60,16 +61,20 @@
       bind-key T command-prompt -p "(rename-pane)" -I "#T" "select-pane -T '%%'"
 
       # Journal
-      unbind e
-      bind-key e display-popup -E "tmux new-session -A -s 'Journal' 'cd $HOME/workspace/journal && hx $(date "+%Y-%m-%d").md'"
+      unbind j
+      bind-key j display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Journal' 'mkdir -p $HOME/workspace/journal && cd $HOME/workspace/journal && hx $(date "+%Y-%m-%d").md'"
 
       # Simple shell popup
-      unbind P
-      bind-key P display-popup -E "tmux new-session -A -s 'Shell' '$SHELL'"
+      unbind e
+      bind-key e display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Shell' '$SHELL'"
+
+      # gitu popup
+      unbind g
+      bind-key g display-popup -y 55% -h 75% -d '#{pane_current_path}' -E "tmux new-session -A -s 'git' 'gitu'"
 
       # Broot popup
       unbind f
-      bind-key f display-popup -y 45 -h 80% -E -d '#{pane_current_path}' "tmux new-session -A -s 'Files' 'broot --no-tree'"
+      bind-key f display-popup -y 55% -h 75% -E -d '#{pane_current_path}' "tmux new-session -A -s 'Files' 'broot --no-tree'"
 
       # Broot new window
       unbind F

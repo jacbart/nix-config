@@ -18,6 +18,7 @@ in
     packages = with pkgs; [
       # personally most used lsp's for helix
       delve # golang debugger
+      delta # A syntax-highlighting pager for git, diff, grep, and blame output
       dockerfile-language-server-nodejs # dockerfile language server
       gofumpt # go formatter
       gopls # go language server
@@ -40,6 +41,7 @@ in
       typescript-language-server # Typescript
       vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
       yaml-language-server # YAML language server
+      yazi # file manager
     ];
 
     file."${config.xdg.configHome}/sqls/config.yml".text = builtins.readFile ./sqls.yaml;
