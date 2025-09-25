@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./lan-mouse.nix
     # ../../apps/wezterm.nix
     # ../../apps/zed-editor.nix
   ];
