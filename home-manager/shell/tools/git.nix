@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     commitizen
+    delta
   ];
   programs = {
     gh = {

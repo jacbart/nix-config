@@ -12,7 +12,7 @@ in
   imports = [
     ./tools # cli/tui tools or services
     ./zsh.nix # zsh config
-    ./nushell.nix # nu shell config
+    # ./nushell.nix # nu shell config
   ];
 
   programs.carapace = {

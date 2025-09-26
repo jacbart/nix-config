@@ -404,11 +404,12 @@ in
       settings = {
         theme = "gruvbox_dark_hard";
         keys.normal = {
+          # forward in undo history
           L = [ ":later" ];
+          # code actions
           A = {
             B = [ ":pipe base64 -w 0" ];
             D = [ ":pipe base64 -d" ];
-            g = [ ":! git diff" ];
             y = [ ":yank-diagnostic" ];
             r = [ ":reload" ];
             R = [
@@ -417,6 +418,11 @@ in
               ":reload-all"
               ":lsp-restart"
             ];
+          };
+          # git shortcuts
+          G = {
+            d = [ ":! git diff" ];
+            D = [ ":! git diff --cached" ];
           };
           "{" = [
             "goto_prev_paragraph"
@@ -427,8 +433,6 @@ in
             "collapse_selection"
           ];
           space = {
-            t = ":open-term";
-            T = ":hide-terminal";
             B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
             i = ":toggle lsp.display-inlay-hints";
             W = ":write";

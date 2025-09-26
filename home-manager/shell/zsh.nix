@@ -53,6 +53,8 @@ in
       hm = "home-manager";
       less = "bat --paging=always";
       more = "bat --paging=always";
+      gd = "git diff | delta";
+      gdc = "git diff --cached | delta";
       gs = "git status";
       ga = "git add";
       gcm = "git commit -m";
