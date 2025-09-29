@@ -418,6 +418,12 @@ in
               ":reload-all"
               ":lsp-restart"
             ];
+            # f = [
+            #   ":create-file-tree"
+            #   ":navigator.move-left"
+            #   ":unfold-all-one-level"
+            # ];
+            # F = [ ":open-file-from-picker" ];
           };
           # git shortcuts
           G = {
@@ -429,6 +435,14 @@ in
             "collapse_selection"
           ];
           "}" = [
+            "goto_next_paragraph"
+            "collapse_selection"
+          ];
+          "C-[" = [
+            "goto_prev_paragraph"
+            "collapse_selection"
+          ];
+          "C-]" = [
             "goto_next_paragraph"
             "collapse_selection"
           ];

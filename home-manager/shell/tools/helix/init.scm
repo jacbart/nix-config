@@ -3,6 +3,7 @@
 (when (equal? (command-line) '("hx"))
   (show-splash))
 
+(require "mattwparas-helix-package/cogs/file-tree.scm")
 (require (prefix-in navigator. "hx-tmux-navigator/navigator.scm"))
 
 ;;;;;;;;;;;;;;;;;;;;;;; Keybindings ;;;;;;;;;;;;;;;;;;;;;;;

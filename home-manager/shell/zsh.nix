@@ -53,6 +53,7 @@ in
       hm = "home-manager";
       less = "bat --paging=always";
       more = "bat --paging=always";
+      g = "gitu";
       gd = "git diff | delta";
       gdc = "git diff --cached | delta";
       gs = "git status";
