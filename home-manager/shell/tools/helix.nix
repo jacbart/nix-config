@@ -418,12 +418,12 @@ in
               ":reload-all"
               ":lsp-restart"
             ];
+            z = [ ":pipe zsh" ];
             # f = [
             #   ":create-file-tree"
             #   ":navigator.move-left"
             #   ":unfold-all-one-level"
             # ];
-            # F = [ ":open-file-from-picker" ];
           };
           # git shortcuts
           G = {
@@ -449,7 +449,8 @@ in
           space = {
             B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
             i = ":toggle lsp.display-inlay-hints";
-            W = ":write";
+            W = ":write-all";
+            J = ":insert-output echo \"# $(date '+%%Y-%%m-%%d')\"";
             esc = [
               "collapse_selection"
               "keep_primary_selection"
