@@ -29,6 +29,7 @@
     jaws.url = "github:jacbart/jaws";
     ff.url = "github:jacbart/ff";
     trees.url = "github:jacbart/trees";
+    rest.url = "github:taybart/rest";
 
     helix.url = "github:jacbart/helix/steel-event-system";
     nix-diff.url = "github:Mic92/nix-diff-rs";
