@@ -8,7 +8,7 @@
 let
   # ff = inputs.ff.packages.${pkgs.stdenv.hostPlatform.system}.default;
   # trees = inputs.trees.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  rest = inputs.rest.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  # rest = inputs.rest.packages.${pkgs.stdenv.hostPlatform.system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
   modPath = [
     "$HOME/.local/bin"
@@ -32,7 +32,8 @@ in
       perl # Required for zplug
       htmlq # parser for html
       unstable.nh # nix helper cli
-      rest # rest easy
+      # rest # rest easy
+      stu # TUI explorer application for Amazon S3
       # trees # git worktrees simplified
       # ff # not so percise search
     ]
