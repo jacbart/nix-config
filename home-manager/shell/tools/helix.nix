@@ -410,6 +410,8 @@ in
           A = {
             B = [ ":pipe base64 -w 0" ];
             D = [ ":pipe base64 -d" ];
+            c = [ ":pipe view_cert" ];
+            C = [ ":pipe base64 -d | view_cert" ];
             y = [ ":yank-diagnostic" ];
             r = [ ":reload" ];
             R = [

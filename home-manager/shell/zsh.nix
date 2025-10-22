@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  inputs,
+  # inputs,
   ...
 }:
 let
@@ -44,7 +44,7 @@ in
     sessionVariables = {
       ZSHDATADIR = "${config.xdg.dataHome}/zsh";
       PATH = "${modPathStr}";
-      TERM = "xterm-ghostty";
+      TERM = "xterm-256color";
     };
     shellAliases = {
       cd = "z";
@@ -54,6 +54,7 @@ in
       la = "eza --long --all";
       tree = "eza --long --tree --level=3";
       cat = "bat --paging=never --style=plain";
+      vc = "view_cert";
       hm = "home-manager";
       less = "bat --paging=always";
       more = "bat --paging=always";
@@ -111,7 +112,9 @@ in
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff5f00"
       zhm-add-update-region-highlight-hook
       zhm_wrap_widget fzf-completion zhm_fzf_completion
+      zhm_wrap_widget fzf-history-widget zhm_fzf_history_widget 
       bindkey '^I' zhm_fzf_completion
+      bindkey '^R' zhm_fzf_history_widget
       bindkey '^E' autosuggest-accept
       bindkey '^ ' forward-word
     '';

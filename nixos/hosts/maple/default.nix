@@ -10,7 +10,7 @@
     ../../services/tailscale.nix
     ../../services/fail2ban.nix
     ../distributed-builds.nix
-    ../../apps/ghostty.nix # enable xterm-ghostty
+    # ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/minio.nix
     # ../../services/mobilizon.nix
     ../../services/kiwix-serve.nix

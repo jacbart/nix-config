@@ -7,7 +7,7 @@
   imports = [
     (modulesPath + "/virtualisation/digital-ocean-image.nix")
     ../../security/acme-proxy.nix
-    ../../apps/ghostty.nix # enable xterm-ghostty
+    # ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/fail2ban.nix
     ../../services/tailscale.nix
     ./nginx.nix
