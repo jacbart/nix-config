@@ -58,7 +58,8 @@ in
       hm = "home-manager";
       less = "bat --paging=always";
       more = "bat --paging=always";
-      g = "gitu";
+      g = "eval $(ssh-agent -s -t 3600 -k) && ssh-add ~/.ssh/id_git && gitu";
+      secure = "eval $(ssh-agent -s -t 3600 -k) && ssh-add ~/.ssh/id_git";
       gd = "git diff | delta";
       gdc = "git diff --cached | delta";
       gs = "git status";
@@ -76,16 +77,16 @@ in
       plugins = [
         { name = "multirious/zsh-helix-mode"; }
         {
-          name = "plugins/fzf";
-          tags = [ "from:oh-my-zsh" ];
-        }
-        {
           name = "plugins/git";
           tags = [ "from:oh-my-zsh" ];
         }
         { name = "zsh-users/zsh-autosuggestions"; }
         { name = "zsh-users/zsh-syntax-highlighting"; }
         { name = "zsh-users/zsh-completions"; }
+        {
+          name = "plugins/fzf";
+          tags = [ "from:oh-my-zsh" ];
+        }
       ];
     };
     history = {
