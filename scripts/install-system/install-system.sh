@@ -50,11 +50,14 @@ sudo nixos-install --no-root-password --flake ".#$TARGET_HOST"
 
 # Rsync nix-config to the target install and set the remote origin to SSH.
 sudo rsync -a "$HOME/" "/mnt/home/$TARGET_USER/"
+# setup host ssh keys
+sudo mkdir -p "/mnt/etc/ssh"
+sudo rsync -a "/etc/ssh/" "/mnt/etc/ssh/"
 # setup age key
 sudo mkdir -p "/mnt/var/lib/sops-nix"
-# sudo cp "/root/.config/sops/age/key.txt" "/mnt/var/lib/sops-nix/key.txt"
+sudo cp "/var/lib/sops-nix/key.txt" "/mnt/var/lib/sops-nix/key.txt"
 # setup ssh for root
 sudo mkdir -p "/mnt/root/.ssh"
 sudo rsync -a "/root/.ssh/" "/mnt/root/.ssh/"
 
-gum style --foreground 2 "Reboot the machine"
+gum style --foreground 2 "Add pub age key to sops secret, then Reboot the machine"
