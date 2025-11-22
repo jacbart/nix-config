@@ -60,4 +60,4 @@ sudo cp "/var/lib/sops-nix/key.txt" "/mnt/var/lib/sops-nix/key.txt"
 sudo mkdir -p "/mnt/root/.ssh"
 sudo rsync -a "/root/.ssh/" "/mnt/root/.ssh/"
 
-gum style --foreground 2 "Add pub age key to sops secret, then Reboot the machine"
+gum style --foreground 2 "Test with \`sudo nixos-enter\` or Reboot the machine to run the system"

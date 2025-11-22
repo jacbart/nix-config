@@ -16,7 +16,10 @@
     ../../services/pipewire.nix
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
+    ../../apps/steam.nix
   ];
+
+  services.flatpak.enable = true;
 
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = [ username ];
