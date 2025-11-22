@@ -14,12 +14,11 @@
     ../../services/docker.nix
     ../../services/bluetooth.nix
     ../../services/pipewire.nix
-    ../../services/tailscale.nix
+    ../../services/flatpak.nix
+    # ../../services/tailscale.nix
     ../../apps/ghostty.nix
     ../../apps/steam.nix
   ];
-
-  services.flatpak.enable = true;
 
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = [ username ];
@@ -27,6 +26,10 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   boot = {
+    kernel.sysctl = {
+      "vm.max_map_count" = 16777216;
+      "fs.file-max" = 524288;
+    };
     initrd = {
       availableKernelModules = [
         "nvme"
@@ -45,8 +48,18 @@
     resumeDevice = "/dev/disk/by-label/nixos";
   };
 
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 8 * 1024; # 8 GB Swap
+    }
+  ];
+  zramSwap = {
+    enable = true;
+    memoryMax = 16 * 1024 * 1024 * 1024; # 16 GB ZRAM
+  };
+
   networking = {
-    # hostId = "";
     hosts = {
       "127.0.0.2" = [
         "cork.meep.sh"
@@ -57,5 +70,5 @@
   networking.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
