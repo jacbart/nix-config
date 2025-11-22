@@ -1,9 +1,5 @@
-{ config, inputs, ... }:
+{ config, ... }:
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.common.gpu.nvidia
-  ];
-
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
