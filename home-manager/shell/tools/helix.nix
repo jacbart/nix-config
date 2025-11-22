@@ -404,6 +404,8 @@ in
       settings = {
         theme = "gruvbox_dark_hard";
         keys.normal = {
+          # go back if select too many lines with x
+          X = [ "select_line_above" ];
           # forward in undo history
           L = [ ":later" ];
           # code actions
