@@ -39,9 +39,7 @@
                   "-f"
                   "--data raid0"
                   "--metadata raid0"
-                  builtins.elemAt
-                  disks
-                  1
+                  (builtins.elemAt disks 1)
                 ];
                 subvolumes = {
                   "/root" = {
@@ -97,7 +95,6 @@
       nvme1n1 = {
         type = "disk";
         device = builtins.elemAt disks 1;
-        size = "100%";
         content = {
           type = "btrfs";
         };

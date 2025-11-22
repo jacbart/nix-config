@@ -37,41 +37,24 @@ if [ ! -e "nixos/hosts/$TARGET_HOST/disks.nix" ]; then
   exit 1
 fi
 
-# List available disks
-DISKS_JSON=$(lsblk --json)
-DISKS=$(echo "$DISKS_JSON" | jq -r '.blockdevices[] | select(.type=="disk") | .name')
-gum style --foreground 2 "Available disks:"
+sudo true
 
-# Use gum to ask the user to select a disk
-SELECTED_DISK=$(echo "$DISKS" | gum choose)
-gum style --foreground 3 "Selected disk: /dev/$SELECTED_DISK"
+sudo nix run github:nix-community/disko \
+  --extra-experimental-features "nix-command flakes" \
+  --no-write-lock-file \
+  -- \
+  --mode zap_create_mount \
+  "nixos/hosts/$TARGET_HOST/disks.nix"
 
-gum style --foreground 3 "WARNING! The disks in $TARGET_HOST are about to get wiped"
-gum style --foreground 3 "NixOS will be re-installed"
-gum style --foreground 3 "This is a destructive operation"
-echo
+sudo nixos-install --no-root-password --flake ".#$TARGET_HOST"
 
-if gum confirm "Are you sure?"; then
-  sudo true
+# Rsync nix-config to the target install and set the remote origin to SSH.
+sudo rsync -a --delete "$HOME/" "/mnt/home/$TARGET_USER/"
+# setup age key
+sudo mkdir -p "/mnt/var/lib/sops-nix"
+sudo mv "/root/.config/sops/age/key.txt" "/mnt/var/lib/sops-nix/key.txt"
+# setup ssh for root
+sudo mkdir -p "/mnt/root/.ssh"
+sudo rsync -a --delete "/root/.ssh/" "/mnt/root/.ssh/"
 
-  sudo nix run github:nix-community/disko \
-    --extra-experimental-features "nix-command flakes" \
-    --no-write-lock-file \
-    -- \
-    --mode zap_create_mount \
-    --arg disks "[ \"/dev/$SELECTED_DISK\" ]" \
-    "hosts/$TARGET_HOST/disks.nix"
-
-  sudo nixos-install --no-root-password --flake ".#$TARGET_HOST"
-
-  # Rsync nix-config to the target install and set the remote origin to SSH.
-  sudo rsync -a --delete "$HOME/" "/mnt/home/$TARGET_USER/"
-  # setup age key
-  sudo mkdir -p "/mnt/var/lib/sops-nix"
-  sudo mv "/root/.config/sops/age/key.txt" "/mnt/var/lib/sops-nix/key.txt"
-  # setup ssh for root
-  sudo mkdir -p "/mnt/root/.ssh"
-  sudo rsync -a --delete "/root/.ssh/" "/mnt/root/.ssh/"
-
-  gum style --foreground 2 "Reboot the machine"
-fi
+gum style --foreground 2 "Reboot the machine"
