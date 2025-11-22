@@ -9,6 +9,7 @@
   imports = [
     (import ./disks.nix { })
     ../../hardware/systemd-boot.nix
+    ../../hardware/nvidia-3060ti.nix
     ../../services/qemu.nix
     ../../services/docker.nix
     ../../services/bluetooth.nix
@@ -25,14 +26,12 @@
   boot = {
     initrd = {
       availableKernelModules = [
-        "xhci_pci"
         "nvme"
         "usb_storage"
-        "sd_mod"
       ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
     kernelParams = [
       "resume_offset=533760"

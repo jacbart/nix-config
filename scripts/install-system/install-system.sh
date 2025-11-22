@@ -49,12 +49,12 @@ sudo nix run github:nix-community/disko \
 sudo nixos-install --no-root-password --flake ".#$TARGET_HOST"
 
 # Rsync nix-config to the target install and set the remote origin to SSH.
-sudo rsync -a --delete "$HOME/" "/mnt/home/$TARGET_USER/"
+sudo rsync -a "$HOME/" "/mnt/home/$TARGET_USER/"
 # setup age key
 sudo mkdir -p "/mnt/var/lib/sops-nix"
-sudo mv "/root/.config/sops/age/key.txt" "/mnt/var/lib/sops-nix/key.txt"
+# sudo cp "/root/.config/sops/age/key.txt" "/mnt/var/lib/sops-nix/key.txt"
 # setup ssh for root
 sudo mkdir -p "/mnt/root/.ssh"
-sudo rsync -a --delete "/root/.ssh/" "/mnt/root/.ssh/"
+sudo rsync -a "/root/.ssh/" "/mnt/root/.ssh/"
 
 gum style --foreground 2 "Reboot the machine"
