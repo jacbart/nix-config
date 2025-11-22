@@ -138,7 +138,7 @@
   networking = {
     hostName = hostname;
     useDHCP = lib.mkDefault true;
-    networkmanager.enable = lib.mkDefault true;
+    # networkmanager.enable = lib.mkDefault true;
   };
 
   nixpkgs = {

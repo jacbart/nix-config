@@ -8,9 +8,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
-
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -58,87 +55,93 @@
       inherit (nixpkgs) lib;
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
       stateVersion = lib.mkDefault "25.05";
-      libx = import ./lib { inherit inputs outputs stateVersion; };
+      utils = import ./lib { inherit inputs outputs stateVersion; };
     in
     {
       # home-manager switch -b backup --flake $HOME/workspace/personal/nix-config
       # nix build .#homeConfigurations."meep@boojum".activationPackage
       homeConfigurations = {
         # Workstations
-        "meep@boojum" = libx.mkHome {
+        "meep@boojum" = utils.mkHome {
           hostname = "boojum";
           username = "meep";
           desktop = "cosmic";
         };
-        "jackbartlett@jackjrny" = libx.mkHome {
+        "jackbartlett@jackjrny" = utils.mkHome {
           hostname = "jackjrny";
           username = "jackbartlett";
           platform = "aarch64-darwin";
         };
-        # VMs
-        "nixos@cork" = libx.mkHome {
+        "meep@cork" = utils.mkHome {
           hostname = "cork";
-          username = "nixos";
+          username = "meep";
+          desktop = "cosmic";
         };
         # Handhelds
-        "meep@ash" = libx.mkHome {
+        "meep@ash" = utils.mkHome {
           hostname = "ash";
           username = "meep";
           desktop = "phosh";
           platform = "aarch64-linux";
         };
         # Servers
-        "ratatoskr@maple" = libx.mkHome {
+        "ratatoskr@maple" = utils.mkHome {
           hostname = "maple";
           username = "ratatoskr";
           platform = "aarch64-linux";
         };
-        "jack@unicron" = libx.mkHome {
+        "jack@unicron" = utils.mkHome {
           hostname = "unicron";
           username = "jack";
         };
-        "ratatoskr@oak" = libx.mkHome {
+        "ratatoskr@oak" = utils.mkHome {
           hostname = "oak";
           username = "ratatoskr";
         };
       };
       nixosConfigurations = {
         # .iso images
-        #  - nix build .#nixosConfigurations.{iso-console|iso-desktop}.config.system.build.isoImage
+        # sh: nix build .#nixosConfigurations.iso.config.system.build.isoImage
+        iso = utils.mkHost {
+          hostname = "iso";
+          username = "nixos";
+          installer = inputs.nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
+        };
+
         # Workstations
         #  - sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
         #  - nix build .#nixosConfigurations.boojum.config.system.build.toplevel
-        boojum = libx.mkHost {
+        boojum = utils.mkHost {
           hostname = "boojum";
           username = "meep";
           desktop = "cosmic";
         };
-        # VMs
-        # cork = libx.mkHost {
-        #   hostname = "cork";
-        #   username = "nixos";
-        # };
+        cork = utils.mkHost {
+          hostname = "cork";
+          username = "meep";
+          desktop = "cosmic";
+        };
         # Handhelds
-        ash = libx.mkHost {
+        ash = utils.mkHost {
           hostname = "ash";
           username = "meep";
           desktop = "phosh";
           platform = "aarch64-linux";
         };
         # Servers
-        maple = libx.mkHost {
+        maple = utils.mkHost {
           hostname = "maple";
           username = "ratatoskr";
           platform = "aarch64-linux";
         };
-        oak = libx.mkHost {
+        oak = utils.mkHost {
           hostname = "oak";
           username = "ratatoskr";
         };
       };
 
       # Devshell for bootstrapping; acessible via 'nix develop'
-      devShells = libx.forAllSystems (
+      devShells = utils.forAllSystems (
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
@@ -147,13 +150,13 @@
       );
 
       # nix fmt
-      formatter = libx.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+      formatter = utils.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
       # Custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
 
       # Custom packages; acessible via 'nix build', 'nix shell', etc
-      packages = libx.forAllSystems (
+      packages = utils.forAllSystems (
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};

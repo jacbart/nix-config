@@ -1,49 +1,15 @@
 # NixOS & Home Manager Configurations
 
-<!--toc:start-->
-- [NixOS & Home Manager Configurations](#nixos-home-manager-configurations)
-  - [Structure](#structure)
-  - [Installing](#installing)
-  - [Applying Changes](#applying-changes)
-    - [NixOS](#nixos)
-    - [Home Manager](#home-manager)
-    - [ISO](#iso)
-<!--toc:end-->
-
-> inspiration from [wimpysworld nix-config](https://github.com/wimpysworld/nix-config)
-
-[NixOS]: https://nixos.org/
-[Home Manager]: https://github.com/nix-community/home-manager
-
-This repository contains a [Nix Flake](https://nixos.wiki/wiki/Flakes) for configuring my computers and home environment. These are the computers this configuration currently manages:
-
 | Hostname |     OEM     |            Model             |  OS   |   Role   | Status            |
 | :------- | :---------: | :--------------------------: | :---: | :------: | :---------------- |
 | boojum   |   Lenovo    |        Thinkpad Gen 6        | NixOS |  Laptop  | working           |
 | jryjack  |    Apple    |     Macbook Pro M1 2020      | MacOS |  Laptop  | home manager      |
-| cork     |    WSL2     |              VM              |       |    VM    | tbn               |
+| cork     |             |            Tower             | NixOS | Desktop  | tbn               |
 | maple    |   Pine64    |         [RockPro64]          | NixOS |   NAS    | working           |
 | ash      | Clockworkpi | [uConsole (CM-4, 4G Module)] | NixOS | Handheld | partially working |
 
 [uConsole (CM-4, 4G Module)]: https://www.clockworkpi.com/uconsole
 [RockPro64]: https://www.pine64.org/rockpro64/
-
-## Structure
-
-- [home-manager]: Home Manager configurations
-  - Sane defaults for shell and desktop
-- [nixos]: NixOS configurations
-  - Includes discrete hardware configurations which leverage the [NixOS Hardware modules](https://github.com/NixOS/nixos-hardware) via [flake.nix].
-- [scripts]: Helper scripts
-- [shells]: [Nix shell environments using direnv](https://determinate.systems/posts/nix-direnv) for infrequently used tools
-
-The [nixos] and [home-manager] are a collection of composited configurations based on the arguments defined in [flake.nix].
-
-[nixos]: ./nixos
-[home-manager]: ./home-manager
-[flake.nix]: ./flake.nix
-[scripts]: ./scripts
-[shells]: ./shells
 
 ## Installing
 

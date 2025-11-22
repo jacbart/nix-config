@@ -23,6 +23,7 @@
 
   environment.systemPackages = [
     pkgs.uucp
+    pkgs.gparted
   ];
 
   boot = {

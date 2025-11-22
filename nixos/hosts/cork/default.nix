@@ -1,16 +1,21 @@
 {
-  nixos-wsl,
-  stateVersion,
+  config,
+  lib,
   ...
 }:
 {
-  imports = [
-    (nixos-wsl.nixosModules.default {
-      system.stateVersion = stateVersion;
-      wsl.enable = true;
-      wsl.defaultUser = "meep";
-    })
-  ];
+  networking = {
+    # hostId = "";
+    hosts = {
+      "127.0.0.2" = [
+        "cork.meep.sh"
+        "remote.dev"
+      ];
+    };
+  };
+  networking.useDHCP = lib.mkDefault true;
 
-  nixpkgs.config.allowBroken = true;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
 }
