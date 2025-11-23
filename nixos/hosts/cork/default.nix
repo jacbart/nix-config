@@ -15,7 +15,7 @@
     ../../services/bluetooth.nix
     ../../services/pipewire.nix
     ../../services/flatpak.nix
-    # ../../services/tailscale.nix
+    ../../services/tailscale.nix
     ../../apps/ghostty.nix
     ../../apps/steam.nix
   ];

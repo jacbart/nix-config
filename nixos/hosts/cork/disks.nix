@@ -1,7 +1,10 @@
 {
   disks ? [
-    "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S59ANMFNB18932X"
-    "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S59ANMFNB18929M"
+    "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S59ANMFNB18932X" # 1tb
+    "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S59ANMFNB18929M" # 1tb
+    "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_1TB_S3PJNF0JA06227T" # 1tb
+    "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_120GB_S21TNXAG816661J" # 120Gb
+    "/dev/disk/by-id/ata-HGST_HUS724040ALE640_PK2334PEGMRMPT" # 4tb
   ],
   ...
 }:
@@ -66,14 +69,6 @@
                       "noatime"
                     ];
                   };
-                  "/persist" = {
-                    mountpoint = "/persist";
-                    mountOptions = [
-                      "subvol=persist"
-                      "compress=zstd"
-                      "noatime"
-                    ];
-                  };
                   "/log" = {
                     mountpoint = "/var/log";
                     mountOptions = [
@@ -81,10 +76,6 @@
                       "compress=zstd"
                       "noatime"
                     ];
-                  };
-                  "/swap" = {
-                    mountpoint = "/swap";
-                    swap.swapfile.size = "16G";
                   };
                 };
               };
@@ -99,9 +90,58 @@
           type = "btrfs";
         };
       };
+      sda = {
+        type = "disk";
+        device = builtins.elemAt disks 2;
+        content = {
+          type = "gpt";
+          partitions = {
+            root = {
+              size = "100%";
+              label = "extra";
+              content = {
+                type = "btrfs";
+                extraArgs = [
+                  "-L"
+                  "extra"
+                  "-f"
+                  "--data raid0"
+                  "--metadata raid0"
+                  (builtins.elemAt disks 3)
+                  (builtins.elemAt disks 4)
+                ];
+                subvolumes = {
+                  "/persist" = {
+                    mountpoint = "/persist";
+                    mountOptions = [
+                      "subvol=persist"
+                      "compress=zstd"
+                      "noatime"
+                    ];
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+      sdb = {
+        type = "disk";
+        device = builtins.elemAt disks 3;
+        content = {
+          type = "btrfs";
+        };
+      };
+      sdc = {
+        type = "disk";
+        device = builtins.elemAt disks 4;
+        content = {
+          type = "btrfs";
+        };
+      };
     };
   };
 
-  fileSystems."/persist".neededForBoot = true;
+  # fileSystems."/persist".neededForBoot = true;
   fileSystems."/var/log".neededForBoot = true;
 }
