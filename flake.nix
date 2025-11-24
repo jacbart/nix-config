@@ -75,7 +75,7 @@
         "meep@cork" = utils.mkHome {
           hostname = "cork";
           username = "meep";
-          desktop = "cosmic";
+          desktop = "kde";
         };
         # Handhelds
         "meep@ash" = utils.mkHome {
@@ -119,7 +119,7 @@
         cork = utils.mkHost {
           hostname = "cork";
           username = "meep";
-          desktop = "cosmic";
+          desktop = "kde";
         };
         # Handhelds
         ash = utils.mkHost {
