@@ -11,7 +11,7 @@
 {
   disko.devices = {
     disk = {
-      nvme0n1 = {
+      nvme1n1 = {
         type = "disk";
         device = builtins.elemAt disks 0;
         content = {
@@ -80,10 +80,22 @@
                 };
               };
             };
+            swap = {
+              size = "30G";
+              label = "swap";
+              type = "8200"; # Linux swap
+              content = {
+                type = "swap";
+                mountOptions = [
+                  "defaults"
+                  "pri=0"
+                ];
+              };
+            };
           };
         };
       };
-      nvme1n1 = {
+      nvme0n1 = {
         type = "disk";
         device = builtins.elemAt disks 1;
         content = {
@@ -142,6 +154,5 @@
     };
   };
 
-  # fileSystems."/persist".neededForBoot = true;
   fileSystems."/var/log".neededForBoot = true;
 }

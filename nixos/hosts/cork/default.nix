@@ -20,6 +20,7 @@
     ../../apps/steam.nix
   ];
 
+  # virtualisation
   programs.virt-manager.enable = true;
   users.groups.libvirtd.members = [ username ];
   virtualisation.libvirtd.enable = true;
@@ -37,6 +38,7 @@
       ];
       kernelModules = [ ];
     };
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
     kernelParams = [
@@ -44,22 +46,27 @@
       "nosgx"
     ];
     supportedFilesystems = lib.mkForce [ "btrfs" ];
-    kernelPackages = pkgs.linuxPackages_latest;
     resumeDevice = "/dev/disk/by-label/nixos";
   };
 
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 8 * 1024; # 8 GB Swap
-    }
-  ];
+  # filesystem
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+    fileSystems = [ "/" ];
+  };
+
+  # swap - swap partition declared in disks.nix
   zramSwap = {
     enable = true;
     memoryMax = 16 * 1024 * 1024 * 1024; # 16 GB ZRAM
+    swapDevices = 2;
+    priority = 10;
   };
 
+  # networking
   networking = {
+    useDHCP = lib.mkDefault true;
     hosts = {
       "127.0.0.2" = [
         "cork.meep.sh"
@@ -67,8 +74,8 @@
       ];
     };
   };
-  networking.useDHCP = lib.mkDefault true;
 
+  # cpu
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
