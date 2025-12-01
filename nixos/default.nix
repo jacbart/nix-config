@@ -94,9 +94,9 @@
       fira-go
       joypixels
       liberation_ttf
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       source-serif
-      ubuntu_font_family
+      ubuntu-classic
       work-sans
     ];
 

@@ -26,7 +26,7 @@
   services.displayManager.defaultSession = "xfce";
   services = {
     blueman.enable = false;
-    gnome.gnome-keyring.enable = true;
+    gnome.gnome-keyring.enable = false;
     pipewire = {
       enable = true;
       alsa = {

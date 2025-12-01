@@ -4,7 +4,7 @@
   ...
 }:
 let
-  isX86_64 = pkgs.system == "x86_64-linux";
+  isX86_64 = pkgs.stdenv.hostPlatform.system == "x86_64-linux";
 in
 {
   # programs.nix-ld.dev.libraries =

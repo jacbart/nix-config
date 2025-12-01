@@ -10,7 +10,7 @@ let
   #     ./patches/helix/clickable-buffer.patch
   #   ];
   # });
-  helix = inputs.helix.packages.${pkgs.system}.helix;
+  helix = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix;
 in
 {
   # Home settings
