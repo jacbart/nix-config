@@ -16,7 +16,7 @@
     };
     git = {
       enable = true;
-      extraConfig = {
+      settings = {
         user = {
           name = "jacbart";
           email = "jacbart@gmail.com";
