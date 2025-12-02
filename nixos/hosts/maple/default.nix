@@ -10,9 +10,7 @@
     ../../services/tailscale.nix
     ../../services/fail2ban.nix
     ../distributed-builds.nix
-    # ../../apps/ghostty.nix # enable xterm-ghostty
     ../../services/minio.nix
-    # ../../services/mobilizon.nix
     ../../services/kiwix-serve.nix
     ../../services/postgresql.nix
     ../../services/zitadel.nix
@@ -43,7 +41,7 @@
 
   # fstab
   fileSystems."/" = {
-    device = "/dev/disk/by-label/NIXOS_SD";
+    device = "/dev/disk/by-partlabel/nixos";
     fsType = "ext4";
   };
   swapDevices = [
@@ -57,7 +55,7 @@
   # zram Swap
   zramSwap = {
     enable = true;
-    priority = 10;
+    priority = 100;
     memoryPercent = 100;
   };
 
