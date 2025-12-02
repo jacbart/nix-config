@@ -8,6 +8,7 @@
     (modulesPath + "/virtualisation/digital-ocean-image.nix")
     ../../security/acme-proxy.nix
     ../../services/fail2ban.nix
+    # ../../services/anubis.nix
     ../../services/tailscale.nix
     ./nginx.nix
   ];
