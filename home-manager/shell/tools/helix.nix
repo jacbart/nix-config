@@ -19,7 +19,7 @@ in
       # personally most used lsp's for helix
       delve # golang debugger
       delta # A syntax-highlighting pager for git, diff, grep, and blame output
-      dockerfile-language-server-nodejs # dockerfile language server
+      dockerfile-language-server # dockerfile language server
       gofumpt # go formatter
       gopls # go language server
       jdt-language-server # java lsp
