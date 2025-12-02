@@ -38,7 +38,7 @@ in
       enable = true;
       https = true;
       hostName = "${subdomain}.${domain}";
-      package = pkgs.nextcloud31;
+      package = pkgs.nextcloud32;
       maxUploadSize = "10G";
       configureRedis = true;
       database.createLocally = false; # Use postgresql.nix to create db
@@ -65,12 +65,12 @@ in
       appstoreEnable = true;
       autoUpdateApps.enable = false;
       extraApps = {
-        inherit (pkgs.unstable.nextcloud31Packages.apps)
+        inherit (pkgs.unstable.nextcloud32Packages.apps)
           bookmarks
           calendar
           contacts
           cookbook
-          maps
+          # maps
           music
           notes
           # notify_push
