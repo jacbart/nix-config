@@ -409,7 +409,7 @@ in
           # forward in undo history
           L = [ ":later" ];
           # code actions
-          A = {
+          ";" = {
             B = [ ":pipe base64 -w 0" ];
             D = [ ":pipe base64 -d" ];
             c = [ ":pipe view_cert" ];
@@ -447,16 +447,16 @@ in
               "keep_primary_selection"
             ];
           };
-          C-h = [ ":! tmux select-pane -L" ];
-          C-l = [ ":! tmux select-pane -R" ];
-          C-j = [ ":! tmux select-pane -D" ];
-          C-k = [ ":! tmux select-pane -U" ];
+          C-h = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -L" ];
+          C-l = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -R" ];
+          C-j = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -D" ];
+          C-k = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -U" ];
         };
         keys.insert = {
-          C-h = [ ":! tmux select-pane -L" ];
-          C-l = [ ":! tmux select-pane -R" ];
-          C-j = [ ":! tmux select-pane -D" ];
-          C-k = [ ":! tmux select-pane -U" ];
+          C-h = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -L" ];
+          C-l = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -R" ];
+          C-j = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -D" ];
+          C-k = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -U" ];
         };
 
         editor = {
