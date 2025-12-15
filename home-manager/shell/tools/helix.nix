@@ -183,7 +183,7 @@ in
                 parameterNames = true;
                 rangeVariableTypes = true;
               };
-              # buildFlags = [ "-tags=ignore" ];
+              # buildFlags = [ "-tags=client,server" ];
             };
           };
 
@@ -447,32 +447,16 @@ in
               "keep_primary_selection"
             ];
           };
-          # C-h = [ ":navigator.move-left" ];
-          # C-l = [ ":navigator.move-right" ];
-          # C-j = [ ":navigator.move-down" ];
-          # C-k = [ ":navigator.move-up" ];
-          C-j = [
-            "collapse_selection"
-            "goto_next_tabstop"
-          ];
-          C-k = [
-            "collapse_selection"
-            "goto_prev_tabstop"
-          ];
+          C-h = [ ":! tmux select-pane -L" ];
+          C-l = [ ":! tmux select-pane -R" ];
+          C-j = [ ":! tmux select-pane -D" ];
+          C-k = [ ":! tmux select-pane -U" ];
         };
         keys.insert = {
-          # C-h = [ ":navigator.move-left" ];
-          # C-l = [ ":navigator.move-right" ];
-          # C-j = [ ":navigator.move-down" ];
-          # C-k = [ ":navigator.move-up" ];
-          C-j = [
-            "collapse_selection"
-            "goto_next_tabstop"
-          ];
-          C-k = [
-            "collapse_selection"
-            "goto_prev_tabstop"
-          ];
+          C-h = [ ":! tmux select-pane -L" ];
+          C-l = [ ":! tmux select-pane -R" ];
+          C-j = [ ":! tmux select-pane -D" ];
+          C-k = [ ":! tmux select-pane -U" ];
         };
 
         editor = {
