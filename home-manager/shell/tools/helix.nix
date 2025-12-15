@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }:
 let
@@ -10,7 +9,8 @@ let
   #     ./patches/helix/clickable-buffer.patch
   #   ];
   # });
-  helix = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix;
+  # helix = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix;
+  helix = pkgs.unstable.helix;
 in
 {
   # Home settings
@@ -45,8 +45,8 @@ in
     ];
 
     file."${config.xdg.configHome}/sqls/config.yml".text = builtins.readFile ./sqls.yaml;
-    file."${config.xdg.configHome}/helix/helix.scm".text = builtins.readFile ./helix/helix.scm;
-    file."${config.xdg.configHome}/helix/init.scm".text = builtins.readFile ./helix/init.scm;
+    # file."${config.xdg.configHome}/helix/helix.scm".text = builtins.readFile ./helix/helix.scm;
+    # file."${config.xdg.configHome}/helix/init.scm".text = builtins.readFile ./helix/init.scm;
 
     sessionVariables = {
       EDITOR = "hx";
@@ -423,11 +423,6 @@ in
               ":lsp-restart"
             ];
             z = [ ":pipe zsh" ];
-            # f = [
-            #   ":create-file-tree"
-            #   ":navigator.move-left"
-            #   ":unfold-all-one-level"
-            # ];
           };
           # git shortcuts
           G = {
@@ -442,14 +437,6 @@ in
             "goto_next_paragraph"
             "collapse_selection"
           ];
-          "C-[" = [
-            "goto_prev_paragraph"
-            "collapse_selection"
-          ];
-          "C-]" = [
-            "goto_next_paragraph"
-            "collapse_selection"
-          ];
           space = {
             B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
             i = ":toggle lsp.display-inlay-hints";
@@ -460,16 +447,32 @@ in
               "keep_primary_selection"
             ];
           };
-          C-h = [ ":navigator.move-left" ];
-          C-l = [ ":navigator.move-right" ];
-          C-j = [ ":navigator.move-down" ];
-          C-k = [ ":navigator.move-up" ];
+          # C-h = [ ":navigator.move-left" ];
+          # C-l = [ ":navigator.move-right" ];
+          # C-j = [ ":navigator.move-down" ];
+          # C-k = [ ":navigator.move-up" ];
+          C-j = [
+            "collapse_selection"
+            "goto_next_tabstop"
+          ];
+          C-k = [
+            "collapse_selection"
+            "goto_prev_tabstop"
+          ];
         };
         keys.insert = {
-          C-h = [ ":navigator.move-left" ];
-          C-l = [ ":navigator.move-right" ];
-          C-j = [ ":navigator.move-down" ];
-          C-k = [ ":navigator.move-up" ];
+          # C-h = [ ":navigator.move-left" ];
+          # C-l = [ ":navigator.move-right" ];
+          # C-j = [ ":navigator.move-down" ];
+          # C-k = [ ":navigator.move-up" ];
+          C-j = [
+            "collapse_selection"
+            "goto_next_tabstop"
+          ];
+          C-k = [
+            "collapse_selection"
+            "goto_prev_tabstop"
+          ];
         };
 
         editor = {
@@ -483,7 +486,7 @@ in
           popup-border = "all";
           color-modes = true;
           auto-pairs = true;
-          bufferline = "always";
+          # bufferline = "always";
           rulers = [ 100 ];
           auto-completion = true;
           path-completion = true;

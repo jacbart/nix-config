@@ -28,7 +28,7 @@
     trees.url = "github:jacbart/trees";
     rest.url = "github:taybart/rest";
 
-    helix.url = "github:jacbart/helix/steel-event-system";
+    # helix.url = "github:jacbart/helix/steel-event-system";
     nix-diff.url = "github:Mic92/nix-diff-rs";
     lan-mouse.url = "github:feschber/lan-mouse";
 
