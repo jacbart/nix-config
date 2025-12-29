@@ -10,6 +10,7 @@
     (import ./disks.nix { })
     ../../hardware/systemd-boot.nix
     ../../hardware/nvidia-3060ti.nix
+    ../../hardware/hardwarekey.nix
     ../../services/qemu.nix
     ../../services/docker.nix
     ../../services/bluetooth.nix
