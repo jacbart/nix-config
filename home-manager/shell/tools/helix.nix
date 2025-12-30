@@ -183,7 +183,7 @@ in
                 parameterNames = true;
                 rangeVariableTypes = true;
               };
-              # buildFlags = [ "-tags=client,server" ];
+              # buildFlags = [ "-tags=stub" ];
             };
           };
 
@@ -405,29 +405,29 @@ in
         theme = "gruvbox_dark_hard";
         keys.normal = {
           # go back if select too many lines with x
-          X = [ "select_line_above" ];
+          X = "select_line_above";
           # forward in undo history
-          L = [ ":later" ];
+          L = ":later";
           # code actions
           ";" = {
-            B = [ ":pipe base64 -w 0" ];
-            D = [ ":pipe base64 -d" ];
-            c = [ ":pipe view_cert" ];
-            C = [ ":pipe base64 -d | view_cert" ];
-            y = [ ":yank-diagnostic" ];
-            r = [ ":reload" ];
+            B = ":pipe base64 -w 0";
+            D = ":pipe base64 -d";
+            c = ":pipe view_cert";
+            C = ":pipe base64 -d | view_cert";
+            y = ":yank-diagnostic";
+            r = ":reload";
             R = [
               ":lsp-stop"
               ":config-reload"
               ":reload-all"
               ":lsp-restart"
             ];
-            z = [ ":pipe zsh" ];
+            z = ":pipe zsh";
           };
           # git shortcuts
           G = {
-            d = [ ":! git diff" ];
-            D = [ ":! git diff --cached" ];
+            d = ":! git diff";
+            D = ":! git diff --cached";
           };
           "{" = [
             "goto_prev_paragraph"
@@ -447,16 +447,16 @@ in
               "keep_primary_selection"
             ];
           };
-          C-h = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -L" ];
-          C-l = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -R" ];
-          C-j = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -D" ];
-          C-k = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -U" ];
+          C-h = ":! [ -n \"$TMUX\" ] && tmux select-pane -L";
+          C-l = ":! [ -n \"$TMUX\" ] && tmux select-pane -R";
+          C-j = ":! [ -n \"$TMUX\" ] && tmux select-pane -D";
+          C-k = ":! [ -n \"$TMUX\" ] && tmux select-pane -U";
         };
         keys.insert = {
-          C-h = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -L" ];
-          C-l = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -R" ];
-          C-j = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -D" ];
-          C-k = [ ":! [ -n \"$TMUX\" ] && tmux select-pane -U" ];
+          C-h = ":! [ -n \"$TMUX\" ] && tmux select-pane -L";
+          C-l = ":! [ -n \"$TMUX\" ] && tmux select-pane -R";
+          C-j = ":! [ -n \"$TMUX\" ] && tmux select-pane -D";
+          C-k = ":! [ -n \"$TMUX\" ] && tmux select-pane -U";
         };
 
         editor = {
