@@ -71,6 +71,7 @@ in
       rebuild-home = lib.mkDefault "nh home switch -b backup $HOME/workspace/personal/nix-config --ask";
       rebuild-host = lib.mkDefault "nh os switch $HOME/workspace/personal/nix-config --ask";
       rebuild-lock = lib.mkDefault "pushd $HOME/workspace/personal/nix-config && nix flake update && popd";
+      lm = "if [ $(systemctl --user is-active lan-mouse) = \"inactive\" ]; then systemctl --user start lan-mouse && echo active; else systemctl --user stop lan-mouse && echo inactive; fi";
     };
     zplug = {
       enable = true;
