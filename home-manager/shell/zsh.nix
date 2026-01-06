@@ -55,11 +55,13 @@ in
       tree = "eza --long --tree --level=3";
       cat = "bat --paging=never --style=plain";
       vc = "view_cert";
+      oc = "opencode --agent plan .";
       hm = "home-manager";
       less = "bat --paging=always";
+      lm = "if [ $(systemctl --user is-active lan-mouse) = \"inactive\" ]; then systemctl --user start lan-mouse && echo active; else systemctl --user stop lan-mouse && echo inactive; fi";
       more = "bat --paging=always";
-      g = "eval $(ssh-agent -s -t 3600 -k) && ssh-add ~/.ssh/id_git && gitu";
       secure = "eval $(ssh-agent -s -t 3600 -k) && ssh-add ~/.ssh/id_git";
+      g = "gitu";
       gd = "git diff | delta";
       gdc = "git diff --cached | delta";
       gs = "git status";
@@ -67,11 +69,8 @@ in
       gcm = "git commit -m";
       clock = "while :; do printf '\r%s ' \"$(date +%r)\"; sleep 1 ; done";
       nix-gc = lib.mkDefault "sudo nix-collect-garbage --delete-older-than 10d && nix-collect-garbage --delete-older-than 10d";
-      rebuild-all = lib.mkDefault "nh os switch $HOME/workspace/personal/nix-config --ask && nh home switch -b backup $HOME/workspace/personal/nix-config --ask";
       rebuild-home = lib.mkDefault "nh home switch -b backup $HOME/workspace/personal/nix-config --ask";
       rebuild-host = lib.mkDefault "nh os switch $HOME/workspace/personal/nix-config --ask";
-      rebuild-lock = lib.mkDefault "pushd $HOME/workspace/personal/nix-config && nix flake update && popd";
-      lm = "if [ $(systemctl --user is-active lan-mouse) = \"inactive\" ]; then systemctl --user start lan-mouse && echo active; else systemctl --user stop lan-mouse && echo inactive; fi";
     };
     zplug = {
       enable = true;

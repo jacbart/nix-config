@@ -8,6 +8,7 @@
     ./git.nix
     ./helix.nix
     # ./neofetch.nix
+    ./opencode.nix
     ./tmux.nix
     ./zoxide.nix
   ];

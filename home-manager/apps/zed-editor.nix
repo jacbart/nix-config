@@ -23,5 +23,5 @@
   # fix weird nix bin name
   # programs.zsh.shellAliases = { zed = "zeditor"; };
   # add in settings.json
-  home.file."${config.xdg.configHome}/zed/settings.json".text = builtins.readFile ./zed-editor.json;
+  # home.file."${config.xdg.configHome}/zed/settings.json".text = builtins.readFile ./zed-editor.json;
 }

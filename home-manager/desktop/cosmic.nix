@@ -6,6 +6,7 @@
 {
   imports = [
     ../apps/rustdesk.nix
+    ../apps/zed-editor.nix
     ../apps/lan-mouse.nix # virtual kvm
     ../services/nextcloud-client.nix
   ];
