@@ -61,6 +61,7 @@ in
       lm = "if [ $(systemctl --user is-active lan-mouse) = \"inactive\" ]; then systemctl --user start lan-mouse && echo active; else systemctl --user stop lan-mouse && echo inactive; fi";
       more = "bat --paging=always";
       secure = "eval $(ssh-agent -s -t 3600 -k) && ssh-add ~/.ssh/id_git";
+      hist = "fc -RI";
       g = "gitu";
       gd = "git diff | delta";
       gdc = "git diff --cached | delta";
@@ -71,6 +72,9 @@ in
       nix-gc = lib.mkDefault "sudo nix-collect-garbage --delete-older-than 10d && nix-collect-garbage --delete-older-than 10d";
       rebuild-home = lib.mkDefault "nh home switch -b backup $HOME/workspace/personal/nix-config --ask";
       rebuild-host = lib.mkDefault "nh os switch $HOME/workspace/personal/nix-config --ask";
+    };
+    shellGlobalAliases = {
+      UUID = "$(uuidgen | tr -d \\n)";
     };
     zplug = {
       enable = true;
@@ -94,19 +98,20 @@ in
       expireDuplicatesFirst = true;
       path = "${config.xdg.dataHome}/zsh/history";
     };
+    setOptions = [
+      "INC_APPEND_HISTORY"
+      "HIST_IGNORE_DUPS"
+      "HIST_IGNORE_SPACE"
+    ];
     initContent = ''
-      # 0 -- vanilla completion (abc => abc)
-      # 1 -- smart case completion (abc => Abc)
-      # 2 -- word flex completion (abc => A-big-Car)
-      # 3 -- full flex completion (abc => ABraCadabra)
+      autoload -Uz edit-command-line
+      zle -N edit-command-line
+      bindkey -M hxins 'v' edit-command-line
       zstyle ':completion:*' matcher-list "" \
         'm:{a-z\-}={A-Z\_}' \
         'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
         'r:|?=** m:{a-z\-}={A-Z\_}'
       zstyle ':completion:*' menu select
-      setopt inc_append_history
-      setopt hist_ignore_dups
-      setopt hist_ignore_space
       ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(
         zhm_history_prev
         zhm_history_next
@@ -130,7 +135,6 @@ in
       bindkey '^R' zhm_fzf_history_widget
       bindkey '^E' autosuggest-accept
       bindkey '^ ' forward-word
-      bindkey '^S' fc -RI
     '';
   };
 }
