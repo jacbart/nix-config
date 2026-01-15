@@ -90,11 +90,23 @@ in
       ];
     };
     history = {
-      size = 100000;
+      size = 500000;
       expireDuplicatesFirst = true;
       path = "${config.xdg.dataHome}/zsh/history";
     };
     initContent = ''
+      # 0 -- vanilla completion (abc => abc)
+      # 1 -- smart case completion (abc => Abc)
+      # 2 -- word flex completion (abc => A-big-Car)
+      # 3 -- full flex completion (abc => ABraCadabra)
+      zstyle ':completion:*' matcher-list "" \
+        'm:{a-z\-}={A-Z\_}' \
+        'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+        'r:|?=** m:{a-z\-}={A-Z\_}'
+      zstyle ':completion:*' menu select
+      setopt inc_append_history
+      setopt hist_ignore_dups
+      setopt hist_ignore_space
       ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(
         zhm_history_prev
         zhm_history_next
@@ -118,6 +130,7 @@ in
       bindkey '^R' zhm_fzf_history_widget
       bindkey '^E' autosuggest-accept
       bindkey '^ ' forward-word
+      bindkey '^S' fc -RI
     '';
   };
 }
