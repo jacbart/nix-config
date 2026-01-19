@@ -106,7 +106,7 @@ in
     initContent = ''
       autoload -Uz edit-command-line
       zle -N edit-command-line
-      bindkey -M hxins 'v' edit-command-line
+      bindkey -M hxins '^X' edit-command-line
       zstyle ':completion:*' matcher-list "" \
         'm:{a-z\-}={A-Z\_}' \
         'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
