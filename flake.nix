@@ -72,6 +72,11 @@
           username = "jackbartlett";
           platform = "aarch64-darwin";
         };
+        "jackbartlett@sycamore" = utils.mkHome {
+          hostname = "sycamore";
+          username = "jackbartlett";
+          platform = "aarch64-darwin";
+        };
         "meep@cork" = utils.mkHome {
           hostname = "cork";
           username = "meep";
