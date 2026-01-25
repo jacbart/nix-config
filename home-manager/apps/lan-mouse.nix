@@ -27,11 +27,10 @@ in
       clients = [
         {
           position = "left";
-          hostname = "jackjrny.local";
+          hostname = "sycamore";
           activate_on_startup = true;
           ips = [
             "192.168.0.30"
-            "100.127.159.128"
           ];
           port = 4242;
         }
