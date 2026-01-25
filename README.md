@@ -4,7 +4,8 @@
 | :------- | :---------: | :--------------------------: | :---: | :------: | :---------------- |
 | boojum   |   Lenovo    |        Thinkpad Gen 6        | NixOS |  Laptop  | working           |
 | jryjack  |    Apple    |     Macbook Pro M1 2020      | MacOS |  Laptop  | home manager      |
-| cork     |             |            Tower             | NixOS | Desktop  | tbn               |
+| sycamore |    Apple    |     Macbook Pro M5 2020      | MacOS |  Laptop  | home manager      |
+| cork     |             |            Tower             | NixOS | Desktop  | working           |
 | maple    |   Pine64    |         [RockPro64]          | NixOS |   NAS    | working           |
 | ash      | Clockworkpi | [uConsole (CM-4, 4G Module)] | NixOS | Handheld | partially working |
 
