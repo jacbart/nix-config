@@ -27,7 +27,7 @@ in
       clients = [
         {
           position = "left";
-          hostname = "sycamore";
+          hostname = "sycamore.local";
           activate_on_startup = true;
           ips = [
             "192.168.0.30"
