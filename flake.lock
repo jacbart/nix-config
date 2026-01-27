@@ -20,9 +20,7 @@
     },
     "disko": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1768923567,
@@ -77,9 +75,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1768949235,
@@ -100,9 +96,7 @@
       "inputs": {
         "nix": "nix",
         "nix-eval-jobs": "nix-eval-jobs",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1769212608,
@@ -212,10 +206,7 @@
     },
     "nix-formatter-pack": {
       "inputs": {
-        "nixpkgs": [
-          "jaws",
-          "nixpkgs"
-        ],
+        "nixpkgs": ["jaws", "nixpkgs"],
         "nmd": "nmd",
         "nmt": "nmt"
       },
@@ -251,12 +242,8 @@
     },
     "nixos-uconsole": {
       "inputs": {
-        "nixos-hardware": [
-          "nixos-hardware"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixos-hardware": ["nixos-hardware"],
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1756613602,
@@ -553,10 +540,7 @@
     },
     "rust-overlay_2": {
       "inputs": {
-        "nixpkgs": [
-          "lan-mouse",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["lan-mouse", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1752806774,
@@ -610,9 +594,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1769469829,
@@ -630,10 +612,7 @@
     },
     "treefmt-nix": {
       "inputs": {
-        "nixpkgs": [
-          "nix-diff",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["nix-diff", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1768158989,

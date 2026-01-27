@@ -27,6 +27,7 @@ in
       # lsp-ai # code completion LSP for LLM's
       markdown-oxide # markdown language server
       nil # nix language server
+      nixd # nix lsp
       nixfmt-rfc-style # nix formatter
       nodePackages.prettier # code formatter
       ruff # python language server/formatter etc

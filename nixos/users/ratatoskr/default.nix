@@ -12,15 +12,10 @@ in
   imports = lib.optionals (desktop != null) [
   ];
 
-  environment.systemPackages =
-    with pkgs;
-    [
-      age
-      scripts.add-zim
-    ]
-    ++ lib.optionals (desktop != null) [
-      unstable.firefox
-    ];
+  environment.systemPackages = with pkgs; [
+    age
+    scripts.add-zim
+  ];
 
   sops.secrets.ratatoskr-password.neededForUsers = true;
   users.mutableUsers = false;
