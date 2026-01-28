@@ -11,6 +11,19 @@ let
   # });
   # helix = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.helix;
   helix = pkgs.unstable.helix;
+  # custom-lsp-ai = pkgs.lsp-ai.overrideAttrs (oldAttrs: {
+  #   cargoBuildFlags = oldAttrs.cargoBuildFlags or [ ] ++ [
+  #     "--features"
+  #     (
+  #       if pkgs.stdenv.hostPlatform.isDarwin then
+  #         "llama_cpp,metal"
+  #       else if pkgs.stdenv.hostPlatform.isLinux then
+  #         "llama_cpp"
+  #       else
+  #         "llama_cpp"
+  #     )
+  #   ];
+  # });
 in
 {
   # Home settings
@@ -24,7 +37,7 @@ in
       gopls # go language server
       jdt-language-server # java lsp
       # llama-cpp # Inference of Meta's LLaMA model (and others) in pure C/C++
-      # lsp-ai # code completion LSP for LLM's
+      # custom-lsp-ai # code completion LSP for LLM's
       markdown-oxide # markdown language server
       nil # nix language server
       nixd # nix lsp
@@ -42,7 +55,7 @@ in
       typescript-language-server # Typescript
       vscode-langservers-extracted # [ vscode-css-language-server vscode-eslint-language-server vscode-html-language-server vscode-json-language-server vscode-markdown-language-server ]
       yaml-language-server # YAML language server
-      yazi # file manager
+      # yazi # file manager
     ];
 
     file."${config.xdg.configHome}/sqls/config.yml".text = builtins.readFile ./sqls.yaml;
@@ -64,141 +77,141 @@ in
           sqls = {
             command = "sqls";
           };
-          # lsp-ai = {
-          #   command = "lsp-ai";
-          #   config = {
-          #     memory = {
-          #       file_store = { };
+          #   lsp-ai = {
+          #     command = "lsp-ai";
+          #     timeout = 60;
+          #     environment = {
+          #       "LSP_AI_LOG" = "debug";
           #     };
-          #     models = {
-          #       # model1 = {
-          #       #   type = "llama_cpp";
-          #       #   repository = "Qwen/Qwen3-4B-GGUF";
-          #       #   name = "Qwen3-4B-Q4_K_M.gguf";
-          #       #   n_ctx = 4096;
-          #       # };
-          #       # model2 = {
-          #       #   type = "llama_cpp";
-          #       #   repository = "unsloth/DeepSeek-R1-0528-Qwen3-8B-GGUF";
-          #       #   name = "DeepSeek-R1-0528-Qwen3-8B-Q4_K_M.gguf";
-          #       #   n_ctx = 4096;
-          #       # };
-          #       model1 = {
-          #         type = "ollama";
-          #         model = "qwen3:1.7b";
+          #     config = {
+          #       memory = {
+          #         file_store = { };
           #       };
-          #       model2 = {
-          #         type = "ollama";
-          #         model = "deepseek-r1:1.5b";
-          #       };
-          #     };
-          #     completion = {
-          #       model = "model1";
-          #       parameters = {
-          #         max_context = 4096;
-          #         options = {
-          #           num_predict = 32;
+          #       models = {
+          #         model1 = {
+          #           type = "llama_cpp";
+          #           repository = "Qwen/Qwen3-4B-GGUF";
+          #           name = "Qwen3-4B-Q4_K_M.gguf";
+          #           n_ctx = 4096;
+          #           n_gpu_layers = -1; # Offload all layers to GPU
+          #           main_gpu = 0; # Use first GPU
+          #           tensor_split = [ ]; # Auto-balance across GPUs (single GPU on M5)
+          #         };
+          #         model2 = {
+          #           type = "llama_cpp";
+          #           repository = "unsloth/DeepSeek-R1-0528-Qwen3-8B-GGUF";
+          #           name = "DeepSeek-R1-0528-Qwen3-8B-Q4_K_M.gguf";
+          #           n_ctx = 4096;
+          #           n_gpu_layers = -1; # Offload all layers to GPU
+          #           main_gpu = 0; # Use first GPU
+          #           tensor_split = [ ]; # Auto-balance across GPUs (single GPU on M5)
           #         };
           #       };
+          #       completion = {
+          #         model = "model1";
+          #         parameters = {
+          #           fim = {
+          #             start = "<fim_prefix>";
+          #             middle = "<fim_suffix>";
+          #             end = "<fim_middle>";
+          #           };
+          #           max_context = 4096;
+          #           options = {
+          #             num_predict = 32;
+          #           };
+          #         };
+          #       };
+          #       actions = [
+          #         {
+          #           action_display_name = "Complete";
+          #           model = "model2";
+          #           parameters = {
+          #             max_context = 4096;
+          #             max_tokens = 4096;
+          #             system = "You are an AI coding assistant. Your task is to complete code snippets. The user's cursor position is marked by \"<CURSOR>\". Follow these steps:\n\n1. Analyze the code context and the cursor position.\n2. Provide your chain of thought reasoning, wrapped in <reasoning> tags. Include thoughts about the cursor position, what needs to be completed, and any necessary formatting.\n3. Determine the appropriate code to complete the current thought, including finishing partial words or lines.\n4. Replace \"<CURSOR>\" with the necessary code, ensuring proper formatting and line breaks.\n5. Wrap your code solution in <answer> tags.\n\nYour response should always include both the reasoning and the answer. Pay special attention to completing partial words or lines before adding new lines of code.";
+          #             messages = [
+          #               {
+          #                 role = "user";
+          #                 content = "{CODE}";
+          #               }
+          #             ];
+          #           };
+          #         }
+          #         {
+          #           action_display_name = "Refactor";
+          #           model = "model2";
+          #           parameters = {
+          #             max_context = 4096;
+          #             max_tokens = 4096;
+          #             system = "You are an AI coding assistant specializing in code refactoring. Your task is to analyze the given code snippet and provide a refactored version. Follow these steps:\n\n1. Analyze the code context and structure.\n2. Identify areas for improvement, such as code efficiency, readability, or adherence to best practices.\n3. Provide your chain of thought reasoning, wrapped in <reasoning> tags. Include your analysis of the current code and explain your refactoring decisions.\n4. Rewrite the entire code snippet with your refactoring applied.\n5. Wrap your refactored code solution in <answer> tags.\n\nYour response should always include both the reasoning and the refactored code.";
+          #             messages = [
+          #               {
+          #                 role = "user";
+          #                 content = "{SELECTED_TEXT}";
+          #               }
+          #             ];
+          #           };
+          #         }
+          #       ];
+          #       chat = [
+          #         {
+          #           trigger = "!C";
+          #           action_display_name = "Chat";
+          #           model = "model2";
+          #           parameters = {
+          #             max_context = 4096;
+          #             max_tokens = 1024;
+          #             messages = [
+          #               {
+          #                 role = "system";
+          #                 content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately given the code context:\n\n{CONTEXT}";
+          #               }
+          #             ];
+          #           };
+          #         }
+          #       ];
           #     };
-          #     actions = [
-          #       {
-          #         action_display_name = "Complete";
-          #         model = "model2";
-          #         parameters = {
-          #           max_context = 4096;
-          #           max_tokens = 4096;
-          #           system = "You are an AI coding assistant. Your task is to complete code snippets. The user's cursor position is marked by \"<CURSOR>\". Follow these steps:\n\n1. Analyze the code context and the cursor position.\n2. Provide your chain of thought reasoning, wrapped in <reasoning> tags. Include thoughts about the cursor position, what needs to be completed, and any necessary formatting.\n3. Determine the appropriate code to complete the current thought, including finishing partial words or lines.\n4. Replace \"<CURSOR>\" with the necessary code, ensuring proper formatting and line breaks.\n5. Wrap your code solution in <answer> tags.\n\nYour response should always include both the reasoning and the answer. Pay special attention to completing partial words or lines before adding new lines of code.";
-          #           messages = [
-          #             {
-          #               role = "user";
-          #               content = "{CODE}";
-          #             }
-          #           ];
-          #         };
-          #         # post_process = {
-          #         #   extractor = "(?s)<answer>(.*?)</answer>";
-          #         # };
-          #       }
-          #       {
-          #         action_display_name = "Refactor";
-          #         model = "model2";
-          #         parameters = {
-          #           max_context = 4096;
-          #           max_tokens = 4096;
-          #           system = "You are an AI coding assistant specializing in code refactoring. Your task is to analyze the given code snippet and provide a refactored version. Follow these steps:\n\n1. Analyze the code context and structure.\n2. Identify areas for improvement, such as code efficiency, readability, or adherence to best practices.\n3. Provide your chain of thought reasoning, wrapped in <reasoning> tags. Include your analysis of the current code and explain your refactoring decisions.\n4. Rewrite the entire code snippet with your refactoring applied.\n5. Wrap your refactored code solution in <answer> tags.\n\nYour response should always include both the reasoning and the refactored code.";
-          #         };
-          #         messages = [
-          #           {
-          #             role = "user";
-          #             content = "{SELECTED_TEXT}";
-          #           }
-          #         ];
-          #         # post_process = {
-          #         #   extractor = "(?s)<answer>(.*?)</answer>";
-          #         # };
-          #       }
-          #     ];
-          #     chat = [
-          #       {
-          #         trigger = "!C";
-          #         action_display_name = "Chat";
-          #         model = "model2";
-          #         parameters = {
-          #           max_context = 4096;
-          #           max_tokens = 1024;
-          #           messages = [
-          #             {
-          #               role = "system";
-          #               content = "You are a code assistant chatbot. The user will ask you for assistance coding and you will do your best to answer succinctly and accurately given the code context:\n\n{CONTEXT}";
-          #             }
-          #           ];
-          #         };
-          #       }
-          #     ];
           #   };
-          # };
+          #   gopls = {
+          #     command = "gopls";
+          #     config = {
+          #       gofumpt = true;
+          #       local = "goimports";
+          #       semanticTokens = true;
+          #       staticcheck = true;
+          #       verboseOutput = true;
+          #       analyses = {
+          #         nilness = true;
+          #         unusedparams = true;
+          #         unusedwrite = true;
+          #         useany = true;
+          #       };
+          #       usePlaceholders = true;
+          #       completeUnimported = true;
+          #       hints = {
+          #         assignVariableType = true;
+          #         compositeLiteralFields = true;
+          #         compositeLiteralTypes = true;
+          #         constantValues = true;
+          #         functionTypeParameters = true;
+          #         parameterNames = true;
+          #         rangeVariableTypes = true;
+          #       };
+          #       # buildFlags = [ "-tags=stub" ];
+          #     };
+          #   };
 
-          gopls = {
-            command = "gopls";
-            config = {
-              gofumpt = true;
-              local = "goimports";
-              semanticTokens = true;
-              staticcheck = true;
-              verboseOutput = true;
-              analyses = {
-                nilness = true;
-                unusedparams = true;
-                unusedwrite = true;
-                useany = true;
-              };
-              usePlaceholders = true;
-              completeUnimported = true;
-              hints = {
-                assignVariableType = true;
-                compositeLiteralFields = true;
-                compositeLiteralTypes = true;
-                constantValues = true;
-                functionTypeParameters = true;
-                parameterNames = true;
-                rangeVariableTypes = true;
-              };
-              # buildFlags = [ "-tags=stub" ];
-            };
-          };
-
-          rust-analyzer = {
-            command = "rust-analyzer";
-            config.inlayHints = {
-              bindingModeHints.enable = false;
-              closingBraceHints.minLines = 10;
-              closureReturnTypeHints.enable = "with_block";
-              discriminantHints.enable = "fieldless";
-              lifetimeElisionHints.enable = "skip_trivial";
-              typeHints.hideClosureInitialization = false;
-            };
-          };
+          #   rust-analyzer = {
+          #     command = "rust-analyzer";
+          #     config.inlayHints = {
+          #       bindingModeHints.enable = false;
+          #       closingBraceHints.minLines = 10;
+          #       closureReturnTypeHints.enable = "with_block";
+          #       discriminantHints.enable = "fieldless";
+          #       lifetimeElisionHints.enable = "skip_trivial";
+          #       typeHints.hideClosureInitialization = false;
+          #     };
+          #   };
         };
 
         language = [
@@ -322,6 +335,7 @@ in
             formatter.command = "nixfmt";
             language-servers = [
               "nil"
+              # "lsp-ai"
             ];
           }
           {
@@ -346,7 +360,10 @@ in
               ];
             };
             auto-format = true;
-            language-servers = [ "ruff" ];
+            language-servers = [
+              "ruff"
+              # "lsp-ai"
+            ];
           }
           {
             name = "rust";
@@ -357,7 +374,10 @@ in
             ];
             file-types = [ "rs" ];
             auto-format = true;
-            language-servers = [ "rust-analyzer" ];
+            language-servers = [
+              "rust-analyzer"
+              # "lsp-ai"
+            ];
           }
           {
             name = "sql";
@@ -370,7 +390,10 @@ in
               ];
             };
             auto-format = false;
-            language-servers = [ "sqls" ];
+            language-servers = [
+              "sqls"
+              # "lsp-ai"
+            ];
           }
           {
             name = "toml";
