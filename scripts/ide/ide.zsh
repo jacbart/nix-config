@@ -249,7 +249,7 @@ setup_ide_layout_in_window() {
   current_git_root=$(get_current_git_root)
 
   # Create 20/80 split in the target window
-  tmux split-window -h -p 87 -t "$target_window"
+  tmux split-window -h -p 85 -t "$target_window"
 
   # Add delay to allow shells to initialize
   sleep 1
@@ -259,7 +259,7 @@ setup_ide_layout_in_window() {
   broot_pane=$(tmux display-message -p -t "$target_window.0" "#{pane_id}")
   tmux set-option -t "$target_window" "@broot_pane" "$broot_pane"
   tmux set-option -t "$target_window" "@preview_state" "open"
-  tmux send-keys -t "$target_window.0" "br" Enter
+  tmux send-keys -t "$target_window.0" "br && exit" Enter
 
   # Add delay before starting helix
   sleep 1
@@ -268,7 +268,7 @@ setup_ide_layout_in_window() {
   local helix_pane
   helix_pane=$(tmux display-message -p -t "$target_window.1" "#{pane_id}")
   tmux set-option -t "$target_window" "@helix_pane" "$helix_pane"
-  tmux send-keys -t "$target_window.1" "hx" Enter
+  tmux send-keys -t "$target_window.1" "hx && exit" Enter
 
   # Add final delay to ensure helix is fully initialized
   sleep 2
@@ -328,7 +328,7 @@ ensure_helix_exists() {
     pane_content=$(tmux capture-pane -p -t "$helix_pane" | head -5)
     if ! echo "$pane_content" | grep -q "hx"; then
       # Restart helix if not running
-      tmux send-keys -t "$helix_pane" "hx" Enter
+      tmux send-keys -t "$helix_pane" "hx && exit" Enter
     fi
   fi
 }
