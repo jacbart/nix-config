@@ -475,12 +475,20 @@ in
           C-l = ":! [ -n \"$TMUX\" ] && tmux select-pane -R";
           C-j = ":! [ -n \"$TMUX\" ] && tmux select-pane -D";
           C-k = ":! [ -n \"$TMUX\" ] && tmux select-pane -U";
+          C-left = ":! [ -n \"$TMUX\" ] && tmux select-pane -L";
+          C-right = ":! [ -n \"$TMUX\" ] && tmux select-pane -R";
+          C-down = ":! [ -n \"$TMUX\" ] && tmux select-pane -D";
+          C-up = ":! [ -n \"$TMUX\" ] && tmux select-pane -U";
         };
         keys.insert = {
           C-h = ":! [ -n \"$TMUX\" ] && tmux select-pane -L";
           C-l = ":! [ -n \"$TMUX\" ] && tmux select-pane -R";
           C-j = ":! [ -n \"$TMUX\" ] && tmux select-pane -D";
           C-k = ":! [ -n \"$TMUX\" ] && tmux select-pane -U";
+          C-left = ":! [ -n \"$TMUX\" ] && tmux select-pane -L";
+          C-right = ":! [ -n \"$TMUX\" ] && tmux select-pane -R";
+          C-down = ":! [ -n \"$TMUX\" ] && tmux select-pane -D";
+          C-up = ":! [ -n \"$TMUX\" ] && tmux select-pane -U";
         };
 
         editor = {

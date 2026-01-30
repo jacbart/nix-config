@@ -4,6 +4,7 @@
 {
   add-zim = pkgs.callPackage ./add-zim { };
   br = pkgs.callPackage ./br { };
+  ide = pkgs.callPackage ./ide { };
   brightness = pkgs.callPackage ./brightness { };
   journal = pkgs.callPackage ./journal { };
   upload-to-cache = pkgs.callPackage ./upload-to-cache { };

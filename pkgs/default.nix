@@ -9,4 +9,5 @@
   mazter = pkgs.callPackage ./mazter { };
   # pmg = pkgs.callPackage ./portmaster-games { };
   libro = pkgs.callPackage ./libro-client { };
+  scripts = pkgs.callPackage ../scripts { };
 }

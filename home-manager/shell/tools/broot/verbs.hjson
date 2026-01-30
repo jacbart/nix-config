@@ -1,26 +1,25 @@
 verbs: [
-
     {
-        invocation: edit
-        shortcut: e
+        invocation: open-helix-enter
         key: enter
-        apply_to: text_file
-        execution: "hx {file}:{line}"
+        external: ["ide" "open" "{file}"]
         leave_broot: false
+        working_dir: "{root}"
+        switch_terminal: false
     }
 
     # launching `tail -n` on the selected file (leaving broot)
     {
         name: tail_lines
         invocation: tl {lines_count}
-        execution: "tail -f -n {lines_count} {file}"
+        external: "tail -f -n {lines_count} {file}"
     }
 
     # touch new file
     {
         name: touch
         invocation: touch {new_file}
-        execution: "touch {directory}/{new_file}"
+        external: "touch {directory}/{new_file}"
         leave_broot: false
     }
 
@@ -28,28 +27,15 @@ verbs: [
     #  the current directory or below
     {
         invocation: create {subpath}
-        execution: "hx {directory}/{subpath}"
+        external: "hx {directory}/{subpath}"
         leave_broot: false
     }
-
-    {
-        invocation: git_diff
-        shortcut: gd
-        leave_broot: false
-        execution: "git difftool -y {file}"
-    }
-
-    # On ctrl-b, propose the creation of a copy of the selection.
-    # While this might occasionally be useful, this verb is mostly here
-    # as an example to demonstrate rare standard groups like {file-stem}
-    # and {file-dot-extension} and the auto_exec verb property which
-    # allows verbs to stay unexecuted until you hit enter
     {
         invocation: "backup {version}"
         key: ctrl-b
         leave_broot: false
         auto_exec: false
-        execution: "cp -r {file} {parent}/{file-stem}-{version}{file-dot-extension}"
+        external: "cp -r {file} {parent}/{file-stem}-{version}{file-dot-extension}"
     }
 
     # By default, `rm` does the system rm, and completely removes
@@ -65,19 +51,75 @@ verbs: [
     {
         invocation: home
         key: ctrl-home
-        execution: ":focus ~"
+        internal: ":focus ~"
     }
 
     # Here's going to the work-dir root of the current git repository
     {
         invocation: gtr
-        execution: ":focus {git-root}"
+        internal: ":focus {git-root}"
     }
 
     {
         invocation: tp
         key: ctrl-p
-        execution: ":toggle_preview"
+        internal: ":toggle_preview"
+    }
+
+    # Navigation verbs for tmux IDE integration
+    {
+        invocation: nav-left
+        key: ctrl-h
+        external: ["tmux" "select-pane" "-L"]
+        leave_broot: false
+    }
+    {
+        invocation: nav-right
+        key: ctrl-l
+        external: ["tmux" "select-pane" "-R"]
+        leave_broot: false
+    }
+    {
+        invocation: nav-up
+        key: ctrl-k
+        external: ["tmux" "select-pane" "-U"]
+        leave_broot: false
+    }
+    {
+        invocation: nav-down
+        key: ctrl-j
+        external: ["tmux" "select-pane" "-D"]
+        leave_broot: false
+    }
+    {
+        invocation: nav-left-arrow
+        key: ctrl-left
+        external: ["tmux" "select-pane" "-L"]
+        leave_broot: false
+    }
+    {
+        invocation: nav-right-arrow
+        key: ctrl-right
+        external: ["tmux" "select-pane" "-R"]
+        leave_broot: false
+    }
+    {
+        invocation: nav-up-arrow
+        key: ctrl-up
+        external: ["tmux" "select-pane" "-U"]
+        leave_broot: false
+    }
+    {
+        invocation: nav-down-arrow
+        key: ctrl-down
+        external: ["tmux" "select-pane" "-D"]
+        leave_broot: false
+    }
+    {
+        invocation: toggle-preview-ide
+        key: F5
+        external: ["zsh" "-c" "source ~/.zshrc && ~/workspace/personal/nix-config/scripts/ide/ide.zsh toggle-preview"]
+        leave_broot: false
     }
 ]
 
