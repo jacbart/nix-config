@@ -259,7 +259,7 @@ setup_ide_layout_in_window() {
   broot_pane=$(tmux display-message -p -t "$target_window.0" "#{pane_id}")
   tmux set-option -t "$target_window" "@broot_pane" "$broot_pane"
   tmux set-option -t "$target_window" "@preview_state" "open"
-  tmux send-keys -t "$target_window.0" "br && exit" Enter
+  tmux send-keys -t "$target_window.0" "br" Enter
 
   # Add delay before starting helix
   sleep 1
