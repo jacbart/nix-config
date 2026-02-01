@@ -1,11 +1,18 @@
 verbs: [
+    # {
+    #     invocation: open-helix-enter
+    #     key: enter
+    #     external: ["ide" "open" "{file}"]
+    #     leave_broot: false
+    #     working_dir: "{root}"
+    #     switch_terminal: false
+    # }
     {
         invocation: open-helix-enter
         key: enter
-        external: ["ide" "open" "{file}"]
+        external: ["hx" "{file}:{line}"]
         leave_broot: false
         working_dir: "{root}"
-        switch_terminal: false
     }
 
     # launching `tail -n` on the selected file (leaving broot)

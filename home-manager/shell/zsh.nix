@@ -2,13 +2,14 @@
   config,
   pkgs,
   lib,
-  # inputs,
+  inputs,
   ...
 }:
 let
   # ff = inputs.ff.packages.${pkgs.stdenv.hostPlatform.system}.default;
   # trees = inputs.trees.packages.${pkgs.stdenv.hostPlatform.system}.default;
   # rest = inputs.rest.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  jaws = inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
   modPath = [
     "$HOME/.local/bin"
@@ -27,6 +28,7 @@ in
   home.packages =
     with pkgs;
     [
+      jaws # secrets manager cli
       mdbook # markdown books
       uv # python package/dep/runtime manager
       perl # Required for zplug

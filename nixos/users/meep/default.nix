@@ -3,7 +3,6 @@
   desktop,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 let
@@ -17,7 +16,6 @@ in
 
   environment.systemPackages = [
     pkgs.age
-    # inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   sops.secrets.meep-password.neededForUsers = true;
