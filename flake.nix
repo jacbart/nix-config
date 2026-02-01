@@ -23,7 +23,7 @@
     # patched caddy with cloudflare provider
     caddy-with-modules.url = "github:jacbart/nixos-caddy-patched";
 
-    jaws.url = "github:jacbart/jaws/rust-rewrite";
+    jaws.url = "github:jacbart/jaws";
     ff.url = "github:jacbart/ff";
     trees.url = "github:jacbart/trees";
     rest.url = "github:taybart/rest";
