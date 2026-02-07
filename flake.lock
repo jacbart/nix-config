@@ -124,11 +124,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1770419191,
-        "narHash": "sha256-yRiF3yjlAJZnRzvHuwdiDI5hs2cHBV5dolR5Lp/gKVY=",
+        "lastModified": 1770444021,
+        "narHash": "sha256-HdODT3Xwu5qbi+rtcLRLfk0EV2P5cQDxZtYoSqSw3w0=",
         "owner": "jacbart",
         "repo": "jaws",
-        "rev": "73dd26e4aa2621d1d43b67294d72342f0407cc24",
+        "rev": "9efcb848203d6e3c1e7d4bc88530ca9f13d94fb0",
         "type": "github"
       },
       "original": {
@@ -362,16 +362,16 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1769789167,
-        "narHash": "sha256-kKB3bqYJU5nzYeIROI82Ef9VtTbu4uA3YydSk/Bioa8=",
+        "lastModified": 1770136044,
+        "narHash": "sha256-tlFqNG/uzz2++aAmn4v8J0vAkV3z7XngeIIB3rM3650=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "62c8382960464ceb98ea593cb8321a2cf8f9e3e5",
+        "rev": "e576e3c9cf9bad747afcddd9e34f51d18c855b4e",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
