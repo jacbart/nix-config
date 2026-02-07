@@ -124,11 +124,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1770444021,
-        "narHash": "sha256-HdODT3Xwu5qbi+rtcLRLfk0EV2P5cQDxZtYoSqSw3w0=",
+        "lastModified": 1770445379,
+        "narHash": "sha256-ciIK4msIIOrJ5XmgG8yH3esJwRKLUmYNDCV6DCdZu8Q=",
         "owner": "jacbart",
         "repo": "jaws",
-        "rev": "9efcb848203d6e3c1e7d4bc88530ca9f13d94fb0",
+        "rev": "592a02dadae8d8cf0e5186b6fac1f33709a24733",
         "type": "github"
       },
       "original": {
