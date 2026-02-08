@@ -30,7 +30,7 @@
     "activate_on_close": "history"
   },
   "file_types": {
-    "HCL": ["hcl", "jaws", "koi"]
+    "HCL": ["hcl"]
   },
   "journal": {
     "path": "~/workspace/journal",
