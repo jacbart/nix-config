@@ -8,7 +8,7 @@
     unstable.broot
     mupdf-headless
     scripts.br
-    scripts.ide
+    # scripts.ide
   ];
   home.file = {
     # add broot config

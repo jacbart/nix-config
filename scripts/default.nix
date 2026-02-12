@@ -3,6 +3,7 @@
 }:
 {
   add-zim = pkgs.callPackage ./add-zim { };
+  alfred = pkgs.callPackage ./alfred { };
   br = pkgs.callPackage ./br { };
   ide = pkgs.callPackage ./ide { };
   brightness = pkgs.callPackage ./brightness { };
