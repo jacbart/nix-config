@@ -8,8 +8,6 @@
 
   home.packages = with pkgs; [
     gitu
-    taskwarrior3
-    scripts.alfred
   ];
 
   # home.file."${config.xdg.configHome}/lan-mouse/config.toml".text = builtins.readFile ./lan-mouse.toml;
