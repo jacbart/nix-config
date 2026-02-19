@@ -5,10 +5,6 @@
 }:
 {
   fex-cli = pkgs.callPackage ./fex { };
-  # headplane = pkgs.callPackage ./headplane { };
   uconsole-nx = pkgs.callPackage ./nxengine { };
   mazter = pkgs.callPackage ./mazter { };
-  # pmg = pkgs.callPackage ./portmaster-games { };
-  libro = pkgs.callPackage ./libro-client { };
-  scripts = pkgs.callPackage ../scripts { };
 }
