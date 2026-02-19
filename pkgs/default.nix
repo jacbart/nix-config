@@ -4,6 +4,7 @@
   pkgs ? (import ../nixpkgs.nix) { },
 }:
 {
+  fex-cli = pkgs.callPackage ./fex { };
   # headplane = pkgs.callPackage ./headplane { };
   uconsole-nx = pkgs.callPackage ./nxengine { };
   mazter = pkgs.callPackage ./mazter { };
