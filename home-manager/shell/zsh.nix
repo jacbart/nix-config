@@ -65,7 +65,7 @@ in
       less = "bat --paging=always";
       lm = "if [ $(systemctl --user is-active lan-mouse) = \"inactive\" ]; then systemctl --user start lan-mouse && echo active; else systemctl --user stop lan-mouse && echo inactive; fi";
       more = "bat --paging=always";
-      summarize = "nix shell nixpkgs#llama-cpp --command llama-completion -hf unsloth/GLM-4.7-Flash-GGUF -p \"Summarize the following git diff into a SINGLE conventional commit message (format: 'type: description') under 72 characters. Use one type only: feat, fix, refactor, perf, style, test, docs, build, ops, chore:\\n\\n$(git diff --cached | head -n 200)\" --single-turn --temp 1.0 --top-p 0.95 --min-p 0.01 --repeat-penalty 1.1 2>/dev/null | grep -E '^(feat|fix|refactor|perf|style|test|docs|build|ops|chore):' | sed 's/`//g; s/\\[end of text\\].*//'``````";
+      summarize = "nix shell nixpkgs#llama-cpp --command llama-completion -hf unsloth/Qwen3-0.6B-GGUF:Q5_K_M -p \"Summarize the following git diff into a SINGLE conventional commit message (format: 'type: description') under 72 characters. Use one type only: feat, fix, refactor, perf, style, test, docs, build, ops, chore:\\n\\n$(git diff --cached | head -n 200)\" --single-turn 2>/dev/null | grep -E '^(feat|fix|refactor|perf|style|test|docs|build|ops|chore):' | sed 's/`//g; s/\\[end of text\\].*//'``````";
       monitor = "fswatch -o . | while read; do clear; git diff; done";
       secure = "eval $(ssh-agent -s -t 3600 -k) && ssh-add ~/.ssh/id_git";
       hist = "fc -RI";

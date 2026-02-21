@@ -44,7 +44,8 @@ in
       nixfmt-rfc-style # nix formatter
       nodePackages.prettier # code formatter
       ruff # python language server/formatter etc
-      serpl # find and replace
+      # serpl # find and replace
+      scooter # Interactive find-and-replace in the terminal
       shfmt # Bash formatter
       sqls # SQL language server
       steel # Embedded scheme interpreter in Rust

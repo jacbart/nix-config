@@ -1,10 +1,17 @@
 { pkgs, ... }:
+let
+  gitu = (
+    pkgs.unstable.gitu.overrideAttrs (old: {
+      doCheck = false;
+    })
+  );
+in
 {
   home = {
     # Install tmux
     packages = [
       pkgs.tmux
-      pkgs.gitu # TUI Git client inspired by Magit
+      gitu # TUI Git client inspired by Magit
     ];
 
     # Fetch the tmux plugin manager (tpm) and place it in the ~/.tmux/plugins/tpm directory
