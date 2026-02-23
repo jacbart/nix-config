@@ -4,6 +4,7 @@
 }:
 let
   zigEnv = pkgs.zig_0_13;
+  zigFlag = if pkgs.stdenv.isLinux then "-lc" else "";
 in
 pkgs.stdenv.mkDerivation rec {
   name = "fex-${version}";
@@ -15,12 +16,12 @@ pkgs.stdenv.mkDerivation rec {
     sha256 = "sha256-h+M0Enyu1wmyZW+qPf6DHAS20D8J3WxYgFguo2SqsYg=";
   };
 
-  nativeBuildInputs = [ zigEnv ];
+  nativeBuildInputs = [ zigEnv ] ++ pkgs.lib.optional pkgs.stdenv.isLinux pkgs.xdg-utils;
 
   buildPhase = ''
     export ZIG_GLOBAL_CACHE_DIR="$TMPDIR/.zig-cache"
     mkdir -p "$ZIG_GLOBAL_CACHE_DIR"
-    zig build-exe -O ReleaseSafe main.zig
+    zig build-exe -O ReleaseSafe main.zig ${zigFlag}
   '';
 
   installPhase = ''
