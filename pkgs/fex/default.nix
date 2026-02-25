@@ -41,6 +41,7 @@ pkgs.stdenv.mkDerivation rec {
     license = with licenses; [ gpl3 ];
     maintainers = with maintainers; [ jacbart ];
     platforms = platforms.unix;
+    badPlatforms = [ "aarch64-linux" ];
   };
 
 }
