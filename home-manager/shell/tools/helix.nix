@@ -173,46 +173,46 @@ in
           #       ];
           #     };
           #   };
-          #   gopls = {
-          #     command = "gopls";
-          #     config = {
-          #       gofumpt = true;
-          #       local = "goimports";
-          #       semanticTokens = true;
-          #       staticcheck = true;
-          #       verboseOutput = true;
-          #       analyses = {
-          #         nilness = true;
-          #         unusedparams = true;
-          #         unusedwrite = true;
-          #         useany = true;
-          #       };
-          #       usePlaceholders = true;
-          #       completeUnimported = true;
-          #       hints = {
-          #         assignVariableType = true;
-          #         compositeLiteralFields = true;
-          #         compositeLiteralTypes = true;
-          #         constantValues = true;
-          #         functionTypeParameters = true;
-          #         parameterNames = true;
-          #         rangeVariableTypes = true;
-          #       };
-          #       # buildFlags = [ "-tags=stub" ];
-          #     };
-          #   };
+          gopls = {
+            command = "gopls";
+            config = {
+              gofumpt = true;
+              local = "goimports";
+              semanticTokens = true;
+              staticcheck = true;
+              verboseOutput = true;
+              analyses = {
+                nilness = true;
+                unusedparams = true;
+                unusedwrite = true;
+                useany = true;
+              };
+              usePlaceholders = true;
+              completeUnimported = true;
+              hints = {
+                assignVariableType = true;
+                compositeLiteralFields = true;
+                compositeLiteralTypes = true;
+                constantValues = true;
+                functionTypeParameters = true;
+                parameterNames = true;
+                rangeVariableTypes = true;
+              };
+              # buildFlags = [ "-tags=stub" ];
+            };
+          };
 
-          #   rust-analyzer = {
-          #     command = "rust-analyzer";
-          #     config.inlayHints = {
-          #       bindingModeHints.enable = false;
-          #       closingBraceHints.minLines = 10;
-          #       closureReturnTypeHints.enable = "with_block";
-          #       discriminantHints.enable = "fieldless";
-          #       lifetimeElisionHints.enable = "skip_trivial";
-          #       typeHints.hideClosureInitialization = false;
-          #     };
-          #   };
+          rust-analyzer = {
+            command = "rust-analyzer";
+            config.inlayHints = {
+              bindingModeHints.enable = false;
+              closingBraceHints.minLines = 10;
+              closureReturnTypeHints.enable = "with_block";
+              discriminantHints.enable = "fieldless";
+              lifetimeElisionHints.enable = "skip_trivial";
+              typeHints.hideClosureInitialization = false;
+            };
+          };
         };
 
         language = [
