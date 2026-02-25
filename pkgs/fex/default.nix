@@ -40,8 +40,12 @@ pkgs.stdenv.mkDerivation rec {
     homepage = "https://github.com/18alantom/fex";
     license = with licenses; [ gpl3 ];
     maintainers = with maintainers; [ jacbart ];
-    platforms = platforms.unix;
-    badPlatforms = [ "aarch64-linux" ];
+    platforms = [
+      "x86_64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
+    badPlatforms = [ "aarch64-linux" ] ++ platforms.cygwin;
   };
 
 }

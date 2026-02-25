@@ -10,7 +10,7 @@ let
   # trees = inputs.trees.packages.${pkgs.stdenv.hostPlatform.system}.default;
   # rest = inputs.rest.packages.${pkgs.stdenv.hostPlatform.system}.default;
   jaws = inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  inherit (pkgs.stdenv) isLinux isDarwin;
+  inherit (pkgs.stdenv) isLinux isDarwin isAarch64;
   modPath = [
     "$HOME/.local/bin"
     "$HOME/go/bin"
@@ -29,7 +29,6 @@ in
     with pkgs;
     [
       dua # View disk space usage and delete unwanted data
-      fex-cli # A command-line file explorer prioritizing quick navigation
       fswatch # A cross-platform file change monitor with multiple backends
       jaws # secrets manager cli
       mdbook # markdown books
@@ -42,7 +41,8 @@ in
       # trees # git worktrees simplified
       ff # not so percise search
     ]
-    ++ lib.optional isLinux unstable.tlrc;
+    ++ lib.optional isLinux unstable.tlrc
+    ++ lib.optional (!isLinux && !isAarch64) fex-cli;
 
   programs.zsh = {
     enable = true;
