@@ -10,7 +10,7 @@ let
   # trees = inputs.trees.packages.${pkgs.stdenv.hostPlatform.system}.default;
   # rest = inputs.rest.packages.${pkgs.stdenv.hostPlatform.system}.default;
   jaws = inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  inherit (pkgs.stdenv) isLinux isDarwin isAarch64;
+  inherit (pkgs.stdenv) isLinux isDarwin;
   modPath = [
     "$HOME/.local/bin"
     "$HOME/go/bin"
@@ -42,7 +42,7 @@ in
       ff # not so percise search
     ]
     ++ lib.optional isLinux unstable.tlrc
-    ++ lib.optional (!isLinux && !isAarch64) fex-cli;
+    ++ lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") fex-cli;
 
   programs.zsh = {
     enable = true;
