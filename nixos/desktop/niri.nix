@@ -6,7 +6,9 @@
   security.pam.services.swaylock = { };
 
   programs.waybar.enable = true;
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = with pkgs; [
+    xwayland-satellite # xwayland support
     alacritty
     fuzzel
     swaylock

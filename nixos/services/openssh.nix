@@ -18,6 +18,7 @@
         "100.100.100.100/10"
       ];
     };
+    gnome.gcr-ssh-agent.enable = lib.mkForce false;
   };
   programs.ssh.startAgent = lib.mkDefault true;
 }

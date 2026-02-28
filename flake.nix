@@ -65,7 +65,8 @@
         "meep@boojum" = utils.mkHome {
           hostname = "boojum";
           username = "meep";
-          desktop = "niri";
+          # desktop = "niri";
+          desktop = "cosmic";
         };
         "jackbartlett@jackjrny" = utils.mkHome {
           hostname = "jackjrny";
@@ -119,7 +120,8 @@
         boojum = utils.mkHost {
           hostname = "boojum";
           username = "meep";
-          desktop = "niri";
+          # desktop = "niri";
+          desktop = "cosmic";
         };
         cork = utils.mkHost {
           hostname = "cork";

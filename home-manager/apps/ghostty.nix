@@ -8,7 +8,7 @@
       theme = "dark:Gruvbox Dark,light:Gruvbox Light";
       shell-integration = "zsh";
       window-decoration = "none";
-      maximize = "true";
+      # maximize = "true";
     };
   };
 }

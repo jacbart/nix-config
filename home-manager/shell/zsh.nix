@@ -6,10 +6,11 @@
   ...
 }:
 let
-  ff = inputs.ff.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  # trees = inputs.trees.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  # rest = inputs.rest.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  jaws = inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  system = pkgs.stdenv.hostPlatform.system;
+  ff = inputs.ff.packages.${system}.default;
+  # trees = inputs.trees.packages.${system}.default;
+  # rest = inputs.rest.packages.${system}.default;
+  jaws = inputs.jaws.packages.${system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
   modPath = [
     "$HOME/.local/bin"
@@ -42,7 +43,7 @@ in
       ff # not so percise search
     ]
     ++ lib.optional isLinux unstable.tlrc
-    ++ lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") fex-cli;
+    ++ lib.optional (system != "aarch64-linux") fex-cli;
 
   programs.zsh = {
     enable = true;
@@ -142,6 +143,8 @@ in
       bindkey '^R' zhm_fzf_history_widget
       bindkey '^E' autosuggest-accept
       bindkey '^ ' forward-word
+    ''
+    + lib.optionalString (system != "aarch64-linux") ''
       source "${pkgs.fex-cli}/lib/fex.zsh"
       bindkey -M hxins '^F' fex-widget
     '';
