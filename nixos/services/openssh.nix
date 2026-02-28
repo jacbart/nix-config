@@ -19,5 +19,5 @@
       ];
     };
   };
-  programs.ssh.startAgent = lib.mkDefault false;
+  programs.ssh.startAgent = lib.mkDefault true;
 }
