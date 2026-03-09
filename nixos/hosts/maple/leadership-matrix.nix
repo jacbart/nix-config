@@ -46,7 +46,7 @@
 
   services.nginx = {
     enable = true;
-    virtualHosts."console.${vars.domain}" = {
+    virtualHosts."cnc.${vars.domain}" = {
       useACMEHost = vars.domain;
       locations."/" = {
         proxyPass = "http://127.0.0.2:13000";
