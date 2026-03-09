@@ -75,7 +75,10 @@
         "unicron"
         "unicron.bbl.systems"
       ];
-      # "192.168.1.1" = [ "mesquite" "mesquite.meep.sh" ];
+      "10.120.0.1" = [
+        "mesquite"
+        "mesquite.meep.sh"
+      ];
     };
     firewall = {
       enable = true;

@@ -3,9 +3,9 @@ let
   service_user = "nixos";
 
   # meep's github ssh key
-  sshkey = pkgs.writeText "meep-ssh-key" '''';
+  sshkey = pkgs.writeText "meep-ssh-key" "";
   # meep's age key for sops
-  agekey = pkgs.writeText "meep-age-key" '''';
+  agekey = pkgs.writeText "meep-age-key" "";
 in
 {
   environment.systemPackages = [

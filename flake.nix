@@ -25,10 +25,10 @@
 
     jaws.url = "github:jacbart/jaws";
     ff.url = "github:jacbart/ff";
-    trees.url = "github:jacbart/trees";
+
+    # leadership-matrix.url = "git+ssh://git@github.com/taybart/leadership-matrix.git?ref=feat/configurable";
     rest.url = "github:taybart/rest";
 
-    # helix.url = "github:jacbart/helix/steel-event-system";
     nix-diff.url = "github:Mic92/nix-diff-rs";
     lan-mouse.url = "github:feschber/lan-mouse";
 
@@ -104,6 +104,10 @@
           hostname = "oak";
           username = "ratatoskr";
         };
+        "ratatoskr@mesquite" = utils.mkHome {
+          hostname = "mesquite";
+          username = "ratatoskr";
+        };
       };
       nixosConfigurations = {
         # .iso images
@@ -143,6 +147,11 @@
         };
         oak = utils.mkHost {
           hostname = "oak";
+          username = "ratatoskr";
+        };
+        # Router / Firewall
+        mesquite = utils.mkHost {
+          hostname = "mesquite";
           username = "ratatoskr";
         };
       };
