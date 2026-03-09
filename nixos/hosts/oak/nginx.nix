@@ -12,7 +12,7 @@ in
     recommendedTlsSettings = true;
     # Listen on port 8080 for HTTP traffic from Anubis
     # Port 80 is handled by Anubis, port 443 is handled directly by nginx for HTTPS
-    defaultListenAddresses = [ "0.0.0.0:8080" ];
+    defaultListenAddresses = [ "0.0.0.0" ];
     upstreams = {
       "matrix-server".servers."${maple}:8008" = { };
       "auth-server".servers."${maple}:8008" = { };
