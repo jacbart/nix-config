@@ -1,6 +1,6 @@
-_:
+{ vars, ... }:
 let
-  domain = "meep.sh";
+  domain = vars.domain;
   maple = "100.116.178.48";
 in
 {

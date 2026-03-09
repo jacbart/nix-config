@@ -1,11 +1,12 @@
 {
   config,
   pkgs,
+  vars,
   ...
 }:
 let
   clientid = "";
-  domain = "meep.sh";
+  domain = vars.domain;
 in
 {
   sops.secrets.zitadel-tailscale-client-secret = {

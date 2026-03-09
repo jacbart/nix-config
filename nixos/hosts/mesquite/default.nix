@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  vars,
   ...
 }:
 {
@@ -77,7 +78,7 @@
     hosts = {
       "127.0.0.2" = [
         "mesquite"
-        "mesquite.meep.sh"
+        "mesquite.${vars.domain}"
       ];
     };
   };

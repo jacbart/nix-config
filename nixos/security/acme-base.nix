@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, vars, ... }:
 {
   sops.secrets."cloudflare_api_key" = {
     group = "nginx";
@@ -6,12 +6,12 @@
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "jacbart@gmail.com";
+    defaults.email = vars.email;
     certs = {
-      "meep.sh" = {
-        domain = "*.meep.sh";
+      "${vars.domain}" = {
+        domain = "*.${vars.domain}";
         group = "nginx";
-        dnsProvider = "cloudflare";
+        dnsProvider = vars.acmeDnsProvider;
         environmentFile = config.sops.secrets."cloudflare_api_key".path;
       };
     };

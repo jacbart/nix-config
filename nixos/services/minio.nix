@@ -1,10 +1,11 @@
 {
   config,
   pkgs,
+  vars,
   ...
 }:
 let
-  domain = "meep.sh";
+  domain = vars.domain;
 in
 {
   imports = [ ./minio-client.nix ];

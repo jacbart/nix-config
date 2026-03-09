@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, vars, ... }:
 let
   user = "kiwix";
   group = "kiwix";
   dataDir = "kiwix";
-  domain = "meep.sh";
+  domain = vars.domain;
   package = pkgs.kiwix-tools;
   port = 3636;
   listenAddress = "127.0.0.1";

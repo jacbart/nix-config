@@ -1,7 +1,13 @@
 {
   lib,
+  vars,
   ...
 }:
+let
+  gateway = vars.lanGateway;
+  subnet = vars.lanSubnet;
+  lanDomain = vars.lanDomain;
+in
 {
   # ── Interface configuration ───────────────────────────────────────────
   networking = {
@@ -23,7 +29,7 @@
       useDHCP = false;
       ipv4.addresses = [
         {
-          address = "10.120.0.1";
+          address = gateway;
           prefixLength = 24;
         }
       ];
@@ -55,7 +61,7 @@
       subnet4 = [
         {
           id = 1;
-          subnet = "10.120.0.0/24";
+          inherit subnet;
           pools = [
             {
               pool = "10.120.0.100 - 10.120.0.254";
@@ -64,15 +70,15 @@
           option-data = [
             {
               name = "routers";
-              data = "10.120.0.1";
+              data = gateway;
             }
             {
               name = "domain-name-servers";
-              data = "10.120.0.1";
+              data = gateway;
             }
             {
               name = "domain-name";
-              data = "lan.meep.sh";
+              data = lanDomain;
             }
           ];
         }
@@ -86,13 +92,13 @@
     settings = {
       server = {
         interface = [
-          "10.120.0.1"
+          gateway
           "127.0.0.1"
           "::1"
         ];
 
         access-control = [
-          "10.120.0.0/24 allow"
+          "${subnet} allow"
           "127.0.0.0/8 allow"
           "::1/128 allow"
         ];

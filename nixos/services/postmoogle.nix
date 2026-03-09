@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  vars,
   ...
 }:
 let
@@ -8,7 +9,7 @@ let
   group = "moogle";
   dataDir = "postmoogle";
   package = pkgs.postmoogle;
-  domain = "meep.sh";
+  domain = vars.domain;
   secretOpts = {
     owner = user;
     inherit group;

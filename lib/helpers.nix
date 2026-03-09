@@ -2,6 +2,7 @@
   inputs,
   outputs,
   stateVersion,
+  vars,
   ...
 }:
 {
@@ -24,6 +25,7 @@
           platform
           username
           stateVersion
+          vars
           ;
       };
       modules = [
@@ -50,6 +52,7 @@
           username
           platform
           stateVersion
+          vars
           ;
       };
       modules = [

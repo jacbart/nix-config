@@ -10,6 +10,7 @@
   stateVersion,
   username,
   platform,
+  vars,
   ...
 }:
 {
@@ -50,7 +51,7 @@
       LC_TIME = "en_US.UTF-8";
     };
   };
-  time.timeZone = lib.mkDefault "America/Phoenix";
+  time.timeZone = lib.mkDefault vars.timezone;
 
   # Only install the docs I use
   documentation.enable = true;

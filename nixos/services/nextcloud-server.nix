@@ -2,11 +2,12 @@
   config,
   pkgs,
   lib,
+  vars,
   ...
 }:
 let
   subdomain = "cloud";
-  domain = "meep.sh";
+  domain = vars.domain;
   user = "nextcloud";
   group = "nextcloud";
 in

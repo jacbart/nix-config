@@ -2,10 +2,18 @@
   inputs,
   outputs,
   stateVersion,
+  vars,
   ...
 }:
 let
-  helpers = import ./helpers.nix { inherit inputs outputs stateVersion; };
+  helpers = import ./helpers.nix {
+    inherit
+      inputs
+      outputs
+      stateVersion
+      vars
+      ;
+  };
 in
 {
   inherit (helpers) mkHome;

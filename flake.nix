@@ -55,7 +55,23 @@
       inherit (nixpkgs) lib;
       # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
       stateVersion = lib.mkDefault "25.11";
-      utils = import ./lib { inherit inputs outputs stateVersion; };
+      vars = {
+        domain = "meep.sh";
+        email = "jacbart@gmail.com";
+        timezone = "America/Phoenix";
+        acmeDnsProvider = "cloudflare";
+        lanSubnet = "10.120.0.0/24";
+        lanGateway = "10.120.0.1";
+        lanDomain = "lan.meep.sh";
+      };
+      utils = import ./lib {
+        inherit
+          inputs
+          outputs
+          stateVersion
+          vars
+          ;
+      };
     in
     {
       # home-manager switch -b backup --flake $HOME/workspace/personal/nix-config

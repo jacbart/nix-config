@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, vars, ... }:
 let
   package = pkgs.unstable.audiobookshelf;
   subdomain = "books";
-  domain = "meep.sh";
+  domain = vars.domain;
 in
 {
   environment.systemPackages = [ package ];

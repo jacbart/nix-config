@@ -2,12 +2,13 @@
   config,
   lib,
   pkgs,
+  vars,
   ...
 }:
 let
   user = "root";
   group = "root";
-  domain = "meep.sh";
+  domain = vars.domain;
   netbird_subdomain = "nb";
   zitadel_subdomain = "auth";
 

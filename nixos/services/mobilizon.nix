@@ -1,6 +1,6 @@
-_:
+{ vars, ... }:
 let
-  domain = "meep.sh";
+  domain = vars.domain;
 in
 {
   services.mobilizon = {

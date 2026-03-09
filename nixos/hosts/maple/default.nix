@@ -19,6 +19,7 @@
     ../../services/dendrite.nix
     # ../../services/postmoogle.nix
     ../../services/smartmon.nix
+    ./leadership-matrix.nix
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)

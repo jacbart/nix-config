@@ -1,12 +1,13 @@
 {
   config,
   pkgs,
+  vars,
   ...
 }:
 let
   instance = "maple";
   subdomain = "auth";
-  domain = "meep.sh";
+  domain = vars.domain;
   user = "zitadel";
   group = "zitadel";
   package = pkgs.zitadel;
