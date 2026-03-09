@@ -96,9 +96,9 @@
 
   # ── Hardware watchdog ─────────────────────────────────────────────────
   # Auto-reboot on kernel hang -- important for always-on headless server
-  systemd.watchdog = {
-    runtimeTime = "30s";
-    rebootTime = "10min";
+  systemd.settings.Manager = {
+    RuntimeWatchdogSec = "30s";
+    RebootWatchdogSec = "10min";
   };
 
   networking = {
@@ -112,6 +112,7 @@
         "minio.meep.sh"
         "s3.meep.sh"
         "wiki.meep.sh"
+        "cnc.meep.sh"
       ];
       "100.78.207.83" = [
         "unicron"

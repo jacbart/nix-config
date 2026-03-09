@@ -1,6 +1,9 @@
-{ inputs, vars, ... }:
 {
-
+  inputs,
+  vars,
+  ...
+}:
+{
   imports = [ inputs.leadership-matrix.nixosModules.default ];
 
   services.leadership-matrix = {
@@ -12,6 +15,8 @@
     # Run as a specific user/group
     user = "root";
     group = "root";
+
+    workingDirectory = "/var/lib";
 
     # ZFS pool to monitor (omit to disable ZFS pool monitoring)
     zpoolName = "trunk";
@@ -32,12 +37,6 @@
       "redis-nextcloud"
     ];
 
-    # NVIDIA GPU monitoring (requires nvidia feature in the package)
-    nvidia = {
-      enable = true;
-      # nvmlPath = "/usr/lib/libnvidia-ml.so.1";  # custom path if needed
-    };
-
     # Additional environment variables
     extraEnv = {
       RUST_LOG = "info";
@@ -50,7 +49,7 @@
       addSSL = true;
       useACMEHost = vars.domain;
       locations."/" = {
-        proxyPass = "https://127.0.0.1:13000";
+        proxyPass = "http://127.0.0.2:13000";
       };
     };
   };
