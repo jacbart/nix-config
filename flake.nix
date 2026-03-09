@@ -26,7 +26,7 @@
     jaws.url = "github:jacbart/jaws";
     ff.url = "github:jacbart/ff";
 
-    # leadership-matrix.url = "git+ssh://git@github.com/taybart/leadership-matrix.git?ref=feat/configurable";
+    leadership-matrix.url = "git+ssh://git@github.com/taybart/leadership-matrix.git?ref=feat/configurable";
     rest.url = "github:taybart/rest";
 
     nix-diff.url = "github:Mic92/nix-diff-rs";
