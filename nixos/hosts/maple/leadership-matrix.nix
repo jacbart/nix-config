@@ -47,16 +47,10 @@
   services.nginx = {
     enable = true;
     virtualHosts."cnc.${vars.domain}" = {
+      addSSL = true;
       useACMEHost = vars.domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.2:13000";
-        proxyWebsockets = true; # needed if you need to use WebSocket
-        extraConfig =
-          # required when the target is also TLS server with multiple hosts
-          "proxy_ssl_server_name on;"
-          +
-            # required when the server wants to use HTTP Authentication
-            "proxy_pass_header Authorization;";
+        proxyPass = "https://127.0.0.1:13000";
       };
     };
   };
