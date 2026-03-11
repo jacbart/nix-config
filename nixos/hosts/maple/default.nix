@@ -18,6 +18,7 @@
     ../../services/audiobooks.nix
     ../../services/dendrite.nix
     # ../../services/postmoogle.nix
+    ../../services/microbin.nix
     ../../services/smartmon.nix
     ./leadership-matrix.nix
   ];
