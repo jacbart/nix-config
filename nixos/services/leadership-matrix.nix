@@ -1,7 +1,7 @@
 {
   inputs,
   vars,
-  services ? [ ],
+  hostname,
   ...
 }:
 let
@@ -22,12 +22,6 @@ in
 
     workingDirectory = "/var/lib";
 
-    # ZFS pool to monitor (omit to disable ZFS pool monitoring)
-    zpoolName = "trunk";
-
-    # Systemd services to monitor
-    inherit services;
-
     extraEnv = {
       RUST_LOG = "info";
     };
@@ -35,7 +29,7 @@ in
 
   services.nginx = {
     enable = true;
-    virtualHosts."cnc.${vars.domain}" = {
+    virtualHosts."${hostname}.${vars.domain}" = {
       addSSL = true;
       useACMEHost = vars.domain;
       locations."/" = {

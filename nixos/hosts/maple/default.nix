@@ -20,24 +20,27 @@
     # ../../services/postmoogle.nix
     ../../services/microbin.nix
     ../../services/smartmon.nix
-    ./leadership-matrix.nix
-    {
-      services = [
-        "smartd"
-        "nginx"
-        "tailscaled"
-        "fail2ban"
-        "zitadel"
-        "phpfpm-nextcloud"
-        "audiobookshelf"
-        "dendrite"
-        "kiwix"
-        "postgresql"
-        "minio"
-        "redis-nextcloud"
-      ];
-    }
+    ../../services/leadership-matrix.nix
   ];
+
+  services.leadership-matrix = {
+    services = lib.mkForce [
+      "leadership-matrix"
+      "smartd"
+      "nginx"
+      "tailscaled"
+      "fail2ban"
+      "zitadel"
+      "phpfpm-nextcloud"
+      "audiobookshelf"
+      "dendrite"
+      "kiwix"
+      "postgresql"
+      "minio"
+      "redis-nextcloud"
+    ];
+    zpoolName = lib.mkForce "trunk";
+  };
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
