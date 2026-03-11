@@ -6,6 +6,7 @@
     dataDir = "/var/lib/microbin";
     settings = {
       MICROBIN_HIDE_LOGO = false;
+      MICROBIN_BIND = "127.0.0.2";
       MICROBIN_PORT = 8283;
       MICROBIN_NO_LISTING = false;
       MICROBIN_PRIVATE = true;
@@ -27,6 +28,7 @@
       MICROBIN_ADMIN_USERNAME = "admin";
     };
   };
+  systemd.services.microbin.serviceConfig.DynamicUser = false;
   services.nginx = {
     enable = true;
     virtualHosts."bin.${vars.domain}" = {
