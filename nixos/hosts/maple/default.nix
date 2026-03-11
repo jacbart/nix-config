@@ -21,6 +21,22 @@
     ../../services/microbin.nix
     ../../services/smartmon.nix
     ./leadership-matrix.nix
+    {
+      services = [
+        "smartd"
+        "nginx"
+        "tailscaled"
+        "fail2ban"
+        "zitadel"
+        "phpfpm-nextcloud"
+        "audiobookshelf"
+        "dendrite"
+        "kiwix"
+        "postgresql"
+        "minio"
+        "redis-nextcloud"
+      ];
+    }
   ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)

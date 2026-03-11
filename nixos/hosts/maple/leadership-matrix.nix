@@ -1,6 +1,7 @@
 {
   inputs,
   vars,
+  services ? [ ],
   ...
 }:
 let
@@ -25,20 +26,7 @@ in
     zpoolName = "trunk";
 
     # Systemd services to monitor
-    services = [
-      "smartd"
-      "nginx"
-      "tailscaled"
-      "fail2ban"
-      "zitadel"
-      "phpfpm-nextcloud"
-      "audiobookshelf"
-      "dendrite"
-      "kiwix"
-      "postgresql"
-      "minio"
-      "redis-nextcloud"
-    ];
+    inherit services;
 
     extraEnv = {
       RUST_LOG = "info";
