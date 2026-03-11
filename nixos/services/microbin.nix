@@ -29,7 +29,7 @@
   };
   services.nginx = {
     enable = true;
-    virtualHosts."drop.${vars.domain}" = {
+    virtualHosts."bin.${vars.domain}" = {
       useACMEHost = vars.domain;
       locations."/" = {
         proxyPass = "http://127.0.0.2:8283";
