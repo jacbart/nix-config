@@ -1,4 +1,9 @@
 { pkgs, vars, ... }:
+let
+  inherit (pkgs) lib;
+  host = "127.0.0.2";
+  port = 8283;
+in
 {
   services.microbin = {
     enable = true;
@@ -6,8 +11,8 @@
     dataDir = "/var/lib/microbin";
     settings = {
       MICROBIN_HIDE_LOGO = false;
-      MICROBIN_BIND = "127.0.0.2";
-      MICROBIN_PORT = 8283;
+      MICROBIN_BIND = host;
+      MICROBIN_PORT = port;
       MICROBIN_NO_LISTING = false;
       MICROBIN_PRIVATE = true;
       MICROBIN_HIGHLIGHTSYNTAX = true;
@@ -28,20 +33,17 @@
       MICROBIN_ADMIN_USERNAME = "admin";
     };
   };
-  systemd.services.microbin.serviceConfig.DynamicUser = false;
+
+  systemd.services.microbin.serviceConfig.DynamicUser = lib.mkForce false;
+
   services.nginx = {
     enable = true;
     virtualHosts."bin.${vars.domain}" = {
+      addSSL = true;
       useACMEHost = vars.domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.2:8283";
-        proxyWebsockets = true; # needed if you need to use WebSocket
-        extraConfig =
-          # required when the target is also TLS server with multiple hosts
-          "proxy_ssl_server_name on;"
-          +
-            # required when the server wants to use HTTP Authentication
-            "proxy_pass_header Authorization;";
+        proxyPass = "http://${host}:${builtins.toString port}";
+        proxyWebsockets = true;
       };
     };
   };
