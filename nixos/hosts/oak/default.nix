@@ -17,7 +17,7 @@
   ];
 
   services.leadership-matrix = {
-    package = inputs.leadership-matrix.packages.${pkgs.system}.leadership-matrix.override {
+    package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
       cargoFeatures = [ "systemd" ];
     };
     services = lib.mkForce [
