@@ -14,7 +14,7 @@
   home = {
     packages = with pkgs; [
       unstable.bitwarden-desktop
-      unstable.element-desktop
+      # unstable.element-desktop
       # libreoffice-qt6-fresh # office document viewer
       geeqie # image veiwer
       # helvum # GTK patchbay for pipewire
@@ -26,9 +26,9 @@
       unstable.vivaldi
 
       gimp-with-plugins
-      unstable.zoom-us
-      unstable.discord
-      unstable.slack
+      # unstable.zoom-us
+      # unstable.discord
+      # unstable.slack
     ];
     file."${config.home.homeDirectory}/Pictures/wallpapers/bg.jpg".source = ../files/bg.jpg;
   };
