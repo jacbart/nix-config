@@ -1,6 +1,8 @@
 {
   modulesPath,
+  pkgs,
   lib,
+  inputs,
   ...
 }:
 {
@@ -9,9 +11,22 @@
     ../../security/acme-proxy.nix
     ../../services/fail2ban.nix
     # ../../services/anubis.nix
+    ../../services/leadership-matrix.nix
     ../../services/tailscale.nix
     ./nginx.nix
   ];
+
+  services.leadership-matrix = {
+    package = inputs.leadership-matrix.packages.${pkgs.system}.leadership-matrix.override {
+      cargoFeatures = [ "systemd" ];
+    };
+    services = lib.mkForce [
+      "leadership-matrix"
+      "nginx"
+      "tailscaled"
+      "fail2ban"
+    ];
+  };
 
   virtualisation.digitalOceanImage.compressionMethod = "bzip2";
   networking = {
