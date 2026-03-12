@@ -20,6 +20,7 @@ in
       "${domain}" = mkCert domain;
       "matrix.${domain}" = mkCert "matrix.${domain}";
       "tun.${domain}" = mkCert "tun.${domain}";
+      "oak.${domain}" = mkCert "oak.${domain}";
     };
   };
 }

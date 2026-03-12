@@ -198,7 +198,7 @@ in
                 parameterNames = true;
                 rangeVariableTypes = true;
               };
-              buildFlags = [ "-tags=stub" ];
+              buildFlags = [ "-tags=stub,redis" ];
             };
           };
 

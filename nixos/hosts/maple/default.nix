@@ -16,6 +16,7 @@
     ../../services/zitadel.nix
     ../../services/nextcloud-server.nix
     ../../services/audiobooks.nix
+    # ../../services/tentenmail.nix
     ../../services/dendrite.nix
     # ../../services/postmoogle.nix
     ../../services/microbin.nix
@@ -132,7 +133,6 @@
         "minio.meep.sh"
         "s3.meep.sh"
         "wiki.meep.sh"
-        "cnc.meep.sh"
       ];
       "100.78.207.83" = [
         "unicron"
