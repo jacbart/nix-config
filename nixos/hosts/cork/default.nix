@@ -20,7 +20,7 @@
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
     ../../apps/steam.nix
-    ../../services/leadership-matrix.nix.nix
+    ../../services/leadership-matrix.nix
   ];
 
   services.leadership-matrix = {

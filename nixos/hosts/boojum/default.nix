@@ -18,7 +18,7 @@
     # ../../services/minio-client.nix
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
-    ../../services/leadership-matrix.nix.nix
+    ../../services/leadership-matrix.nix
     ./virt.nix
   ];
 

@@ -10,7 +10,7 @@
     ../distributed-builds.nix
     # ./remote-builder.nix
     ../../services/tailscale.nix
-    ../../services/leadership-matrix.nix.nix
+    ../../services/leadership-matrix.nix
   ];
 
   services.leadership-matrix = {
