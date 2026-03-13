@@ -105,11 +105,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769800271,
-        "narHash": "sha256-vrwZnNY7DypyWyHRqQ0uIBiQ5hZ6MRMfq5Gjl6VoLiA=",
+        "lastModified": 1773358869,
+        "narHash": "sha256-HsXoFwS1JQdBQ4nXaOsLsM3bDyTc7xEIaF73diUptRA=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "a9581bcdc469fdf34cb92519ee973045b5e8c8e4",
+        "rev": "54b770f235507648267634858673ff8577aedf19",
         "type": "github"
       },
       "original": {
@@ -162,11 +162,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1773381545,
-        "narHash": "sha256-8OjD4kzMjV4blelIxNGUawNosvWpTv4V2+pBGgz5ddI=",
+        "lastModified": 1773382559,
+        "narHash": "sha256-BfYTDzYlBOZPb9h95uQ9wn5NAJUI0p8pT7qm5UlJmYw=",
         "ref": "feat/configurable",
-        "rev": "39be5b3069073eabde8324a021c53b3fa1a55bf7",
-        "revCount": 72,
+        "rev": "b314951ef3ef7623c464c43739f675e4bfb81828",
+        "revCount": 74,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -179,16 +179,16 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1768160797,
-        "narHash": "sha256-TVKn52SoKq8mMyW/x3NPPskGVurFdnGGV0DGvnL0gak=",
+        "lastModified": 1772966630,
+        "narHash": "sha256-qzVtneydMSjNZXzNbxQG9VvJc490keS9RNlbUCfiQas=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "fb562abba93fb15f66a71a9fc1d94bb1ea21a2d4",
+        "rev": "26842787496f2293c676fb36db38dacfd63497e0",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "2.33-maintenance",
+        "ref": "2.34-maintenance",
         "repo": "nix",
         "type": "github"
       }
@@ -216,16 +216,16 @@
     "nix-eval-jobs": {
       "flake": false,
       "locked": {
-        "lastModified": 1767025318,
-        "narHash": "sha256-i68miKHGdueWggcDAF+Kca9g6S3ipkW629XbMpQYfn0=",
-        "owner": "nix-community",
+        "lastModified": 1773356729,
+        "narHash": "sha256-OFGRoJOYhvZ3Enk5a8vMy0QNcG5ZxyzFhyHMrwKXde8=",
+        "owner": "NixOS",
         "repo": "nix-eval-jobs",
-        "rev": "79dd7adbb5f75b08fb4b9bddd712ebc52baa46bc",
+        "rev": "65ebf5b7cd453a27af09cf02b1fc57b3568cc4b7",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "v2.33.0",
+        "owner": "NixOS",
+        "ref": "v2.34.1",
         "repo": "nix-eval-jobs",
         "type": "github"
       }
