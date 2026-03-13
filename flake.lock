@@ -162,11 +162,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1773380195,
-        "narHash": "sha256-eCknYCF8cE7eqOJkFdGx+ffeS/pZRKkkXISAawGTEmo=",
+        "lastModified": 1773381545,
+        "narHash": "sha256-8OjD4kzMjV4blelIxNGUawNosvWpTv4V2+pBGgz5ddI=",
         "ref": "feat/configurable",
-        "rev": "8fd9a4abfbadf6d303eedd4cfad9bda93508439a",
-        "revCount": 71,
+        "rev": "39be5b3069073eabde8324a021c53b3fa1a55bf7",
+        "revCount": 72,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
