@@ -31,7 +31,7 @@ in
     enable = true;
     virtualHosts."${hostname}.${vars.domain}" = {
       addSSL = true;
-      useACMEHost = vars.domain;
+      useACMEHost = if hostname == "maple" then vars.domain else "${hostname}.${vars.domain}";
       locations."/" = {
         proxyPass = "http://127.0.0.2:${port}";
         proxyWebsockets = true;
