@@ -18,8 +18,19 @@
     # ../../services/minio-client.nix
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
+    ../../services/leadership-matrix.nix.nix
     ./virt.nix
   ];
+
+  services.leadership-matrix = {
+    package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      cargoFeatures = [ "systemd" ];
+    };
+    services = lib.mkForce [
+      "leadership-matrix"
+      "tailscaled"
+    ];
+  };
 
   environment.systemPackages = [
     pkgs.uucp

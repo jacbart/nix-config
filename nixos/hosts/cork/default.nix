@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   username,
   ...
 }:
@@ -19,7 +20,22 @@
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
     ../../apps/steam.nix
+    ../../services/leadership-matrix.nix.nix
   ];
+
+  services.leadership-matrix = {
+    package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      cargoFeatures = [
+        "nvidia"
+        "systemd"
+        "smart"
+      ];
+    };
+    services = lib.mkForce [
+      "leadership-matrix"
+      "tailscaled"
+    ];
+  };
 
   # virtualisation
   programs.virt-manager.enable = true;

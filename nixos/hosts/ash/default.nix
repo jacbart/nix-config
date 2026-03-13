@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -9,7 +10,18 @@
     ../distributed-builds.nix
     # ./remote-builder.nix
     ../../services/tailscale.nix
+    ../../services/leadership-matrix.nix.nix
   ];
+
+  services.leadership-matrix = {
+    package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      cargoFeatures = [ "systemd" ];
+    };
+    services = lib.mkForce [
+      "leadership-matrix"
+      "tailscaled"
+    ];
+  };
 
   # use x86_64 steam and allow unfree license
   nixpkgs.overlays = [
