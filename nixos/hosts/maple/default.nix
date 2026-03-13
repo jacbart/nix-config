@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }:
 {
@@ -25,6 +26,14 @@
   ];
 
   services.leadership-matrix = {
+    package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      cargoFeatures = [
+        "aggregate"
+        "systemd"
+        "zfs"
+        "smart"
+      ];
+    };
     services = lib.mkForce [
       "leadership-matrix"
       "smartd"
