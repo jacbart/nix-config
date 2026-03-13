@@ -11,6 +11,7 @@
     (import ./disks.nix { })
     ./remote-builder.nix
     ../../hardware/systemd-boot.nix
+    ../../security/acme-hostname.nix
     ../../services/qemu.nix
     ../../services/docker.nix
     ../../services/bluetooth.nix
