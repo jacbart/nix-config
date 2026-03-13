@@ -11,6 +11,7 @@
     (import ./disks.nix { })
     ./remote-builder.nix
     ../../hardware/systemd-boot.nix
+    ../../security/acme-hostname.nix
     ../../services/qemu.nix
     ../../services/docker.nix
     ../../services/bluetooth.nix
@@ -18,8 +19,19 @@
     # ../../services/minio-client.nix
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
+    ../../services/leadership-matrix.nix
     ./virt.nix
   ];
+
+  services.leadership-matrix = {
+    package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      cargoFeatures = [ "systemd" ];
+    };
+    services = lib.mkForce [
+      "leadership-matrix"
+      "tailscaled"
+    ];
+  };
 
   environment.systemPackages = [
     pkgs.uucp

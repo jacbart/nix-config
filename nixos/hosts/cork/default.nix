@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   username,
   ...
 }:
@@ -11,6 +12,7 @@
     ../../hardware/systemd-boot.nix
     ../../hardware/nvidia-3060ti.nix
     ../../hardware/hardwarekey.nix
+    ../../security/acme-hostname.nix
     ../../services/qemu.nix
     ../../services/docker.nix
     ../../services/bluetooth.nix
@@ -19,7 +21,22 @@
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
     ../../apps/steam.nix
+    ../../services/leadership-matrix.nix
   ];
+
+  services.leadership-matrix = {
+    package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      cargoFeatures = [
+        "nvidia"
+        "systemd"
+        "smart"
+      ];
+    };
+    services = lib.mkForce [
+      "leadership-matrix"
+      "tailscaled"
+    ];
+  };
 
   # virtualisation
   programs.virt-manager.enable = true;
