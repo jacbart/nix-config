@@ -5,9 +5,9 @@ let
   # -S on: Enables attribute autosave
   # -n standby,q: Don’t check if disk is in standby, and be quiet about it
   # -s (S//./02|L//6/03): Schedule short self-tests daily at 2am, and long self-tests weekly on Saturdays at 3am
-  # -W 4,35,40: Sets temperature thresholds (low, high, critical)
+  # -W 4,35,40: Sets temperature thresholds (freq, low, high)
   # -m root: Send email alerts to root user
-  options = "-a -o on -S on -n standby,q -s (S//./02|L//6/03) -W 4,35,40 -m root";
+  options = "-a -o on -S on -n standby,q -s (S//./02|L//6/03) -W 4,20,50 -m root";
 in
 {
   environment.systemPackages = with pkgs; [
