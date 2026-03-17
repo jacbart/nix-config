@@ -1,19 +1,20 @@
-{ pkgs, vars, ... }:
+{ vars, ... }:
 let
-  package = pkgs.unstable.audiobookshelf;
-  subdomain = "books";
+  subdomain = "calibre";
   domain = vars.domain;
 in
 {
-  environment.systemPackages = [ package ];
-
-  services.audiobookshelf = {
+  services.calibre-web = {
     enable = true;
-    inherit package;
     group = "media";
-    host = "127.0.0.2";
-    port = 8234;
-    openFirewall = false;
+    listen = {
+      ip = "127.0.0.2";
+      port = 8235;
+    };
+    options = {
+      enableBookUploading = true;
+      enableBookConversion = true;
+    };
   };
 
   services.nginx = {
@@ -22,7 +23,7 @@ in
       addSSL = true;
       useACMEHost = domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.2:8234";
+        proxyPass = "http://127.0.0.2:8235";
         proxyWebsockets = true; # needed if you need to use WebSocket
         extraConfig =
           # required when the target is also TLS server with multiple hosts

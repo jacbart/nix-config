@@ -16,7 +16,7 @@
     ../../services/postgresql.nix
     ../../services/zitadel.nix
     ../../services/nextcloud-server.nix
-    ../../services/audiobooks.nix
+    ../../services/books.nix
     # ../../services/tentenmail.nix
     ../../services/dendrite.nix
     # ../../services/postmoogle.nix

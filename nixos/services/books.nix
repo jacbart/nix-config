@@ -1,6 +1,11 @@
 { pkgs, ... }:
 {
-  imports = [ ./audiobookshelf.nix ];
+  users.groups.media = { };
+
+  imports = [
+    ./audiobookshelf.nix
+    ./calibre.nix
+  ];
 
   environment.systemPackages = [
     pkgs.unstable.libation
