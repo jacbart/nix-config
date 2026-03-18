@@ -160,6 +160,7 @@ in
             cat > ${dataDir}/config/nginx.conf << 'EOF'
             pid ${dataDir}/tmp/production-nginx.pid;
             daemon off;
+            error_log ${dataDir}/logs/production-error.log debug;
 
             worker_processes 4;
 
@@ -168,6 +169,9 @@ in
             }
 
             http {
+                lua_package_path "${dataDir}/app/?.lua;${dataDir}/app/?/init.lua;${cfg.package}/share/koreader-sync-server/lib/?.lua;${cfg.package}/share/koreader-sync-server/lib/?/init.lua;;";
+                lua_package_cpath "${dataDir}/lib/?.so;${cfg.package}/lib/?.so;;";
+                
                 # Gin initialization
                 init_by_lua_block {
                     require "gin"
@@ -178,8 +182,6 @@ in
                     
                     # Access log with buffer
                     access_log ${dataDir}/logs/production-access.log combined buffer=16k;
-                    # Error log
-                    error_log ${dataDir}/logs/production-error.log debug;
                     
                     location / {
                         content_by_lua_block {
@@ -191,6 +193,7 @@ in
             EOF
 
             ${pkgs.coreutils}/bin/chown ${user}:${group} ${dataDir}/config/nginx.conf
+            ${pkgs.coreutils}/bin/chmod 644 ${dataDir}/config/nginx.conf
           ''}
         '';
 
