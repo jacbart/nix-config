@@ -40,6 +40,8 @@ stdenv.mkDerivation {
   pname = "koreader-sync-server";
   version = "2.0";
 
+  dontUseCmakeConfigure = true;
+
   src = koreaderSyncSrc;
 
   nativeBuildInputs = [
