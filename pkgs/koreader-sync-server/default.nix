@@ -47,6 +47,7 @@ let
       luafilesystem
       luasocket
       luasec
+      penlight
     ]
   );
 
