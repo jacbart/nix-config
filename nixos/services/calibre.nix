@@ -8,9 +8,10 @@ in
     enable = true;
     group = "media";
     listen = {
-      ip = "127.0.0.2";
+      ip = "0.0.0.0";
       port = 8235;
     };
+    openFirewall = true;
     options = {
       enableBookUploading = true;
       enableBookConversion = true;
