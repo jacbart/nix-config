@@ -102,8 +102,8 @@ in
       port = cfg.redis.port;
       unixSocket = cfg.redis.unixSocket;
       unixSocketPerm = 770;
-      dir = redisDataDir;
       settings = {
+        dir = redisDataDir;
         maxmemory = "256mb";
         maxmemory-policy = "allkeys-lru";
         save = [
