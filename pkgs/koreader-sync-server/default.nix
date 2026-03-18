@@ -4,79 +4,18 @@
   fetchurl,
   fetchFromGitHub,
   makeWrapper,
-  openssl,
-  pcre,
-  zlib,
+  openresty,
   luajit,
   luarocks,
   redis,
-  which,
   git,
   unzip,
   gnused,
   coreutils,
   gnugrep,
-  gawk,
-  gnutar,
-  gzip,
-  curl,
-  cacert,
 }:
 
 let
-  openrestyVersion = "1.27.1.2";
-
-  openresty = stdenv.mkDerivation rec {
-    pname = "openresty";
-    version = openrestyVersion;
-
-    src = fetchurl {
-      url = "https://openresty.org/download/openresty-${version}.tar.gz";
-      sha256 = "sha256-dPB29+NksqmabF+btTHCdhDHiYWr6Va0QrGSoilfdUg=";
-    };
-
-    nativeBuildInputs = [
-      which
-      makeWrapper
-    ];
-    buildInputs = [
-      openssl
-      pcre
-      zlib
-      luajit
-    ];
-
-    configureFlags = [
-      "--prefix=${placeholder "out"}"
-      "--with-http_ssl_module"
-      "--with-http_v2_module"
-      "--with-http_realip_module"
-      "--with-http_stub_status_module"
-      "--with-luajit"
-    ];
-
-    preConfigure = ''
-      patchShebangs ./configure
-      export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I${luajit}/include"
-      export NIX_LDFLAGS="$NIX_LDFLAGS -L${luajit}/lib"
-    '';
-
-    postInstall = ''
-      ln -s $out/nginx/sbin/nginx $out/bin/openresty
-      ln -s $out/bin/openresty $out/bin/nginx
-    '';
-
-    enableParallelBuilding = true;
-
-    meta = with lib; {
-      description = "Fast web app server by bundling NGINX with LuaJIT";
-      homepage = "https://openresty.org";
-      license = licenses.bsd2;
-      platforms = platforms.all;
-      maintainers = with maintainers; [ ];
-    };
-  };
-
   ginSrc = fetchFromGitHub {
     owner = "ostinelli";
     repo = "gin";
@@ -111,17 +50,11 @@ stdenv.mkDerivation {
     gnused
     coreutils
     gnugrep
-    gawk
-    gnutar
-    gzip
-    curl
-    cacert
   ];
 
   buildInputs = [
     openresty
     luajit
-    openssl
     redis
   ];
 
@@ -158,11 +91,6 @@ stdenv.mkDerivation {
     luarocks install --tree="$LUAROCKS_PREFIX" luasec 2>&1 || true
     luarocks install --tree="$LUAROCKS_PREFIX" redis-lua 2>&1 || true
 
-    # Verify installations
-    echo "Installed rocks in $LUAROCKS_PREFIX:"
-    ls -la "$LUAROCKS_PREFIX/share/lua/5.1/" 2>/dev/null || true
-    ls -la "$LUAROCKS_PREFIX/lib/lua/5.1/" 2>/dev/null || true
-
     runHook postBuild
   '';
 
@@ -183,7 +111,7 @@ stdenv.mkDerivation {
     cp -r $LUAROCKS_PREFIX/share/lua/5.1/* $out/share/koreader-sync-server/lib/ 2>/dev/null || true
     cp -r $LUAROCKS_PREFIX/lib/lua/5.1/* $out/lib/ 2>/dev/null || true
 
-    # Create wrapper scripts
+    # Create openresty wrapper with correct Lua paths
     makeWrapper ${openresty}/bin/openresty $out/bin/openresty \
       --set LUA_PATH "$out/share/koreader-sync-server/lib/?.lua;$out/share/koreader-sync-server/lib/?/init.lua;;" \
       --set LUA_CPATH "$out/lib/?.so;;"
