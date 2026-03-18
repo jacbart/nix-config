@@ -70,7 +70,7 @@ in
 
       unixSocket = lib.mkOption {
         type = lib.types.str;
-        default = "${dataDir}/redis/redis.sock";
+        default = "/run/redis-kosync/redis.sock";
         description = "Path to Redis Unix socket.";
       };
     };
@@ -95,7 +95,8 @@ in
       "d ${dataDir}/config 0755 ${user} ${group} -"
       "d ${dataDir}/tmp 0755 ${user} ${group} -"
     ]
-    ++ lib.optional cfg.redis.enable "d ${redisDataDir} 0755 ${user} ${group} -";
+    ++ lib.optional cfg.redis.enable "d ${redisDataDir} 0755 ${user} ${group} -"
+    ++ lib.optional cfg.redis.enable "d /run/redis-kosync 0755 ${user} ${group} -";
 
     # Redis service (dedicated instance)
     services.redis.servers.kosync = lib.mkIf cfg.redis.enable {
@@ -147,8 +148,7 @@ in
             ${pkgs.coreutils}/bin/mkdir -p ${dataDir}/{logs,app,config,tmp}
             ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}
             # Make directories accessible (755 for dirs, 644 for files)
-            ${pkgs.coreutils}/bin/find ${dataDir} -type d -exec chmod 755 {} \;
-            ${pkgs.coreutils}/bin/find ${dataDir} -type f -exec chmod 644 {} \; 2>/dev/null || true
+            ${pkgs.coreutils}/bin/chmod -R u+rwX,go+rX ${dataDir}
 
             # Copy app files if not present
             if [ ! -f ${dataDir}/app/main.lua ]; then
@@ -157,8 +157,7 @@ in
               ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/config/* ${dataDir}/config/ 2>/dev/null || true
               ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/db/* ${dataDir}/db/ 2>/dev/null || true
               ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}
-              ${pkgs.coreutils}/bin/find ${dataDir} -type d -exec chmod 755 {} \;
-              ${pkgs.coreutils}/bin/find ${dataDir} -type f -exec chmod 644 {} \; 2>/dev/null || true
+              ${pkgs.coreutils}/bin/chmod -R u+rwX,go+rX ${dataDir}
             fi
 
             # Generate proper nginx.conf with substituted template variables
