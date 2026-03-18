@@ -35,7 +35,10 @@ let
       sha256 = "sha256-dPB29+NksqmabF+btTHCdhDHiYWr6Va0QrGSoilfdUg=";
     };
 
-    nativeBuildInputs = [ which ];
+    nativeBuildInputs = [
+      which
+      makeWrapper
+    ];
     buildInputs = [
       openssl
       pcre
@@ -53,6 +56,10 @@ let
     ];
 
     preConfigure = ''
+      patchShebangs ./configure
+      patchShebangs --host ./configure
+      find . -type f -name "*.pl" -exec patchShebangs {} \;
+      find . -type f -name "*.sh" -exec patchShebangs {} \;
       export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -I${luajit}/include"
       export NIX_LDFLAGS="$NIX_LDFLAGS -L${luajit}/lib"
     '';

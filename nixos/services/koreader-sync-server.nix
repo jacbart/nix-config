@@ -103,7 +103,7 @@ in
       unixSocket = cfg.redis.unixSocket;
       unixSocketPerm = 770;
       settings = {
-        dir = redisDataDir;
+        dir = lib.mkForce redisDataDir;
         maxmemory = "256mb";
         maxmemory-policy = "allkeys-lru";
         save = [
