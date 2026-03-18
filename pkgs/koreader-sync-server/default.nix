@@ -71,11 +71,7 @@ stdenv.mkDerivation {
 
     # Set luarocks to use local tree
     mkdir -p "$LUAROCKS_PREFIX/etc/luarocks"
-    cat > "$LUAROCKS_PREFIX/etc/luarocks/config.lua" << 'LUACONFIG'
-    rocks_trees = {
-      { name = "user", root = os.getenv("LUAROCKS_PREFIX") }
-    }
-    LUACONFIG
+    echo "rocks_trees = { { name = \"user\", root = \"$LUAROCKS_PREFIX\" } }" > "$LUAROCKS_PREFIX/etc/luarocks/config.lua"
     export LUAROCKS_CONFIG="$LUAROCKS_PREFIX/etc/luarocks/config.lua"
 
     # Fetch and patch gin
@@ -104,14 +100,20 @@ stdenv.mkDerivation {
     mkdir -p $out/share/koreader-sync-server/{app,config,db,lib}
 
     # Copy application code
-    cp -r app/* $out/share/koreader-sync-server/app/
-    cp -r config/* $out/share/koreader-sync-server/config/
-    cp -r db/* $out/share/koreader-sync-server/db/
-    cp -r lib/* $out/share/koreader-sync-server/lib/
+    for dir in app config db lib; do
+      if [ -d "$dir" ] && [ "$(ls -A $dir)" ]; then
+        cp -r $dir/* $out/share/koreader-sync-server/$dir/ 2>/dev/null || true
+      fi
+    done
 
-    # Copy luarocks installed packages
-    cp -r $LUAROCKS_PREFIX/share/lua/5.1/* $out/share/koreader-sync-server/lib/ 2>/dev/null || true
-    cp -r $LUAROCKS_PREFIX/lib/lua/5.1/* $out/lib/ 2>/dev/null || true
+    # Copy luarocks installed packages if they exist
+    if [ -d "$LUAROCKS_PREFIX/share/lua/5.1" ] && [ "$(ls -A $LUAROCKS_PREFIX/share/lua/5.1)" ]; then
+      cp -r $LUAROCKS_PREFIX/share/lua/5.1/* $out/share/koreader-sync-server/lib/ 2>/dev/null || true
+    fi
+
+    if [ -d "$LUAROCKS_PREFIX/lib/lua/5.1" ] && [ "$(ls -A $LUAROCKS_PREFIX/lib/lua/5.1)" ]; then
+      cp -r $LUAROCKS_PREFIX/lib/lua/5.1/* $out/lib/ 2>/dev/null || true
+    fi
 
     # Create openresty wrapper with correct Lua paths
     makeWrapper ${openresty}/bin/openresty $out/bin/openresty \
