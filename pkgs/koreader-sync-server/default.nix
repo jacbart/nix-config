@@ -175,4 +175,8 @@ stdenv.mkDerivation {
     platforms = platforms.linux;
     maintainers = with maintainers; [ ];
   };
+
+  passthru = {
+    inherit luajitWithPackages;
+  };
 }
