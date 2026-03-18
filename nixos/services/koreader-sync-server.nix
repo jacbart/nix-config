@@ -87,15 +87,15 @@ in
 
     users.groups.${group} = { };
 
-    # Data directories
+    # Data directories - use 0755 so kosync can access even with group quirks
     systemd.tmpfiles.rules = [
-      "d ${dataDir} 0750 ${user} ${group} -"
-      "d ${dataDir}/logs 0750 ${user} ${group} -"
-      "d ${dataDir}/app 0750 ${user} ${group} -"
-      "d ${dataDir}/config 0750 ${user} ${group} -"
-      "d ${dataDir}/tmp 0750 ${user} ${group} -"
+      "d ${dataDir} 0755 ${user} ${group} -"
+      "d ${dataDir}/logs 0755 ${user} ${group} -"
+      "d ${dataDir}/app 0755 ${user} ${group} -"
+      "d ${dataDir}/config 0755 ${user} ${group} -"
+      "d ${dataDir}/tmp 0755 ${user} ${group} -"
     ]
-    ++ lib.optional cfg.redis.enable "d ${redisDataDir} 0750 ${user} ${group} -";
+    ++ lib.optional cfg.redis.enable "d ${redisDataDir} 0755 ${user} ${group} -";
 
     # Redis service (dedicated instance)
     services.redis.servers.kosync = lib.mkIf cfg.redis.enable {
@@ -146,6 +146,9 @@ in
             # Create data directory structure as root
             ${pkgs.coreutils}/bin/mkdir -p ${dataDir}/{logs,app,config,tmp}
             ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}
+            # Make directories accessible (755 for dirs, 644 for files)
+            ${pkgs.coreutils}/bin/find ${dataDir} -type d -exec chmod 755 {} \;
+            ${pkgs.coreutils}/bin/find ${dataDir} -type f -exec chmod 644 {} \; 2>/dev/null || true
 
             # Copy app files if not present
             if [ ! -f ${dataDir}/app/main.lua ]; then
@@ -154,6 +157,8 @@ in
               ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/config/* ${dataDir}/config/ 2>/dev/null || true
               ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/db/* ${dataDir}/db/ 2>/dev/null || true
               ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}
+              ${pkgs.coreutils}/bin/find ${dataDir} -type d -exec chmod 755 {} \;
+              ${pkgs.coreutils}/bin/find ${dataDir} -type f -exec chmod 644 {} \; 2>/dev/null || true
             fi
 
             # Generate proper nginx.conf with substituted template variables
