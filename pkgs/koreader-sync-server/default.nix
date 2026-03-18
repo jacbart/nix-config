@@ -129,10 +129,10 @@ stdenv.mkDerivation {
 
     cd "@out@/share/koreader-sync-server"
 
-    if [ "$1" = "start" ]; then
+    if [ -z "$1" ] || [ "$1" = "start" ]; then
       exec @out@/bin/openresty -p "@out@/share/koreader-sync-server" -c config/nginx.conf
     else
-      echo "Usage: gin start"
+      echo "Usage: koreader-sync-server [start]"
       exit 1
     fi
     GINWRAPPER
