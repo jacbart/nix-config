@@ -84,14 +84,14 @@ let
     owner = "ostinelli";
     repo = "gin";
     rev = "cb35e87fa0671fcf25e5bce5cb9487dee8b497e2";
-    sha256 = "sha256-VyCTsyrPO/zN4fo95SFgzMN6mPPOItWtBP3WyoNV3No=";
+    sha256 = "sha256-HUtqs1nx659eSpBupTGVyoe/BW5HmhJTaoIKLjIzidM=";
   };
 
   koreaderSyncSrc = fetchFromGitHub {
     owner = "koreader";
     repo = "koreader-sync-server";
     rev = "v2.0";
-    sha256 = "sha256-l355M1Hn3gRZmEuRyF7RFMn7dNTrUKxCpV3PEfKAkn0=";
+    sha256 = "sha256-KbRZ/KBGSXV01vJTAvPtvVE/mIvDvQ324eCLKi7QBU8=";
   };
 
   ginPatch = fetchurl {
@@ -100,7 +100,7 @@ let
   };
 
 in
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "koreader-sync-server";
   version = "2.0";
 
