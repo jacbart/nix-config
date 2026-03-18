@@ -176,7 +176,7 @@ in
             }
 
             http {
-                lua_package_path "${dataDir}/app/?.lua;${dataDir}/app/?/init.lua;${cfg.package}/share/koreader-sync-server/lib/?.lua;${cfg.package}/share/koreader-sync-server/lib/?/init.lua;${cfg.package}/share/koreader-sync-server/lib/redis-lua/?.lua;${cfg.package.luajitWithPackages}/share/lua/5.1/?.lua;${cfg.package.luajitWithPackages}/share/lua/5.1/?/init.lua;;";
+                lua_package_path "${dataDir}/?.lua;${dataDir}/?/init.lua;${dataDir}/app/?.lua;${dataDir}/app/?/init.lua;${cfg.package}/share/koreader-sync-server/lib/?.lua;${cfg.package}/share/koreader-sync-server/lib/?/init.lua;${cfg.package}/share/koreader-sync-server/lib/redis-lua/?.lua;${cfg.package.luajitWithPackages}/share/lua/5.1/?.lua;${cfg.package.luajitWithPackages}/share/lua/5.1/?/init.lua;;";
                 lua_package_cpath "${dataDir}/lib/?.so;${cfg.package}/lib/?.so;${cfg.package.luajitWithPackages}/lib/lua/5.1/?.so;;";
                 
                 # Gin initialization
