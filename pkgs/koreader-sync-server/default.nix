@@ -44,6 +44,7 @@ let
   # Create a luajit with required packages
   luajitWithPackages = luajit.withPackages (
     ps: with ps; [
+      luafilesystem
       luasocket
       luasec
     ]
