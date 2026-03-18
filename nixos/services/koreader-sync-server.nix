@@ -64,8 +64,8 @@ in
 
       port = lib.mkOption {
         type = lib.types.port;
-        default = 0; # Unix socket only
-        description = "Redis port (0 for Unix socket only).";
+        default = 6379; # TCP port for Redis (upstream db/redis.lua expects 127.0.0.1:6379)
+        description = "Redis port (6379 for TCP, 0 for Unix socket only).";
       };
 
       unixSocket = lib.mkOption {
