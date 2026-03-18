@@ -38,7 +38,7 @@ let
     owner = "nrk";
     repo = "redis-lua";
     rev = "v2.0.4";
-    sha256 = "sha256-XrbLfNDtplnO98Ix5DzV9JHL0EgEA00cgBNKFgTly14=";
+    sha256 = "sha256-716yWMrDj0rwhCGebE75b0oRwH5kwvh55WmbqCEhL0E=";
   };
 
   # Create a luajit with required packages
