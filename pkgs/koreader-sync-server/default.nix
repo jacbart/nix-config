@@ -6,10 +6,9 @@
   makeWrapper,
   openresty,
   luajit,
-  luarocks,
+  luajitPackages,
   redis,
   git,
-  unzip,
   gnused,
   coreutils,
   gnugrep,
@@ -35,6 +34,21 @@ let
     sha256 = "sha256-A8HaVjtEgU9dTZ4ciDw9QzOtdX29VbPy21/6XEPAchY=";
   };
 
+  redisLuaSrc = fetchFromGitHub {
+    owner = "nrk";
+    repo = "redis-lua";
+    rev = "v2.0.4";
+    sha256 = "sha256-XrbLfNDtplnO98Ix5DzV9JHL0EgEA00cgBNKFgTly14=";
+  };
+
+  # Create a luajit with required packages
+  luajitWithPackages = luajit.withPackages (
+    ps: with ps; [
+      luasocket
+      luasec
+    ]
+  );
+
 in
 stdenv.mkDerivation {
   pname = "koreader-sync-server";
@@ -46,9 +60,7 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     makeWrapper
-    luarocks
     git
-    unzip
     gnused
     coreutils
     gnugrep
@@ -56,38 +68,34 @@ stdenv.mkDerivation {
 
   buildInputs = [
     openresty
-    luajit
+    luajitWithPackages
     redis
   ];
 
   buildPhase = ''
     runHook preBuild
 
-    # Set up luarocks environment
-    export LUAROCKS_PREFIX="$TMPDIR/luarocks"
-    mkdir -p "$LUAROCKS_PREFIX"
-    export LUA_PATH="$LUAROCKS_PREFIX/share/lua/5.1/?.lua;$LUAROCKS_PREFIX/share/lua/5.1/?/init.lua;;"
-    export LUA_CPATH="$LUAROCKS_PREFIX/lib/lua/5.1/?.so;;"
+    # Create directories for gin and other manual deps
+    mkdir -p $out/share/koreader-sync-server/lib
 
-    # Set luarocks to use local tree
-    mkdir -p "$LUAROCKS_PREFIX/etc/luarocks"
-    echo "rocks_trees = { { name = \"user\", root = \"$LUAROCKS_PREFIX\" } }" > "$LUAROCKS_PREFIX/etc/luarocks/config.lua"
-    export LUAROCKS_CONFIG="$LUAROCKS_PREFIX/etc/luarocks/config.lua"
-
-    # Fetch and patch gin
-    cp -r ${ginSrc} gin
-    chmod -R +w gin
-    cd gin
+    # Fetch and patch gin framework
+    cp -r ${ginSrc} gin-src
+    chmod -R +w gin-src
+    cd gin-src
     patch -N -p1 < ${ginPatch} || true
 
-    # Build and install gin
-    luarocks make --tree="$LUAROCKS_PREFIX" 2>&1 || true
+    # Install gin manually to our lib directory
+    # Gin is a pure Lua framework, so we just need to copy the lua files
+    cp -r lib/* $out/share/koreader-sync-server/lib/ 2>/dev/null || true
+    cp -r *.lua $out/share/koreader-sync-server/lib/ 2>/dev/null || true
     cd ..
 
-    # Install Lua dependencies
-    luarocks install --tree="$LUAROCKS_PREFIX" luasocket 2>&1 || true
-    luarocks install --tree="$LUAROCKS_PREFIX" luasec 2>&1 || true
-    luarocks install --tree="$LUAROCKS_PREFIX" redis-lua 2>&1 || true
+    # Install redis-lua
+    cp -r ${redisLuaSrc}/* $out/share/koreader-sync-server/lib/redis.lua 2>/dev/null || true
+    # If redis-lua has a lib directory structure
+    if [ -d "${redisLuaSrc}/lib" ]; then
+      cp -r ${redisLuaSrc}/lib/* $out/share/koreader-sync-server/lib/
+    fi
 
     runHook postBuild
   '';
@@ -100,31 +108,29 @@ stdenv.mkDerivation {
     mkdir -p $out/share/koreader-sync-server/{app,config,db,lib}
 
     # Copy application code
-    for dir in app config db lib; do
-      if [ -d "$dir" ] && [ "$(ls -A $dir)" ]; then
+    for dir in app config db; do
+      if [ -d "$dir" ] && [ "$(ls -A $dir 2>/dev/null)" ]; then
         cp -r $dir/* $out/share/koreader-sync-server/$dir/ 2>/dev/null || true
       fi
     done
 
-    # Copy luarocks installed packages if they exist
-    if [ -d "$LUAROCKS_PREFIX/share/lua/5.1" ] && [ "$(ls -A $LUAROCKS_PREFIX/share/lua/5.1)" ]; then
-      cp -r $LUAROCKS_PREFIX/share/lua/5.1/* $out/share/koreader-sync-server/lib/ 2>/dev/null || true
-    fi
+    # Copy lib files (sync app code with lua modules)
+    cp -r lib/* $out/share/koreader-sync-server/lib/ 2>/dev/null || true
 
-    if [ -d "$LUAROCKS_PREFIX/lib/lua/5.1" ] && [ "$(ls -A $LUAROCKS_PREFIX/lib/lua/5.1)" ]; then
-      cp -r $LUAROCKS_PREFIX/lib/lua/5.1/* $out/lib/ 2>/dev/null || true
-    fi
+    # Set up proper Lua paths - use the luajit with packages
+    LUA_BASE="${luajitWithPackages}/lib/lua/${luajit.luaversion}"
+    LUA_SHARE="${luajitWithPackages}/share/lua/${luajit.luaversion}"
 
-    # Create openresty wrapper with correct Lua paths
+    # Create openresty wrapper with all Lua paths
     makeWrapper ${openresty}/bin/openresty $out/bin/openresty \
-      --set LUA_PATH "$out/share/koreader-sync-server/lib/?.lua;$out/share/koreader-sync-server/lib/?/init.lua;;" \
-      --set LUA_CPATH "$out/lib/?.so;;"
+      --set LUA_PATH "$out/share/koreader-sync-server/lib/?.lua;$out/share/koreader-sync-server/lib/?/init.lua;$LUA_SHARE/?.lua;$LUA_SHARE/?/init.lua;;" \
+      --set LUA_CPATH "${luajitWithPackages}/lib/lua/${luajit.luaversion}/?.so;$out/lib/?.so;;"
 
     # Create gin wrapper
     cat > $out/bin/gin << 'GINWRAPPER'
     #!/usr/bin/env bash
-    export LUA_PATH="@out@/share/koreader-sync-server/lib/?.lua;@out@/share/koreader-sync-server/lib/?/init.lua;;"
-    export LUA_CPATH="@out@/lib/?.so;;"
+    export LUA_PATH="@out@/share/koreader-sync-server/lib/?.lua;@out@/share/koreader-sync-server/lib/?/init.lua;@luashare@/?.lua;@luashare@/?/init.lua;;"
+    export LUA_CPATH="@luacpath@/?.so;@out@/lib/?.so;;"
     export GIN_APP_ROOT="@out@/share/koreader-sync-server/app"
 
     cd "@out@/share/koreader-sync-server"
@@ -136,7 +142,10 @@ stdenv.mkDerivation {
       exit 1
     fi
     GINWRAPPER
+
     sed -i "s|@out@|$out|g" $out/bin/gin
+    sed -i "s|@luashare@|${luajitWithPackages}/share/lua/${luajit.luaversion}|g" $out/bin/gin
+    sed -i "s|@luacpath@|${luajitWithPackages}/lib/lua/${luajit.luaversion}|g" $out/bin/gin
     chmod +x $out/bin/gin
 
     # Create the main server wrapper
