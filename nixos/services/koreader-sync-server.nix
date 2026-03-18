@@ -179,7 +179,7 @@ in
                 
                 # Gin initialization
                 init_by_lua_block {
-                    require "gin"
+                    require "gin.core.gin"
                 }
                 
                 server {
@@ -190,7 +190,7 @@ in
                     
                     location / {
                         content_by_lua_block {
-                            require "gin".run()
+                            require("gin.core.router").handler(ngx)
                         }
                     }
                 }
