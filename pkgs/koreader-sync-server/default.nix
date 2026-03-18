@@ -84,18 +84,12 @@ stdenv.mkDerivation {
     cd gin-src
     patch -N -p1 < ${ginPatch} || true
 
-    # Install gin manually to our lib directory
-    # Gin is a pure Lua framework, so we just need to copy the lua files
-    cp -r lib/* $out/share/koreader-sync-server/lib/ 2>/dev/null || true
-    cp -r *.lua $out/share/koreader-sync-server/lib/ 2>/dev/null || true
+    # Install gin framework - copy the entire gin directory maintaining structure
+    cp -r gin $out/share/koreader-sync-server/lib/
     cd ..
 
-    # Install redis-lua
-    cp -r ${redisLuaSrc}/* $out/share/koreader-sync-server/lib/redis.lua 2>/dev/null || true
-    # If redis-lua has a lib directory structure
-    if [ -d "${redisLuaSrc}/lib" ]; then
-      cp -r ${redisLuaSrc}/lib/* $out/share/koreader-sync-server/lib/
-    fi
+    # Install redis-lua - copy the entire source directory
+    cp -r ${redisLuaSrc} $out/share/koreader-sync-server/lib/redis-lua
 
     runHook postBuild
   '';
