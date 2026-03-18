@@ -7,4 +7,5 @@
   fex-cli = pkgs.callPackage ./fex { };
   uconsole-nx = pkgs.callPackage ./nxengine { };
   mazter = pkgs.callPackage ./mazter { };
+  koreader-sync-server = pkgs.callPackage ./koreader-sync-server { };
 }

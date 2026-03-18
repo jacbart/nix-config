@@ -23,6 +23,7 @@
     ../../services/microbin.nix
     ../../services/smartmon.nix
     ../../services/leadership-matrix.nix
+    ../../services/koreader-sync-server.nix
   ];
 
   services.leadership-matrix = {
@@ -48,9 +49,14 @@
       "postgresql"
       "minio"
       "redis-nextcloud"
+      "redis-kosync"
+      "koreader-sync-server"
     ];
     zpoolName = lib.mkForce "trunk";
   };
+
+  # Enable koreader sync server
+  services.koreader-sync-server.enable = true;
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
@@ -142,6 +148,7 @@
         "minio.meep.sh"
         "s3.meep.sh"
         "wiki.meep.sh"
+        "kosync.meep.sh"
       ];
       "100.78.207.83" = [
         "unicron"
