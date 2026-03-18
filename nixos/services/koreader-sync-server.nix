@@ -92,6 +92,8 @@ in
       "d ${dataDir} 0750 ${user} ${group} -"
       "d ${dataDir}/logs 0750 ${user} ${group} -"
       "d ${dataDir}/app 0750 ${user} ${group} -"
+      "d ${dataDir}/config 0750 ${user} ${group} -"
+      "d ${dataDir}/tmp 0750 ${user} ${group} -"
     ]
     ++ lib.optional cfg.redis.enable "d ${redisDataDir} 0750 ${user} ${group} -";
 
@@ -142,19 +144,58 @@ in
         ExecStartPre = ''
           +${pkgs.writeShellScript "koreader-sync-server-setup" ''
             # Create data directory structure as root
-            ${pkgs.coreutils}/bin/mkdir -p ${dataDir}/{logs,app}
+            ${pkgs.coreutils}/bin/mkdir -p ${dataDir}/{logs,app,config,tmp}
             ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}
 
             # Copy app files if not present
             if [ ! -f ${dataDir}/app/main.lua ]; then
-              ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/app/* ${dataDir}/app/
-              ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}/app
+              ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/app/* ${dataDir}/app/ 2>/dev/null || true
+              ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/lib/* ${dataDir}/app/ 2>/dev/null || true
+              ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/config/* ${dataDir}/config/ 2>/dev/null || true
+              ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/db/* ${dataDir}/db/ 2>/dev/null || true
+              ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}
             fi
+
+            # Generate proper nginx.conf with substituted template variables
+            cat > ${dataDir}/config/nginx.conf << 'EOF'
+            pid ${dataDir}/tmp/production-nginx.pid;
+            daemon off;
+
+            worker_processes 4;
+
+            events {
+                worker_connections 4096;
+            }
+
+            http {
+                # Gin initialization
+                init_by_lua_block {
+                    require "gin"
+                }
+                
+                server {
+                    listen ${toString cfg.port};
+                    
+                    # Access log with buffer
+                    access_log ${dataDir}/logs/production-access.log combined buffer=16k;
+                    # Error log
+                    error_log ${dataDir}/logs/production-error.log debug;
+                    
+                    location / {
+                        content_by_lua_block {
+                            require "gin".run()
+                        }
+                    }
+                }
+            }
+            EOF
+
+            ${pkgs.coreutils}/bin/chown ${user}:${group} ${dataDir}/config/nginx.conf
           ''}
         '';
 
         ExecStart = ''
-          ${cfg.package}/bin/koreader-sync-server
+          ${cfg.package}/bin/openresty -p ${dataDir} -c config/nginx.conf
         '';
 
         ExecStop = ''
@@ -179,15 +220,6 @@ in
         LimitNOFILE = 65536;
         LimitNPROC = 512;
       };
-
-      preStart = ''
-        # Update nginx config with correct settings
-        if [ -f ${dataDir}/app/config/nginx.conf ]; then
-          # Add daemon off if not present
-          ${pkgs.gnugrep}/bin/grep -q 'daemon off;' ${dataDir}/app/config/nginx.conf || \
-            ${pkgs.coreutils}/bin/echo 'daemon off;' >> ${dataDir}/app/config/nginx.conf
-        fi
-      '';
     };
 
     # Nginx reverse proxy
