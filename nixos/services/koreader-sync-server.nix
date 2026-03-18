@@ -160,11 +160,14 @@ in
               ${pkgs.coreutils}/bin/chmod -R u+rwX,go+rX ${dataDir}
             fi
 
-            # Generate proper nginx.conf with substituted template variables
+            # Generate proper nginx.conf with gin framework initialization
             cat > ${dataDir}/config/nginx.conf << 'EOF'
             pid ${dataDir}/tmp/production-nginx.pid;
             daemon off;
             error_log ${dataDir}/logs/production-error.log debug;
+
+            env ENABLE_USER_REGISTRATION;
+            env GIN_ENV;
 
             worker_processes 4;
 
@@ -181,11 +184,11 @@ in
                     require "gin.core.gin"
                 }
                 
+                # Access log with buffer
+                access_log ${dataDir}/logs/production-access.log combined buffer=16k;
+                
                 server {
                     listen ${toString cfg.port};
-                    
-                    # Access log with buffer
-                    access_log ${dataDir}/logs/production-access.log combined buffer=16k;
                     
                     location / {
                         content_by_lua_block {
@@ -202,7 +205,7 @@ in
         '';
 
         ExecStart = ''
-          ${cfg.package}/bin/openresty -p ${dataDir} -c config/nginx.conf
+          ${cfg.package}/bin/openresty -p ${dataDir} -c config/nginx.conf -e ${dataDir}/logs/error.log
         '';
 
         ExecStop = ''
