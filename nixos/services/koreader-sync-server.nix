@@ -139,6 +139,20 @@ in
           // cfg.environment
         );
 
+        ExecStartPre = ''
+          +${pkgs.writeShellScript "koreader-sync-server-setup" ''
+            # Create data directory structure as root
+            ${pkgs.coreutils}/bin/mkdir -p ${dataDir}/{logs,app}
+            ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}
+
+            # Copy app files if not present
+            if [ ! -f ${dataDir}/app/main.lua ]; then
+              ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/app/* ${dataDir}/app/
+              ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}/app
+            fi
+          ''}
+        '';
+
         ExecStart = ''
           ${cfg.package}/bin/koreader-sync-server
         '';
@@ -167,17 +181,6 @@ in
       };
 
       preStart = ''
-        # Ensure data directory exists with correct permissions
-        ${pkgs.coreutils}/bin/mkdir -p ${dataDir}/logs
-        ${pkgs.coreutils}/bin/mkdir -p ${dataDir}/app
-        ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}
-
-        # Copy app files if not present
-        if [ ! -f ${dataDir}/app/main.lua ]; then
-          ${pkgs.coreutils}/bin/cp -r ${cfg.package}/share/koreader-sync-server/app/* ${dataDir}/app/
-          ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${dataDir}/app
-        fi
-
         # Update nginx config with correct settings
         if [ -f ${dataDir}/app/config/nginx.conf ]; then
           # Add daemon off if not present
