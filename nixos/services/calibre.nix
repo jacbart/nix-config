@@ -27,9 +27,13 @@ in
       locations."/" = {
         proxyPass = "http://127.0.0.2:8235";
         extraConfig = ''
-          proxy_max_temp_file_size 0;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
           proxy_buffering off;
           proxy_request_buffering off;
+          proxy_max_temp_file_size 0;
           proxy_read_timeout 300s;
         '';
       };
