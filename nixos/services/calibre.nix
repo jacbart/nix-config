@@ -20,15 +20,16 @@ in
 
   services.nginx = {
     enable = true;
-    clientMaxBodySize = "100m";
+    clientMaxBodySize = "0";
     virtualHosts."${subdomain}.${domain}" = {
       addSSL = true;
       useACMEHost = domain;
       locations."/" = {
         proxyPass = "http://127.0.0.2:8235";
         extraConfig = ''
-          # Disable buffering for smooth downloads
+          proxy_max_temp_file_size 0;
           proxy_buffering off;
+          proxy_request_buffering off;
           proxy_read_timeout 300s;
         '';
       };
