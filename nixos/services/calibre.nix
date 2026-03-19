@@ -1,11 +1,20 @@
-{ vars, ... }:
+{
+  pkgs,
+  lib,
+  vars,
+  ...
+}:
 let
   subdomain = "calibre";
   domain = vars.domain;
+  calibreWebPackage = pkgs.unstable.calibre-web.overridePythonAttrs (old: {
+    dependencies = old.dependencies ++ lib.concatLists (lib.attrValues old.optional-dependencies);
+  });
 in
 {
   services.calibre-web = {
     enable = true;
+    package = calibreWebPackage;
     group = "media";
     listen = {
       ip = "0.0.0.0";
