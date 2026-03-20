@@ -109,14 +109,9 @@ in
         dir = lib.mkForce redisDataDir;
         maxmemory = "256mb";
         maxmemory-policy = "allkeys-lru";
-        # Disable RDB snapshot errors blocking writes
-        stop-writes-on-bgsave-error = false;
-        # Switch to AOF persistence for better reliability
-        appendonly = true;
-        appendfsync = "everysec";
-        # Reduce AOF file size
-        auto-aof-rewrite-percentage = 100;
-        auto-aof-rewrite-min-size = "64mb";
+        # Disable persistence - sync data is ephemeral and OK to lose on restart
+        save = [ ]; # Disable RDB snapshots
+        stop-writes-on-bgsave-error = false; # Don't block writes if persistence fails
       };
     };
 
