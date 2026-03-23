@@ -7,8 +7,21 @@
 let
   subdomain = "calibre";
   domain = vars.domain;
+  # Use python313 wand for nixpkgs-unstable which uses python313
+  wand_0_6 = pkgs.unstable.python313Packages.wand.overrideAttrs (old: {
+    version = "0.6.13";
+    src = pkgs.unstable.python313Packages.fetchPypi {
+      pname = "Wand";
+      version = "0.6.13";
+      hash = "sha256-+BJTpXPXFlWJ/5akqIzNfR7BTL2n0IXl4RtrMUCg7kE=";
+    };
+  });
   calibreWebPackage = pkgs.unstable.calibre-web.overridePythonAttrs (old: {
-    dependencies = old.dependencies ++ lib.concatLists (lib.attrValues old.optional-dependencies);
+    dependencies =
+      let
+        filteredDeps = builtins.filter (dep: !(dep.pname == "wand")) (old.dependencies or [ ]);
+      in
+      filteredDeps ++ [ wand_0_6 ] ++ lib.concatLists (lib.attrValues old.optional-dependencies);
   });
 in
 {
