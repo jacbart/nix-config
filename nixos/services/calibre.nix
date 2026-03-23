@@ -17,7 +17,7 @@ in
     package = calibreWebPackage;
     group = "media";
     listen = {
-      ip = "0.0.0.0";
+      ip = "127.0.0.2";
       port = 8235;
     };
     openFirewall = true;
