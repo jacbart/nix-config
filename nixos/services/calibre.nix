@@ -6,6 +6,8 @@
 }:
 let
   subdomain = "calibre";
+  addr = "127.0.0.2";
+  port = 8235;
   domain = vars.domain;
   # Use python313 wand for nixpkgs-unstable which uses python313
   wand_0_6 = pkgs.unstable.python313Packages.wand.overrideAttrs (old: {
@@ -30,8 +32,8 @@ in
     package = calibreWebPackage;
     group = "media";
     listen = {
-      ip = "127.0.0.2";
-      port = 8235;
+      ip = addr;
+      inherit port;
     };
     openFirewall = true;
     options = {
@@ -47,7 +49,7 @@ in
       addSSL = true;
       useACMEHost = domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.2:8235";
+        proxyPass = "http://${addr}:${builtins.toString port}";
         extraConfig = ''
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
