@@ -35,9 +35,6 @@
     hydra.url = "github:NixOS/hydra";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
 
-    harmonia.url = "github:nix-community/harmonia";
-    harmonia.inputs.nixpkgs.follows = "nixpkgs";
-
     nixos-uconsole.url = "github:jacbart/nixos-uconsole";
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";

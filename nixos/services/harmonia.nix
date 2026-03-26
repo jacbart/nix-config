@@ -1,18 +1,29 @@
 {
   config,
-  lib,
-  pkgs,
-  inputs,
   vars,
   ...
 }:
 {
-  imports = [ inputs.harmonia.nixosModules.harmonia ];
 
-  sops.secrets."harmonia-secret" = {
+  sops.secrets."harmonia/secret" = {
+    group = "harmonia";
+  };
+  sops.secrets."harmonia/pub" = {
     group = "harmonia";
   };
 
+  services.harmonia = {
+    enable = true;
+    cache = {
+      enable = true;
+      signKeyPaths = [ config.sops.secrets."harmonia/secret".path ];
+      settings = {
+        priority = 30;
+      };
+    };
+  };
+
+  users.groups.harmonia = { };
   services.nginx = {
     enable = true;
     recommendedTlsSettings = true;
@@ -33,22 +44,8 @@
     };
   };
 
-  services.harmonia-dev = {
-    daemon.enable = true;
-
-    cache = {
-      enable = true;
-      signKeyPaths = [ config.sops.secrets."harmonia-secret".path ];
-      settings = {
-        priority = 30;
-      };
-    };
-  };
-
   networking.firewall.allowedTCPPorts = [
     80
     443
   ];
-
-  users.groups.harmonia = { };
 }

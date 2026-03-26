@@ -14,6 +14,8 @@ in
   ];
 
   sops.secrets."nix-cache-key" = { };
+  sops.secrets."harmonia/secret" = { };
+  sops.secrets."harmonia/pub" = { };
 
   security.pki.certificates = lib.mapAttrsToList (cert: _: loadCerts cert) certFiles;
 

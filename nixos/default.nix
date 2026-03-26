@@ -196,12 +196,12 @@
       warn-dirty = false;
 
       substituters = [
-        # "https://nix-cache.${vars.domain}"
+        "https://nix-cache.meep.sh"
         "https://nix-community.cachix.org"
         "https://cache.nixos.org"
       ];
       trusted-public-keys = [
-        # "nix-cache.${vars.domain}-1:<INSERT-PUBLIC-KEY-HERE>"
+        "nix-cache.meep.sh-1:XXAOd8QBIGcdFKorIt/nY+MP6DTJWA63h1zFyJfEzQM="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
 
