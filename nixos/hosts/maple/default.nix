@@ -24,6 +24,7 @@
     ../../services/smartmon.nix
     ../../services/leadership-matrix.nix
     ../../services/koreader-sync-server.nix
+    ../../services/harmonia.nix
   ];
 
   services.leadership-matrix = {
