@@ -4,23 +4,15 @@
   ...
 }:
 {
+  users.groups.harmonia = { };
 
   sops.secrets."harmonia/secret" = {
     group = "harmonia";
   };
 
-  services.harmonia = {
-    enable = true;
-    cache = {
-      enable = true;
-      signKeyPaths = [ config.sops.secrets."harmonia/secret".path ];
-      settings = {
-        priority = 30;
-      };
-    };
-  };
+  services.harmonia.enable = true;
+  services.harmonia.signKeyPaths = [ config.sops.secrets."harmonia/secret".path ];
 
-  users.groups.harmonia = { };
   services.nginx = {
     enable = true;
     recommendedTlsSettings = true;
