@@ -8,9 +8,6 @@
   sops.secrets."harmonia/secret" = {
     group = "harmonia";
   };
-  sops.secrets."harmonia/pub" = {
-    group = "harmonia";
-  };
 
   services.harmonia = {
     enable = true;
