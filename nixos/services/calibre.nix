@@ -15,7 +15,7 @@ let
     src = pkgs.unstable.python313Packages.fetchPypi {
       pname = "Wand";
       version = "0.6.13";
-      hash = "sha256-+BJTpXPXFlWJ/5akqIzNfR7BTL2n0IXl4RtrMUCg7kE=";
+      hash = "sha256-9QE0hOr3og6yLRghqu/mC1DMMpciNytfhWXUbUqq/Mo=";
     };
   });
   calibreWebPackage = pkgs.unstable.calibre-web.overridePythonAttrs (old: {
