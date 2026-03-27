@@ -29,7 +29,7 @@
     ]
     ++ [
       {
-        services-leadership-matrix = {
+        services.leadership-matrix = {
           package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
             cargoFeatures = [
               "aggregate"
@@ -59,7 +59,7 @@
         };
 
         # Enable koreader sync server
-        services-koreader-sync-server.enable = true;
+        services.koreader-sync-server.enable = true;
 
         # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
         boot.loader.grub.enable = false;
