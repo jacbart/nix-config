@@ -83,6 +83,14 @@
         ./modules/hosts/mesquite/nixos.nix
         ./modules/hosts/oak/nixos.nix
         ./modules/hosts/unicron/home.nix
+        ./modules/hosts/sycamore/home.nix
+        ./modules/hosts/jackjrny/home.nix
+        ./modules/hosts/oak/home.nix
+        ./modules/hosts/mesquite/home.nix
+        ./modules/hosts/maple/home.nix
+        ./modules/hosts/cork/home.nix
+        ./modules/hosts/boojum/home.nix
+        ./modules/hosts/ash/home.nix
       ];
     };
 }

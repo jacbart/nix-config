@@ -3,9 +3,8 @@
   homeHosts."jackbartlett@sycamore" = {
     system = "aarch64-darwin";
     modules = [
-      ../../home/core.nix
+      config.flake.modules.homeManager.core
       ../../home/shell/default.nix
-      ../../home/shell/tools/default.nix
       ../../home/users/jackbartlett/default.nix
     ];
   };

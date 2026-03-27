@@ -130,7 +130,12 @@ in
 
     # Build Home-Manager configurations from registry
     flake.homeConfigurations = lib.flip lib.mapAttrs config.homeHosts (
-      _name: cfg:
+      name: cfg:
+      let
+        parts = lib.splitString "@" name;
+        username = builtins.elemAt parts 0;
+        hostname = builtins.elemAt parts 1;
+      in
       inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.${cfg.system};
         extraSpecialArgs = {
@@ -138,7 +143,11 @@ in
             inputs
             vars
             stateVersion
+            username
+            hostname
             ;
+          platform = cfg.system;
+          inherit (config.flake) overlays;
         };
         modules = cfg.modules ++ [
           inputs.sops-nix.homeManagerModules.sops

@@ -2,9 +2,9 @@
 {
   flake.overlays = {
     # Custom packages from the 'pkgs' directory
-    local-packages = final: _prev: import ../../pkgs { pkgs = final; };
+    local-packages = final: _prev: import ../pkgs { pkgs = final; };
     script-packages = final: _prev: {
-      scripts = import ../../scripts { pkgs = final; };
+      scripts = import ../scripts { pkgs = final; };
     };
 
     # https://nixos.wiki/wiki/Overlays

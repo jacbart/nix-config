@@ -3,9 +3,8 @@
   homeHosts."jack@unicron" = {
     system = "x86_64-linux";
     modules = [
-      ../../home/core.nix
+      config.flake.modules.homeManager.core
       ../../home/shell/default.nix
-      ../../home/shell/tools/default.nix
       ../../home/users/jack/default.nix
     ]
     ++ [
