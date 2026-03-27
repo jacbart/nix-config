@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    ./_desktop.nix
+    ./desktop.nix
   ];
 
   config.users.users.nixos = {

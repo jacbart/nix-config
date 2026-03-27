@@ -112,14 +112,17 @@ in
           outputs = config.flake;
           inherit (config.flake) overlays;
         };
-        modules = cfg.modules ++ [
-          inputs.disko.nixosModules.disko
-          inputs.sops-nix.nixosModules.sops
-          {
-            networking.hostName = _name;
-            nixpkgs.hostPlatform = cfg.system;
-          }
-        ];
+        modules =
+          cfg.modules
+          ++ [
+            inputs.disko.nixosModules.disko
+            inputs.sops-nix.nixosModules.sops
+            {
+              networking.hostName = _name;
+              nixpkgs.hostPlatform = cfg.system;
+            }
+          ]
+          ++ lib.optional (builtins.pathExists ./nixos/users/${cfg.username}) ./nixos/users/${cfg.username};
       }
     );
 
