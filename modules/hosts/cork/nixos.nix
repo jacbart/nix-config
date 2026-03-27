@@ -2,7 +2,6 @@
   config,
   inputs,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -27,80 +26,83 @@
       ../../nixos/services/leadership-matrix.nix
     ]
     ++ [
-      {
-        services.leadership-matrix = {
-          package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-            cargoFeatures = [
-              "nvidia"
-              "systemd"
-              "smart"
+      (
+        { pkgs, ... }:
+        {
+          services.leadership-matrix = {
+            package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+              cargoFeatures = [
+                "nvidia"
+                "systemd"
+                "smart"
+              ];
+            };
+            services = lib.mkForce [
+              "leadership-matrix"
+              "tailscaled"
             ];
           };
-          services = lib.mkForce [
-            "leadership-matrix"
-            "tailscaled"
-          ];
-        };
 
-        # virtualisation
-        programs.virt-manager.enable = true;
-        users.groups.libvirtd.members = [ "meep" ];
-        virtualisation.libvirtd.enable = true;
-        virtualisation.spiceUSBRedirection.enable = true;
+          # virtualisation
+          programs.virt-manager.enable = true;
+          users.groups.libvirtd.members = [ "meep" ];
+          virtualisation.libvirtd.enable = true;
+          virtualisation.spiceUSBRedirection.enable = true;
 
-        boot = {
-          kernel.sysctl = {
-            "vm.max_map_count" = 16777216;
-            "fs.file-max" = 524288;
-          };
-          initrd = {
-            availableKernelModules = [
-              "nvme"
-              "usb_storage"
+          boot = {
+            kernel.sysctl = {
+              "vm.max_map_count" = 16777216;
+              "fs.file-max" = 524288;
+            };
+            initrd = {
+              availableKernelModules = [
+                "nvme"
+                "usb_storage"
+              ];
+              kernelModules = [ ];
+            };
+            kernelPackages = pkgs.linuxPackages_6_18;
+            kernelModules = [ "kvm-amd" ];
+            extraModulePackages = [ ];
+            kernelParams = [
+              "resume_offset=533760"
+              "nosgx"
             ];
-            kernelModules = [ ];
+            supportedFilesystems = lib.mkForce [ "btrfs" ];
+            resumeDevice = "/dev/disk/by-label/nixos";
           };
-          kernelPackages = pkgs.linuxPackages_6_18;
-          kernelModules = [ "kvm-amd" ];
-          extraModulePackages = [ ];
-          kernelParams = [
-            "resume_offset=533760"
-            "nosgx"
-          ];
-          supportedFilesystems = lib.mkForce [ "btrfs" ];
-          resumeDevice = "/dev/disk/by-label/nixos";
-        };
 
-        # filesystem
-        services.btrfs.autoScrub = {
-          enable = true;
-          interval = "monthly";
-          fileSystems = [ "/" ];
-        };
-
-        # swap
-        zramSwap = {
-          enable = true;
-          memoryMax = 16 * 1024 * 1024 * 1024; # 16 GB ZRAM
-          swapDevices = 2;
-          priority = 10;
-        };
-
-        # networking
-        networking = {
-          useDHCP = lib.mkDefault true;
-          hosts = {
-            "127.0.0.2" = [
-              "cork.meep.sh"
-              "remote.dev"
-            ];
+          # filesystem
+          services.btrfs.autoScrub = {
+            enable = true;
+            interval = "monthly";
+            fileSystems = [ "/" ];
           };
-        };
 
-        # cpu
-        nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-        hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-      }
+          # swap
+          zramSwap = {
+            enable = true;
+            memoryMax = 16 * 1024 * 1024 * 1024; # 16 GB ZRAM
+            swapDevices = 2;
+            priority = 10;
+          };
+
+          # networking
+          networking = {
+            useDHCP = lib.mkDefault true;
+            hosts = {
+              "127.0.0.2" = [
+                "cork.meep.sh"
+                "remote.dev"
+              ];
+            };
+          };
+
+          # cpu
+          nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+          hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+        }
+      )
     ]
     ++ [
       (import ./disks.nix { })
