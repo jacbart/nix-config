@@ -1,0 +1,46 @@
+{ inputs, ... }:
+{
+  flake.overlays = {
+    # Custom packages from the 'pkgs' directory
+    local-packages = final: _prev: import ../../pkgs { pkgs = final; };
+    script-packages = final: _prev: {
+      scripts = import ../../scripts { pkgs = final; };
+    };
+
+    # https://nixos.wiki/wiki/Overlays
+    modifications = final: _prev: {
+      inherit (final.lixPackageSets.latest)
+        nixpkgs-review
+        nix-eval-jobs
+        nix-fast-build
+        colmena
+        ;
+    };
+
+    uconsole-mods = final: prev: {
+      makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; });
+      retroarch-joypad-autoconfig = prev.retroarch-joypad-autoconfig.overrideAttrs {
+        src = prev.fetchFromGitHub {
+          owner = "jacbart";
+          repo = "retroarch-joypad-autoconfig";
+          rev = "7733b32317046ac0e4a2897f45fb1c9844986190";
+          hash = "sha256-j7Cu66PU+mY3c6ojTmdYPKZlUMbL9L4xoyJP4gQaLqU=";
+        };
+      };
+      squeekboard = prev.squeekboard.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          rm $out/bin/squeekboard
+          touch $out/bin/squeekboard
+        '';
+      });
+    };
+
+    # Unstable nixpkgs accessible through 'pkgs.unstable'
+    unstable-packages = final: _prev: {
+      unstable = import inputs.nixpkgs-unstable {
+        inherit (final.stdenv.hostPlatform) system;
+        config.allowUnfree = true;
+      };
+    };
+  };
+}
