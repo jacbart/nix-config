@@ -39,10 +39,6 @@
             package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
               cargoFeatures = [ "systemd" ];
             };
-            services = lib.mkForce [
-              "leadership-matrix"
-              "tailscaled"
-            ];
           };
 
           environment.systemPackages = [
@@ -82,7 +78,8 @@
           };
 
           nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-          hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+          hardware.cpu.intel.updateMicrocode = lib.mkForce true;
         }
       )
 

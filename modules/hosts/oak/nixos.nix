@@ -24,12 +24,6 @@
             package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
               cargoFeatures = [ "systemd" ];
             };
-            services = lib.mkForce [
-              "leadership-matrix"
-              "nginx"
-              "tailscaled"
-              "fail2ban"
-            ];
           };
 
           virtualisation.digitalOceanImage.compressionMethod = "bzip2";

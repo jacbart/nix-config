@@ -541,11 +541,11 @@
         "rust-overlay": "rust-overlay_5"
       },
       "locked": {
-        "lastModified": 1774556028,
-        "narHash": "sha256-I4mRYm0/TixbeYxcnwSmdduhctgEdopstDYJDKeepx8=",
+        "lastModified": 1774653945,
+        "narHash": "sha256-fMMH59SJphvoUDvIHAMC8hNsKkSKTKrzG6odya1GnWs=",
         "ref": "main",
-        "rev": "de460d691b85246c3178d29d6dfba71347ec0fec",
-        "revCount": 14,
+        "rev": "9d2a22abe16a5b2fa886ccff519e0c342643549a",
+        "revCount": 15,
         "type": "git",
         "url": "ssh://git@github.com/jacbart/nixupd.git"
       },
