@@ -2,6 +2,7 @@
 {
   flake.modules.nixos.core =
     {
+      config,
       inputs,
       overlays,
       lib,
@@ -147,9 +148,7 @@
 
         # This will additionally add your inputs to the system's legacy channels
         # Making legacy nix commands consistent as well, awesome!
-        nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") (
-          lib.mapAttrs (_: value: { flake = value; }) inputs
-        );
+        nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
         optimise.automatic = true;
         settings = {
