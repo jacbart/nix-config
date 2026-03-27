@@ -40,23 +40,6 @@
                 "smart"
               ];
             };
-            services = lib.mkForce [
-              "leadership-matrix"
-              "smartd"
-              "nginx"
-              "tailscaled"
-              "fail2ban"
-              "zitadel"
-              "phpfpm-nextcloud"
-              "audiobookshelf"
-              "dendrite"
-              "kiwix"
-              "postgresql"
-              "minio"
-              "redis-nextcloud"
-              "redis-kosync"
-              "koreader-sync-server"
-            ];
             zpoolName = lib.mkForce "trunk";
           };
 
@@ -85,11 +68,6 @@
           # zfs tools
           environment.systemPackages = [ pkgs.zfs ];
 
-          # fstab
-          fileSystems."/" = {
-            device = "/dev/disk/by-partlabel/nixos";
-            fsType = "ext4";
-          };
           swapDevices = [
             {
               device = "/var/lib/swapfile";
