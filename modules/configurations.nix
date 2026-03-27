@@ -117,6 +117,7 @@ in
           ++ [
             inputs.disko.nixosModules.disko
             inputs.sops-nix.nixosModules.sops
+            ./nixos/services/openssh.nix
             {
               networking.hostName = _name;
               nixpkgs.hostPlatform = cfg.system;
