@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  vars,
+  ...
+}:
 {
   imports = [
     ./lan-mouse.nix

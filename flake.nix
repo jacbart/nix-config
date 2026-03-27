@@ -35,6 +35,12 @@
     hydra.url = "github:NixOS/hydra";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixupd.url = "git+ssh://git@github.com/jacbart/nixupd.git?ref=main";
+    nixupd.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-uconsole.url = "github:jacbart/nixos-uconsole";
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
@@ -169,6 +175,19 @@
         mesquite = utils.mkHost {
           hostname = "mesquite";
           username = "ratatoskr";
+        };
+      };
+
+      darwinConfigurations = {
+        # macOS hosts
+        #  - sudo darwin-rebuild switch --flake $HOME/workspace/personal/nix-config
+        jackjrny = utils.mkDarwinHost {
+          hostname = "jackjrny";
+          username = "jackbartlett";
+        };
+        sycamore = utils.mkDarwinHost {
+          hostname = "sycamore";
+          username = "jackbartlett";
         };
       };
 

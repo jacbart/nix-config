@@ -10,6 +10,10 @@
     group = "harmonia";
   };
 
+  sops.secrets."harmonia/pub" = {
+    group = "harmonia";
+  };
+
   services.harmonia.enable = true;
   services.harmonia.signKeyPaths = [ config.sops.secrets."harmonia/secret".path ];
 

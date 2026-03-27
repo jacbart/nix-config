@@ -18,5 +18,6 @@ in
 {
   inherit (helpers) mkHome;
   inherit (helpers) mkHost;
+  inherit (helpers) mkDarwinHost;
   inherit (helpers) forAllSystems;
 }

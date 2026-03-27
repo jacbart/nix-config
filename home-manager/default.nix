@@ -8,6 +8,7 @@
   pkgs,
   stateVersion,
   username,
+  vars,
   ...
 }:
 let
@@ -61,26 +62,40 @@ in
     };
   };
 
-  nix =
-    if isDarwin then
-      { }
-    else
-      {
-        # This will add each flake input as a registry
-        # To make nix3 commands consistent with your flake
-        registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+  nix = {
+    package = pkgs.nix;
+    settings = {
+      trusted-users = [
+        username
+        "root"
+      ];
+      substituters = [
+        "https://nix-cache.${vars.domain}"
+        "https://nix-community.cachix.org"
+        "https://cache.nixos.org"
+      ];
+      trusted-public-keys = [
+        "nix-cache.${vars.domain}-1:XXAOd8QBIGcdFKorIt/nY+MP6DTJWA63h1zFyJfEzQM="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    }
+    // lib.optionalAttrs (!isDarwin) {
+      # This will add each flake input as a registry
+      # To make nix3 commands consistent with your flake
+      registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
-        package = pkgs.lixPackageSets.latest.lix;
-        settings = {
-          auto-optimise-store = true;
-          experimental-features = [
-            "nix-command"
-            "flakes"
-          ];
-          # Avoid unwanted garbage collection when using nix-direnv
-          keep-outputs = true;
-          keep-derivations = true;
-          warn-dirty = false;
-        };
+      package = pkgs.lixPackageSets.latest.lix;
+      settings = {
+        auto-optimise-store = true;
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        # Avoid unwanted garbage collection when using nix-direnv
+        keep-outputs = true;
+        keep-derivations = true;
+        warn-dirty = false;
       };
+    };
+  };
 }

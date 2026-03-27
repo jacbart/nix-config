@@ -33,6 +33,44 @@
       ];
     };
 
+  # Helper function for generating darwin host configs
+  mkDarwinHost =
+    {
+      hostname,
+      username,
+      desktop ? null,
+    }:
+    let
+      darwinModule =
+        { ... }:
+        {
+          imports = [
+            ../darwin/default.nix
+          ];
+        };
+    in
+    inputs.nix-darwin.lib.darwinSystem {
+      specialArgs = {
+        inherit
+          inputs
+          outputs
+          desktop
+          hostname
+          username
+          stateVersion
+          vars
+          ;
+      };
+      modules = [
+        darwinModule
+        inputs.home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        }
+      ];
+    };
+
   # Helper function for generating host configs
   mkHost =
     {
@@ -60,8 +98,6 @@
         inputs.sops-nix.nixosModules.sops
       ]
       ++ (inputs.nixpkgs.lib.optionals (platform == "x86_64-linux") [
-        # inputs.nix-ld.nixosModules.nix-ld
-        # { programs.nix-ld.dev.enable = true; }
         { programs.nix-ld.enable = true; }
       ])
       ++ (inputs.nixpkgs.lib.optionals (installer != null) [
@@ -78,6 +114,5 @@
     "i686-linux"
     "x86_64-linux"
     "aarch64-darwin"
-    "x86_64-darwin"
   ];
 }

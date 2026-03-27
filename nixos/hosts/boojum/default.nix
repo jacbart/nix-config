@@ -20,6 +20,7 @@
     ../../services/tailscale.nix
     ../../apps/ghostty.nix
     ../../services/leadership-matrix.nix
+    ../../services/nixupd-client.nix
     ./virt.nix
   ];
 

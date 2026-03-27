@@ -19,6 +19,7 @@
     ../../services/pipewire.nix
     ../../services/flatpak.nix
     ../../services/tailscale.nix
+    ../../services/nixupd-client.nix
     ../../apps/ghostty.nix
     ../../apps/steam.nix
     ../../services/leadership-matrix.nix

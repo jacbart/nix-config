@@ -13,6 +13,7 @@
     # ../../services/anubis.nix
     ../../services/leadership-matrix.nix
     ../../services/tailscale.nix
+    ../../services/nixupd-client.nix
     ./nginx.nix
   ];
 

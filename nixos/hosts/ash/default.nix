@@ -12,6 +12,7 @@
     # ./remote-builder.nix
     ../../services/tailscale.nix
     ../../services/leadership-matrix.nix
+    ../../services/nixupd-client.nix
   ];
 
   services.leadership-matrix = {
