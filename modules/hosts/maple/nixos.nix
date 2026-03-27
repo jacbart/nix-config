@@ -8,6 +8,7 @@
 {
   nixosHosts.maple = {
     system = "aarch64-linux";
+    username = "ratatoskr";
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/security/acme-base.nix

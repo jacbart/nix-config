@@ -7,6 +7,8 @@
 }:
 {
   nixosHosts.cork = {
+    username = "meep";
+    desktop = "cosmic";
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/hardware/systemd-boot.nix
@@ -26,7 +28,7 @@
     ]
     ++ [
       {
-        services-leadership-matrix = {
+        services.leadership-matrix = {
           package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
             cargoFeatures = [
               "nvidia"

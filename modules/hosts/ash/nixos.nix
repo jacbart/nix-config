@@ -8,6 +8,8 @@
 {
   nixosHosts.ash = {
     system = "aarch64-linux";
+    username = "meep";
+    desktop = "phosh";
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/hardware/uconsole.nix
@@ -18,7 +20,7 @@
     ]
     ++ [
       {
-        services-leadership-matrix = {
+        services.leadership-matrix = {
           package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
             cargoFeatures = [ "systemd" ];
           };

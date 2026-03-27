@@ -29,6 +29,16 @@ in
                 default = "x86_64-linux";
                 description = "System architecture for this host";
               };
+              username = lib.mkOption {
+                type = lib.types.str;
+                default = "root";
+                description = "Primary username for this host";
+              };
+              desktop = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Desktop environment for this host";
+              };
             };
             config = { };
           }
@@ -95,12 +105,20 @@ in
             vars
             stateVersion
             ;
+          hostname = _name;
+          platform = cfg.system;
+          username = cfg.username;
+          desktop = cfg.desktop;
+          outputs = config.flake;
           inherit (config.flake) overlays;
         };
         modules = cfg.modules ++ [
           inputs.disko.nixosModules.disko
           inputs.sops-nix.nixosModules.sops
-          { networking.hostName = _name; }
+          {
+            networking.hostName = _name;
+            nixpkgs.hostPlatform = cfg.system;
+          }
         ];
       }
     );

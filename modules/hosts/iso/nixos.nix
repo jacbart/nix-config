@@ -5,6 +5,7 @@
 }:
 {
   nixosHosts.iso = {
+    username = "nixos";
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/services/openssh.nix

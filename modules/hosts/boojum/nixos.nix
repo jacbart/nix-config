@@ -7,6 +7,8 @@
 }:
 {
   nixosHosts.boojum = {
+    username = "meep";
+    desktop = "cosmic";
     modules = [
       # Core modules
       config.flake.modules.nixos.core

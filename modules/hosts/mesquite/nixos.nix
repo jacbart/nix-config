@@ -8,6 +8,7 @@
 }:
 {
   nixosHosts.mesquite = {
+    username = "ratatoskr";
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/hardware/fw4b0.nix

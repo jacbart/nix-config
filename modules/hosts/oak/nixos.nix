@@ -3,14 +3,14 @@
   inputs,
   lib,
   pkgs,
-  modulesPath,
   ...
 }:
 {
   nixosHosts.oak = {
+    username = "ratatoskr";
     modules = [
       config.flake.modules.nixos.core
-      (modulesPath + "/virtualisation/digital-ocean-image.nix")
+      (inputs.nixpkgs + "/nixos/modules/virtualisation/digital-ocean-image.nix")
       ../../nixos/security/acme-proxy.nix
       ../../nixos/services/fail2ban.nix
       ../../nixos/services/leadership-matrix.nix
@@ -19,7 +19,7 @@
     ]
     ++ [
       {
-        services-leadership-matrix = {
+        services.leadership-matrix = {
           package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
             cargoFeatures = [ "systemd" ];
           };
@@ -61,7 +61,7 @@
           };
         };
 
-        services-openssh = {
+        services.openssh = {
           ports = [ 3048 ];
           settings.PasswordAuthentication = lib.mkForce false;
           settings.PermitRootLogin = lib.mkForce "yes";
