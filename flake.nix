@@ -38,6 +38,11 @@
     nixupd.url = "git+ssh://git@github.com/jacbart/nixupd.git?ref=main";
     nixupd.inputs.nixpkgs.follows = "nixpkgs";
 
+    attic = {
+      url = "github:zhaofengli/attic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 

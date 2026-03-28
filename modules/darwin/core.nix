@@ -5,7 +5,9 @@
 {
   flake.modules.darwin.core =
     {
+      inputs,
       lib,
+      pkgs,
       vars,
       username,
       ...
@@ -16,6 +18,11 @@
       programs.zsh.enable = true;
 
       nixpkgs.hostPlatform = "aarch64-darwin";
+
+      # Attic client for pushing to nix-cache
+      environment.systemPackages = [
+        inputs.attic.packages.${pkgs.stdenv.hostPlatform.system}.attic-client
+      ];
 
       nix = {
         gc = {

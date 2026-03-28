@@ -7,8 +7,9 @@
 {
   imports = [ inputs.nixupd.nixosModules.nixupd ];
 
-  sops.secrets."harmonia/secret" = {
+  sops.secrets."attic/secret" = {
     group = "nixupd";
+    mode = "0640";
   };
 
   services.nixupd = {
@@ -20,10 +21,10 @@
       {
         name = "nix-cache.${vars.domain}";
         endpoint = "https://nix-cache.${vars.domain}";
-        secretKeyPath = config.sops.secrets."harmonia/secret".path;
+        secretKeyPath = config.sops.secrets."attic/secret".path;
       }
     ];
-    socketPath = "/run/nixupd/nixupd.sock";
+    socketPath = "/var/run/nixupd/nixupd.sock";
     compression = "zstd";
     logLevel = "info";
   };
