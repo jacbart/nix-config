@@ -124,7 +124,8 @@ in
               nixpkgs.hostPlatform = cfg.system;
             }
           ]
-          ++ lib.optional (builtins.pathExists ./nixos/users/${cfg.username}) ./nixos/users/${cfg.username};
+          ++ lib.optional (builtins.pathExists ./nixos/users/${cfg.username}) ./nixos/users/${cfg.username}
+          ++ lib.optional (cfg.desktop != null) ./nixos/desktop;
       }
     );
 
