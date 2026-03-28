@@ -807,10 +807,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1774730617,
-        "narHash": "sha256-0UNw3V53MITtw8JUr07JX3Z9opqy3L1NKkgvmHeHya0=",
+        "lastModified": 1774731411,
+        "narHash": "sha256-aer3e/NMp3RhC8nNEJjzfWMe9PDn/Ysq25T7sxZRPzw=",
         "ref": "main",
-        "rev": "cde1a06f390c83cad5d92b6bf50fc13d1ad2245a",
+        "rev": "6535e0092ccab1dc342266f09af654775af8dac2",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/jacbart/nix-secrets.git"
