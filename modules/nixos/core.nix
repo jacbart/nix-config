@@ -179,9 +179,6 @@
             "nix-cache.${vars.domain}-1:XXAOd8QBIGcdFKorIt/nY+MP6DTJWA63h1zFyJfEzQM="
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           ];
-
-          secret-key-files = "/etc/nix/cache.key";
-          # post-build-hook = "${pkgs.scripts.upload-to-cache}/bin/upload-to-cache";
         };
       };
 
