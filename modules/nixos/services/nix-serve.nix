@@ -8,11 +8,11 @@ let
   addr = "127.0.0.1";
 in
 {
-  sops.secrets."harmonia/secret" = { };
+  sops.secrets."nix-serve/secret" = { };
 
   services.nix-serve = {
     enable = true;
-    secretKeyFile = config.sops.secrets."harmonia/secret".path;
+    secretKeyFile = config.sops.secrets."nix-serve/secret".path;
     bindAddress = addr;
     port = port;
   };
