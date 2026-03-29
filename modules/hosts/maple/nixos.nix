@@ -25,7 +25,8 @@
       ../../nixos/services/smartmon.nix
       ../../nixos/services/leadership-matrix.nix
       ../../nixos/services/koreader-sync-server.nix
-      ../../nixos/services/nix-serve.nix
+      ../../nixos/services/attic.nix
+      ../../nixos/services/nixupd-client.nix
     ]
     ++ [
       (

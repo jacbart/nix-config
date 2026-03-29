@@ -10,6 +10,14 @@
           shell = "/run/current-system/sw/bin/zsh";
         };
       }
+      # (
+      #   { pkgs, ... }:
+      #   {
+      #     environment.systemPackages = with pkgs; [
+
+      #     ];
+      #   }
+      # )
     ];
   };
 }

@@ -7,6 +7,7 @@
     {
       lib,
       vars,
+      overlays,
       username,
       ...
     }:
@@ -15,7 +16,13 @@
 
       programs.zsh.enable = true;
 
-      nixpkgs.hostPlatform = "aarch64-darwin";
+      nixpkgs = {
+        overlays = lib.attrValues overlays;
+        hostPlatform = "aarch64-darwin";
+        config = {
+          allowUnfree = true;
+        };
+      };
 
       nix = {
         gc = {
