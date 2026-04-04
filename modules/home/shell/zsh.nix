@@ -39,7 +39,6 @@ in
       unstable.nh # nix helper cli
       # rest # rest easy
       stu # TUI explorer application for Amazon S3
-      # trees # git worktrees simplified
       ff # not so percise search
     ]
     ++ lib.optional isLinux unstable.tlrc

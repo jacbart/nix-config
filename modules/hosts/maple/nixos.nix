@@ -26,7 +26,10 @@
       ../../nixos/services/leadership-matrix.nix
       ../../nixos/services/koreader-sync-server.nix
       ../../nixos/services/attic.nix
-      ../../nixos/services/nixupd-client.nix
+      ../../nixos/services/hydra.nix
+      ../../nixos/services/mailserver.nix
+      ../../nixos/services/maildns.nix
+      # ../../nixos/services/nixupd-client.nix
     ]
     ++ [
       (
@@ -130,6 +133,7 @@
                 "s3.meep.sh"
                 "wiki.meep.sh"
                 "kosync.meep.sh"
+                "mail.meep.sh"
               ];
               "100.78.207.83" = [
                 "unicron"
@@ -145,6 +149,7 @@
               allowedTCPPorts = [
                 80
                 443
+                587
               ];
             };
           };

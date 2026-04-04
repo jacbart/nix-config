@@ -1,5 +1,12 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  imports = [ inputs.hydra.nixosModules.hydra ];
+
   systemd.tmpfiles.rules = [
     "d /var/lib/hydra/.aws 0644 hydra hydra"
     "f /etc/nixos/secret.key 0644 hydra"
@@ -7,7 +14,7 @@
 
   services.hydra = {
     enable = true;
-    package = pkgs.unstable.hydra;
+    package = inputs.hydra.packages.${pkgs.stdenv.hostPlatform.system}.hydra;
     hydraURL = "https://hydra.meep.sh";
     notificationSender = "ratatoskr@meep.sh";
     extraConfig = ''

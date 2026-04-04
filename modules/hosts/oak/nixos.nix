@@ -15,6 +15,7 @@
       ../../nixos/services/leadership-matrix.nix
       ../../nixos/services/tailscale.nix
       ../../nixos/services/nixupd-client.nix
+      ../../nixos/services/mailrelay.nix
     ]
     ++ [
       (
@@ -34,6 +35,7 @@
                 "matrix.meep.sh"
                 "mx.meep.sh"
                 "tun.meep.sh"
+                "mail.meep.sh"
               ];
               "100.116.178.48" = [
                 "maple.meep.sh"
@@ -51,6 +53,8 @@
               allowedTCPPorts = [
                 80
                 443
+                25
+                587
               ];
               allowedUDPPorts = [ ];
             };

@@ -21,6 +21,7 @@ in
       "matrix.${domain}" = mkCert "matrix.${domain}";
       "tun.${domain}" = mkCert "tun.${domain}";
       "oak.${domain}" = mkCert "oak.${domain}";
+      "mail.${domain}" = mkCert "mail.${domain}";
     };
   };
 }
