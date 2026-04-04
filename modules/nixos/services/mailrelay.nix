@@ -16,9 +16,9 @@ in
 
   services.postfix = {
     enable = true;
-    hostname = "mail.${domain}";
-    relayDomains = [ domain ];
-    config = {
+    settings.main = {
+      myhostname = "mail.${domain}";
+      relay_domains = domain;
       mynetworks = [
         "127.0.0.0/8"
         "::1/128"

@@ -16,7 +16,6 @@ in
     isSystemUser = true;
     inherit group;
     home = "/var/lib/${dataDir}";
-    description = "Virtual mail user";
   };
 
   users.groups."${group}" = { };
@@ -36,13 +35,13 @@ in
 
   services.postfix = {
     enable = true;
-    hostname = "mail.${domain}";
-    domain = domain;
-    destination = [
-      domain
-      "localhost"
-    ];
-    config = {
+    settings.main = {
+      myhostname = "mail.${domain}";
+      mydomain = domain;
+      mydestination = [
+        domain
+        "localhost"
+      ];
       mynetworks = [
         "127.0.0.0/8"
         "::1/128"
