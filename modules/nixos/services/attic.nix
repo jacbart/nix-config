@@ -31,7 +31,6 @@ in
         type = "local";
         path = "/var/lib/atticd/storage";
       };
-      default-reserved-space = "20GB";
       chunking = {
         # The minimum NAR size to trigger chunking
         #
