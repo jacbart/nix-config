@@ -9,7 +9,6 @@ let
   user = "vmail";
   group = "vmail";
   dataDir = "mail";
-  relayPort = 2525;
   oakIp = "100.116.178.48";
 in
 {
@@ -35,19 +34,7 @@ in
     opendkim
   ];
 
-  systemd.services.postfix = {
-    after = [
-      "network.target"
-      "local-fs.target"
-    ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "forking";
-      PIDFile = "/var/lib/postfix/pid/master.pid";
-    };
-  };
-
-  postfix = {
+  services.postfix = {
     enable = true;
     hostname = "mail.${domain}";
     domain = domain;
@@ -72,37 +59,40 @@ in
 
   services.dovecot2 = {
     enable = true;
-    enableImap = true;
-    enablePop3 = false;
-    enableLmtp = false;
-    enableLda = false;
-    protocols = [ "imap" ];
-    authMechanisms = [
-      "plain"
-      "login"
-    ];
+    enablePAM = false;
+    createMailUser = true;
     mailUser = user;
-    ssl = {
-      enable = true;
-      cert = "/var/lib/acme/certs/mail.${domain}/fullchain.pem";
-      key = "/var/lib/acme/private/mail.${domain}/key.pem";
+    mailGroup = group;
+    mailLocation = "maildir:~/Maildir";
+    mailboxes = {
+      All = {
+        auto = "create";
+        specialUse = "All";
+      };
+      Sent = {
+        auto = "create";
+        specialUse = "Sent";
+      };
+      Trash = {
+        auto = "create";
+        specialUse = "Trash";
+      };
+      Junk = {
+        auto = "create";
+        specialUse = "Junk";
+      };
     };
-    userdb = {
-      name = "passwd";
-      args = [ "scheme=CRYPT" ];
-    };
-    passdb = {
-      name = "passwd-file";
-      args = [
-        "scheme=CRYPT"
-        "${config.sops.secrets."mail-password".path}"
-      ];
-    };
-    mailGroups = [ group ];
+    sslServerCert = "/var/lib/acme/certs/mail.${domain}/fullchain.pem";
+    sslServerKey = "/var/lib/acme/private/mail.${domain}/key.pem";
     extraConfig = ''
-      mail_location = maildir:~/Maildir
-      namespace inbox {
-        inbox = yes
+      auth_mechanisms = plain login
+      passdb {
+        driver = passwd-file
+        args = scheme=CRYPT ${config.sops.secrets."mail-password".path}
+      }
+      userdb {
+        driver = static
+        args = uid=vmail gid=vmail home=/var/lib/mail/%u
       }
       protocol imap {
         mail_max_userip_connections = 10
@@ -112,26 +102,19 @@ in
 
   services.rspamd = {
     enable = true;
-    localOnly = false;
-    services = [
-      "proxy"
-      "normal"
-    ];
-    dkim = {
-      enable = true;
-      path = "/var/lib/${dataDir}/dkim";
-      selector = "mail";
-      keys."${domain}" = {
-        path = "/var/lib/${dataDir}/dkim/${domain}.mail.key";
-        type = "rsa";
-        bits = 2048;
-      };
+    locals = {
+      "options.inc".text = ''
+        subject = "*** SPAM ***";
+        add_header = 6;
+        reject_score = 15;
+      '';
+      "dkim_signing.conf".text = ''
+        selector = "mail";
+        domain = "${domain}";
+        path = "/var/lib/${dataDir}/dkim/$domain_$selector.key";
+      '';
     };
-    settings = {
-      "subject" = "*** SPAM ***";
-      "add_header" = 6;
-      "reject_score" = 15;
-    };
+    postfix.enable = true;
   };
 
   systemd.tmpfiles.rules = [
@@ -139,11 +122,6 @@ in
     "d /var/lib/${dataDir}/dkim 0750 ${user} ${group} - -"
     "d /var/lib/postfix 0755 postfix ${group} - -"
   ];
-
-  systemd.services.rspamd = {
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-  };
 
   networking.firewall.allowedTCPPorts = [
     993 # IMAPS

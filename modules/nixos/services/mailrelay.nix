@@ -14,7 +14,7 @@ in
     postfix
   ];
 
-  postfix = {
+  services.postfix = {
     enable = true;
     hostname = "mail.${domain}";
     relayDomains = [ domain ];
