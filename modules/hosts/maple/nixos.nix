@@ -25,10 +25,10 @@
       ../../nixos/services/smartmon.nix
       ../../nixos/services/leadership-matrix.nix
       ../../nixos/services/koreader-sync-server.nix
-      ../../nixos/services/attic.nix
-      ../../nixos/services/hydra.nix
-      ../../nixos/services/mailserver.nix
-      ../../nixos/services/maildns.nix
+      # ../../nixos/services/attic.nix
+      # ../../nixos/services/hydra.nix
+      # ../../nixos/services/mailserver.nix
+      # ../../nixos/services/maildns.nix
       # ../../nixos/services/nixupd-client.nix
     ]
     ++ [
