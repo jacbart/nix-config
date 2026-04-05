@@ -23,7 +23,7 @@ in
     mode = "monolithic";
     settings = {
       listen = "${addr}:${port}";
-      api_endpoint = "https://nix-cache.${vars.domain}";
+      api-endpoint = "https://nix-cache.${vars.domain}";
       database.url = "sqlite:///var/lib/atticd/server.db?mode=rwc";
       storage = {
         type = "local";
