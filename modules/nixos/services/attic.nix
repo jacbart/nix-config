@@ -47,12 +47,8 @@ in
         # The preferred maximum size of a chunk, in bytes
         max-size = 256 * 1024; # 256 KiB
       };
-      chunks = {
-        store-compressed = true;
-        compress-after-store = false;
-      };
       gc = {
-        interval = "daily";
+        interval = "yearly";
       };
     };
   };
