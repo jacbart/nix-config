@@ -10,10 +10,7 @@
     # https://nixos.wiki/wiki/Overlays
     modifications = final: _prev: {
       inherit (final.lixPackageSets.latest)
-        nixpkgs-review
         nix-eval-jobs
-        nix-fast-build
-        colmena
         ;
     };
 

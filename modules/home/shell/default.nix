@@ -46,8 +46,8 @@ in
         User ratatoskr
         IdentityFile ~/.ssh/id_ratatoskr
 
-    Host mac
-        HostName jackjrny
+    Host sycamore
+        HostName sycamore
         User jackbartlett
 
     Host unicron

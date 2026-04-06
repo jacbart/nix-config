@@ -1,5 +1,6 @@
 {
   config,
+  desktop,
   lib,
   pkgs,
   username,
@@ -9,9 +10,7 @@ let
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
-  imports = [
-    ./desktop.nix
-  ];
+  imports = lib.optional (desktop != null) ./desktop.nix;
 
   config.users.users.nixos = {
     description = "NixOS";
