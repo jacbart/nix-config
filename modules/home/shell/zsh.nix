@@ -82,6 +82,7 @@ in
     };
     shellGlobalAliases = {
       UUID = "$(uuidgen | tr -d \\n)";
+      BUILD_UNICRON = "--builders 'unicron x86_64-linux'";
     };
     zplug = {
       enable = true;

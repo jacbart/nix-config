@@ -9,7 +9,7 @@ in
 {
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "install" ''
-      #! ${pkgs.zsh}/bin/zsh
+      #! ${pkgs.bash}/bin/bash
       set -euo pipefail
 
       if [ ! -s "${sshkey}" ]; then
@@ -25,16 +25,24 @@ in
         local owner="$2"
         local do_sudo="''${3:-}"
 
-        local -a SUDO=()
         if [ "$do_sudo" = "sudo" ]; then
           sudo true
-          SUDO=(sudo)
+          sudo install -dm0700 "$home/.ssh"
+          sudo install -Dm0400 -o "$owner" "${sshkey}" "$home/.ssh/id_github"
+          printf 'Host github.com\n  IdentityFile %s/.ssh/id_github\n  User git\n' "$home" \
+            | sudo tee "$home/.ssh/config" > /dev/null
+          sudo chmod 0600 "$home/.ssh/config"
+          sudo chown "$owner" "$home/.ssh/config"
+          sudo install -Dm0600 -o "$owner" "${agekey}" "$home/.config/sops/age/keys.txt"
+        else
+          install -dm0700 "$home/.ssh"
+          install -Dm0400 -o "$owner" "${sshkey}" "$home/.ssh/id_github"
+          printf 'Host github.com\n  IdentityFile %s/.ssh/id_github\n  User git\n' "$home" \
+            > "$home/.ssh/config"
+          chmod 0600 "$home/.ssh/config"
+          chown "$owner" "$home/.ssh/config"
+          install -Dm0600 -o "$owner" "${agekey}" "$home/.config/sops/age/keys.txt"
         fi
-
-        $SUDO install -dm0700 "$home/.ssh"
-        $SUDO install -Dm0400 -o "$owner" "${sshkey}" "$home/.ssh/id_github"
-        $SUDO install -Dm0600 -o "$owner" =(printf 'Host github.com\n  IdentityFile %s/.ssh/id_github\n  User git\n' "$home") "$home/.ssh/config"
-        $SUDO install -Dm0600 -o "$owner" "${agekey}" "$home/.config/sops/age/keys.txt"
       }
 
       setup_keys "$HOME" "${service_user}"
