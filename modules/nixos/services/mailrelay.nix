@@ -18,13 +18,13 @@ in
     enable = true;
     settings.main = {
       myhostname = "mail.${domain}";
-      relay_domains = domain;
+      relay_domains = [ domain ];
       mynetworks = [
         "127.0.0.0/8"
         "::1/128"
         "${mapleshIp}"
       ];
-      relayhost = "[${mapleshIp}]:${toString mapleshPort}";
+      relayhost = [ "[${mapleshIp}]:${toString mapleshPort}" ];
       transport_maps = [ "hash:/etc/postfix/transport" ];
       virtual_alias_maps = [ "hash:/etc/postfix/virtual" ];
       owner_request_special = false;
@@ -32,18 +32,6 @@ in
       disable_dns_lookups = "no";
       alias_maps = [ "hash:/etc/aliases" ];
       mail_spool_directory = "/var/mail";
-    };
-  };
-
-  systemd.services.postfix = {
-    after = [
-      "network.target"
-      "local-fs.target"
-    ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "forking";
-      PIDFile = "/var/lib/postfix/pid/master.pid";
     };
   };
 

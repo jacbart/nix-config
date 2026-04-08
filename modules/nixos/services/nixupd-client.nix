@@ -14,18 +14,15 @@
 
   services.nixupd = {
     enable = true;
-    generateKey = false;
     configurePostBuildHook = true;
-    cacheName = "nix-cache.${vars.domain}";
+    atticConfigPath = config.sops.secrets."nixupd-secret".path;
     caches = [
       {
         name = "nix-cache.${vars.domain}";
-        endpoint = "https://nix-cache.${vars.domain}";
-        secretKeyPath = config.sops.secrets."nixupd-secret".path;
+        cacheRef = "nix-cache.${vars.domain}:nix-cache.${vars.domain}";
       }
     ];
     socketPath = "/var/run/nixupd/nixupd.sock";
-    compression = "zstd";
     logLevel = "info";
   };
 }

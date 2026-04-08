@@ -1,6 +1,6 @@
 # NixOS & Home Manager Configurations
 
-Personal [flake-parts](https://flake.parts/) based Nix configuration managing NixOS systems, macOS via nix-darwin, and Home Manager on non-NixOS hosts. Supports `x86_64-linux`, `aarch64-linux`, and `aarch64-darwin`.
+Personal [flake-parts](https://flake.parts/) based Nix configuration managing NixOS systems, macOS via nix-darwin, and Home Manager on Linux and Darwin. Supports `x86_64-linux`, `aarch64-linux`, and `aarch64-darwin`.
 
 ## Hosts
 
@@ -26,10 +26,25 @@ Personal [flake-parts](https://flake.parts/) based Nix configuration managing Ni
 
 This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) to organize configuration into composable modules:
 
-- **Configuration registry** -- Hosts are registered as `nixosHosts`, `darwinHosts`, or `homeHosts` in a central module (`modules/configurations.nix`) that builds the respective `flake.*Configurations` outputs
-- **Core modules** -- Base configurations exported as `flake.modules.{nixos,darwin,homeManager}.core`, included by every host of that type
-- **Shared inputs** -- `sops-nix` and `disko` are automatically included for NixOS hosts; `home-manager` integration is automatic for Darwin hosts
-- **Overlays** -- Custom packages, script packages, Lix replacements, and unstable nixpkgs are available as overlays
+- **Configuration registry** — Hosts are registered as `nixosHosts`, `darwinHosts`, or `homeHosts` in [`modules/configurations.nix`](modules/configurations.nix), which builds `flake.nixosConfigurations`, `flake.darwinConfigurations`, and `flake.homeConfigurations`.
+- **Core modules** — Base configs are exported as `flake.modules.{nixos,darwin,homeManager}.core` and included by each host of that type.
+- **NixOS** — `disko`, `sops-nix`, OpenSSH, and the shared security module are appended automatically; [`modules/nixos/desktop/`](modules/nixos/desktop/) is included when the host sets `desktop != null`. Graphical baseline (Plymouth, graphics) lives in `desktop/default.nix`; per-DE files include their app lists inline (no separate `*-apps.nix` split).
+- **Home Manager** — Each `homeHosts."user@hostname"` entry can set:
+  - `desktop` — optional; if unset, inherits `nixosHosts.<hostname>.desktop` when that NixOS host exists.
+  - `shellProfile` — `"lite"` | `"zsh-lite"` (default) | `"dev-heavy"`; selects [`modules/home/shell/profiles/`](modules/home/shell/profiles/) (minimal tools vs full dev stack). See **Shell profiles** below.
+  - [`modules/home/desktop/default.nix`](modules/home/desktop/default.nix) imports `./${desktop}.nix` when `desktop` is non-null (aligned with NixOS desktop id).
+- **Darwin** — Home Manager is wired automatically. [`modules/darwin/laptop.nix`](modules/darwin/laptop.nix) bundles core + nix-homebrew + docker for the Mac laptops; `flakeModules` is passed in `specialArgs` so nested modules can import flake-exported modules.
+- **Overlays** — Custom packages, script packages, Lix-related tweaks, and `pkgs.unstable` are available via [`modules/flake/overlays.nix`](modules/flake/overlays.nix).
+
+## Shell profiles
+
+| Profile   | Typical use   | What you get |
+| :-------- | :------------ | :----------- |
+| `lite`    | Servers, routers | Minimal CLI: git (no forced `ssh -i`), helix-lite, tmux, bat, fzf, ripgrep, etc.; journal + nix-diff; no zsh plugins bundle from the heavy profile. |
+| `zsh-lite` | Default      | `lite` + zsh (zplug, starship), `home.sessionPath` for local bins. |
+| `dev-heavy` | Workstations | `zsh-lite` stack + full [`modules/home/shell/tools/default.nix`](modules/home/shell/tools/default.nix) (helix + LSPs, git with `core.sshCommand`, opencode, carapace, extra CLIs). `summarize` maps to the `summarize-commit` script. |
+
+Per-host `shellProfile` is set in each [`modules/hosts/*/home.nix`](modules/hosts/) file.
 
 ## Modules
 
@@ -39,7 +54,7 @@ This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) t
 | :------- | :--------------------------------------------------------------------------------------------------------- |
 | apps     | firefox, ghostty, rofi, steam, vscode                                                                      |
 | services | ~45 services including caddy, docker, tailscale, nextcloud, postgresql, minio, dendrite, zitadel, fail2ban |
-| desktop  | cosmic, hyprland, kde, niri, phosh, xfce (each with app bundles)                                           |
+| desktop  | cosmic, hyprland, kde, niri, phosh, xfce (each module includes its desktop packages) |
 | hardware | fw4b0, hardwarekey, nvidia-3060ti, rockpro64, systemd-boot, uconsole                                       |
 | security | sops, ACME (base/hostname/proxy), custom CA certs                                                          |
 | users    | meep, ratatoskr, nixos, root                                                                               |
@@ -49,8 +64,8 @@ This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) t
 | Category | Contents                                                                                          |
 | :------- | :------------------------------------------------------------------------------------------------ |
 | apps     | eww, firefox, ghostty, kitty, lan-mouse, rofi-wayland, rustdesk, wezterm, zed                     |
-| desktop  | cosmic, hyprland, kde, niri, phosh, xfce                                                          |
-| shell    | zsh, starship, carapace, helix, tmux, git, eza, zoxide, broot, bottom, fzf, fd, ripgrep, opencode |
+| desktop  | cosmic, hyprland, kde, niri, phosh, xfce (selected via `desktop` + `home/desktop/default.nix`)   |
+| shell    | zsh, profiles (`lite` / `zsh-lite` / `dev-heavy`), starship, helix, tmux, git, eza, zoxide, broot, bottom, fzf, fd, ripgrep, opencode (subset depends on profile) |
 | services | dunst, nextcloud-client                                                                           |
 | users    | meep, ratatoskr, jackbartlett, jack (with host-specific overrides)                                |
 
@@ -59,6 +74,9 @@ This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) t
 | Category | Contents                                          |
 | :------- | :------------------------------------------------ |
 | core     | Lix, zsh, auto GC, flake support, state version 6 |
+| nix-homebrew | Homebrew taps + formulae/casks via nix-homebrew |
+| docker   | Colima + Docker CLI (unstable Colima)            |
+| laptop   | core + nix-homebrew + docker + primary user      |
 
 ## Installing
 
@@ -79,17 +97,19 @@ This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) t
 nix run nix-darwin -- switch --flake $HOME/workspace/personal/nix-config#<hostname>
 ```
 
+Laptop hosts (`sycamore`, `jackjrny`) use the shared `darwin.laptop` module (core + Homebrew + Docker tooling).
+
 ## Applying Changes
 
 Clone this repo to `~/workspace/personal/nix-config`:
 
 ```bash
-git clone jacbart/nix-config ~/workspace/personal/nix-config
+git clone git@github.com:jacbart/nix-config.git ~/workspace/personal/nix-config
 ```
 
 ### NixOS
 
-A `rebuild-host` alias is provided that does the following:
+A `rebuild-host` alias is provided (zsh profile; uses `nh` when configured):
 
 ```bash
 sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
@@ -97,7 +117,7 @@ sudo nixos-rebuild switch --flake $HOME/workspace/personal/nix-config
 
 ### Home Manager
 
-A `rebuild-home` alias is provided that does the following:
+A `rebuild-home` alias is provided:
 
 ```bash
 home-manager switch -b backup --flake $HOME/workspace/personal/nix-config
