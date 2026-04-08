@@ -1,40 +1,20 @@
 { pkgs, ... }:
 {
   imports = [
-    ./docker-darwin.nix
     ./bottom.nix
-    # ./bitwarden.nix
     ./broot.nix
     ./eza.nix
-    ./git.nix
-    ./helix.nix
-    # ./neofetch.nix
-    ./opencode.nix
+    ./git-lite.nix
+    ./helix-lite.nix
     ./tmux.nix
     ./zoxide.nix
   ];
 
   home = {
     packages = with pkgs; [
-      # angle-grinder
-      dogdns
-      # dysk # disable for m1 mac
-      fastfetch
       fd
       fzf
-      # htmlq
-      # hyperfine
-      # unstable.infisical
-      netcat
-      # nurl
-      # nix-melt
-      # mazter
-      # mprocs
-      procs
-      rainfrog
       ripgrep
-      sd
-      xh
     ];
     sessionVariables = {
       MANROFFOPT = "-c";
@@ -42,7 +22,6 @@
     };
   };
 
-  # default shell programs
   programs = {
     bat = {
       enable = true;
@@ -55,15 +34,6 @@
       enable = true;
       enableZshIntegration = true;
     };
-    # direnv = {
-    #   enable = true;
-    #   enableZshIntegration = true;
-    #   silent = true;
-    #   nix-direnv = {
-    #     enable = true;
-    #     # package = pkgs.lixPackageSets.latest.nix-direnv;
-    #   };
-    # };
     fzf = {
       enable = true;
       enableZshIntegration = true;

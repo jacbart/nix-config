@@ -2,6 +2,7 @@
 {
   homeHosts."meep@boojum" = {
     system = "x86_64-linux";
+    shellProfile = "dev-heavy";
     modules = [
       config.flake.modules.homeManager.core
       ../../home/shell/default.nix

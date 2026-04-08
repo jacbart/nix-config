@@ -3,62 +3,15 @@
   platform,
   lib,
   inputs,
+  shellProfile,
   ...
 }:
-let
-  inherit (pkgs.stdenv) isLinux;
-in
 {
-  imports = [
-    ./tools # cli/tui tools or services
-    ./zsh.nix # zsh config
-    # ./nushell.nix # nu shell config
-  ];
-
-  programs.carapace = {
-    enable = true;
-    package = pkgs.unstable.carapace;
-    enableZshIntegration = true;
-    enableNushellIntegration = true;
-  };
-
-  home.packages =
-    with pkgs;
-    [
-      scripts.journal
-      inputs.nix-diff.packages.${platform}.default
-    ]
-    ++ lib.optional isLinux pkgs.pax-utils;
-
-  home.file.".ssh/config".text = ''
-    Host boojum
-        HostName boojum
-        User meep
-        IdentityFile ~/.ssh/id_ratatoskr
-
-    Host ash
-        HostName ash
-        User meep
-        IdentityFile ~/.ssh/id_ratatoskr
-
-    Host maple
-        HostName maple
-        User ratatoskr
-        IdentityFile ~/.ssh/id_ratatoskr
-
-    Host sycamore
-        HostName sycamore
-        User jackbartlett
-
-    Host unicron
-        HostName unicron
-        User jack
-        IdentityFile ~/.ssh/id_ratatoskr
-
-    Host oak
-        HostName oak
-        User root
-        Port 3048
-        IdentityFile ~/.ssh/id_do
-  '';
+  imports =
+    if shellProfile == "lite" then
+      [ ./profiles/lite.nix ]
+    else if shellProfile == "dev-heavy" then
+      [ ./profiles/dev-heavy.nix ]
+    else
+      [ ./profiles/zsh-lite.nix ];
 }

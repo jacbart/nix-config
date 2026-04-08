@@ -5,10 +5,6 @@
   ...
 }:
 {
-  imports = [
-    ./hyprland-apps.nix
-  ];
-
   # gtk.enable = true;
   # home.packages = with pkgs;[
   # auth popup
@@ -18,6 +14,18 @@
   services = {
     gpg-agent.pinentryPackage = lib.mkForce pkgs.pinentry-gnome3;
   };
+
+  home.packages =
+    (config.home.packages or [ ])
+    ++ (with pkgs; [
+      dunst
+      eww
+      hyprlock
+      hypridle
+      kitty
+      libnotify
+      rofi-wayland
+    ]);
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     Unit.Description = "polkit-gnome-authentication-agent-1";

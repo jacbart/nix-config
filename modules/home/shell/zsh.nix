@@ -12,16 +12,6 @@ let
   # rest = inputs.rest.packages.${system}.default;
   jaws = inputs.jaws.packages.${system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
-  modPath = [
-    "$HOME/.local/bin"
-    "$HOME/go/bin"
-    "$HOME/.cargo/bin"
-  ]
-  ++ lib.optional isDarwin "/opt/homebrew/bin"
-  ++ [
-    "$PATH"
-  ];
-  modPathStr = lib.strings.concatMapStrings (path: path + ":") modPath;
 in
 {
   imports = [ ./tools/starship.nix ];
@@ -48,7 +38,6 @@ in
     enable = true;
     sessionVariables = {
       ZSHDATADIR = "${config.xdg.dataHome}/zsh";
-      PATH = "${modPathStr}";
       TERM = "xterm-256color";
     };
     shellAliases = {
@@ -65,7 +54,6 @@ in
       less = "bat --paging=always";
       lm = "if [ $(systemctl --user is-active lan-mouse) = \"inactive\" ]; then systemctl --user start lan-mouse && echo active; else systemctl --user stop lan-mouse && echo inactive; fi";
       more = "bat --paging=always";
-      summarize = "nix shell nixpkgs#llama-cpp --command llama-completion -hf unsloth/Qwen3-0.6B-GGUF:Q5_K_M -p \"Summarize the following git diff into a SINGLE conventional commit message (format: 'type: description') under 72 characters. Use one type only: feat, fix, refactor, perf, style, test, docs, build, ops, chore:\\n\\n$(git diff --cached | head -n 200)\" --single-turn 2>/dev/null | grep -E '^(feat|fix|refactor|perf|style|test|docs|build|ops|chore):' | sed 's/`//g; s/\\[end of text\\].*//'``````";
       monitor = "fswatch -o . | while read; do clear; git diff; done";
       secure = "eval $(ssh-agent -s -t 3600 -k) && ssh-add ~/.ssh/id_git";
       hist = "fc -RI";

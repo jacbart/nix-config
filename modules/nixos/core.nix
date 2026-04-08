@@ -9,8 +9,12 @@
       pkgs,
       vars,
       stateVersion,
+      desktop,
       ...
     }:
+    let
+      hasDesktop = desktop != null;
+    in
     {
       boot = {
         consoleLogLevel = 0;
@@ -69,7 +73,7 @@
         };
       };
 
-      fonts = {
+      fonts = lib.mkIf hasDesktop {
         fontDir.enable = true;
         packages = with pkgs; [
           nerd-fonts.fira-code
@@ -190,7 +194,7 @@
         };
       };
 
-      services.fwupd.enable = true;
+      services.fwupd.enable = lib.mkIf hasDesktop true;
 
       system.activationScripts.diff = {
         supportsDryActivation = true;

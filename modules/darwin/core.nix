@@ -15,7 +15,10 @@
     {
       users.users = lib.mkDefault { };
 
-      environment.systemPackages = [ pkgs.unstable.nixos-rebuild-ng ];
+      environment.systemPackages = with pkgs; [
+        unstable.nixos-rebuild-ng
+        jq
+      ];
 
       programs.zsh.enable = true;
 

@@ -9,4 +9,5 @@
   upload-to-cache = pkgs.callPackage ./upload-to-cache { };
   volume = pkgs.callPackage ./volume { };
   install-system = pkgs.callPackage ./install-system { };
+  summarize-commit = pkgs.callPackage ./summarize-commit { };
 }

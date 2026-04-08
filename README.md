@@ -60,16 +60,6 @@ This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) t
 | :------- | :------------------------------------------------ |
 | core     | Lix, zsh, auto GC, flake support, state version 6 |
 
-## Dev Shells
-
-Standalone flake-based dev shells in `shells/`:
-
-- **code-format** -- black, prettier, rustfmt, shellcheck, shfmt
-- **gpu** -- clinfo, libva-utils, gpustat, vdpauinfo
-- **network** -- bmon, iperf3, mtr, nethogs, ookla-speedtest, wavemon
-
-Enter a shell with `nix develop ./shells/<name>`.
-
 ## Installing
 
 - Boot off a `.iso` image created by this flake using `nix build .#nixosConfigurations.iso.config.system.build.isoImage`

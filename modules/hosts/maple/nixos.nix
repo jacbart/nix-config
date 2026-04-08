@@ -36,7 +36,8 @@
         { pkgs, ... }:
         {
           services.leadership-matrix = {
-            package = inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+            package = import ../../nixos/services/leadership-matrix-package.nix {
+              inherit pkgs inputs;
               cargoFeatures = [
                 "aggregate"
                 "systemd"

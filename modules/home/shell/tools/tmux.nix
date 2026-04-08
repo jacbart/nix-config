@@ -5,6 +5,12 @@ let
       doCheck = false;
     })
   );
+  tpm = pkgs.fetchFromGitHub {
+    owner = "tmux-plugins";
+    repo = "tpm";
+    rev = "99469c4a9b1ccf77fade25842dc7bafbc8ce9946";
+    sha256 = "sha256-hW8mfwB8F9ZkTQ72WQp/1fy8KL1IIYMZBtZYIwZdMQc=";
+  };
 in
 {
   home = {
@@ -14,11 +20,8 @@ in
       gitu # TUI Git client inspired by Magit
     ];
 
-    # Fetch the tmux plugin manager (tpm) and place it in the ~/.tmux/plugins/tpm directory
-    file.".tmux/plugins/tpm".source = builtins.fetchGit {
-      url = "https://github.com/tmux-plugins/tpm";
-      rev = "99469c4a9b1ccf77fade25842dc7bafbc8ce9946";
-    };
+    # TPM via fixed-output derivation (no eval-time network fetch)
+    file.".tmux/plugins/tpm".source = tpm;
 
     # Tmux home dir config file
     file.".tmux.conf".text = ''

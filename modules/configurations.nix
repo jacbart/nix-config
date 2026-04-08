@@ -86,6 +86,20 @@ in
               default = "x86_64-linux";
               description = "System architecture for this home configuration";
             };
+            desktop = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "Desktop id for home/desktop modules; null inherits nixosHosts.<hostname>.desktop when defined";
+            };
+            shellProfile = lib.mkOption {
+              type = lib.types.enum [
+                "lite"
+                "zsh-lite"
+                "dev-heavy"
+              ];
+              default = "zsh-lite";
+              description = "Home shell/tools profile tier for this host";
+            };
           };
         }
       );
@@ -140,6 +154,7 @@ in
             stateVersion
             ;
           inherit (config.flake) overlays;
+          flakeModules = config.flake.modules;
           username = cfg.username;
         };
         modules = cfg.modules ++ [
@@ -159,6 +174,14 @@ in
         parts = lib.splitString "@" name;
         username = builtins.elemAt parts 0;
         hostname = builtins.elemAt parts 1;
+        desktop =
+          if cfg.desktop != null then
+            cfg.desktop
+          else if builtins.hasAttr hostname config.nixosHosts then
+            config.nixosHosts.${hostname}.desktop
+          else
+            null;
+        shellProfile = cfg.shellProfile;
       in
       inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.${cfg.system};
@@ -169,6 +192,8 @@ in
             stateVersion
             username
             hostname
+            desktop
+            shellProfile
             ;
           platform = cfg.system;
           inherit (config.flake) overlays;
