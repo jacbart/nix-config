@@ -5,7 +5,9 @@
   ...
 }:
 let
-  port = "13121";
+  lm = vars.serviceCatalog.leadershipMatrix;
+  bindHost = lm.bindHost;
+  port = lm.bindPort;
 in
 {
   imports = [ inputs.leadership-matrix.nixosModules.default ];
@@ -13,8 +15,8 @@ in
   services.leadership-matrix = {
     enable = true;
 
-    # Web server bind address
-    host = "127.0.0.2:${port}";
+    # Web server bind address (see vars.serviceCatalog.leadershipMatrix)
+    host = "${bindHost}:${port}";
 
     # Run as a specific user/group
     user = "root";
@@ -33,7 +35,7 @@ in
       addSSL = true;
       useACMEHost = if hostname == "maple" then vars.domain else "${hostname}.${vars.domain}";
       locations."/" = {
-        proxyPass = "http://127.0.0.2:${port}";
+        proxyPass = "http://${bindHost}:${port}";
         proxyWebsockets = true;
       };
     };

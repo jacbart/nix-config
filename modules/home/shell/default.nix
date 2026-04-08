@@ -6,6 +6,7 @@
   shellProfile,
   ...
 }:
+# shellProfile: lite | zsh-lite | dev-heavy — see README.md (Shell / profiles).
 {
   imports =
     if shellProfile == "lite" then

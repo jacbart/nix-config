@@ -213,11 +213,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1775617781,
-        "narHash": "sha256-HRXoSB66Te4VHv+PTLosmTDaEsN/jLdRsyLJQ5vYC+4=",
+        "lastModified": 1775689074,
+        "narHash": "sha256-a7lvOVppx8JCS6LGcX1ECqgqCsu0PoBB2L8gf6+TLdU=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "26be0e0c9d5d393ca7b76e25dfea725d44c97912",
+        "rev": "26aafa57e6cfb07385e5957bfcfd8b49142fb330",
         "type": "github"
       },
       "original": {
@@ -229,11 +229,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1775628396,
-        "narHash": "sha256-1bQOqEFycUYXNUA52IwK7N0Zc8KW6YqzWwGf5fHujl0=",
+        "lastModified": 1775688830,
+        "narHash": "sha256-vpsGHIOE2tMn3Z/0k+xasOdejG7dHS+6L9j/Lg2+xis=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "2fa402988e1c54ade4f2bad0af97b35d0c1e7ca6",
+        "rev": "1451d0013b92ec9e7438934d90240a6ac484221f",
         "type": "github"
       },
       "original": {
@@ -252,11 +252,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1775621785,
-        "narHash": "sha256-U2uZuHDvJRc0E/tdYFBswAh17PUqQGdpiiSpQVAOXZA=",
+        "lastModified": 1775667573,
+        "narHash": "sha256-9J9jzf82/EEAy0+qG8/yz201tMB/+Ch3PdxXmb5cq4U=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "284c28220774ee1c465d887b13daab3422ffc411",
+        "rev": "cd235f7de82e3b67e81b442b73f5f7a98791298c",
         "type": "github"
       },
       "original": {
@@ -290,11 +290,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1774442217,
-        "narHash": "sha256-ktAx2SUj30DNEc4UQAyjAJsX3ZBGsfbb4zN+jjy1bwo=",
+        "lastModified": 1775663005,
+        "narHash": "sha256-LKBM2iuI4Z2TnCuN9yhFBn8NhA2EBEcCTHxGF5PwL2I=",
         "owner": "feschber",
         "repo": "lan-mouse",
-        "rev": "2e1b5278ce789ac5388ea5548800856303a0372b",
+        "rev": "aef05f386f5dd4d7e5c4fd0fb4e25477cef0613a",
         "type": "github"
       },
       "original": {
@@ -309,11 +309,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1775485086,
-        "narHash": "sha256-Crezh4WQ98rE35vy6n4/EshC6w34HYkIGV7qPLmKpV0=",
+        "lastModified": 1775689982,
+        "narHash": "sha256-LtgRLYNCTEsKFujDJtcNsM4cY79g2JPVI8JaT4iQbRM=",
         "ref": "feat/configurable",
-        "rev": "698371d58b448573fe6de690c69336709ae7a31b",
-        "revCount": 160,
+        "rev": "3f0947cdd2cd4bff86c6e01521aad45793f174ad",
+        "revCount": 161,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -541,11 +541,11 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1775305101,
-        "narHash": "sha256-/74n1oQPtKG52Yw41cbToxspxHbYz6O3vi+XEw16Qe8=",
+        "lastModified": 1775525138,
+        "narHash": "sha256-BQb70+B378ECLO8iQT3P/b1hCC5/CJVHZdeulY8futc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "36a601196c4ebf49e035270e10b2d103fe39076b",
+        "rev": "d96b37bbeb9840f1c0ebfe90585ef5067b69bbb3",
         "type": "github"
       },
       "original": {
@@ -900,11 +900,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775619836,
-        "narHash": "sha256-VcC/+MMMldwQKcST2y/QTndGLusSxjeUvYwFwzZKKko=",
+        "lastModified": 1775682595,
+        "narHash": "sha256-0E9PohY/VuESLq0LR4doaH7hTag513sDDW5n5qmHd1Q=",
         "owner": "mic92",
         "repo": "sops-nix",
-        "rev": "de5f2d596eb896a5728afcd15f823f59cb9ecfdb",
+        "rev": "d2e8438d5886e92bc5e7c40c035ab6cae0c41f76",
         "type": "github"
       },
       "original": {

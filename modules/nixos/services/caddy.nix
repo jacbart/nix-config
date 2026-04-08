@@ -1,9 +1,39 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
+  vars,
   ...
 }:
+let
+  inherit (vars) serviceCatalog;
+  edgeRoutes = with serviceCatalog; [
+    matrixEdge
+    mxEdge
+  ];
+  mkAnubisServerBlock = route: ''
+    ${route.publicHost} {
+      reverse_proxy ${route.backendTarget}
+      log {
+        output file /var/log/caddy/access-${route.accessLogBase}.log
+        format json
+      }
+    }
+  '';
+  mkTlsServerBlock = route: ''
+    ${route.publicHost} {
+      reverse_proxy ${route.backendTarget}
+      log {
+        output file /var/log/caddy/access-${route.accessLogBase}.log
+        format json
+      }
+      tls {
+        on_demand
+      }
+    }
+  '';
+in
 {
   sops.secrets."caddy_users/jack_pass" = {
     owner = "caddy";
@@ -21,43 +51,11 @@
     content = ''
       # Listen on port 8080 for HTTP traffic from Anubis
       :8080 {
-        matrix.meep.sh {
-          reverse_proxy maple.meep.sh:8008
-          log {
-            output file /var/log/caddy/access-matrix.meep.sh.log
-            format json
-          }
-        }
-        mx.meep.sh {
-          reverse_proxy maple.meep.sh:443
-          log {
-            output file /var/log/caddy/access-mx.meep.sh.log
-            format json
-          }
-        }
+        ${lib.concatStrings (map mkAnubisServerBlock edgeRoutes)}
       }
 
       # Listen on port 443 for HTTPS traffic (direct, bypassing Anubis for TLS)
-      matrix.meep.sh {
-        reverse_proxy maple.meep.sh:8008
-        log {
-          output file /var/log/caddy/access-matrix.meep.sh.log
-          format json
-        }
-        tls {
-          on_demand
-        }
-      }
-      mx.meep.sh {
-        reverse_proxy maple.meep.sh:443
-        log {
-          output file /var/log/caddy/access-mx.meep.sh.log
-          format json
-        }
-        tls {
-          on_demand
-        }
-      }
+      ${lib.concatStrings (map mkTlsServerBlock edgeRoutes)}
     '';
     owner = "caddy";
     group = "caddy";

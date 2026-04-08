@@ -42,32 +42,23 @@
 
       nix = {
         package = pkgs.lixPackageSets.latest.lix;
+        registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
         settings = {
           trusted-users = [
             username
             "root"
           ];
-          substituters = [
-            # "https://nix-cache.${vars.domain}"
-            "https://nix-community.cachix.org"
-            "https://cache.nixos.org"
-          ];
-          trusted-public-keys = [
-            # "nix-cache.${vars.domain}-1:q58+Lt6h68AmBke4wpJatSrpe1cZvDzVNDTp8qurEbs="
-            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          ];
-        };
-        registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-        settings = {
           auto-optimise-store = true;
           experimental-features = [
             "nix-command"
             "flakes"
           ];
+          allowed-uris = vars.nixAllowedUris;
           keep-outputs = true;
           keep-derivations = true;
           warn-dirty = false;
+          substituters = vars.nixSubstitutersPublic;
+          trusted-public-keys = vars.nixTrustedPublicKeysPublic;
         };
       };
     };

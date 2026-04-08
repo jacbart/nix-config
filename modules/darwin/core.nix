@@ -5,6 +5,7 @@
 {
   flake.modules.darwin.core =
     {
+      inputs,
       lib,
       pkgs,
       vars,
@@ -31,7 +32,8 @@
       };
 
       nix = {
-        package = pkgs.lixPackageSets.stable.lix;
+        package = pkgs.lixPackageSets.latest.lix;
+        registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
         gc = {
           automatic = true;
           options = "--delete-older-than 10d";
@@ -42,16 +44,10 @@
             "root"
             username
           ];
-          substituters = [
-            # "https://nix-cache.${vars.domain}"
-            "https://nix-community.cachix.org"
-            "https://cache.nixos.org"
-          ];
-          trusted-public-keys = [
-            # "nix-cache.${vars.domain}-1:q58+Lt6h68AmBke4wpJatSrpe1cZvDzVNDTp8qurEbs="
-            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          ];
+          auto-optimise-store = true;
+          allowed-uris = vars.nixAllowedUris;
+          substituters = vars.nixSubstitutersPublic;
+          trusted-public-keys = vars.nixTrustedPublicKeysPublic;
           experimental-features = [
             "nix-command"
             "flakes"

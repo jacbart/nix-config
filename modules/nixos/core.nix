@@ -161,12 +161,7 @@
             "nix-command"
             "flakes"
           ];
-          allowed-uris = [
-            "github:"
-            "git+https://github.com/"
-            "git+https://git.vdx.hu/"
-            "git+ssh://github.com/"
-          ];
+          allowed-uris = vars.nixAllowedUris;
 
           # Avoid unwanted garbage collection when using nix-direnv
           keep-outputs = true;
@@ -174,16 +169,8 @@
 
           warn-dirty = false;
 
-          substituters = [
-            "https://nix-cache.${vars.domain}"
-            "https://nix-community.cachix.org"
-            "https://cache.nixos.org"
-          ];
-          trusted-public-keys = [
-            "nix-cache.${vars.domain}-1:q58+Lt6h68AmBke4wpJatSrpe1cZvDzVNDTp8qurEbs="
-            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          ];
+          substituters = vars.nixSubstitutersNixOS;
+          trusted-public-keys = vars.nixTrustedPublicKeysNixOS;
         };
       };
 
