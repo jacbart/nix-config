@@ -43,8 +43,15 @@
       };
     };
     push.default = "current";
+    # First `git push` on a new branch sets upstream (no more `git pull` without tracking).
+    push.autoSetupRemote = true;
     pull.rebase = false;
+    fetch.prune = true;
+    rerere.enabled = true;
     init.defaultBranch = "main";
+    merge.conflictStyle = "zdiff3";
+    diff.algorithm = "histogram";
+    column.ui = "auto";
     gpg.format = "ssh";
     commit.gpgsign = true;
   };
