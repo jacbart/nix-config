@@ -36,6 +36,7 @@ in
       dua
       fswatch
       mdbook
+      newsboat
       uv
       htmlq
       unstable.nh

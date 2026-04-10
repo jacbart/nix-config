@@ -5,6 +5,8 @@
   ...
 }:
 {
+  imports = [ ./personal-services.nix ];
+
   # gtk.enable = true;
   # home.packages = with pkgs;[
   # auth popup
@@ -18,7 +20,6 @@
   home.packages =
     (config.home.packages or [ ])
     ++ (with pkgs; [
-      dunst
       eww
       hyprlock
       hypridle

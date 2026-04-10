@@ -12,39 +12,27 @@
       config.flake.modules.nixos.core
       ../../nixos/security/acme-base.nix
       ../../nixos/hardware/rockpro64.nix
-      ../../nixos/services/tailscale.nix
-      ../../nixos/services/fail2ban.nix
-      ../../nixos/services/minio.nix
-      ../../nixos/services/kiwix-serve.nix
-      ../../nixos/services/postgresql.nix
-      ../../nixos/services/zitadel.nix
-      ../../nixos/services/nextcloud-server.nix
-      ../../nixos/services/books.nix
-      ../../nixos/services/dendrite.nix
-      ../../nixos/services/microbin.nix
-      ../../nixos/services/smartmon.nix
-      ../../nixos/services/leadership-matrix.nix
-      ../../nixos/services/koreader-sync-server.nix
+      config.flake.modules.nixos.profileTailscale
+      config.flake.modules.nixos.profileFail2ban
+      config.flake.modules.nixos.profileMapleHomelab
       # ../../nixos/services/attic.nix
       # ../../nixos/services/hydra.nix
       # ../../nixos/services/mailserver.nix
       # ../../nixos/services/maildns.nix
       # ../../nixos/services/nixupd-client.nix
-    ]
-    ++ [
       (
         { pkgs, ... }:
+        let
+          lm = import ../../nixos/services/mk-leadership-matrix-package.nix { inherit pkgs inputs; };
+        in
         {
           services.leadership-matrix = {
-            package = import ../../nixos/services/leadership-matrix-package.nix {
-              inherit pkgs inputs;
-              cargoFeatures = [
-                "aggregate"
-                "systemd"
-                "zfs"
-                "smart"
-              ];
-            };
+            package = lm [
+              "aggregate"
+              "systemd"
+              "zfs"
+              "smart"
+            ];
             zpoolName = lib.mkForce "trunk";
           };
 
@@ -124,27 +112,6 @@
 
           networking = {
             hostId = "01d4f038";
-            hosts = {
-              "127.0.0.2" = [
-                "maple.meep.sh"
-                "auth.meep.sh"
-                "books.meep.sh"
-                "cloud.meep.sh"
-                "minio.meep.sh"
-                "s3.meep.sh"
-                "wiki.meep.sh"
-                "kosync.meep.sh"
-                "mail.meep.sh"
-              ];
-              "100.78.207.83" = [
-                "unicron"
-                "unicron.bbl.systems"
-              ];
-              "10.120.0.1" = [
-                "mesquite"
-                "mesquite.meep.sh"
-              ];
-            };
             firewall = {
               enable = true;
               allowedTCPPorts = [
@@ -164,11 +131,7 @@
           };
         }
       )
-    ]
-    ++ [
       ./disks.nix
-    ]
-    ++ [
       ../../hosts/shared/distributed-builds.nix
     ];
   };

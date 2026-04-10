@@ -2,7 +2,6 @@
   config,
   inputs,
   lib,
-  vars,
   ...
 }:
 {
@@ -11,10 +10,8 @@
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/hardware/fw4b0.nix
-      ../../nixos/services/tailscale.nix
-      ../../nixos/services/fail2ban.nix
-    ]
-    ++ [
+      config.flake.modules.nixos.profileTailscale
+      config.flake.modules.nixos.profileFail2ban
       (
         { pkgs, ... }:
         {
@@ -77,15 +74,7 @@
           };
 
           # ── Networking hosts ──────────────────────────────────────────────────
-          networking = {
-            hostId = "a1b2c3d4"; # Required for ZFS compatibility, harmless otherwise
-            hosts = {
-              "127.0.0.2" = [
-                "mesquite"
-                "mesquite.${vars.domain}"
-              ];
-            };
-          };
+          networking.hostId = "a1b2c3d4"; # Required for ZFS compatibility, harmless otherwise
 
           # ── IRQ affinity and RPS tuning ───────────────────────────────────────
           systemd.services.network-tuning = {
@@ -138,8 +127,6 @@
           };
         }
       )
-    ]
-    ++ [
       (import ./disks.nix { })
       ./network.nix
       ./nftables.nix

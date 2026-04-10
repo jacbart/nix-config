@@ -11,43 +11,19 @@
       config.flake.modules.nixos.core
       (inputs.nixpkgs + "/nixos/modules/virtualisation/digital-ocean-image.nix")
       ../../nixos/security/acme-proxy.nix
-      ../../nixos/services/fail2ban.nix
-      ../../nixos/services/leadership-matrix.nix
-      ../../nixos/services/tailscale.nix
-      ../../nixos/services/nixupd-client.nix
-      ../../nixos/services/mailrelay.nix
-    ]
-    ++ [
+      config.flake.modules.nixos.profileFail2ban
+      config.flake.modules.nixos.profileOnlinePersonal
+      config.flake.modules.nixos.profileMailrelay
       (
         { pkgs, ... }:
+        let
+          lm = import ../../nixos/services/mk-leadership-matrix-package.nix { inherit pkgs inputs; };
+        in
         {
-          services.leadership-matrix = {
-            package = import ../../nixos/services/leadership-matrix-package.nix {
-              inherit pkgs inputs;
-              cargoFeatures = [ "systemd" ];
-            };
-          };
+          services.leadership-matrix.package = lm [ "systemd" ];
 
           virtualisation.digitalOceanImage.compressionMethod = "bzip2";
           networking = {
-            hosts = {
-              "127.0.0.2" = [
-                "oak.meep.sh"
-                "matrix.meep.sh"
-                "mx.meep.sh"
-                "tun.meep.sh"
-                "mail.meep.sh"
-              ];
-              "100.116.178.48" = [
-                "maple.meep.sh"
-                "s3.meep.sh"
-                "books.meep.sh"
-                "auth.meep.sh"
-                "minio.meep.sh"
-                "cloud.meep.sh"
-                "wiki.meep.sh"
-              ];
-            };
             networkmanager.dns = "none";
             firewall = {
               enable = true;
@@ -76,8 +52,6 @@
           ];
         }
       )
-    ]
-    ++ [
       ./nginx.nix
     ];
   };

@@ -137,6 +137,7 @@ in
               networking.hostName = _name;
               nixpkgs.hostPlatform = cfg.system;
             }
+            ./nixos/services/service-catalog-hosts.nix
           ]
           ++ lib.optional (builtins.pathExists ./nixos/users/${cfg.username}) ./nixos/users/${cfg.username}
           ++ lib.optional (cfg.desktop != null) ./nixos/desktop;

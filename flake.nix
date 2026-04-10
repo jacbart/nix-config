@@ -73,6 +73,7 @@
 
         # Core modules that export to flake.modules
         ./modules/nixos/core.nix
+        ./modules/nixos/service-profiles.nix
         ./modules/home/core.nix
         ./modules/darwin/core.nix
         ./modules/darwin/nix-homebrew.nix

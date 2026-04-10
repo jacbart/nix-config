@@ -13,20 +13,14 @@
       config.flake.modules.nixos.core
       ../../nixos/hardware/uconsole.nix
       ../../nixos/security/acme-hostname.nix
-      ../../nixos/services/tailscale.nix
-      ../../nixos/services/leadership-matrix.nix
-      ../../nixos/services/nixupd-client.nix
-    ]
-    ++ [
+      config.flake.modules.nixos.profileOnlinePersonal
       (
         { pkgs, ... }:
+        let
+          lm = import ../../nixos/services/mk-leadership-matrix-package.nix { inherit pkgs inputs; };
+        in
         {
-          services.leadership-matrix = {
-            package = import ../../nixos/services/leadership-matrix-package.nix {
-              inherit pkgs inputs;
-              cargoFeatures = [ "systemd" ];
-            };
-          };
+          services.leadership-matrix.package = lm [ "systemd" ];
 
           # use x86_64 steam and allow unfree license
           nixpkgs.overlays = [
@@ -76,40 +70,21 @@
             }
           ];
 
-          networking = {
-            hosts = {
-              "127.0.0.2" = [ "ash.meep.sh" ];
-              "100.116.178.48" = [
-                "maple.meep.sh"
-                "s3.meep.sh"
-                "books.meep.sh"
-                "auth.meep.sh"
-                "minio.meep.sh"
-                "cloud.meep.sh"
-                "wiki.meep.sh"
-              ];
-            };
-            wireless.iwd = {
-              enable = lib.mkDefault true;
-              settings = {
-                Network = {
-                  EnableIPv6 = lib.mkDefault true;
-                  RoutePriorityOffset = lib.mkDefault 300;
-                };
-                Settings = {
-                  AutoConnect = lib.mkDefault true;
-                };
+          networking.wireless.iwd = {
+            enable = lib.mkDefault true;
+            settings = {
+              Network = {
+                EnableIPv6 = lib.mkDefault true;
+                RoutePriorityOffset = lib.mkDefault 300;
+              };
+              Settings = {
+                AutoConnect = lib.mkDefault true;
               };
             };
           };
         }
       )
-    ]
-    ++ [
       ./disks.nix
-      # ./remote-builder.nix
-    ]
-    ++ [
       ../../hosts/shared/distributed-builds.nix
     ];
   };

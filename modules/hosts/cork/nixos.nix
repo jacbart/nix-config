@@ -14,31 +14,22 @@
       ../../nixos/hardware/nvidia-3060ti.nix
       ../../nixos/hardware/hardwarekey.nix
       ../../nixos/security/acme-hostname.nix
-      ../../nixos/services/qemu.nix
-      ../../nixos/services/docker.nix
-      ../../nixos/services/bluetooth.nix
-      ../../nixos/services/pipewire.nix
+      config.flake.modules.nixos.profileWorkstationMedia
       ../../nixos/services/flatpak.nix
-      ../../nixos/services/tailscale.nix
-      ../../nixos/services/nixupd-client.nix
+      config.flake.modules.nixos.profileOnlinePersonal
       ../../nixos/apps/ghostty.nix
       ../../nixos/apps/steam.nix
-      ../../nixos/services/leadership-matrix.nix
-    ]
-    ++ [
       (
         { pkgs, ... }:
+        let
+          lm = import ../../nixos/services/mk-leadership-matrix-package.nix { inherit pkgs inputs; };
+        in
         {
-          services.leadership-matrix = {
-            package = import ../../nixos/services/leadership-matrix-package.nix {
-              inherit pkgs inputs;
-              cargoFeatures = [
-                "nvidia"
-                "systemd"
-                "smart"
-              ];
-            };
-          };
+          services.leadership-matrix.package = lm [
+            "nvidia"
+            "systemd"
+            "smart"
+          ];
 
           # virtualisation
           programs.virt-manager.enable = true;
@@ -84,24 +75,13 @@
             priority = 10;
           };
 
-          # networking
-          networking = {
-            useDHCP = lib.mkDefault true;
-            hosts = {
-              "127.0.0.2" = [
-                "cork.meep.sh"
-                "remote.dev"
-              ];
-            };
-          };
+          networking.useDHCP = lib.mkDefault true;
 
           # cpu
           nixpkgs.hostPlatform = lib.mkForce "x86_64-linux";
           hardware.cpu.amd.updateMicrocode = lib.mkForce true;
         }
       )
-    ]
-    ++ [
       (import ./disks.nix { })
     ];
   };
