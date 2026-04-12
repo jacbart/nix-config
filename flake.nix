@@ -30,6 +30,11 @@
     nix-diff.url = "github:Mic92/nix-diff-rs";
     lan-mouse.url = "github:feschber/lan-mouse";
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     hydra.url = "github:NixOS/hydra";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
 

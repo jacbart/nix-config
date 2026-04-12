@@ -1,5 +1,10 @@
 # Applies vars.serviceCatalog.localVhosts.<hostName> to networking.hosts when defined.
-{ config, lib, vars, ... }:
+{
+  config,
+  lib,
+  vars,
+  ...
+}:
 let
   host = config.networking.hostName;
   lv = vars.serviceCatalog.localVhosts or { };

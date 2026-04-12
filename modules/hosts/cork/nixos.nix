@@ -7,7 +7,7 @@
 {
   nixosHosts.cork = {
     username = "meep";
-    desktop = "cosmic";
+    desktop = "niri";
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/hardware/systemd-boot.nix
@@ -28,7 +28,6 @@
           services.leadership-matrix.package = lm [
             "nvidia"
             "systemd"
-            "smart"
           ];
 
           # virtualisation
