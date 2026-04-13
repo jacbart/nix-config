@@ -20,6 +20,7 @@
       # ../../nixos/services/mailserver.nix
       # ../../nixos/services/maildns.nix
       # ../../nixos/services/nixupd-client.nix
+      ../../nixos/services/freshrss.nix
       (
         { pkgs, ... }:
         let

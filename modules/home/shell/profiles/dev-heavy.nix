@@ -15,6 +15,7 @@ in
     ../zsh.nix
     ../tools/starship.nix
     ../tools
+    ../../apps/newsboat.nix
   ];
 
   home.sessionPath = [
@@ -35,8 +36,8 @@ in
     (with pkgs; [
       dua
       fswatch
+      fern
       mdbook
-      newsboat
       uv
       htmlq
       unstable.nh
@@ -46,6 +47,8 @@ in
     ])
     ++ lib.optional isLinux pkgs.unstable.tlrc
     ++ lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") pkgs.fex-cli;
+
+  home.file.".config/fern/themes".source = "${pkgs.fern}/share/fern/themes";
 
   programs.zsh.shellAliases.summarize = "summarize-commit";
 }

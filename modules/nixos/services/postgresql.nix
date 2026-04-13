@@ -4,10 +4,15 @@
     enable = true;
     package = pkgs.postgresql_16;
     ensureDatabases = [
+      "freshrss"
       "nextcloud"
       "zitadel"
     ];
     ensureUsers = [
+      {
+        name = "freshrss";
+        ensureDBOwnership = true;
+      }
       {
         name = "nextcloud";
         ensureDBOwnership = true;

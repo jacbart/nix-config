@@ -19,7 +19,7 @@
       inherit (pkgs.stdenv) isDarwin;
     in
     {
-      imports = [ ];
+      imports = [ ./core/sops.nix ];
 
       home = {
         activation.report-changes = hmConfig.config.lib.dag.entryAnywhere ''

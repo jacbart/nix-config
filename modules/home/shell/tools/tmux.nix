@@ -71,7 +71,7 @@ in
 
       # Journal
       unbind j
-      bind-key j display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Journal' 'mkdir -p $HOME/workspace/journal && cd $HOME/workspace/journal && hx $(date "+%Y-%m-%d").md'"
+      bind-key j display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Journal' 'fern'"
 
       # Simple shell popup
       unbind e

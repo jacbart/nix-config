@@ -126,7 +126,7 @@
       Mod+W { spawn "vivaldi"; }
 
       // Overview
-      Mod+O repeat=false { toggle-overview; }
+      Mod+Tab repeat=false { toggle-overview; }
 
       // Window management
       Mod+Q repeat=false { close-window; }
@@ -217,8 +217,6 @@
       Mod+Ctrl+9 { move-column-to-workspace 9; }
 
       // Workspace cycling
-      Mod+Tab { focus-workspace-down; }
-      Mod+Shift+Tab { focus-workspace-up; }
       Mod+Page_Down { focus-workspace-down; }
       Mod+Page_Up { focus-workspace-up; }
       Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
@@ -276,8 +274,10 @@
 
     // Window rules
     window-rule {
-      match title="Picture-in-Picture"
+      match title=r#"(?i)^picture.?in.?picture$"#  // Matches Firefox and Vivaldi PiP
       open-floating true
+      default-column-width { fixed 480; }
+      default-window-height { fixed 270; }
     }
 
     window-rule {

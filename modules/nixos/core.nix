@@ -77,6 +77,8 @@
         fontDir.enable = true;
         packages = with pkgs; [
           nerd-fonts.fira-code
+          nerd-fonts.hack
+          nerd-fonts.jetbrains-mono
           nerd-fonts.sauce-code-pro
           nerd-fonts.ubuntu-mono
           fira

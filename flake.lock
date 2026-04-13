@@ -213,11 +213,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1775937758,
-        "narHash": "sha256-JuGA2pq5efajcapMVJBmOkT+zJXCY6T0zy8je3/y+CA=",
+        "lastModified": 1775952309,
+        "narHash": "sha256-2kBve9lLSf0AWKu5HINtjZ06AhnANKhcI5B6SDP3xS8=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "a6d1aed37680d9d64e284e78d54b54f1e4dca10d",
+        "rev": "ad861511208be856e533b88aa5869f9ba3fa7921",
         "type": "github"
       },
       "original": {
@@ -229,11 +229,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1775950960,
-        "narHash": "sha256-AhmRytPNWOcxF/nRrlazyQS0uVfM2DEdVgCyhid6Pxc=",
+        "lastModified": 1775957205,
+        "narHash": "sha256-JsMtwOjuJqXvsFkiZKFWiiLb1PvVIEfnJ5W/lMbt9ao=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "e934fe515afdbc8be322b8a2bdfab559a196a74f",
+        "rev": "09fbec0da7cd316ca3813c5b52a5050b7abc4cec",
         "type": "github"
       },
       "original": {
@@ -923,10 +923,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1774755016,
-        "narHash": "sha256-Y+xVnVJqw2ZdQp9eZTQ1OwXdnrpbUYrLM7laQjgetZA=",
+        "lastModified": 1776040661,
+        "narHash": "sha256-SGp9nMM06VlBZ/LNvbZI6uNJLhvJhdhKkpKo93lHhkU=",
         "ref": "main",
-        "rev": "93fc105d763633f960088134e3bb2f61f5c7cbdc",
+        "rev": "8fc216e28fe86f178b134e0fc4483b68a5b1db68",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/jacbart/nix-secrets.git"

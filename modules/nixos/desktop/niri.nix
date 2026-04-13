@@ -5,6 +5,12 @@
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.swaylock = { };
 
+  # XDG portals for flatpak, file dialogs, etc.
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-gtk
+  ];
+
   services.greetd = {
     enable = true;
     package = pkgs.greetd;
@@ -35,5 +41,6 @@
     wl-clipboard
     grim
     slurp
+    unstable.gnome-software
   ];
 }
