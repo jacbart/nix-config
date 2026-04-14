@@ -16,6 +16,9 @@
       hasDesktop = desktop != null;
     in
     {
+      imports = [
+        ./libraries
+      ];
       boot = {
         consoleLogLevel = 0;
         initrd.verbose = false;
@@ -85,6 +88,8 @@
           fira-go
           joypixels
           liberation_ttf
+          # Broad Unicode coverage for browsers / UI (enableDefaultPackages is off)
+          noto-fonts
           noto-fonts-color-emoji
           source-serif
           ubuntu-classic
@@ -97,15 +102,20 @@
         fontconfig = {
           antialias = true;
           defaultFonts = {
-            serif = [ "Source Serif" ];
+            serif = [
+              "Source Serif"
+              "Noto Serif"
+            ];
             sansSerif = [
               "Work Sans"
               "Fira Sans"
               "FiraGO"
+              "Noto Sans"
             ];
             monospace = [
               "FiraCode Nerd Font Mono"
               "SauceCodePro Nerd Font Mono"
+              "Noto Sans Mono"
             ];
             emoji = [
               "Joypixels"

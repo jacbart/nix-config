@@ -73,6 +73,10 @@ in
       unbind j
       bind-key j display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Journal' 'fern'"
 
+      # Newsboat
+      unbind N
+      bind-key N display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Newsboat' 'newsboat'"
+
       # Simple shell popup
       unbind e
       bind-key e display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Shell' '$SHELL'"

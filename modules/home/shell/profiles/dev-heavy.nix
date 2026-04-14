@@ -16,6 +16,7 @@ in
     ../tools/starship.nix
     ../tools
     ../../apps/newsboat.nix
+    ../../apps/ai
   ];
 
   home.sessionPath = [

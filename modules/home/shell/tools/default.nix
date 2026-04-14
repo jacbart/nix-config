@@ -9,7 +9,6 @@
     ./git.nix
     ./helix.nix
     # ./neofetch.nix
-    ./opencode.nix
     ./tmux.nix
     ./zoxide.nix
   ];
@@ -29,7 +28,6 @@
       # nurl
       # nix-melt
       # mazter
-      # mprocs
       procs
       rainfrog
       ripgrep

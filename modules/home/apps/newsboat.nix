@@ -36,9 +36,4 @@ in
       delete-read-articles-on-quit yes
     '';
   };
-
-  home.file.".config/newsboat/freshrss-password" = {
-    text = "";
-    # TODO: Wire up to sops-nix ssh keys are working
-  };
 }

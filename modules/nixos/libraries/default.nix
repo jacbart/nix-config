@@ -3,10 +3,31 @@
   lib,
   ...
 }:
-let
-  isX86_64 = pkgs.stdenv.hostPlatform.system == "x86_64-linux";
-in
 {
-  # programs.nix-ld.dev.libraries =
-  programs.nix-ld.libraries = lib.optional isX86_64 pkgs.stdenv.cc.cc.lib;
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    glib
+    nss
+    nspr
+    atk
+    cups
+    dbus
+    libdrm
+    gtk3
+    pango
+    cairo
+    xorg.libX11
+    xorg.libXcomposite
+    xorg.libXdamage
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXrandr
+    xorg.libxcb
+    mesa
+    alsa-lib
+    expat
+    libxkbcommon
+    vulkan-loader
+  ];
 }
