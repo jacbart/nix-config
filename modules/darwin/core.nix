@@ -18,7 +18,6 @@
 
       environment.systemPackages = with pkgs; [
         unstable.nixos-rebuild-ng
-        cornerfix
         jq
       ];
 

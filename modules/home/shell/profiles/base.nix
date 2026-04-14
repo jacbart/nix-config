@@ -18,20 +18,40 @@ in
     ++ lib.optional isLinux pkgs.pax-utils;
 
   home.file.".ssh/config".text = ''
-    Host boojum
-        HostName boojum
-        User meep
-        IdentityFile ~/.ssh/id_ratatoskr
-
     Host ash
         HostName ash
         User meep
         IdentityFile ~/.ssh/id_ratatoskr
 
+    Host boojum
+        HostName boojum
+        User meep
+        IdentityFile ~/.ssh/id_ratatoskr
+
+    Host cork
+        HostName cork
+        User meep
+        IdentityFile ~/.ssh/id_ratatoskr
+
+    Host jackjrny
+        HostName jackjrny
+        User jackbartlett
+
     Host maple
         HostName maple
         User ratatoskr
         IdentityFile ~/.ssh/id_ratatoskr
+
+    Host mesquite
+        HostName mesquite
+        User ratatoskr
+        IdentityFile ~/.ssh/id_ratatoskr
+
+    Host oak
+        HostName oak
+        User root
+        Port 3048
+        IdentityFile ~/.ssh/id_do
 
     Host sycamore
         HostName sycamore
@@ -41,11 +61,5 @@ in
         HostName unicron
         User jack
         IdentityFile ~/.ssh/id_ratatoskr
-
-    Host oak
-        HostName oak
-        User root
-        Port 3048
-        IdentityFile ~/.ssh/id_do
   '';
 }
