@@ -1,0 +1,45 @@
+--- a/src/inject/main.m
++++ b/src/inject/main.m
+@@ -2,6 +2,8 @@
+ #import <Foundation/Foundation.h>
+ #import <spawn.h>
+ #import <sys/wait.h>
++#import <limits.h>
++#import <mach-o/dyld.h>
+ 
+ extern char **environ;
+ 
+@@ -17,11 +19,29 @@
+             "  --                Pass remaining arguments to the target executable\n");
+ }
+ 
++static NSString *CornerfixInstallRelativeDylibPath(void) {
++    char rawPath[PATH_MAX];
++    uint32_t bufSize = sizeof(rawPath);
++    if (_NSGetExecutablePath(rawPath, &bufSize) != 0) {
++        return nil;
++    }
++    NSString *raw = [NSString stringWithUTF8String:rawPath];
++    NSString *resolved = [[NSURL fileURLWithPath:raw] URLByResolvingSymlinksInPath].path;
++    if (resolved.length == 0) {
++        return nil;
++    }
++    NSString *exeDir = [resolved stringByDeletingLastPathComponent];
++    return [[exeDir stringByAppendingPathComponent:@"../lib/cornerfix/libcornerfix.dylib"] stringByStandardizingPath];
++}
++
+ static NSString *DefaultDylibPath(void) {
+-    NSArray<NSString *> *candidates = @[
+-        @"/usr/local/lib/cornerfix/libcornerfix.dylib",
+-        [[[NSFileManager defaultManager] currentDirectoryPath] stringByAppendingPathComponent:@"build/libcornerfix.dylib"]
+-    ];
++    NSMutableArray<NSString *> *candidates = [NSMutableArray array];
++    [candidates addObject:@"/usr/local/lib/cornerfix/libcornerfix.dylib"];
++    NSString *installRelative = CornerfixInstallRelativeDylibPath();
++    if (installRelative != nil) {
++        [candidates addObject:installRelative];
++    }
++    [candidates addObject:[[[NSFileManager defaultManager] currentDirectoryPath] stringByAppendingPathComponent:@"build/libcornerfix.dylib"]];
+ 
+     for (NSString *candidate in candidates) {
+         if ([[NSFileManager defaultManager] isReadableFileAtPath:candidate]) {
