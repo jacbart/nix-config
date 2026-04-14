@@ -69,6 +69,10 @@ in
       unbind T
       bind-key T command-prompt -p "(rename-pane)" -I "#T" "select-pane -T '%%'"
 
+      # remote session
+      unbin C-r
+      bind-key C-r command-prompt "new-session -s %1 ssh %1 \; set-option default-command \"ssh %1\""
+
       # Journal
       unbind j
       bind-key j display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Journal' 'fern'"
