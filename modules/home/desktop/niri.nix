@@ -11,6 +11,7 @@
     ../apps/ghostty.nix
     ../apps/lan-mouse.nix # virtual kvm
     ./personal-services.nix
+    ./vivaldi-pwa.nix
     inputs.noctalia.homeModules.default
   ];
 

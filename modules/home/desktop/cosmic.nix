@@ -9,6 +9,7 @@
     ../apps/zed-editor.nix
     ../apps/lan-mouse.nix # virtual kvm
     ./personal-services.nix
+    ./vivaldi-pwa.nix
   ];
 
   home = {

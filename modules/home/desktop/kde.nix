@@ -8,6 +8,7 @@
     ../apps/rustdesk.nix
     ../apps/lan-mouse.nix # virtual kvm
     ./personal-services.nix
+    ./vivaldi-pwa.nix
   ];
 
   home = {

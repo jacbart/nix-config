@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
-  # imports = [
-  #   ../apps/firefox.nix
-  # ];
+  imports = [
+    ./vivaldi-pwa.nix
+  ];
   home = {
     packages = with pkgs; [
       unstable.bitwarden-desktop
