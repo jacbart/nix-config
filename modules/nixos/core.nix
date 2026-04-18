@@ -30,6 +30,14 @@
 
       i18n = {
         defaultLocale = "en_US.UTF-8";
+        # UTF-8 locale data for apps that set LC_* to zh/ru/etc. (glyphs still need fonts below)
+        supportedLocales = [
+          "C.UTF-8/UTF-8"
+          "en_US.UTF-8/UTF-8"
+          "ru_RU.UTF-8/UTF-8"
+          "zh_CN.UTF-8/UTF-8"
+          "ja_JP.UTF-8/UTF-8"
+        ];
         extraLocaleSettings = {
           LC_ADDRESS = "en_US.UTF-8";
           LC_IDENTIFICATION = "en_US.UTF-8";
@@ -90,6 +98,8 @@
           liberation_ttf
           # Broad Unicode coverage for browsers / UI (enableDefaultPackages is off)
           noto-fonts
+          # Han/Hangul/Kana (not in noto-fonts LGC)
+          noto-fonts-cjk-sans
           noto-fonts-color-emoji
           source-serif
           ubuntu-classic
@@ -110,11 +120,13 @@
               "Work Sans"
               "Fira Sans"
               "FiraGO"
+              "Noto Sans CJK SC"
               "Noto Sans"
             ];
             monospace = [
               "FiraCode Nerd Font Mono"
               "SauceCodePro Nerd Font Mono"
+              "Noto Sans Mono CJK SC"
               "Noto Sans Mono"
             ];
             emoji = [

@@ -13,6 +13,7 @@
       font-family = [
         "\"JetBrainsMono Nerd Font Mono\""
         "\"Noto Sans Mono\""
+        "\"Noto Sans Mono CJK SC\""
       ];
       font-size = 13;
       # maximize = "true";
