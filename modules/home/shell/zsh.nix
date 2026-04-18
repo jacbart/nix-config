@@ -12,27 +12,35 @@ let
   # rest = inputs.rest.packages.${system}.default;
   jaws = inputs.jaws.packages.${system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
+
+  sesh = pkgs.unstable.sesh;
+  seshZshCompletion = pkgs.runCommand "sesh-zsh-completion" { } ''
+    ${sesh}/bin/sesh completion zsh > $out
+  '';
 in
 {
   imports = [ ./tools/starship.nix ];
 
-  home.packages =
-    with pkgs;
-    [
-      dua # View disk space usage and delete unwanted data
-      fswatch # A cross-platform file change monitor with multiple backends
-      jaws # secrets manager cli
-      mdbook # markdown books
-      uv # python package/dep/runtime manager
-      perl # Required for zplug
-      htmlq # parser for html
-      unstable.nh # nix helper cli
-      # rest # rest easy
-      stu # TUI explorer application for Amazon S3
-      ff # not so percise search
-    ]
-    ++ lib.optional isLinux unstable.tlrc
-    ++ lib.optional (system != "aarch64-linux") fex-cli;
+  home = {
+    file.".zsh/completions/_sesh".source = seshZshCompletion;
+    packages =
+      with pkgs;
+      [
+        dua # View disk space usage and delete unwanted data
+        fswatch # A cross-platform file change monitor with multiple backends
+        jaws # secrets manager cli
+        mdbook # markdown books
+        uv # python package/dep/runtime manager
+        perl # Required for zplug
+        htmlq # parser for html
+        unstable.nh # nix helper cli
+        # rest # rest easy
+        stu # TUI explorer application for Amazon S3
+        ff # not so percise search
+      ]
+      ++ lib.optional isLinux unstable.tlrc
+      ++ lib.optional (system != "aarch64-linux") fex-cli;
+  };
 
   programs.zsh = {
     enable = true;
@@ -55,7 +63,7 @@ in
       lm = "if [ $(systemctl --user is-active lan-mouse) = \"inactive\" ]; then systemctl --user start lan-mouse && echo active; else systemctl --user stop lan-mouse && echo inactive; fi";
       more = "bat --paging=always";
       monitor = "fswatch -o . | while read; do clear; git diff; done";
-      secure = "eval $(ssh-agent -s -t 3600 -k) && ssh-add ~/.ssh/id_git";
+      secure = "ssh-add ~/.ssh/id_git";
       hist = "fc -RI";
       g = "gitu";
       gd = "git diff | delta";
@@ -100,6 +108,8 @@ in
       "HIST_IGNORE_SPACE"
     ];
     initContent = ''
+      fpath+=("$HOME/.zsh/completions")
+
       autoload -Uz edit-command-line
       zle -N edit-command-line
       bindkey -M hxins '^X' edit-command-line
@@ -131,6 +141,24 @@ in
       bindkey '^R' zhm_fzf_history_widget
       bindkey '^E' autosuggest-accept
       bindkey '^ ' forward-word
+
+      # sesh (https://github.com/joshmedeski/sesh): pick tmux session outside tmux (Alt+s)
+      function sesh-sessions() {
+        {
+          exec </dev/tty
+          exec <&1
+          local session
+          session=$(${lib.getExe sesh} list -t -c | ${lib.getExe pkgs.fzf} --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+          zle reset-prompt > /dev/null 2>&1 || true
+          [[ -z "$session" ]] && return
+          ${lib.getExe sesh} connect "$session"
+        }
+      }
+      zle -N sesh-sessions
+      bindkey -M emacs '\es' sesh-sessions
+      bindkey -M vicmd '\es' sesh-sessions
+      bindkey -M viins '\es' sesh-sessions
+      bindkey -M hxins '\es' sesh-sessions
     ''
     + lib.optionalString (system != "aarch64-linux") ''
       source "${pkgs.fex-cli}/lib/fex.zsh"

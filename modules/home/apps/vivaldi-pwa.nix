@@ -177,8 +177,7 @@ in
       home.packages = lib.attrValues (lib.mapAttrs (_: v: v.wrapper) pwaDefs);
 
       xdg.dataFile = lib.mapAttrs' (
-        _: v:
-        lib.nameValuePair "applications/${v.launcherName}.desktop" { text = v.desktopText; }
+        _: v: lib.nameValuePair "applications/${v.launcherName}.desktop" { text = v.desktopText; }
       ) pwaDefs;
     }
   );

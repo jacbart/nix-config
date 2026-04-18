@@ -41,8 +41,6 @@
         position = "top";
         widgets = {
           left = [
-            { id = "Launcher"; }
-            { id = "Clock"; }
             { id = "ActiveWindow"; }
           ];
           center = [
@@ -53,9 +51,11 @@
           ];
           right = [
             { id = "Tray"; }
+            { id = "Tailscale"; }
+            { id = "PrivacyIndicator"; }
             { id = "Volume"; }
             { id = "Brightness"; }
-            { id = "ControlCenter"; }
+            { id = "Clock"; }
           ];
         };
       };
@@ -100,7 +100,6 @@
     spawn-at-startup "xwayland-satellite"
     spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
     spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
-    spawn-at-startup "sh" "-c" "export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket"
 
     prefer-no-csd
 

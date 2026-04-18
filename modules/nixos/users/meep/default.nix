@@ -41,4 +41,10 @@ in
   };
 
   nix.settings.trusted-users = [ "meep" ];
+
+  # Must match HM `SSH_AUTH_SOCK=%t/ssh-agent`; do not rely on mkDefault if another module flips it.
+  programs.ssh.startAgent = lib.mkForce true;
+
+  # Same 1h lifetime as old `ssh-agent -t 3600`; keys dropped from agent after that.
+  programs.ssh.agentTimeout = lib.mkDefault "3600";
 }

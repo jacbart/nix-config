@@ -16,10 +16,16 @@
       ...
     }@hmConfig:
     let
-      inherit (pkgs.stdenv) isDarwin;
+      inherit (pkgs.stdenv) isDarwin isLinux;
     in
     {
       imports = [ ./core/sops.nix ];
+
+      # Wayland / GUI apps do not source /etc/set-environment; systemd --user must see
+      # SSH_AUTH_SOCK so ssh, git, IDEs share one agent (NixOS ssh-agent uses %t/ssh-agent).
+      systemd.user.sessionVariables = lib.mkIf isLinux {
+        SSH_AUTH_SOCK = "%t/ssh-agent";
+      };
 
       home = {
         activation.report-changes = hmConfig.config.lib.dag.entryAnywhere ''

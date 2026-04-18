@@ -7,7 +7,7 @@
 {
   nixosHosts.boojum = {
     username = "meep";
-    desktop = "cosmic";
+    desktop = "niri";
     modules = [
       config.flake.modules.nixos.core
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
