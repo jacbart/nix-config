@@ -14,6 +14,7 @@
       ../../nixos/hardware/systemd-boot.nix
       ../../nixos/security/acme-hostname.nix
       config.flake.modules.nixos.profileWorkstationMedia
+      ../../nixos/services/flatpak.nix
       config.flake.modules.nixos.profileOnlinePersonal
       ../../nixos/apps/ghostty.nix
       (

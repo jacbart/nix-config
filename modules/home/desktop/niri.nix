@@ -38,6 +38,7 @@
       wallpaper.directory = "${config.home.homeDirectory}/Pictures/wallpapers";
       appLauncher.terminalCommand = "ghostty";
       bar = {
+        outerCorners = false;
         position = "top";
         widgets = {
           left = [
@@ -51,15 +52,15 @@
           ];
           right = [
             { id = "Tray"; }
-            { id = "Tailscale"; }
-            { id = "PrivacyIndicator"; }
+            # { id = "Tailscale"; }
+            # { id = "PrivacyIndicator"; }
             { id = "Volume"; }
             { id = "Brightness"; }
             { id = "Clock"; }
           ];
         };
       };
-      colorSchemes.predefinedScheme = "ayu";
+      colorSchemes.predefinedScheme = "kanagawa";
       idle = {
         enabled = true;
         screenOffTimeout = 600;
@@ -249,7 +250,7 @@
       Mod+Shift+E { quit; }
 
       // Power off monitors
-      Mod+Shift+P { power-off-monitors; }
+      // Mod+Shift+P { power-off-monitors; }
 
       // Volume
       XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }

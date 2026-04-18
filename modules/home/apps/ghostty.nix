@@ -5,7 +5,8 @@
     package = pkgs.ghostty;
     enableZshIntegration = true;
     settings = {
-      theme = "dark:Gruvbox Dark,light:Gruvbox Light";
+      # theme = "dark:Gruvbox Dark,light:Gruvbox Light";
+      theme = "Gruvbox Dark";
       shell-integration = "zsh";
       window-decoration = "none";
       # HM keyValue omits quotes; spaced names must be quoted for Ghostty (see ghostty.org config reference).
