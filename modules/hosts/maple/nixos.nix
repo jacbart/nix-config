@@ -28,7 +28,11 @@
         in
         {
           services.leadership-matrix = {
-            package = lm;
+            package = lm [
+              "systemd"
+              "zfs"
+              "smart"
+            ];
             zpoolName = lib.mkForce "trunk";
           };
 

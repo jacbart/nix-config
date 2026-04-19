@@ -23,7 +23,11 @@
           lm = import ../../nixos/services/mk-leadership-matrix-package.nix { inherit pkgs inputs; };
         in
         {
-          services.leadership-matrix.package = lm;
+          services.leadership-matrix.package = lm [
+            "systemd"
+            "zfs"
+            "smart"
+          ];
 
           environment.systemPackages = [
             pkgs.uucp

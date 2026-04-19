@@ -1,3 +1,3 @@
-# Curried helper: (import ./mk-leadership-matrix-package.nix { inherit pkgs inputs; }) [ "systemd" ];
+# Curried helper: (import ./mk-leadership-matrix-package.nix { inherit pkgs inputs; }) [ "systemd" "zfs" "smart" ];
 { pkgs, inputs }:
-cargoFeatures: import ./leadership-matrix-package.nix { inherit pkgs inputs cargoFeatures; }
+nativeComponents: import ./leadership-matrix-package.nix { inherit pkgs inputs nativeComponents; }

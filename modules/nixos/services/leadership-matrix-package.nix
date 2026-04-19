@@ -2,8 +2,8 @@
 {
   pkgs,
   inputs,
-  cargoFeatures,
+  nativeComponents,
 }:
 inputs.leadership-matrix.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-  inherit cargoFeatures;
+  inherit nativeComponents;
 }
