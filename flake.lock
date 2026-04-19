@@ -213,11 +213,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1776479251,
-        "narHash": "sha256-GYgSnMc9mYInUR2UC4qeooEvj8N7a8l8P5B6Hnr6NKE=",
+        "lastModified": 1776559491,
+        "narHash": "sha256-Au908aBmK2W8oOMLByl7F6Fv1Cb0pPAFKt5Mg0eSe5A=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "280137bfa09d706c7f188f7a295f5a536770f150",
+        "rev": "95fbb6467e9ea755b0fb6c9dd2ca046caa14ac82",
         "type": "github"
       },
       "original": {
@@ -229,11 +229,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1776476526,
-        "narHash": "sha256-FhiAKGqFhnO8EH7JS7KdkP+6SnzQyVcmSKVg0TjwfMc=",
+        "lastModified": 1776560562,
+        "narHash": "sha256-6Q6v0lhlhNm6WVXDjNFl021nHD67N1tyj77u0RfFwuY=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "ef6a9a7c134a89a0917e18c44d3ed9a97abc768d",
+        "rev": "77d664e8ac5567847a08634a5cb08e6023fedffe",
         "type": "github"
       },
       "original": {
@@ -309,11 +309,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1775689982,
-        "narHash": "sha256-LtgRLYNCTEsKFujDJtcNsM4cY79g2JPVI8JaT4iQbRM=",
+        "lastModified": 1776559760,
+        "narHash": "sha256-I84uUsblIiYdcuhO+jZT3mqcqhPODkKKHKzQws7giIU=",
         "ref": "feat/configurable",
-        "rev": "3f0947cdd2cd4bff86c6e01521aad45793f174ad",
-        "revCount": 161,
+        "rev": "3eccde140ae39e995a33752e9090f72945731322",
+        "revCount": 165,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -541,11 +541,11 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1776221942,
-        "narHash": "sha256-FbQAeVNi7G4v3QCSThrSAAvzQTmrmyDLiHNPvTF2qFM=",
+        "lastModified": 1776434932,
+        "narHash": "sha256-gyqXNMgk3sh+ogY5svd2eNLJ6oEwzbAeaoBrrxD0lKk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1766437c5509f444c1b15331e82b8b6a9b967000",
+        "rev": "c7f47036d3df2add644c46d712d14262b7d86c0c",
         "type": "github"
       },
       "original": {
