@@ -20,7 +20,7 @@
           lm = import ../../nixos/services/mk-leadership-matrix-package.nix { inherit pkgs inputs; };
         in
         {
-          services.leadership-matrix.package = lm [ "systemd" ];
+          services.leadership-matrix.package = lm;
 
           # use x86_64 steam and allow unfree license
           nixpkgs.overlays = [

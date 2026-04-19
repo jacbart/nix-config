@@ -25,10 +25,7 @@
           lm = import ../../nixos/services/mk-leadership-matrix-package.nix { inherit pkgs inputs; };
         in
         {
-          services.leadership-matrix.package = lm [
-            "nvidia"
-            "systemd"
-          ];
+          services.leadership-matrix.package = lm;
 
           # virtualisation
           programs.virt-manager.enable = true;

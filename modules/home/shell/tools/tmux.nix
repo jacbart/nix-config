@@ -74,7 +74,12 @@ let
 
   # sesh window picker (https://github.com/joshmedeski/sesh — tmux + fzf)
   seshWindowFzf = pkgs.writeShellScript "tmux-sesh-window-fzf" ''
-    export PATH="${lib.makeBinPath [ sesh pkgs.fzf ]}:$PATH"
+    export PATH="${
+      lib.makeBinPath [
+        sesh
+        pkgs.fzf
+      ]
+    }:$PATH"
     choice=$(sesh window | fzf-tmux -p 60%,50% --prompt '🪟  ') || exit 0
     exec sesh window "$choice"
   '';
