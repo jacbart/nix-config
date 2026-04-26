@@ -213,11 +213,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1777223096,
-        "narHash": "sha256-qLHTAtpRp+PAcomh3G3Q4MOhdiwO8WFGS6+7Yg+Fq3A=",
+        "lastModified": 1777229714,
+        "narHash": "sha256-UEN/AoQMfhXe7mFgqlwhb1sJdn+3qog6jMDQuUDrFdI=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "57dcccdfe159de8e7ce893cb03dc615353bb6222",
+        "rev": "61137854b96b33e531c488eace4790cbf43563e8",
         "type": "github"
       },
       "original": {
@@ -229,11 +229,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1777218090,
-        "narHash": "sha256-ZtPG0W+WDUUzGWvbeDBYKhPkIKGoBtIrFma99A3eT/w=",
+        "lastModified": 1777234085,
+        "narHash": "sha256-GDp2zOlqgFaAP4d3FG9MKq+4vwCXDpF/KPT+CY7vvOQ=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "86874a5550ba4d9c68668f609119e587c25267c4",
+        "rev": "91c0f204fcb3d91827926fa683ef40a061eb894f",
         "type": "github"
       },
       "original": {
@@ -823,6 +823,7 @@
         "nixupd": "nixupd",
         "noctalia": "noctalia",
         "rest": "rest",
+        "rustfs": "rustfs",
         "secrets": "secrets",
         "sops-nix": "sops-nix"
       }
@@ -917,6 +918,26 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rustfs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776327381,
+        "narHash": "sha256-Fm8lU0/C1Y2/be7cuNFoFRuivQIDsO0Hmt4pq2pKGiI=",
+        "owner": "rustfs",
+        "repo": "rustfs-flake",
+        "rev": "59ecb1959c42b7508d3b8e797b269027ff378531",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rustfs",
+        "repo": "rustfs-flake",
         "type": "github"
       }
     },
