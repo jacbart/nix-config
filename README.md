@@ -24,7 +24,7 @@ Personal [flake-parts](https://flake.parts/) based Nix configuration managing Ni
 
 ## Architecture
 
-This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) to organize configuration into composable modules:
+This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) to organize configuration into composable modules. [`flake.nix`](flake.nix) imports [flake-parts](modules/flake/flake-parts.nix) plus two barrels: shared flake bits in [`modules/flake/imports.nix`](modules/flake/imports.nix) and per-host entries in [`modules/hosts/imports.nix`](modules/hosts/imports.nix) (add new hosts there, not in `flake.nix`).
 
 - **Configuration registry** — Hosts are registered as `nixosHosts`, `darwinHosts`, or `homeHosts` in [`modules/configurations.nix`](modules/configurations.nix), which builds `flake.nixosConfigurations`, `flake.darwinConfigurations`, and `flake.homeConfigurations`.
 - **Core modules** — Base configs are exported as `flake.modules.{nixos,darwin,homeManager}.core` and included by each host of that type.

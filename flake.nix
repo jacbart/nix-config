@@ -68,43 +68,8 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./modules/flake/flake-parts.nix
-        ./modules/flake/overlays.nix
-        ./modules/flake/devshell.nix
-        ./modules/flake/formatter.nix
-        ./modules/flake/systems.nix
-        ./modules/vars.nix
-        ./modules/configurations.nix
-        ./modules/pkgs.nix
-        ./modules/scripts.nix
-
-        # Core modules that export to flake.modules
-        ./modules/nixos/core.nix
-        ./modules/nixos/service-profiles.nix
-        ./modules/home/core.nix
-        ./modules/darwin/core.nix
-        ./modules/darwin/nix-homebrew.nix
-        ./modules/darwin/docker.nix
-        ./modules/darwin/laptop.nix
-
-        # Host configurations
-        ./modules/hosts/sycamore/darwin.nix
-        ./modules/hosts/jackjrny/darwin.nix
-        ./modules/hosts/ash/nixos.nix
-        ./modules/hosts/boojum/nixos.nix
-        ./modules/hosts/cork/nixos.nix
-        ./modules/hosts/iso/nixos.nix
-        ./modules/hosts/maple/nixos.nix
-        ./modules/hosts/mesquite/nixos.nix
-        ./modules/hosts/oak/nixos.nix
-        ./modules/hosts/unicron/home.nix
-        ./modules/hosts/sycamore/home.nix
-        ./modules/hosts/jackjrny/home.nix
-        ./modules/hosts/oak/home.nix
-        ./modules/hosts/mesquite/home.nix
-        ./modules/hosts/maple/home.nix
-        ./modules/hosts/cork/home.nix
-        ./modules/hosts/boojum/home.nix
-        ./modules/hosts/ash/home.nix
+        ./modules/flake/imports.nix
+        ./modules/hosts/imports.nix
       ];
     };
 }

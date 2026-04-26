@@ -56,7 +56,13 @@
     { ... }:
     {
       imports = [
-        ./services/minio.nix
+        # ./services/attic.nix
+        # ./services/hydra.nix
+        # ./services/mailserver.nix
+        # ./services/maildns.nix
+        # ./services/nixupd-client.nix
+        ./services/freshrss.nix
+        ./services/rustfs.nix
         ./services/kiwix-serve.nix
         ./services/postgresql.nix
         ./services/zitadel.nix

@@ -150,6 +150,11 @@
       # Basic networking defaults - hostname should be set at host level
       networking = {
         useDHCP = lib.mkDefault true;
+        # StevenBlack unified hosts: ad/malware sinkhole (see https://github.com/StevenBlack/hosts).
+        # Extra lists: fakenews, gambling, porn, social — add to `block` if you want them.
+        stevenblack = {
+          enable = true;
+        };
       };
 
       nixpkgs = {

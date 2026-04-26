@@ -9,7 +9,7 @@ let
     "s3.${domain}"
     "books.${domain}"
     "auth.${domain}"
-    "minio.${domain}"
+    "fs.${domain}"
     "cloud.${domain}"
     "wiki.${domain}"
   ];
@@ -40,7 +40,7 @@ in
         "auth.${domain}"
         "books.${domain}"
         "cloud.${domain}"
-        "minio.${domain}"
+        "fs.${domain}"
         "s3.${domain}"
         "wiki.${domain}"
         "kosync.${domain}"
