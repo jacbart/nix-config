@@ -56,6 +56,9 @@
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
 
+    rustfs.url = "github:rustfs/rustfs-flake";
+    rustfs.inputs.nixpkgs.follows = "nixpkgs";
+
     secrets.url = "git+ssh://git@github.com/jacbart/nix-secrets.git?ref=main&shallow=1";
     secrets.flake = false;
   };
@@ -94,6 +97,7 @@
         ./modules/hosts/mesquite/nixos.nix
         ./modules/hosts/oak/nixos.nix
         ./modules/hosts/unicron/home.nix
+        ./modules/nixos/services/rustfs.nix
         ./modules/hosts/sycamore/home.nix
         ./modules/hosts/jackjrny/home.nix
         ./modules/hosts/oak/home.nix
