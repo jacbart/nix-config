@@ -3,6 +3,7 @@
   pkgs,
   vars,
   inputs,
+  platform,
   ...
 }:
 let
@@ -19,7 +20,7 @@ in
 
   services.rustfs = {
     enable = true;
-    package = inputs.rustfs.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    package = inputs.rustfs.packages.${platform}.default;
     volumes = "/var/lib/rustfs";
     address = "127.0.0.2:9000";
     consoleAddress = "127.0.0.2:9001";
