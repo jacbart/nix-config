@@ -15,6 +15,7 @@
       config.flake.modules.nixos.profileTailscale
       config.flake.modules.nixos.profileFail2ban
       config.flake.modules.nixos.profileMapleHomelab
+      ../../nixos/services/rustfs.nix
       # ../../nixos/services/attic.nix
       # ../../nixos/services/hydra.nix
       # ../../nixos/services/mailserver.nix
