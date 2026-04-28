@@ -5,6 +5,7 @@
   add-zim = pkgs.callPackage ./add-zim { };
   br = pkgs.callPackage ./br { };
   brightness = pkgs.callPackage ./brightness { };
+  gitclean = pkgs.callPackage ./gitclean { };
   journal = pkgs.callPackage ./journal { };
   upload-to-cache = pkgs.callPackage ./upload-to-cache { };
   volume = pkgs.callPackage ./volume { };

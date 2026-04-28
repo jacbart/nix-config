@@ -3,6 +3,7 @@
   homePackages = with pkgs; [
     commitizen
     delta
+    scripts.gitclean
   ];
 
   gh = {
