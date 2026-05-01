@@ -22,8 +22,10 @@ in
     enable = true;
     package = inputs.rustfs.packages.${platform}.default;
     volumes = "/var/lib/rustfs";
-    address = "127.0.0.2:9000";
-    consoleAddress = "127.0.0.2:9001";
+    # RustFS rejects addresses not listed on local interfaces (rustfs_utils::net::check_local_server_addr).
+    # 127.0.0.2 is rarely on lo — only 127.0.0.1 is — so bind 127.0.0.1.
+    address = "127.0.0.1:9000";
+    consoleAddress = "127.0.0.1:9001";
     accessKeyFile = config.sops.secrets."minio/root/access-key".path;
     secretKeyFile = config.sops.secrets."minio/root/secret-key".path;
   };
@@ -33,7 +35,7 @@ in
     virtualHosts."s3.${domain}" = {
       useACMEHost = domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.2:9000";
+        proxyPass = "http://127.0.0.1:9000";
         proxyWebsockets = true;
         extraConfig = "proxy_ssl_server_name on;" + "proxy_pass_header Authorization;";
       };
@@ -42,7 +44,7 @@ in
       addSSL = true;
       useACMEHost = domain;
       locations."/" = {
-        proxyPass = "http://127.0.0.2:9001";
+        proxyPass = "http://127.0.0.1:9001";
         proxyWebsockets = true;
         extraConfig = "proxy_ssl_server_name on;" + "proxy_pass_header Authorization;";
       };
