@@ -152,7 +152,8 @@ in
       bind _ split-window -v -f -c '#{pane_current_path}'
       bind - split-window -v -c '#{pane_current_path}'
 
-      set-option -g default-terminal "xterm-256color"
+      # Must be tmux-* or screen-* (tmux(1)): xterm-* inside tmux breaks UTF-8, ACS, prompts (eza/starship/etc.).
+      set-option -g default-terminal "tmux-256color"
       set-option -sa terminal-overrides ",xterm*:Tc"
       set-option -g mouse on
 

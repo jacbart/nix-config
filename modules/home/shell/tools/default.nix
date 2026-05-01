@@ -1,4 +1,11 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  ...
+}:
+let
+  inherit (pkgs.stdenv) isDarwin;
+in
 {
   imports = [
     ./docker-darwin.nix
@@ -34,10 +41,15 @@
       sd
       xh
     ];
-    sessionVariables = {
-      MANROFFOPT = "-c";
-      MANPAGER = "sh -c 'col -bx | bat -plman'";
-    };
+    sessionVariables =
+      {
+        MANROFFOPT = "-c";
+        MANPAGER = "sh -c 'col -bx | bat -plman'";
+      }
+      # nix-darwin HM has no Linux-style terminfo wiring; ncurses carries tmux-256color etc.
+      // lib.optionalAttrs isDarwin {
+        TERMINFO_DIRS = "${pkgs.ncurses}/share/terminfo";
+      };
   };
 
   # default shell programs
