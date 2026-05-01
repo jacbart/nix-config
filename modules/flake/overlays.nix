@@ -33,11 +33,18 @@
     };
 
     # Unstable nixpkgs accessible through 'pkgs.unstable'
-    unstable-packages = final: _prev: {
-      unstable = import inputs.nixpkgs-unstable {
+    unstable-packages = final: _prev: let
+      unstablePkgs = import inputs.nixpkgs-unstable {
         inherit (final.stdenv.hostPlatform) system;
         config.allowUnfree = true;
       };
+    in {
+      unstable =
+        unstablePkgs
+        // {
+          # Default vivaldi build omits ffmpeg blob; upstream binary still dlopen()'s libffmpeg.so → startup fail.
+          vivaldi = unstablePkgs.vivaldi.override { proprietaryCodecs = true; };
+        };
     };
   };
 }
