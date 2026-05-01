@@ -70,6 +70,8 @@ in
   services.nginx = {
     enable = true;
     virtualHosts."s3.${domain}" = {
+      # Required for TLS on 443; without it only port 80 is bound and HTTPS falls through to another vhost (e.g. auth → /ui/login).
+      addSSL = true;
       useACMEHost = domain;
       locations."/" = {
         proxyPass = "http://127.0.0.1:9000";
@@ -80,6 +82,7 @@ in
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
+          add_header X-NixRustfs-Vhost "s3-api" always;
           proxy_ssl_server_name on;
           proxy_pass_header Authorization;
         '';
@@ -96,10 +99,7 @@ in
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
+          add_header X-NixRustfs-Vhost "fs-console" always;
           proxy_ssl_server_name on;
           proxy_pass_header Authorization;
         '';
-      };
-    };
-  };
-}
