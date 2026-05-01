@@ -1,6 +1,6 @@
 {
   pkgs,
-  lib,
+  # lib,
   vars,
   ...
 }:
@@ -9,27 +9,11 @@ let
   addr = "127.0.0.2";
   port = 8235;
   domain = vars.domain;
-  # Use python313 wand for nixpkgs-unstable which uses python313
-  wand_0_6 = pkgs.unstable.python313Packages.wand.overrideAttrs (old: {
-    version = "0.6.13";
-    src = pkgs.unstable.python313Packages.fetchPypi {
-      pname = "Wand";
-      version = "0.6.13";
-      hash = "sha256-9QE0hOr3og6yLRghqu/mC1DMMpciNytfhWXUbUqq/Mo=";
-    };
-  });
-  calibreWebPackage = pkgs.unstable.calibre-web.overridePythonAttrs (old: {
-    dependencies =
-      let
-        filteredDeps = builtins.filter (dep: !(dep.pname == "wand")) (old.dependencies or [ ]);
-      in
-      filteredDeps ++ [ wand_0_6 ] ++ lib.concatLists (lib.attrValues old.optional-dependencies);
-  });
 in
 {
   services.calibre-web = {
     enable = true;
-    package = calibreWebPackage;
+    package = pkgs.calibre-web;
     group = "media";
     listen = {
       ip = addr;
