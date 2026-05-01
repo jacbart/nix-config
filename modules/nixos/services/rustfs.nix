@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   vars,
   inputs,
@@ -28,6 +29,12 @@ in
     consoleAddress = "127.0.0.1:9001";
     accessKeyFile = config.sops.secrets."minio/root/access-key".path;
     secretKeyFile = config.sops.secrets."minio/root/secret-key".path;
+  };
+
+  # rustfs-flake hardens RustFS like a generic Unix daemon. Prebuilt aarch64/linux is musl + mimalloc
+  # (jemalloc only on x86_64-gnu); systemd MemoryDenyWriteExecute breaks that allocator → EACCES and instant exit.
+  systemd.services.rustfs.serviceConfig = {
+    MemoryDenyWriteExecute = lib.mkForce false;
   };
 
   services.nginx = {
