@@ -106,14 +106,13 @@ in
       "HIST_IGNORE_DUPS"
       "HIST_IGNORE_SPACE"
     ];
-    initContent =
-      ''
-        # Outside tmux, only fill in a sane TERM; never override tmux (-256color = correct terminfo inside panes).
-        if [[ -z ''${TMUX:-} && ( -z ''${TERM:-} || ''${TERM} == dumb ) ]]; then
-          export TERM=xterm-256color
-        fi
-      ''
-      + ''
+    initContent = ''
+      # Outside tmux, only fill in a sane TERM; never override tmux (-256color = correct terminfo inside panes).
+      if [[ -z ''${TMUX:-} && ( -z ''${TERM:-} || ''${TERM} == dumb ) ]]; then
+        export TERM=xterm-256color
+      fi
+    ''
+    + ''
       fpath+=("$HOME/.zsh/completions")
 
       autoload -Uz edit-command-line

@@ -103,3 +103,7 @@ in
           proxy_ssl_server_name on;
           proxy_pass_header Authorization;
         '';
+      };
+    };
+  };
+}
