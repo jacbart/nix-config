@@ -31,18 +31,41 @@ in
     secretKeyFile = config.sops.secrets."minio/root/secret-key".path;
   };
 
-  # rustfs-flake hardening fights upstream prebuilt aarch64 musl (mimalloc) + workload:
-  # - MemoryDenyWriteExecute can break allocator-style mappings.
-  # - SystemCallFilter includes "~@resources" which blocks mmap-family syscalls after early bootstrap → Permission denied.
-  # - PrivateUsers occasionally breaks credential/volume paths on constrained hosts.
+  # rustfs-flake unit is over-hardened vs upstream static musl+aarch64 RustFS: still hit EACCES after credentials
+  # (mmap/sockets/volume IO — exact syscall depends on build). Relax to a normal long-running network daemon.
   systemd.services.rustfs.serviceConfig = {
     MemoryDenyWriteExecute = lib.mkForce false;
     PrivateUsers = lib.mkForce false;
-    SystemCallFilter = lib.mkForce [
-      "@system-service"
-      "~@privileged"
+    PrivateDevices = lib.mkForce false;
+    DevicePolicy = lib.mkForce "auto";
+    ProtectSystem = lib.mkForce false;
+    ProtectHome = lib.mkForce false;
+    ProtectKernelLogs = lib.mkForce false;
+    ProtectKernelModules = lib.mkForce false;
+    ProtectKernelTunables = lib.mkForce false;
+    ProtectClock = lib.mkForce false;
+    ProtectControlGroups = lib.mkForce false;
+    ProtectHostname = lib.mkForce false;
+    ProtectProc = lib.mkForce "no";
+    ProcSubset = lib.mkForce "all";
+    RestrictNamespaces = lib.mkForce false;
+    RestrictRealtime = lib.mkForce false;
+    RestrictSUIDSGID = lib.mkForce false;
+    LockPersonality = lib.mkForce false;
+    SystemCallFilter = lib.mkForce "@known";
+    UMask = lib.mkForce "0027";
+    RestrictAddressFamilies = lib.mkForce [
+      "AF_UNIX"
+      "AF_INET"
+      "AF_INET6"
+      "AF_NETLINK"
     ];
   };
+
+  # If the tree was ever root-owned (ZFS hand moves, manual tar, etc.), normalize for the rustfs account.
+  systemd.tmpfiles.rules = [
+    "Z /var/lib/rustfs 0750 rustfs rustfs - -"
+  ];
 
   services.nginx = {
     enable = true;
