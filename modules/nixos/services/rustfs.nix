@@ -31,10 +31,17 @@ in
     secretKeyFile = config.sops.secrets."minio/root/secret-key".path;
   };
 
-  # rustfs-flake hardens RustFS like a generic Unix daemon. Prebuilt aarch64/linux is musl + mimalloc
-  # (jemalloc only on x86_64-gnu); systemd MemoryDenyWriteExecute breaks that allocator → EACCES and instant exit.
+  # rustfs-flake hardening fights upstream prebuilt aarch64 musl (mimalloc) + workload:
+  # - MemoryDenyWriteExecute can break allocator-style mappings.
+  # - SystemCallFilter includes "~@resources" which blocks mmap-family syscalls after early bootstrap → Permission denied.
+  # - PrivateUsers occasionally breaks credential/volume paths on constrained hosts.
   systemd.services.rustfs.serviceConfig = {
     MemoryDenyWriteExecute = lib.mkForce false;
+    PrivateUsers = lib.mkForce false;
+    SystemCallFilter = lib.mkForce [
+      "@system-service"
+      "~@privileged"
+    ];
   };
 
   services.nginx = {
