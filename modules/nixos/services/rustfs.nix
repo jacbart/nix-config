@@ -74,7 +74,15 @@ in
       locations."/" = {
         proxyPass = "http://127.0.0.1:9000";
         proxyWebsockets = true;
-        extraConfig = "proxy_ssl_server_name on;" + "proxy_pass_header Authorization;";
+        # Preserve public Host; default with IP proxy_pass is Host=127.0.0.1 → SigV4 mismatch / fake "bad creds".
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_ssl_server_name on;
+          proxy_pass_header Authorization;
+        '';
       };
     };
     virtualHosts."fs.${domain}" = {
@@ -83,7 +91,14 @@ in
       locations."/" = {
         proxyPass = "http://127.0.0.1:9001";
         proxyWebsockets = true;
-        extraConfig = "proxy_ssl_server_name on;" + "proxy_pass_header Authorization;";
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_ssl_server_name on;
+          proxy_pass_header Authorization;
+        '';
       };
     };
   };
