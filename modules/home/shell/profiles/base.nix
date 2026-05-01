@@ -21,6 +21,7 @@ in
     Host ash
         HostName ash
         User meep
+        SetEnv TERM=xterm-256color
         IdentityFile ~/.ssh/id_ratatoskr
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
@@ -29,6 +30,7 @@ in
     Host boojum
         HostName boojum
         User meep
+        SetEnv TERM=xterm-256color
         IdentityFile ~/.ssh/id_ratatoskr
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
@@ -37,6 +39,7 @@ in
     Host cork
         HostName cork
         User meep
+        SetEnv TERM=xterm-256color
         IdentityFile ~/.ssh/id_ratatoskr
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
@@ -45,6 +48,7 @@ in
     Host jackjrny
         HostName jackjrny
         User jackbartlett
+        SetEnv TERM=xterm-256color
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
         ControlPersist 10
@@ -52,6 +56,7 @@ in
     Host maple
         HostName maple
         User ratatoskr
+        SetEnv TERM=xterm-256color
         IdentityFile ~/.ssh/id_ratatoskr
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
@@ -60,6 +65,7 @@ in
     Host mesquite
         HostName mesquite
         User ratatoskr
+        SetEnv TERM=xterm-256color
         IdentityFile ~/.ssh/id_ratatoskr
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
@@ -68,6 +74,7 @@ in
     Host oak
         HostName oak
         User root
+        SetEnv TERM=xterm-256color
         Port 3048
         IdentityFile ~/.ssh/id_do
         ControlMaster auto
@@ -77,6 +84,7 @@ in
     Host sycamore
         HostName sycamore
         User jackbartlett
+        SetEnv TERM=xterm-256color
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
         ControlPersist 10
@@ -84,6 +92,7 @@ in
     Host unicron
         HostName unicron
         User jack
+        SetEnv TERM=xterm-256color
         IdentityFile ~/.ssh/id_ratatoskr
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
