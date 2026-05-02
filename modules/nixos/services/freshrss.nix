@@ -12,11 +12,14 @@ in
 {
   services.freshrss = {
     enable = true;
+    # Google Reader API (/api/greader.php); must match Profile → API password in the UI, not the web login password.
+    api.enable = true;
     baseUrl = "https://${subdomain}.${domain}";
     authType = "form";
     virtualHost = "${subdomain}.${domain}";
     webserver = "nginx";
     defaultUser = "ratatoskr";
+    # Web UI login for defaultUser; reapplied on switch via freshrss-config (update-user).
     passwordFile = config.sops.secrets."freshrss/admin-password".path;
     database = {
       type = "pgsql";

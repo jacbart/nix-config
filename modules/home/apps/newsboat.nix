@@ -7,7 +7,7 @@ in
   programs.newsboat = {
     enable = true;
     extraConfig = ''
-      # FreshRSS API
+      # FreshRSS Google Reader API — file must hold the FreshRSS *API* password (Profile), not the web UI password.
       urls-source "freshrss"
       freshrss-url "${baseUrl}"
       freshrss-login "ratatoskr"
