@@ -10,10 +10,10 @@ let
   domain = vars.domain;
 in
 {
+  # nixos-25.11 FreshRSS module has no services.freshrss.api; enable Reader API under FreshRSS → Authentication after install if needed.
+
   services.freshrss = {
     enable = true;
-    # Google Reader API (/api/greader.php); must match Profile → API password in the UI, not the web login password.
-    api.enable = true;
     baseUrl = "https://${subdomain}.${domain}";
     authType = "form";
     virtualHost = "${subdomain}.${domain}";
