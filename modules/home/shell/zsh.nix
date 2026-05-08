@@ -8,8 +8,9 @@
 let
   system = pkgs.stdenv.hostPlatform.system;
   ff = inputs.ff.packages.${system}.default;
-  # trees = inputs.trees.packages.${system}.default;
-  # rest = inputs.rest.packages.${system}.default;
+  rest = inputs.rest.packages.${system}.default.overrideAttrs (oldAttrs: {
+    vendorHash = "sha256-LLOQkMdrajZ/qlBn9Y5xz7/t1hq/6Htd3O/36bRUsT0=";
+  });
   jaws = inputs.jaws.packages.${system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
 
@@ -29,12 +30,12 @@ in
         dua # View disk space usage and delete unwanted data
         fswatch # A cross-platform file change monitor with multiple backends
         jaws # secrets manager cli
-        mdbook # markdown books
-        uv # python package/dep/runtime manager
+        # mdbook # markdown books
+        # uv # python package/dep/runtime manager
         perl # Required for zplug
         htmlq # parser for html
         unstable.nh # nix helper cli
-        # rest # rest easy
+        rest # rest easy
         stu # TUI explorer application for Amazon S3
         ff # not so percise search
       ]
@@ -73,7 +74,14 @@ in
       clock = "while :; do printf '\r%s ' \"$(date +%r)\"; sleep 1 ; done";
       nix-gc = lib.mkDefault "sudo nix-collect-garbage --delete-older-than 10d && nix-collect-garbage --delete-older-than 10d";
       rebuild-home = lib.mkDefault "nh home switch -b backup $HOME/workspace/personal/nix-config --ask";
-      rebuild-host = lib.mkDefault "nh os switch $HOME/workspace/personal/nix-config --ask";
+      rebuild-host = lib.mkDefault (
+        if isLinux then
+          "nh os switch $HOME/workspace/personal/nix-config --ask"
+        else if isDarwin then
+          "nh darwin switch $HOME/workspace/personal/nix-config --ask"
+        else
+          ""
+      );
     };
     shellGlobalAliases = {
       UUID = "$(uuidgen | tr -d \\n)";

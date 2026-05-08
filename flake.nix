@@ -26,6 +26,7 @@
 
     leadership-matrix.url = "git+ssh://git@github.com/taybart/leadership-matrix.git?ref=feat/configurable";
     rest.url = "github:taybart/rest";
+    rest.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-diff.url = "github:Mic92/nix-diff-rs";
     lan-mouse.url = "github:feschber/lan-mouse";
