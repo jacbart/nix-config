@@ -5,6 +5,10 @@
   ...
 }:
 {
+  # CM4/Pi firmware chain-loads kernels via extlinux; there is no BIOS disk for GRUB.
+  boot.loader.grub.enable = lib.mkDefault false;
+  boot.loader.generic-extlinux-compatible.enable = lib.mkDefault true;
+
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   boot.kernelParams = [
     "snd_bcm2835.enable_compat_alsa=0"
