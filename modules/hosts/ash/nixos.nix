@@ -58,15 +58,8 @@
           # allow build for x86_64-linux architecture through emulation
           boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
-          fileSystems = {
-            "/" = {
-              device = "/dev/disk/by-label/NIXOS_SD";
-              fsType = "ext4";
-              options = [
-                "x-initrd"
-              ];
-            };
-          };
+          # Root + /boot/firmware: see ./disks.nix (disko). Do not set fileSystems."/" here — conflicts with disko’s by-partlabel device.
+
           swapDevices = [
             {
               device = "/var/lib/swapfile";
