@@ -9,6 +9,7 @@
     ./boojum/nixos.nix
     ./cork/nixos.nix
     ./iso/nixos.nix
+    ./iso-maple/nixos.nix
     ./maple/nixos.nix
     ./mesquite/nixos.nix
     ./oak/nixos.nix
