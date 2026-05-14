@@ -55,6 +55,8 @@
           # zfs tools
           environment.systemPackages = [ pkgs.zfs ];
 
+          fileSystems."/".device = lib.mkForce "/dev/disk/by-label/nixos";
+
           swapDevices = [
             {
               device = "/var/lib/swapfile";
