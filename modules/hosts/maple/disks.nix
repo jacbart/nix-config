@@ -1,6 +1,6 @@
 {
   disks ? [
-    "/dev/mmcblk2"
+    "/dev/mmcblk0"
     "/dev/sda"
     "/dev/sdb"
   ],
