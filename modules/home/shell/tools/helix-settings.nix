@@ -39,6 +39,7 @@
       i = ":toggle lsp.display-inlay-hints";
       W = ":write-all";
       J = ":insert-output echo \"# $(date '+%%Y-%%m-%%d')\"";
+      s = ":sh tmux popup -xC -yC -w90%% -h90%% -E scooter";
       esc = [
         "collapse_selection"
         "keep_primary_selection"

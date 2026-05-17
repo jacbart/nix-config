@@ -220,6 +220,9 @@ in
       unbind F
       bind-key F new-window -n "broot" -c "#{pane_current_path}" "broot"
 
+      # Scooter popup
+      bind-key S display-popup -y 55% -h 75% -d '#{pane_current_path}' -E "tmux new-session -A -s 'scooter' 'scooter'"
+
       is_hx="ps -o state= -o comm= -t '#{pane_tty}' \
         | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?hx?x?|fzf)(diff)?$'"
       bind-key -n 'C-h' if-shell "$is_hx" 'send-keys C-h'  'select-pane -L'

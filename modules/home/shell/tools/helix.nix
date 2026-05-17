@@ -13,6 +13,12 @@ in
 
     file."${config.xdg.configHome}/sqls/config.yml".text = builtins.readFile ./sqls.yaml;
 
+    file."${config.xdg.configHome}/scooter/config.toml".text = ''
+      [editor_open]
+      command = "tmux send-keys -t \"$TMUX_PANE\" ':open \"%file:%line\"' Enter"
+      exit = true
+    '';
+
     sessionVariables = {
       EDITOR = "hx";
       SYSTEMD_EDITOR = "hx";
