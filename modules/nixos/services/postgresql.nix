@@ -4,6 +4,7 @@
     enable = true;
     package = pkgs.postgresql_16;
     ensureDatabases = [
+      "postgres"
       "freshrss"
       "nextcloud"
       "zitadel"
