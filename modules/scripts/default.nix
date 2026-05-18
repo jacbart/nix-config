@@ -4,6 +4,7 @@
 {
   add-zim = pkgs.callPackage ./add-zim { };
   br = pkgs.callPackage ./br { };
+  unicroninit = pkgs.callPackage ./unicroninit { };
   brightness = pkgs.callPackage ./brightness { };
   gitclean = pkgs.callPackage ./gitclean { };
   journal = pkgs.callPackage ./journal { };

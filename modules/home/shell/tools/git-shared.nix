@@ -4,6 +4,7 @@
     commitizen
     delta
     scripts.gitclean
+    scripts.unicroninit
   ];
 
   gh = {
