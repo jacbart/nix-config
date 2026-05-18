@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   s = import ./git-shared.nix { inherit pkgs; };
 in
@@ -10,6 +10,7 @@ in
       enable = true;
       settings = s.gitSettingsBase // {
         core.editor = "hx";
+        safe.directory = [ "${config.home.homeDirectory}/workspace/*" ];
       };
     };
   };

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   s = import ./git-shared.nix { inherit pkgs; };
 in
@@ -17,6 +17,7 @@ in
           editor = "hx";
           sshCommand = "ssh -i ~/.ssh/id_git";
         };
+        safe.directory = [ "${config.home.homeDirectory}/workspace/*" ];
       };
     };
   };
