@@ -97,5 +97,10 @@ in
         ControlMaster auto
         ControlPath ~/.ssh/mux-%r@%h:%p
         ControlPersist 10
+
+    Host cgit.bbl.systems
+        User git
+        IdentityFile ~/.ssh/id_ratatoskr
+        IdentitiesOnly yes
   '';
 }
