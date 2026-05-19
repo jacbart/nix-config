@@ -10,7 +10,10 @@ in
       enable = true;
       settings = s.gitSettingsBase // {
         core.editor = "hx";
-        safe.directory = [ "${config.home.homeDirectory}/workspace/**" ];
+        safe.directory = [
+          "${config.home.homeDirectory}/workspace/**"
+          "/git/**"
+        ];
       };
     };
   };
