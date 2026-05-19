@@ -99,7 +99,17 @@ in
         ControlPersist 10
 
     Host cgit.bbl.systems
-        User git
+        User jack
+        IdentityFile ~/.ssh/id_ratatoskr
+        IdentitiesOnly yes
+
+    Host got.bbl.systems
+        User jack
+        IdentityFile ~/.ssh/id_ratatoskr
+        IdentitiesOnly yes
+
+    Host git.bbl.systems
+        User jack
         IdentityFile ~/.ssh/id_ratatoskr
         IdentitiesOnly yes
   '';
