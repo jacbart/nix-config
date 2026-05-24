@@ -45,7 +45,7 @@ in
 
   systemd.services.postgresql-backup = {
     description = "PostgreSQL nightly dumpall backup";
-    after = [ "postgresql.service" "zfs.target" ];
+    after = [ "postgresql.service" ];
     requires = [ "postgresql.service" ];
     serviceConfig = {
       Type = "oneshot";

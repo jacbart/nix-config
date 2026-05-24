@@ -53,7 +53,7 @@
     };
 
   flake.modules.nixos.profileMapleHomelab =
-    { ... }:
+    { lib, ... }:
     {
       imports = [
         # ./services/attic.nix
@@ -76,5 +76,22 @@
         ./services/koreader-sync-server.nix
         ./services/immich.nix
       ];
+
+      systemd.services = lib.genAttrs [
+        "audiobookshelf"
+        "calibre-web"
+        "dendrite"
+        "immich-server"
+        "kiwix-serve"
+        "koreader-sync-server"
+        "microbin"
+        "postgresql"
+        "postgresql-backup"
+        "rustfs"
+        "sftpgo"
+      ] (_: {
+        requires = [ "zfs-mount.service" ];
+        after = [ "zfs-mount.service" ];
+      });
     };
 }

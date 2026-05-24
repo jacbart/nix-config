@@ -40,7 +40,7 @@ in
   ];
 
   systemd.services.immich-server = {
-    after = [ "zfs.target" "postgresql.target" ];
+    after = [ "postgresql.target" ];
     requires = [ "postgresql.target" ];
   };
 

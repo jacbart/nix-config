@@ -30,11 +30,6 @@ in
     "d ${dataDir} 0700 sftpgo sftpgo -"
   ];
 
-  systemd.services.sftpgo = {
-    after = [ "zfs.target" ];
-    requires = [ "zfs.target" ];
-  };
-
   services.nginx = {
     enable = true;
     virtualHosts."${subdomain}.${domain}" = {
