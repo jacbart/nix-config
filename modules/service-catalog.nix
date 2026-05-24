@@ -11,6 +11,7 @@ let
     "auth.${domain}"
     "fs.${domain}"
     "cloud.${domain}"
+    "photos.${domain}"
     "wiki.${domain}"
   ];
 in
@@ -44,6 +45,7 @@ in
         "s3.${domain}"
         "wiki.${domain}"
         "kosync.${domain}"
+        "photos.${domain}"
         "mail.${domain}"
       ];
       "100.78.207.83" = [
