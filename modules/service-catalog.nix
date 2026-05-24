@@ -9,8 +9,8 @@ let
     "s3.${domain}"
     "books.${domain}"
     "auth.${domain}"
+    "files.${domain}"
     "fs.${domain}"
-    "cloud.${domain}"
     "photos.${domain}"
     "wiki.${domain}"
   ];
@@ -40,7 +40,7 @@ in
         "maple.${domain}"
         "auth.${domain}"
         "books.${domain}"
-        "cloud.${domain}"
+        "files.${domain}"
         "fs.${domain}"
         "s3.${domain}"
         "wiki.${domain}"

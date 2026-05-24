@@ -14,16 +14,11 @@ in
     ensureDatabases = [
       "postgres"
       "freshrss"
-      "nextcloud"
       "zitadel"
     ];
     ensureUsers = [
       {
         name = "freshrss";
-        ensureDBOwnership = true;
-      }
-      {
-        name = "nextcloud";
         ensureDBOwnership = true;
       }
       {
@@ -35,7 +30,6 @@ in
       # ArbitraryMapName systemuser DBUser
       superuser_map    zitadel     postgres
       superuser_map    root        postgres
-      superuser_map    nextcloud   postgres
       # Let other names login as themselves
       superuser_map    /^(.*)$     \1
     '';

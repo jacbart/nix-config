@@ -66,7 +66,8 @@
         ./services/kiwix-serve.nix
         ./services/postgresql.nix
         ./services/zitadel.nix
-        ./services/nextcloud-server.nix
+        # ./services/nextcloud-server.nix
+        ./services/sftpgo.nix
         ./services/books.nix
         ./services/dendrite.nix
         ./services/microbin.nix
