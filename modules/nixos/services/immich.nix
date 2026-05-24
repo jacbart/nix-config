@@ -42,6 +42,14 @@ in
   systemd.services.immich-server = {
     after = [ "postgresql.target" ];
     requires = [ "postgresql.target" ];
+
+    preStart = lib.mkAfter ''
+      for d in encoded-video thumbs upload backups library profile; do
+        install -d -m 0700 -o immich -g immich "${mediaLocation}/$d"
+        touch "${mediaLocation}/$d/.immich"
+        chown immich:immich "${mediaLocation}/$d/.immich"
+      done
+    '';
   };
 
   services.nginx = {
