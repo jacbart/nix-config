@@ -13,14 +13,9 @@ in
     package = pkgs.postgresql_16;
     ensureDatabases = [
       "postgres"
-      "freshrss"
       "zitadel"
     ];
     ensureUsers = [
-      {
-        name = "freshrss";
-        ensureDBOwnership = true;
-      }
       {
         name = "zitadel";
         ensureDBOwnership = true;
