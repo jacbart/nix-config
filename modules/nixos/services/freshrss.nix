@@ -21,12 +21,12 @@ in
     defaultUser = "ratatoskr";
     # Web UI login for defaultUser; reapplied on switch via freshrss-config (update-user).
     passwordFile = config.sops.secrets."freshrss/admin-password".path;
-    database = {
-      type = "pgsql";
-      host = "/run/postgresql";
-      name = "freshrss";
-      user = "freshrss";
-    };
+    # database = {
+    #   type = "pgsql";
+    #   host = "/run/postgresql";
+    #   name = "freshrss";
+    #   user = "freshrss";
+    # };
     extensions = with pkgs.freshrss-extensions; [
       youtube
     ];
@@ -41,6 +41,6 @@ in
     useACMEHost = domain;
   };
 
-  systemd.services.freshrss-config.after = [ "postgresql.service" ];
-  systemd.services.freshrss-config.requires = [ "postgresql.service" ];
+  # systemd.services.freshrss-config.after = [ "postgresql.service" ];
+  # systemd.services.freshrss-config.requires = [ "postgresql.service" ];
 }
