@@ -24,7 +24,7 @@
     {
       imports = [
         ./services/tailscale.nix
-        ./services/nixupd-client.nix
+        # ./services/nixupd-client.nix
         ./services/leadership-matrix.nix
       ];
     };
@@ -61,12 +61,12 @@
         # ./services/mailserver.nix
         # ./services/maildns.nix
         # ./services/nixupd-client.nix
+        ./services/got.nix
         ./services/freshrss.nix
         ./services/rustfs.nix
         ./services/kiwix-serve.nix
         ./services/postgresql.nix
         ./services/zitadel.nix
-        # ./services/nextcloud-server.nix
         ./services/sftpgo.nix
         ./services/books.nix
         ./services/dendrite.nix
@@ -77,21 +77,25 @@
         ./services/immich.nix
       ];
 
-      systemd.services = lib.genAttrs [
-        "audiobookshelf"
-        "calibre-web"
-        "dendrite"
-        "immich-server"
-        "kiwix-serve"
-        "koreader-sync-server"
-        "microbin"
-        "postgresql"
-        "postgresql-backup"
-        "rustfs"
-        "sftpgo"
-      ] (_: {
-        requires = [ "zfs-mount.service" ];
-        after = [ "zfs-mount.service" ];
-      });
+      systemd.services =
+        lib.genAttrs
+          [
+            "audiobookshelf"
+            "calibre-web"
+            "dendrite"
+            "got"
+            "immich-server"
+            "kiwix-serve"
+            "koreader-sync-server"
+            "microbin"
+            "postgresql"
+            "postgresql-backup"
+            "rustfs"
+            "sftpgo"
+          ]
+          (_: {
+            requires = [ "zfs-mount.service" ];
+            after = [ "zfs-mount.service" ];
+          });
     };
 }

@@ -13,6 +13,7 @@ let
     "fs.${domain}"
     "photos.${domain}"
     "wiki.${domain}"
+    "got.${domain}"
   ];
 in
 {
@@ -47,14 +48,11 @@ in
         "kosync.${domain}"
         "photos.${domain}"
         "mail.${domain}"
+        "got.${domain}"
       ];
       "100.78.207.83" = [
         "unicron"
         "unicron.bbl.systems"
-      ];
-      "10.120.0.1" = [
-        "mesquite"
-        "mesquite.${domain}"
       ];
     };
     oak = {

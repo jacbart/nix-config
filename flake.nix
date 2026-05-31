@@ -60,6 +60,8 @@
     rustfs.url = "github:rustfs/rustfs-flake";
     rustfs.inputs.nixpkgs.follows = "nixpkgs";
 
+    got.url = "git+ssh://git@got.bbl.systems/git/got";
+
     secrets.url = "git+ssh://git@github.com/jacbart/nix-secrets.git?ref=main&shallow=1";
     secrets.flake = false;
   };
