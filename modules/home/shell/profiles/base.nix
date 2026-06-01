@@ -98,11 +98,6 @@ in
         ControlPath ~/.ssh/mux-%r@%h:%p
         ControlPersist 10
 
-    Host cgit.bbl.systems
-        User jack
-        IdentityFile ~/.ssh/id_ratatoskr
-        IdentitiesOnly yes
-
     Host got.bbl.systems
         User jack
         IdentityFile ~/.ssh/id_ratatoskr
@@ -110,6 +105,11 @@ in
 
     Host git.bbl.systems
         User jack
+        IdentityFile ~/.ssh/id_ratatoskr
+        IdentitiesOnly yes
+
+    Host got.meep.sh
+        User git
         IdentityFile ~/.ssh/id_ratatoskr
         IdentitiesOnly yes
   '';
