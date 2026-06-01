@@ -11,8 +11,8 @@ in
       settings = s.gitSettingsBase // {
         core.editor = "hx";
         safe.directory = [
-          "${config.home.homeDirectory}/workspace/**"
-          "/git/**"
+          "${config.home.homeDirectory}/workspace/*"
+          "/git/*"
         ];
       };
     };
