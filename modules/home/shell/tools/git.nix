@@ -18,8 +18,8 @@ in
           sshCommand = "ssh -i ~/.ssh/id_git";
         };
         safe.directory = [
-          "${config.home.homeDirectory}/workspace/**"
-          "/git/**"
+          "${config.home.homeDirectory}/workspace/*"
+          "/git/*"
         ];
       };
     };
