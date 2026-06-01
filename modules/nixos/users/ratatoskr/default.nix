@@ -31,6 +31,7 @@ in
       "podman"
       "nextcloud"
       "hydra"
+      "git"
     ];
     hashedPasswordFile = config.sops.secrets.ratatoskr-password.path;
     homeMode = "0755";

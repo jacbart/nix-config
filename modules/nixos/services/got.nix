@@ -1,7 +1,7 @@
 {
   pkgs,
   inputs,
-  var,
+  vars,
   ...
 }:
 let
@@ -42,9 +42,9 @@ in
 
   services.nginx = {
     enable = true;
-    virtualHosts."${subdomain}.${var.domain}" = {
+    virtualHosts."${subdomain}.${vars.domain}" = {
       addSSL = true;
-      useACMEHost = var.domain;
+      useACMEHost = vars.domain;
       locations."/" = {
         proxyPass = "http://127.0.0.2:${toString port}";
         extraConfig =
