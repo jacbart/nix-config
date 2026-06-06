@@ -35,5 +35,5 @@ in
 
   config.system.stateVersion = lib.mkForce lib.trivial.release;
   config.environment.systemPackages = [ pkgs.scripts.install-system ];
-  config.services.kmscon.autologinUser = "${username}";
+  config.services.getty.autologinUser = "${username}";
 }

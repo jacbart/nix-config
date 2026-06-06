@@ -43,7 +43,7 @@
           ## ZFS
           boot.supportedFilesystems = [ "zfs" ];
           boot.zfs.extraPools = [ "trunk" ];
-          boot.zfs.forceImportRoot = false;
+          boot.zfs.forceImportRoot = lib.mkForce false;
 
           # Limit ZFS ARC to 1GB -- with 4GB RAM and heavy services
           boot.kernelParams = [ "zfs.zfs_arc_max=1073741824" ];

@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   ...
 }:
 {
@@ -16,7 +17,7 @@
         { pkgs, ... }:
         {
           boot.supportedFilesystems = [ "zfs" ];
-          boot.zfs.forceImportRoot = false;
+          boot.zfs.forceImportRoot = lib.mkForce false;
 
           environment.systemPackages = [
             pkgs.zfs
@@ -24,7 +25,7 @@
           ];
 
           # Auto-login on console for convenience
-          services.kmscon.autologinUser = "nixos";
+          services.getty.autologinUser = "nixos";
         }
       )
     ];

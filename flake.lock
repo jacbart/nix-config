@@ -248,11 +248,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1780711445,
-        "narHash": "sha256-VLMCrL0WCUg+Skf0CdgHip4HQBuA+ldWI9neHU9F3z0=",
+        "lastModified": 1780715842,
+        "narHash": "sha256-ySwT3kqbmarRmzVJZHzJzJ1v89aImiLZuaJW/aX6sFE=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "12cc3724d94aeb4961466a897aa5702acf1cc11e",
+        "rev": "37775e2fc8b49abe8d067667b71f4c5e71eb66ca",
         "type": "github"
       },
       "original": {
@@ -264,11 +264,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1780708836,
-        "narHash": "sha256-O5ncmYVFl0EOJcLH/kQBy+Juif9sicaHqUbTUaOaooI=",
+        "lastModified": 1780716827,
+        "narHash": "sha256-f3UqzwPTpV7/QuunozYGRLCIzROFVEVcvvt5zbKTp3U=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "efd63c709ccb41a560ea4742914667860f5123a0",
+        "rev": "f7d2447151eaf92d9483a0b833890b509d74c813",
         "type": "github"
       },
       "original": {
@@ -345,11 +345,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1780665619,
-        "narHash": "sha256-Bv5c7xa9h2hACUSabEem4m+bO9BPjY8A9KuJ2rdrkfs=",
+        "lastModified": 1780718521,
+        "narHash": "sha256-mghz0983daoXnlXxf2VKeYdM9gucTRQUDtYl6XsnZu4=",
         "ref": "feat/solidjs-vite",
-        "rev": "1a72c04403fb7dd3c0418102bcc253cc4906c396",
-        "revCount": 191,
+        "rev": "becabca869d6b1bc3ec6e08921c5f26d21e2e31f",
+        "revCount": 192,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
