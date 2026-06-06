@@ -74,7 +74,7 @@ _: {
         impure_msg = "[impure](bold red) ";
         pure_msg = "[pure](bold green) ";
         symbol = "❄️ ";
-        format = " [$symbol$state(\($name\))](bold blue)";
+        format = " [$symbol$state($name)](bold blue)";
       };
 
       terraform = {
