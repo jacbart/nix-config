@@ -23,7 +23,6 @@ in
   home = {
     packages = with pkgs; [
       # angle-grinder
-      dogdns
       # dysk # disable for m1 mac
       fastfetch
       fd
@@ -36,7 +35,7 @@ in
       # nix-melt
       # mazter
       procs
-      rainfrog
+      # rainfrog
       ripgrep
       sd
       xh

@@ -11,7 +11,7 @@ with pkgs;
   nil
   nixd
   nixfmt-rfc-style
-  nodePackages.prettier
+  prettier
   ruff
   scooter
   shfmt
