@@ -45,6 +45,7 @@ in
 
   programs.zsh = {
     enable = true;
+    dotDir = config.home.homeDirectory;
     sessionVariables = {
       ZSHDATADIR = "${config.xdg.dataHome}/zsh";
     };

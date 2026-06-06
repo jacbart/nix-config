@@ -38,6 +38,8 @@
 
       news.display = "silent";
 
+      xdg.userDirs.setSessionVariables = true;
+
       nixpkgs = {
         overlays = lib.attrValues overlays;
         config = {

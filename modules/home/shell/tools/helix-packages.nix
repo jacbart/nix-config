@@ -10,7 +10,7 @@ with pkgs;
   markdown-oxide
   nil
   nixd
-  nixfmt-rfc-style
+  nixfmt
   prettier
   ruff
   scooter
