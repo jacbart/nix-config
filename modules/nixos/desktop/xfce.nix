@@ -82,7 +82,7 @@
     xfce.xfce4-systemload-plugin
     xfce.xfce4-whiskermenu-plugin
     xfce.xfce4-xkb-plugin
-    xorg.xev
+    xev
     xsel
     xtitle
     xwinmosaic
