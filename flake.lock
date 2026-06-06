@@ -248,11 +248,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1780614128,
-        "narHash": "sha256-jnjahKvVdPEARj+qHQO+DDLZbw8JPWMy/BMg1UMC4ls=",
+        "lastModified": 1780710669,
+        "narHash": "sha256-UGGWIuVrIIdFWV/0m6UC5Hxy0O2xoFrhQnL4VzATBn0=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "fd954dccda06e0ad211b3854c1b58c8770b878a6",
+        "rev": "685c52d0726f447340a27a7577128aab591d5183",
         "type": "github"
       },
       "original": {
@@ -264,11 +264,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1780613034,
-        "narHash": "sha256-4rT83Rg1Ag7jpF8wUf001eyi//sxOgzVAeGKhCH9du4=",
+        "lastModified": 1780708836,
+        "narHash": "sha256-O5ncmYVFl0EOJcLH/kQBy+Juif9sicaHqUbTUaOaooI=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "73698f12e961cf3bb52feb13821f416510b4e670",
+        "rev": "efd63c709ccb41a560ea4742914667860f5123a0",
         "type": "github"
       },
       "original": {
@@ -288,11 +288,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1780512126,
-        "narHash": "sha256-8eupjc4tbq1E2dyW8h99STHrwfSStDazrZhLWwdHlNk=",
+        "lastModified": 1780695588,
+        "narHash": "sha256-JU/3RjNlbKMRPmJVgEk1r87i+ZInVVGEoQB3pEFPEg8=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "da0075f0ad86c4bb9b800bb0d0f4530e4810e4cd",
+        "rev": "395c32aff1a0091a52cf63ff5a341ae14f41f0d8",
         "type": "github"
       },
       "original": {
@@ -345,11 +345,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1780614780,
-        "narHash": "sha256-wUAJO1ezvHMmA5tBamlua4F1UUFM2ARht7FqCmz9LBs=",
+        "lastModified": 1780665619,
+        "narHash": "sha256-Bv5c7xa9h2hACUSabEem4m+bO9BPjY8A9KuJ2rdrkfs=",
         "ref": "feat/solidjs-vite",
-        "rev": "eba9b1b79b420fb0b814544721c7a3bac1bdafd8",
-        "revCount": 190,
+        "rev": "1a72c04403fb7dd3c0418102bcc253cc4906c396",
+        "revCount": 191,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -609,11 +609,11 @@
     },
     "nixpkgs_12": {
       "locked": {
-        "lastModified": 1779796641,
-        "narHash": "sha256-ZsIrKmhp4vbBXoXXmR/tBXA/UCsAQiJL9vsgZEduhVY=",
+        "lastModified": 1780511130,
+        "narHash": "sha256-2v9lT4ya59Lh1FqPeLnz1MoX9y/wz2huqfe9RtQZITk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "25f538306313eae3927264466c70d7001dcea1df",
+        "rev": "535f3e6942cb1cead3929c604320d3db54b542b9",
         "type": "github"
       },
       "original": {
@@ -797,11 +797,11 @@
         "noctalia-qs": "noctalia-qs"
       },
       "locked": {
-        "lastModified": 1780371321,
-        "narHash": "sha256-WCaU6npdMdjZSZHe3XATNDFijmzRnsV8V+iR80e5deg=",
+        "lastModified": 1780673010,
+        "narHash": "sha256-h7Q8F019PwjIqm5lH0kJRQ/58UiELG+XwZ2B62K3PKA=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "3aab45a2f34fd47666b05892b95054952e788de1",
+        "rev": "2461f871a602f9a5688b5b01dc19c6309dd0d519",
         "type": "github"
       },
       "original": {
@@ -1057,11 +1057,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775636079,
-        "narHash": "sha256-pc20NRoMdiar8oPQceQT47UUZMBTiMdUuWrYu2obUP0=",
+        "lastModified": 1780220602,
+        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "790751ff7fd3801feeaf96d7dc416a8d581265ba",
+        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
         "type": "github"
       },
       "original": {
