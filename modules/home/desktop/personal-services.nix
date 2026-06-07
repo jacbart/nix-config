@@ -2,7 +2,7 @@
 { ... }:
 {
   imports = [
-    ../services/nextcloud-client.nix
+    # ../services/nextcloud-client.nix
     ../services/dunst.nix
   ];
 }
