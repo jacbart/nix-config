@@ -19,6 +19,8 @@
       config.flake.modules.nixos.profileOnlinePersonal
       ../../nixos/apps/ghostty.nix
       ../../nixos/apps/steam.nix
+      ../../nixos/apps/gaming.nix
+      ./gaming.nix
       (
         { pkgs, ... }:
         let
