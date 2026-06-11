@@ -7,6 +7,7 @@
       config.flake.modules.homeManager.core
       ../../home/shell/default.nix
       ../../home/users/jackbartlett/default.nix
+      ./git-1password.nix
     ];
   };
 }
