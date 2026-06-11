@@ -39,6 +39,8 @@ in
       fswatch
       fern
       mdbook
+      pgsync
+      postgresql_16
       uv
       htmlq
       unstable.nh

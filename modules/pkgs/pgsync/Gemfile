@@ -1,0 +1,4 @@
+source 'https://rubygems.org'
+gem 'pgsync'
+gem 'bigdecimal'
+gem 'parallel', '~> 1.22'

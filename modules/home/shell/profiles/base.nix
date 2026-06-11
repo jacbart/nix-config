@@ -9,6 +9,13 @@ let
   inherit (pkgs.stdenv) isLinux;
 in
 {
+  imports = [
+    ../tools/nodejs-hardening.nix
+    ../tools/rust-hardening.nix
+    ../tools/python-hardening.nix
+    ../tools/go-hardening.nix
+  ];
+
   home.packages =
     with pkgs;
     [

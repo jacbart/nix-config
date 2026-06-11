@@ -9,4 +9,5 @@
   mazter = pkgs.callPackage ./mazter { };
   koreader-sync-server = pkgs.callPackage ./koreader-sync-server { };
   fern = pkgs.callPackage ./fern { };
+  pgsync = pkgs.callPackage ./pgsync { };
 }
