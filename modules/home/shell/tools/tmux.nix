@@ -198,30 +198,30 @@ in
 
       # Journal
       unbind j
-      bind-key j display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Journal' 'fern'"
+      bind-key j display-popup -y 55% -h 75% -E "hx ~/workspace/journal/"
 
       # Newsboat
       unbind N
-      bind-key N display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Newsboat' 'newsboat'"
+      bind-key N display-popup -y 55% -h 75% -E "newsboat"
 
       # Simple shell popup
       unbind e
-      bind-key e display-popup -y 55% -h 75% -E "tmux new-session -A -s 'Shell' '$SHELL'"
+      bind-key e display-popup -y 55% -h 75% -E "$SHELL"
 
       # gitu popup
       unbind g
-      bind-key g display-popup -y 55% -h 75% -d '#{pane_current_path}' -E "tmux new-session -A -s 'git' 'gitu'"
+      bind-key g display-popup -y 55% -h 75% -d '#{pane_current_path}' -E "gitu"
 
       # Broot popup
       unbind f
-      bind-key f display-popup -y 55% -h 75% -E -d '#{pane_current_path}' "tmux new-session -A -s 'Files' 'broot --no-tree'"
+      bind-key f display-popup -y 55% -h 75% -E -d '#{pane_current_path}' "broot --no-tree"
 
       # Broot new window
       unbind F
       bind-key F new-window -n "broot" -c "#{pane_current_path}" "broot"
 
       # Scooter popup
-      bind-key S display-popup -y 55% -h 75% -d '#{pane_current_path}' -E "tmux new-session -A -s 'scooter' 'scooter'"
+      bind-key S display-popup -y 55% -h 75% -d '#{pane_current_path}' -E "scooter"
 
       is_hx="ps -o state= -o comm= -t '#{pane_tty}' \
         | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?hx?x?|fzf)(diff)?$'"

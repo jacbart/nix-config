@@ -12,7 +12,11 @@
       c = ":pipe view_cert";
       C = ":pipe base64 -d | view_cert";
       y = ":yank-diagnostic";
-      r = ":reload";
+      r = [
+        ":config-reload"
+        ":reload-all"
+      ];
+      s = ":! [ -n \"$TMUX\" ] && tmux popup -xC -yC -w75%% -h55%% -E scooter";
       R = [
         ":lsp-stop"
         ":config-reload"
@@ -39,7 +43,6 @@
       i = ":toggle lsp.display-inlay-hints";
       W = ":write-all";
       J = ":insert-output echo \"# $(date '+%%Y-%%m-%%d')\"";
-      s = ":sh tmux popup -xC -yC -w90%% -h90%% -E scooter";
       esc = [
         "collapse_selection"
         "keep_primary_selection"
