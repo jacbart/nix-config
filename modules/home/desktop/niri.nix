@@ -32,41 +32,54 @@
     file."${config.home.homeDirectory}/Pictures/wallpapers/bg.jpg".source = ../files/bg.jpg;
   };
 
-  programs.noctalia-shell = {
+  programs.noctalia = {
     enable = true;
     settings = {
       wallpaper.directory = "${config.home.homeDirectory}/Pictures/wallpapers";
-      appLauncher.terminalCommand = "ghostty";
+      theme = {
+        mode = "dark";
+        source = "builtin";
+        builtin = "Kanagawa";
+      };
+      nightlight.enabled = true;
+      idle = {
+        behavior = {
+          lock = {
+            enabled = true;
+            timeout = 660;
+            command = "noctalia:session lock";
+          };
+          "screen-off" = {
+            enabled = true;
+            timeout = 600;
+            command = "noctalia:dpms-off";
+            resume_command = "noctalia:dpms-on";
+          };
+        };
+      };
       bar = {
-        outerCorners = false;
-        position = "top";
-        widgets = {
-          left = [
-            { id = "ActiveWindow"; }
-          ];
-          center = [
-            {
-              id = "Workspace";
-              labelMode = "none";
-            }
-          ];
-          right = [
-            { id = "Tray"; }
-            # { id = "Tailscale"; }
-            # { id = "PrivacyIndicator"; }
-            { id = "Volume"; }
-            { id = "Brightness"; }
-            { id = "Clock"; }
+        main = {
+          position = "top";
+          radius = 0;
+          start = [ "active_window" ];
+          center = [ "workspaces" ];
+          end = [
+            "tray"
+            # "tailscale"
+            # "privacy-indicator"
+            "volume"
+            "brightness"
+            "clock"
           ];
         };
       };
-      colorSchemes.predefinedScheme = "kanagawa";
-      idle = {
-        enabled = true;
-        screenOffTimeout = 600;
-        lockTimeout = 660;
+      widget = {
+        workspaces = {
+          settings = {
+            display = "none";
+          };
+        };
       };
-      nightLight.enabled = true;
     };
   };
 
@@ -97,7 +110,7 @@
       default-column-width { proportion 0.5; }
     }
 
-    spawn-at-startup "noctalia-shell"
+    spawn-at-startup "noctalia"
     spawn-at-startup "xwayland-satellite"
     spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
     spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
