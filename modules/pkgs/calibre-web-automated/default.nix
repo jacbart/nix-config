@@ -28,6 +28,7 @@ let
     self = py;
     packageOverrides = pyfinal: pyprev: {
       goodreads = pyfinal.callPackage ./python-overrides/goodreads.nix { };
+      flask-limiter = pyfinal.callPackage ./python-overrides/flask-limiter.nix { };
     };
   };
 
