@@ -142,17 +142,14 @@ py.pkgs.buildPythonApplication rec {
 
   format = "other";
 
-  # Nixpkgs wraps calibre binaries with a shell that prints the version banner
-  # on stderr, so CWA's stdout-only re.search in process_wait never matches and
-  # check_calibre reports "binaries not viable". Merge stderr into stdout, and
-  # guard the now-None p.stderr.close() to avoid AttributeError.
-  postPatch = ''
-    substituteInPlace cps/subproc_wrapper.py \
-      --replace-fail 'def process_wait(command, serr=subprocess.PIPE, pattern=""):' \
-                     'def process_wait(command, serr=subprocess.STDOUT, pattern=""):' \
-      --replace-fail 'p.stderr.close()' \
-                     'p.stderr.close() if p.stderr else None'
-  '';
+  # CWA's process_wait only reads stdout, but Nixpkgs wraps the Calibre
+  # binaries with a shell that prints the version banner on stderr, so
+  # check_calibre fails with "Calibre binaries not viable". Replace the
+  # function with a robust subprocess.run impl that captures combined
+  # stdout+stderr with a timeout.
+  patches = [
+    ./patches/0001-robust-process-wait.patch
+  ];
 
   nativeBuildInputs = [ makeWrapper ];
 
