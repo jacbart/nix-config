@@ -10,4 +10,5 @@
   koreader-sync-server = pkgs.callPackage ./koreader-sync-server { };
   fern = pkgs.callPackage ./fern { };
   pgsync = pkgs.callPackage ./pgsync { };
+  calibre-web-automated = pkgs.callPackage ./calibre-web-automated { };
 }
