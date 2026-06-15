@@ -25,9 +25,29 @@ let
   configDir  = "${stateDir}/config";
   libraryDir = "${stateDir}/library";
   ingestDir  = "${stateDir}/ingest";
-  appDir     = "${stateDir}/app";
+  # Mounted as /app inside the unit. CWA writes /app/theme_migration_notice
+  # and /app/cwa_update_notice (siblings of /app/calibre-web-automated),
+  # so /app itself must be writable.
+  appRoot    = "${stateDir}/app-root";
+  appDir     = "${appRoot}/calibre-web-automated";
 
   cwa = pkgs.calibre-web-automated;
+
+  # Binaries CWA shells out to via subprocess.run / Popen.
+  runtimePath = [
+    pkgs.python3
+    pkgs.calibre
+    pkgs.kepubify
+    pkgs.inotify-tools
+    pkgs.imagemagick
+    pkgs.ghostscript
+    pkgs.file
+    pkgs.sqlite
+    pkgs.coreutils
+    pkgs.findutils
+    pkgs.procps
+    pkgs.gnused
+  ];
 
   hardenedServiceConfig = {
     NoNewPrivileges = true;
@@ -56,7 +76,7 @@ let
 
   bindMounts = {
     BindPaths = [
-      "${appDir}:/app/calibre-web-automated"
+      "${appRoot}:/app"
       "${configDir}:/config"
       "${libraryDir}:/calibre-library"
       "${ingestDir}:/cwa-book-ingest"
@@ -76,6 +96,7 @@ in
     "d ${configDir}  0750 ${user} ${group} -"
     "d ${libraryDir} 0755 ${user} ${group} -"
     "d ${ingestDir}  0775 ${user} ${group} -"
+    "d ${appRoot}    0750 ${user} ${group} -"
     "d ${appDir}     0750 ${user} ${group} -"
     "d ${configDir}/processed_books              0750 ${user} ${group} -"
     "d ${configDir}/processed_books/converted    0750 ${user} ${group} -"
@@ -97,6 +118,7 @@ in
     wantedBy = [ "multi-user.target" ];
 
     environment = cwaEnv;
+    path = runtimePath;
 
     serviceConfig = hardenedServiceConfig // bindMounts // {
       Type = "simple";
@@ -162,6 +184,7 @@ in
     wantedBy = [ "multi-user.target" ];
 
     environment = cwaEnv;
+    path = runtimePath;
 
     serviceConfig = hardenedServiceConfig // bindMounts // {
       Type = "simple";
