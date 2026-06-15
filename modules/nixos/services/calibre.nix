@@ -49,6 +49,9 @@ let
     pkgs.gnused
   ];
 
+  # NOTE: minimal hardening. CWA shells out to Calibre (Qt-based) which
+  # needs /dev access for Qt init even on --version, and ImageMagick which
+  # touches many syscalls. PrivateDevices=true silently breaks check_calibre.
   hardenedServiceConfig = {
     NoNewPrivileges = true;
     ProtectHome = true;
@@ -61,10 +64,7 @@ let
     LockPersonality = true;
     RestrictSUIDSGID = true;
     RestrictRealtime = true;
-    RestrictNamespaces = true;
-    SystemCallArchitectures = "native";
     PrivateTmp = true;
-    PrivateDevices = true;
   };
 
   cwaEnv = {
