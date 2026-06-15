@@ -149,6 +149,7 @@ py.pkgs.buildPythonApplication rec {
   # stdout+stderr with a timeout.
   patches = [
     ./patches/0001-robust-process-wait.patch
+    ./patches/0002-debug-check-calibre.patch
   ];
 
   nativeBuildInputs = [ makeWrapper ];
