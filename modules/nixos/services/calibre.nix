@@ -72,6 +72,12 @@ let
     CALIBRE_CONFIG_DIR = "/config";
     CWA_PORT_OVERRIDE = toString port;
     HOME = "/config";
+    # Headless Qt: ebook-convert --version aborts without a platform plugin
+    # even though no GUI is needed.
+    QT_QPA_PLATFORM = "offscreen";
+    XDG_CONFIG_HOME = "/config/.xdg-config";
+    XDG_CACHE_HOME  = "/config/.xdg-cache";
+    XDG_DATA_HOME   = "/config/.xdg-data";
   };
 
   bindMounts = {
@@ -109,6 +115,9 @@ in
     "d ${configDir}/.cwa_conversion_tmp    0750 ${user} ${group} -"
     "d ${configDir}/thumbnails             0750 ${user} ${group} -"
     "d ${configDir}/backup                 0750 ${user} ${group} -"
+    "d ${configDir}/.xdg-config            0750 ${user} ${group} -"
+    "d ${configDir}/.xdg-cache             0750 ${user} ${group} -"
+    "d ${configDir}/.xdg-data              0750 ${user} ${group} -"
   ];
 
   systemd.services.calibre-web-automated = {
@@ -147,6 +156,9 @@ in
             fi
             printf '%s' "$want" > "$stamp"
             ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${appDir}
+            # rsync preserved /nix/store's 0555/0444 modes. CWA writes runtime
+            # state inside cps/ and dirs.json, so grant the owner write back.
+            ${pkgs.coreutils}/bin/chmod -R u+w ${appDir}
           fi
 
           if [ ! -f ${configDir}/app.db ]; then
@@ -166,6 +178,22 @@ in
             config_binariesdir   = '${pkgs.calibre}/bin',
             config_calibre_dir   = '/calibre-library';
           SQL
+          # sqlite3 ran as root; reclaim db + journal/wal/shm for the user.
+          for f in ${configDir}/app.db ${configDir}/app.db-journal ${configDir}/app.db-wal ${configDir}/app.db-shm; do
+            [ -e "$f" ] && ${pkgs.coreutils}/bin/chown ${user}:${group} "$f" || true
+          done
+
+          # ---- preflight diagnostics (remove once green) ----
+          echo "==== cwa preflight ===="
+          ${pkgs.coreutils}/bin/ls -ld ${pkgs.calibre}/bin || true
+          ${pkgs.coreutils}/bin/ls -l ${pkgs.calibre}/bin/ebook-convert || true
+          HOME=/config QT_QPA_PLATFORM=offscreen \
+            ${pkgs.calibre}/bin/ebook-convert --version 2>&1 | ${pkgs.coreutils}/bin/head -5 \
+            || echo "ebook-convert --version FAILED rc=$?"
+          ${pkgs.sqlite}/bin/sqlite3 ${configDir}/app.db \
+            'SELECT config_binariesdir, config_converterpath, config_kepubifypath FROM settings;' \
+            || echo "sqlite SELECT FAILED rc=$?"
+          echo "==== end preflight ===="
         ''))
       ];
       ExecStart = "${cwa}/bin/calibre-web-automated -i ${addr}";
