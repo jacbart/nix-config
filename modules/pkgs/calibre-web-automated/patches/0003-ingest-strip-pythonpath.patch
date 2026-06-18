@@ -1,0 +1,16 @@
+--- a/scripts/ingest_processor.py
++++ b/scripts/ingest_processor.py
+@@ -415,7 +415,12 @@
+         self.is_target_format = (self.input_format.lower() == str(self.target_format).lower())
+
+         # Calibre environment
+         self.calibre_env = os.environ.copy()
+         self.calibre_env["HOME"] = "/config"  # Enable plugins under /config
++        # Nix: CWA wrapper exports PYTHONPATH so this script can import its
++        # site-packages. Strip it for Calibre child processes so calibredb's
++        # bundled Python doesn't load CWA's regex (ABI mismatch).
++        self.calibre_env.pop("PYTHONPATH", None)
++        self.calibre_env.pop("PYTHONHOME", None)
+
+         self.metadata_db = os.path.join(self.library_dir, "metadata.db")
+         # Split library support

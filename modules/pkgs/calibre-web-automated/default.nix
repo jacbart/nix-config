@@ -152,6 +152,9 @@ py.pkgs.buildPythonApplication rec {
     # libmagic tags some EPUBs as application/java-archive (ZIP+META-INF/).
     # Extend validate_mime_type's ZIP fallback to also accept JAR mime.
     ./patches/0002-accept-jar-mime-for-epub.patch
+    # Ingest processor builds env for calibredb from os.environ.copy(), which
+    # inherits CWA's PYTHONPATH and breaks calibre's bundled Python on regex.
+    ./patches/0003-ingest-strip-pythonpath.patch
   ];
 
   nativeBuildInputs = [ makeWrapper ];
