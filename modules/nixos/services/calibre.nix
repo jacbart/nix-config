@@ -72,6 +72,9 @@ let
     CALIBRE_CONFIG_DIR = "/config";
     CWA_PORT_OVERRIDE = toString port;
     HOME = "/config";
+    # CWA's editbooks chowns the ingest dir on upload; as a non-root user
+    # that's EPERM. The official escape hatch is NETWORK_SHARE_MODE.
+    NETWORK_SHARE_MODE = "true";
     # Headless Qt: ebook-convert --version aborts without a platform plugin
     # even though no GUI is needed.
     QT_QPA_PLATFORM = "offscreen";
