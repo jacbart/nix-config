@@ -169,6 +169,16 @@ in
               ${cwa}/share/calibre-web-automated/empty_library/app.db ${configDir}/app.db
           fi
 
+          # CWA's /user_profiles.json route opens this file on every page
+          # load and logs ERROR if missing. Seed it empty so the route can
+          # decode {} cleanly until a user uploads a profile picture.
+          if [ ! -f ${configDir}/user_profiles.json ]; then
+            ${pkgs.coreutils}/bin/install -m 0640 -o ${user} -g ${group} \
+              /dev/null ${configDir}/user_profiles.json
+            printf '{}' > ${configDir}/user_profiles.json
+            ${pkgs.coreutils}/bin/chown ${user}:${group} ${configDir}/user_profiles.json
+          fi
+
           if [ ! -f ${libraryDir}/metadata.db ]; then
             ${pkgs.coreutils}/bin/install -m 0644 -o ${user} -g ${group} \
               ${cwa}/share/calibre-web-automated/empty_library/metadata.db ${libraryDir}/metadata.db

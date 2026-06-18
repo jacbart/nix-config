@@ -149,6 +149,9 @@ py.pkgs.buildPythonApplication rec {
   # stdout+stderr with a timeout.
   patches = [
     ./patches/0001-robust-process-wait.patch
+    # libmagic tags some EPUBs as application/java-archive (ZIP+META-INF/).
+    # Extend validate_mime_type's ZIP fallback to also accept JAR mime.
+    ./patches/0002-accept-jar-mime-for-epub.patch
   ];
 
   nativeBuildInputs = [ makeWrapper ];

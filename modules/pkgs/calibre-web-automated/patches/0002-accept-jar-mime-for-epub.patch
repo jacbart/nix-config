@@ -1,0 +1,12 @@
+--- a/cps/file_helper.py
++++ b/cps/file_helper.py
+@@ -62,7 +62,8 @@
+     if any(mime_type in tmp_mime_type for mime_type in allowed_mimetypes):
+         return True
+     # Some epubs show up as zip mimetypes
+-    elif "zip" in tmp_mime_type:
++    # libmagic also tags ZIPs containing META-INF/ as application/java-archive
++    elif "zip" in tmp_mime_type or "java-archive" in tmp_mime_type:
+         try:
+             with zipfile.ZipFile(BytesIO(file_buffer.read()), 'r') as epub:
+                 file_buffer.seek(0)
