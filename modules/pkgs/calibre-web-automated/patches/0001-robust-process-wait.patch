@@ -1,13 +1,19 @@
 --- a/cps/subproc_wrapper.py
 +++ b/cps/subproc_wrapper.py
-@@ -24,22 +24,38 @@
+@@ -24,22 +24,44 @@
      else:
          exc_command = [x for x in command]
  
 +    # Under Nix, Calibre's bundled Python must not inherit CWA's PYTHONPATH,
-+    # or `from calibre.X import Y` fails on first hit. Strip it by default.
++    # or `from calibre.X import Y` fails on first hit. Strip it whether the
++    # caller supplied an env or not (embed_helper passes a copy of os.environ
++    # which would otherwise smuggle PYTHONPATH straight through).
 +    if env is None:
 +        env = _clean_subprocess_env()
++    else:
++        env = dict(env)
++        env.pop('PYTHONPATH', None)
++        env.pop('PYTHONHOME', None)
 +
      return subprocess.Popen(exc_command, shell=False, stdout=sout, stderr=serr, universal_newlines=newlines, env=env) # nosec
  
