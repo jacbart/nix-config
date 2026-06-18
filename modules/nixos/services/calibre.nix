@@ -14,7 +14,10 @@
 }:
 let
   subdomain = "calibre";
-  addr = "127.0.0.2";
+  # CWA's ingest_processor.py hardcodes 127.0.0.1 for /cwa-internal callbacks
+  # (reconnect-db, duplicate-scan, schedule-auto-send), so the web server must
+  # listen on 127.0.0.1 or the upload task never completes.
+  addr = "127.0.0.1";
   port = 8235;
   domain = vars.domain;
 
@@ -42,6 +45,7 @@ let
     pkgs.imagemagick
     pkgs.ghostscript
     pkgs.file
+    pkgs.lsof
     pkgs.sqlite
     pkgs.coreutils
     pkgs.findutils

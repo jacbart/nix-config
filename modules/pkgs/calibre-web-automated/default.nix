@@ -18,6 +18,7 @@
   imagemagick,
   ghostscript,
   file,
+  lsof,
   sqlite,
   coreutils,
   procps,
@@ -123,6 +124,7 @@ let
     imagemagick
     ghostscript
     file
+    lsof
     sqlite
     coreutils
     procps
