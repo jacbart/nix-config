@@ -24,6 +24,17 @@
         ":lsp-restart"
       ];
       z = ":pipe zsh";
+      # gopls build-tags management (per-project .helix/languages.toml override).
+      # Single commands (not arrays) — :!/:sh in a command array is non-blocking
+      # in helix 25.07.1, so chained :config-reload/:lsp-restart run before the
+      # tmux popup even appears. After ;g t or ;g c, press ;R to reload gopls.
+      # -d "$PWD" is critical: tmux popup defaults to $HOME, not helix's CWD, so
+      # without it .helix/languages.toml gets written to the wrong directory.
+      g = {
+        t = ":! [ -n \"$TMUX\" ] && tmux popup -d \"$PWD\" -xC -yC -w60%% -h10%% -E 'hx-go-tags --pick'";
+        v = ":sh hx-go-tags";
+        c = ":sh hx-go-tags --clear";
+      };
     };
     # git shortcuts
     G = {
@@ -41,6 +52,7 @@
     space = {
       B = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
       i = ":toggle lsp.display-inlay-hints";
+      z = ":toggle soft-wrap.enable";
       W = ":write-all";
       J = ":insert-output echo \"# $(date '+%%Y-%%m-%%d')\"";
       esc = [

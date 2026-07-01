@@ -12,4 +12,5 @@
   volume = pkgs.callPackage ./volume { };
   install-system = pkgs.callPackage ./install-system { };
   summarize-commit = pkgs.callPackage ./summarize-commit { };
+  hx-go-tags = pkgs.callPackage ./hx-go-tags { };
 }

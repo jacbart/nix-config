@@ -9,7 +9,7 @@
 
     # https://nixos.wiki/wiki/Overlays
     modifications = final: _prev: {
-      inherit (final.lixPackageSets.latest)
+      inherit (final.lixPackageSets.stable)
         nix-eval-jobs
         ;
     };

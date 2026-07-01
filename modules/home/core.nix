@@ -50,7 +50,7 @@
       };
 
       nix = {
-        package = pkgs.lixPackageSets.latest.lix;
+        package = pkgs.lixPackageSets.stable.lix;
         registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
         settings = {
           trusted-users = [

@@ -69,7 +69,7 @@ in
     #   silent = true;
     #   nix-direnv = {
     #     enable = true;
-    #     # package = pkgs.lixPackageSets.latest.nix-direnv;
+    #     # package = pkgs.lixPackageSets.stable.nix-direnv;
     #   };
     # };
     fzf = {

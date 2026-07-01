@@ -9,7 +9,7 @@ let
 in
 {
   home = {
-    packages = import ./helix-packages.nix { inherit pkgs; };
+    packages = (import ./helix-packages.nix { inherit pkgs; }) ++ [ pkgs.scripts.hx-go-tags ];
 
     file."${config.xdg.configHome}/sqls/config.yml".text = builtins.readFile ./sqls.yaml;
 

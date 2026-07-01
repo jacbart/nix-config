@@ -123,7 +123,9 @@
           parameterNames = true;
           rangeVariableTypes = true;
         };
-        buildFlags = [ "-tags=stub,redis" ];
+        # buildFlags are managed per-project via the `hx-go-tags` helper, which
+        # writes a .helix/languages.toml override that helix deep-merges over this
+        # global config. No home-manager rebuild needed to switch tags.
       };
     };
 
