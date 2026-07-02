@@ -111,6 +111,13 @@
           unusedparams = true;
           unusedwrite = true;
           useany = true;
+          ST1000 = false; # package doc comment missing
+          ST1003 = false; # naming conventions (ID vs Id, etc.)
+          ST1006 = false; # receiver naming conventions
+          ST1019 = false; # import grouping / duplicate imports
+          ST1020 = false; # exported func doc comment form
+          ST1021 = false; # exported type doc comment form
+          ST1022 = false; # exported var/const doc comment form
         };
         usePlaceholders = true;
         completeUnimported = true;
