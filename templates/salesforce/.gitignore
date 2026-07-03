@@ -1,0 +1,10 @@
+# Salesforce DX
+.sf/
+.sfdx/
+.localdevserver/
+deploy/
+retrieve/
+*.log
+
+# Node / LWC tooling
+node_modules/

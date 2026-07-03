@@ -5,6 +5,7 @@
   imports = [
     ./overlays.nix
     ./devshell.nix
+    ./templates.nix
     ./formatter.nix
     ./systems.nix
     ../vars.nix

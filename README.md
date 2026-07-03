@@ -33,6 +33,7 @@ This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) t
   - `desktop` — optional; if unset, inherits `nixosHosts.<hostname>.desktop` when that NixOS host exists.
   - `shellProfile` — `"lite"` | `"zsh-lite"` (default) | `"dev-heavy"`; selects [`modules/home/shell/profiles/`](modules/home/shell/profiles/) (minimal tools vs full dev stack). See **Shell profiles** below.
   - [`modules/home/desktop/default.nix`](modules/home/desktop/default.nix) imports `./${desktop}.nix` when `desktop` is non-null (aligned with NixOS desktop id).
+  - Optional feature modules (e.g. [`modules/home/dev/salesforce`](modules/home/dev/salesforce/)) are toggled by adding/removing them in the host's `modules` list — see [`modules/hosts/sycamore/home.nix`](modules/hosts/sycamore/home.nix).
 - **Darwin** — Home Manager is wired automatically. [`modules/darwin/laptop.nix`](modules/darwin/laptop.nix) bundles core + nix-homebrew + docker for the Mac laptops; `flakeModules` is passed in `specialArgs` so nested modules can import flake-exported modules.
 - **Overlays** — Custom packages, script packages, Lix-related tweaks, and `pkgs.unstable` are available via [`modules/flake/overlays.nix`](modules/flake/overlays.nix).
 
@@ -65,6 +66,7 @@ Per-host `shellProfile` is set in each [`modules/hosts/*/home.nix`](modules/host
 | :------- | :------------------------------------------------------------------------------------------------ |
 | apps     | eww, firefox, ghostty, kitty, lan-mouse, rofi-wayland, rustdesk, wezterm, zed                     |
 | desktop  | cosmic, hyprland, kde, niri, phosh, xfce (selected via `desktop` + `home/desktop/default.nix`)   |
+| dev      | [salesforce](modules/home/dev/salesforce/) — Apex/LWC/SOQL toolchain + Helix grammars/queries; opt-in per host by adding `modules/home/dev/salesforce` to the host's `modules` list. LWC: template completions in `.html` + eslint diagnostics in `.js`. `apex-impls` finds interface/class implementations (no Apex LSP supports goto-implementation) |
 | shell    | zsh, profiles (`lite` / `zsh-lite` / `dev-heavy`), starship, helix, tmux, git, eza, zoxide, broot, bottom, fzf, fd, ripgrep, opencode (subset depends on profile) |
 | services | dunst, nextcloud-client                                                                           |
 | users    | meep, ratatoskr, jackbartlett, jack (with host-specific overrides)                                |
@@ -77,6 +79,53 @@ Per-host `shellProfile` is set in each [`modules/hosts/*/home.nix`](modules/host
 | nix-homebrew | Homebrew taps + formulae/casks via nix-homebrew |
 | docker   | Colima + Docker CLI (unstable Colima)            |
 | laptop   | core + nix-homebrew + docker + primary user      |
+
+## Project templates
+
+Per-project dev shells scaffolded with `nix flake init`. Each drops a `flake.nix`
+(exposing `devShells.default`) and a language-appropriate `.gitignore`. Enter the
+shell with `nix develop`.
+
+| Template     | Toolchain                                                        |
+| :----------- | :-------------------------------------------------------------- |
+| `salesforce` | `sf`, `apex-lsp`, `lwc-language-server`, `prettier-apex`, `apex-impls`, JDK 21, Node 24 |
+| `go`         | `go`, `gopls`, `gofumpt`, `delve`, `golangci-lint`              |
+| `rust`       | `rustc`, `cargo`, `rust-analyzer`, `clippy`, `rustfmt`         |
+| `web`        | `nodejs_24`, `typescript`, `typescript-language-server`, `vscode-langservers-extracted`, `prettier` |
+| `lua`        | `lua5_4`, `lua-language-server`, `stylua`                       |
+| `sql`        | `sqls`, `sqlfluff`, `postgresql` (psql)                         |
+| `shell`      | `bash`, `zsh`, `shfmt`, `shellcheck`, `bash-language-server`    |
+
+Usage (any template):
+
+```sh
+mkdir my-project && cd my-project
+nix flake init -t github:jacbart/nix-config#go   # or rust / web / lua / sql / shell / salesforce
+nix develop
+```
+
+The non-Salesforce templates are self-contained (pinned only to `nixpkgs`), so a
+scaffolded project stays lightweight.
+
+### Salesforce specifics
+
+The home module above wires the Apex/LWC/SOQL toolchain into Helix at the host level
+(enabled on `sycamore`); the `salesforce` template gives the same toolchain per
+project. After scaffolding:
+
+```sh
+sf project generate --name my-project   # writes sfdx-project.json
+sf org login web --alias dev
+```
+
+Opening the project in Helix (on a host with the salesforce home module) then
+activates the Apex/LWC LSPs and highlighting — they key off the `sfdx-project.json`.
+
+**Note:** unlike the others, the `salesforce` template takes `jacbart/nix-config`
+as an input (it needs the custom SF packages), which locks all of that flake's
+transitive inputs — including private `git+ssh` sources — so its `flake.lock` is
+large and only resolves where those inputs are reachable. See
+[`templates/salesforce/README.md`](templates/salesforce/README.md).
 
 ## Installing
 

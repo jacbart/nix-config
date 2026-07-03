@@ -1,0 +1,9 @@
+{
+  "name": "prettier-apex-wrapper",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "prettier": "^3.6.0",
+    "prettier-plugin-apex": "^2.3.0"
+  }
+}

@@ -1,6 +1,7 @@
 # Language servers and commented lsp-ai experiment: ./helix-langs.nix
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -8,6 +9,10 @@ let
   helix = pkgs.unstable.helix;
 in
 {
+  # Declares dev.salesforce.enable (default false); the salesforce feature module
+  # sets it true when a host imports modules/home/dev/salesforce.
+  imports = [ ../../dev/salesforce/options.nix ];
+
   home = {
     packages = (import ./helix-packages.nix { inherit pkgs; }) ++ [ pkgs.scripts.hx-go-tags ];
 
@@ -29,7 +34,10 @@ in
   programs.helix = {
     enable = true;
     package = helix;
-    languages = import ./helix-langs.nix;
+    languages = import ./helix-langs.nix {
+      inherit lib;
+      salesforce = config.dev.salesforce.enable; # toggled via modules/home/dev/salesforce
+    };
     settings = import ./helix-settings.nix;
   };
 }

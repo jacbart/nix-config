@@ -1,4 +1,8 @@
 {
+  lib,
+  salesforce ? false,
+}:
+{
   language-server = {
     sqls = {
       command = "sqls";
@@ -206,6 +210,15 @@
     }
     {
       name = "html";
+      # lwc-lsp serves LWC templates (lightning-*/c-* tag completions, directives);
+      # comes from modules/home/dev/salesforce (per-host toggle). Explicit list
+      # replaces helix's default [vscode-html-language-server, superhtml] — we
+      # keep the former (installed) and drop superhtml (never installed).
+      language-servers = lib.optional salesforce "lwc-lsp" ++ [ "vscode-html-language-server" ];
+      # lwc-lsp needs the sfdx project root as its LSP workspace or it bails
+      # with "unknown workspace type"; harmless for non-SF html (marker absent
+      # -> helix falls back to its normal root detection).
+      roots = lib.optionals salesforce [ "sfdx-project.json" ];
       formatter = {
         command = "prettier";
         args = [
@@ -226,14 +239,20 @@
     }
     {
       name = "java";
-      file-types = [
-        "cls"
-        "java"
-      ];
+      file-types = [ "java" ];
       auto-format = true;
     }
     {
       name = "javascript";
+      # lwc-lsp + eslint come from modules/home/dev/salesforce (per-host toggle)
+      language-servers =
+        lib.optionals salesforce [
+          "lwc-lsp"
+          "eslint"
+        ]
+        ++ [ "typescript-language-server" ];
+      # See the html entry: gives lwc-lsp the sfdx root as LSP workspace.
+      roots = lib.optionals salesforce [ "sfdx-project.json" ];
       formatter = {
         command = "prettier";
         args = [
