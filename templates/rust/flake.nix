@@ -17,11 +17,18 @@
       devShells = forAll (pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            # Rust toolchain
             rustc
             cargo
             rust-analyzer
             clippy
             rustfmt
+            # Editor baseline: flake.nix, docs, config files (incl. Cargo.toml)
+            nil # nix LSP
+            nixfmt # nix formatter
+            markdown-oxide # markdown LSP
+            prettier # markdown/json formatter
+            taplo # toml LSP + formatter (Cargo.toml, rustfmt.toml, clippy.toml)
           ];
           # rust-analyzer resolves std sources from here.
           RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";

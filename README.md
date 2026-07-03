@@ -86,15 +86,21 @@ Per-project dev shells scaffolded with `nix flake init`. Each drops a `flake.nix
 (exposing `devShells.default`) and a language-appropriate `.gitignore`. Enter the
 shell with `nix develop`.
 
-| Template     | Toolchain                                                                                           |
-| :----------- | :-------------------------------------------------------------------------------------------------- |
-| `salesforce` | `sf`, `apex-lsp`, `lwc-language-server`, `prettier-apex`, `apex-impls`, JDK 21, Node 24             |
-| `go`         | `go`, `gopls`, `gofumpt`, `delve`, `golangci-lint`                                                  |
-| `rust`       | `rustc`, `cargo`, `rust-analyzer`, `clippy`, `rustfmt`                                              |
-| `web`        | `nodejs_24`, `typescript`, `typescript-language-server`, `vscode-langservers-extracted`, `prettier` |
-| `lua`        | `lua5_4`, `lua-language-server`, `stylua`                                                           |
-| `sql`        | `sqls`, `sqlfluff`, `postgresql` (psql)                                                             |
-| `shell`      | `bash`, `zsh`, `shfmt`, `shellcheck`, `bash-language-server`                                        |
+Every shell carries a small editor baseline for the files in any project — `nil` +
+`nixfmt` (the `flake.nix`) and `markdown-oxide` + `prettier` (docs; `prettier` also
+formats json/yaml). Config-language tooling is added only where that ecosystem
+actually uses it: `taplo` (toml) for `rust`/`lua`, `yaml-language-server` for the
+rest. The table lists each template's language-specific tools on top of the baseline.
+
+| Template     | Language toolchain                                                                                  | Config |
+| :----------- | :------------------------------------------------------------------------------------------------- | :----- |
+| `salesforce` | `sf`, `apex-lsp`, `lwc-language-server`, `prettier-apex`, `apex-impls`, JDK 21, Node 24             | yaml   |
+| `go`         | `go`, `gopls`, `gofumpt`, `delve`, `golangci-lint`                                                  | yaml   |
+| `rust`       | `rustc`, `cargo`, `rust-analyzer`, `clippy`, `rustfmt`                                              | toml   |
+| `web`        | `nodejs_24`, `typescript`, `typescript-language-server`, `vscode-langservers-extracted`, `prettier` | json/yaml |
+| `lua`        | `lua5_4`, `lua-language-server`, `stylua`                                                           | toml   |
+| `sql`        | `sqls`, `sqlfluff`, `postgresql` (psql)                                                             | yaml   |
+| `shell`      | `bash`, `zsh`, `shfmt`, `shellcheck`, `bash-language-server`, `systemd-language-server`             | yaml   |
 
 Usage (any template):
 

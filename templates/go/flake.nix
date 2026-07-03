@@ -17,11 +17,18 @@
       devShells = forAll (pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            # Go toolchain
             go
             gopls
             gofumpt
             delve
             golangci-lint
+            # Editor baseline: flake.nix, docs, config files
+            nil # nix LSP
+            nixfmt # nix formatter
+            markdown-oxide # markdown LSP
+            prettier # markdown/json/yaml formatter
+            yaml-language-server # .golangci.yml, CI, goreleaser
           ];
         };
       });

@@ -17,9 +17,16 @@
       devShells = forAll (pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            # Lua toolchain
             lua5_4
             lua-language-server
             stylua
+            # Editor baseline: flake.nix, docs, config files
+            nil # nix LSP
+            nixfmt # nix formatter
+            markdown-oxide # markdown LSP
+            prettier # markdown/json formatter
+            taplo # toml LSP + formatter (stylua.toml)
           ];
         };
       });

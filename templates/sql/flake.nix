@@ -17,9 +17,16 @@
       devShells = forAll (pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            # SQL toolchain
             sqls # SQL language server
             sqlfluff # linter + formatter
             postgresql # psql client
+            # Editor baseline: flake.nix, docs, config files
+            nil # nix LSP
+            nixfmt # nix formatter
+            markdown-oxide # markdown LSP
+            prettier # markdown/json/yaml formatter
+            yaml-language-server # sqls config.yml, CI
           ];
         };
       });

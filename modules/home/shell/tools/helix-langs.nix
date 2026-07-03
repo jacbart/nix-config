@@ -7,6 +7,13 @@
     sqls = {
       command = "sqls";
     };
+    # Helix's built-in `systemd` language points at a server named `systemd-lsp`,
+    # but the nixpkgs package (in helix-packages.nix) ships the binary as
+    # `systemd-language-server`. Override the command so the built-in language
+    # actually resolves it.
+    systemd-lsp = {
+      command = "systemd-language-server";
+    };
     #   lsp-ai = {
     #     command = "lsp-ai";
     #     timeout = 60;

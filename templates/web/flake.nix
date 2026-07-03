@@ -17,11 +17,17 @@
       devShells = forAll (pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            # Web toolchain
             nodejs_24 # bundles corepack for pnpm/yarn
             typescript
             typescript-language-server
             vscode-langservers-extracted # html/css/json + eslint servers
-            prettier
+            prettier # also formats markdown/yaml
+            # Editor baseline: flake.nix, docs, config files
+            nil # nix LSP
+            nixfmt # nix formatter
+            markdown-oxide # markdown LSP
+            yaml-language-server # pnpm-workspace.yaml, CI (json covered above)
           ];
         };
       });

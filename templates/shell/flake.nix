@@ -17,11 +17,19 @@
       devShells = forAll (pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            # Shell toolchain
             bashInteractive
             zsh
             shfmt
             shellcheck
             bash-language-server
+            systemd-language-server # .service/.timer/.socket units
+            # Editor baseline: flake.nix, docs, config files
+            nil # nix LSP
+            nixfmt # nix formatter
+            markdown-oxide # markdown LSP
+            prettier # markdown/json/yaml formatter
+            yaml-language-server # CI, pre-commit
           ];
         };
       });
