@@ -7,11 +7,11 @@ Personal [flake-parts](https://flake.parts/) based Nix configuration managing Ni
 | Hostname |     OEM      |            Model             |    OS     |   Role    | Desktop | Status            |
 | :------- | :----------: | :--------------------------: | :-------: | :-------: | :-----: | :---------------- |
 | ash      | Clockworkpi  | [uConsole (CM-4, 4G Module)] |   NixOS   | Handheld  |  phosh  | partially working |
-| boojum   |    Lenovo    |      ThinkPad X1 Gen 6       |   NixOS   |  Laptop   | cosmic  | working           |
-| cork     |              |       Tower (3060 Ti)        |   NixOS   |  Desktop  | cosmic  | working           |
+| boojum   |    Lenovo    |      ThinkPad X1 Gen 6       |   NixOS   |  Laptop   |  niri   | working           |
+| cork     |              |       Tower (3060 Ti)        |   NixOS   |  Desktop  |  niri   | working           |
 | jackjrny |    Apple     |     Macbook Pro M1 2020      |   macOS   |  Laptop   |         | working           |
 | maple    |    Pine64    |         [RockPro64]          |   NixOS   |  Server   |         | working           |
-| mesquite |  Protectli   |           [FW4B0]            |   NixOS   |  Router   |         | working           |
+| mesquite |  Protectli   |           [FW4B0]            |   NixOS   |  Router   |         | untested          |
 | oak      | DigitalOcean |             VPS              |   NixOS   |  Server   |         | working           |
 | sycamore |    Apple     |     Macbook Pro M5 2020      |   macOS   |  Laptop   |         | working           |
 | unicron  |              |        Remote Server         | Home-only |  Server   |         | home manager      |
@@ -39,11 +39,11 @@ This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) t
 
 ## Shell profiles
 
-| Profile   | Typical use   | What you get |
-| :-------- | :------------ | :----------- |
-| `lite`    | Servers, routers | Minimal CLI: git (no forced `ssh -i`), helix-lite, tmux, bat, fzf, ripgrep, etc.; journal + nix-diff; no zsh plugins bundle from the heavy profile. |
-| `zsh-lite` | Default      | `lite` + zsh (zplug, starship), `home.sessionPath` for local bins. |
-| `dev-heavy` | Workstations | `zsh-lite` stack + full [`modules/home/shell/tools/default.nix`](modules/home/shell/tools/default.nix) (helix + LSPs, git with `core.sshCommand`, opencode, carapace, extra CLIs). `summarize` maps to the `summarize-commit` script. |
+| Profile     | Typical use      | What you get                                                                                                                                                                                                                          |
+| :---------- | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `lite`      | Servers, routers | Minimal CLI: git (no forced `ssh -i`), helix-lite, tmux, bat, fzf, ripgrep, etc.; journal + nix-diff; no zsh plugins bundle from the heavy profile.                                                                                   |
+| `zsh-lite`  | Default          | `lite` + zsh (zplug, starship), `home.sessionPath` for local bins.                                                                                                                                                                    |
+| `dev-heavy` | Workstations     | `zsh-lite` stack + full [`modules/home/shell/tools/default.nix`](modules/home/shell/tools/default.nix) (helix + LSPs, git with `core.sshCommand`, opencode, carapace, extra CLIs). `summarize` maps to the `summarize-commit` script. |
 
 Per-host `shellProfile` is set in each [`modules/hosts/*/home.nix`](modules/hosts/) file.
 
@@ -55,30 +55,30 @@ Per-host `shellProfile` is set in each [`modules/hosts/*/home.nix`](modules/host
 | :------- | :--------------------------------------------------------------------------------------------------------- |
 | apps     | firefox, ghostty, rofi, steam, vscode                                                                      |
 | services | ~45 services including caddy, docker, tailscale, nextcloud, postgresql, minio, dendrite, zitadel, fail2ban |
-| desktop  | cosmic, hyprland, kde, niri, phosh, xfce (each module includes its desktop packages) |
+| desktop  | cosmic, hyprland, kde, niri, phosh, xfce (each module includes its desktop packages)                       |
 | hardware | fw4b0, hardwarekey, nvidia-3060ti, rockpro64, systemd-boot, uconsole                                       |
 | security | sops, ACME (base/hostname/proxy), custom CA certs                                                          |
 | users    | meep, ratatoskr, nixos, root                                                                               |
 
 ### Home Manager (`modules/home/`)
 
-| Category | Contents                                                                                          |
-| :------- | :------------------------------------------------------------------------------------------------ |
-| apps     | eww, firefox, ghostty, kitty, lan-mouse, rofi-wayland, rustdesk, wezterm, zed                     |
-| desktop  | cosmic, hyprland, kde, niri, phosh, xfce (selected via `desktop` + `home/desktop/default.nix`)   |
+| Category | Contents                                                                                                                                                                                                                                                                                                                                               |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| apps     | eww, firefox, ghostty, kitty, lan-mouse, rofi-wayland, rustdesk, wezterm, zed                                                                                                                                                                                                                                                                          |
+| desktop  | cosmic, hyprland, kde, niri, phosh, xfce (selected via `desktop` + `home/desktop/default.nix`)                                                                                                                                                                                                                                                         |
 | dev      | [salesforce](modules/home/dev/salesforce/) — Apex/LWC/SOQL toolchain + Helix grammars/queries; opt-in per host by adding `modules/home/dev/salesforce` to the host's `modules` list. LWC: template completions in `.html` + eslint diagnostics in `.js`. `apex-impls` finds interface/class implementations (no Apex LSP supports goto-implementation) |
-| shell    | zsh, profiles (`lite` / `zsh-lite` / `dev-heavy`), starship, helix, tmux, git, eza, zoxide, broot, bottom, fzf, fd, ripgrep, opencode (subset depends on profile) |
-| services | dunst, nextcloud-client                                                                           |
-| users    | meep, ratatoskr, jackbartlett, jack (with host-specific overrides)                                |
+| shell    | zsh, profiles (`lite` / `zsh-lite` / `dev-heavy`), starship, helix, tmux, git, eza, zoxide, broot, bottom, fzf, fd, ripgrep, opencode (subset depends on profile)                                                                                                                                                                                      |
+| services | dunst, nextcloud-client                                                                                                                                                                                                                                                                                                                                |
+| users    | meep, ratatoskr, jackbartlett, jack (with host-specific overrides)                                                                                                                                                                                                                                                                                     |
 
 ### Darwin (`modules/darwin/`)
 
-| Category | Contents                                          |
-| :------- | :------------------------------------------------ |
-| core     | Lix, zsh, auto GC, flake support, state version 6 |
-| nix-homebrew | Homebrew taps + formulae/casks via nix-homebrew |
-| docker   | Colima + Docker CLI (unstable Colima)            |
-| laptop   | core + nix-homebrew + docker + primary user      |
+| Category     | Contents                                          |
+| :----------- | :------------------------------------------------ |
+| core         | Lix, zsh, auto GC, flake support, state version 6 |
+| nix-homebrew | Homebrew taps + formulae/casks via nix-homebrew   |
+| docker       | Colima + Docker CLI (unstable Colima)             |
+| laptop       | core + nix-homebrew + docker + primary user       |
 
 ## Project templates
 
@@ -86,15 +86,15 @@ Per-project dev shells scaffolded with `nix flake init`. Each drops a `flake.nix
 (exposing `devShells.default`) and a language-appropriate `.gitignore`. Enter the
 shell with `nix develop`.
 
-| Template     | Toolchain                                                        |
-| :----------- | :-------------------------------------------------------------- |
-| `salesforce` | `sf`, `apex-lsp`, `lwc-language-server`, `prettier-apex`, `apex-impls`, JDK 21, Node 24 |
-| `go`         | `go`, `gopls`, `gofumpt`, `delve`, `golangci-lint`              |
-| `rust`       | `rustc`, `cargo`, `rust-analyzer`, `clippy`, `rustfmt`         |
+| Template     | Toolchain                                                                                           |
+| :----------- | :-------------------------------------------------------------------------------------------------- |
+| `salesforce` | `sf`, `apex-lsp`, `lwc-language-server`, `prettier-apex`, `apex-impls`, JDK 21, Node 24             |
+| `go`         | `go`, `gopls`, `gofumpt`, `delve`, `golangci-lint`                                                  |
+| `rust`       | `rustc`, `cargo`, `rust-analyzer`, `clippy`, `rustfmt`                                              |
 | `web`        | `nodejs_24`, `typescript`, `typescript-language-server`, `vscode-langservers-extracted`, `prettier` |
-| `lua`        | `lua5_4`, `lua-language-server`, `stylua`                       |
-| `sql`        | `sqls`, `sqlfluff`, `postgresql` (psql)                         |
-| `shell`      | `bash`, `zsh`, `shfmt`, `shellcheck`, `bash-language-server`    |
+| `lua`        | `lua5_4`, `lua-language-server`, `stylua`                                                           |
+| `sql`        | `sqls`, `sqlfluff`, `postgresql` (psql)                                                             |
+| `shell`      | `bash`, `zsh`, `shfmt`, `shellcheck`, `bash-language-server`                                        |
 
 Usage (any template):
 
