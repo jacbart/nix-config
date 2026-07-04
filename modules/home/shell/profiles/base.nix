@@ -110,11 +110,6 @@ in
         IdentityFile ~/.ssh/id_ratatoskr
         IdentitiesOnly yes
 
-    Host git.bbl.systems
-        User jack
-        IdentityFile ~/.ssh/id_ratatoskr
-        IdentitiesOnly yes
-
     Host got.meep.sh
         User git
         IdentityFile ~/.ssh/id_ratatoskr
