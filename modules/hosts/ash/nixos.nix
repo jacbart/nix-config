@@ -12,6 +12,9 @@
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/hardware/uconsole.nix
+      # uConsole kernel with CWU50 panel/backlight/PMU drivers; overrides the
+      # linuxPackages_latest default from hardware/uconsole.nix.
+      inputs.nixos-uconsole.nixosModules."kernel-7.0-potatomania"
       ../../nixos/security/acme-hostname.nix
       config.flake.modules.nixos.profileOnlinePersonal
       (
