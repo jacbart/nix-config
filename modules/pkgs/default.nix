@@ -9,10 +9,8 @@ in
 {
   fex-cli = pkgs.callPackage ./fex { };
   mazter = pkgs.callPackage ./mazter { };
-  koreader-sync-server = pkgs.callPackage ./koreader-sync-server { };
   fern = pkgs.callPackage ./fern { };
   pgsync = pkgs.callPackage ./pgsync { };
-  calibre-web-automated = pkgs.callPackage ./calibre-web-automated { };
   apex-jorje-lsp = pkgs.callPackage ./apex-jorje-lsp { };
   tree-sitter-sfapex = pkgs.callPackage ./tree-sitter-sfapex { };
   lwc-language-server = pkgs.callPackage ./lwc-language-server { };
@@ -21,4 +19,6 @@ in
 }
 // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
   uconsole-nx = pkgs.callPackage ./nxengine { };
+  koreader-sync-server = pkgs.callPackage ./koreader-sync-server { };
+  calibre-web-automated = pkgs.callPackage ./calibre-web-automated { };
 }
