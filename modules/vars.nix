@@ -10,6 +10,19 @@
       lanGateway = "10.120.0.1";
       lanDomain = "lan.meep.sh";
 
+      # NixOS hosts opted in to the hardened fail2ban profile: explicit sshd /
+      # caddy-status / recidive jails plus a daily-fed scanner blocklist
+      # (Shodan/Censys C2, Spamhaus DROP/EDROP, FireHOL L1–L3) dropped at the
+      # firewall via ipset. Add a host's networking.hostName here to opt in.
+      # The host must also import profileFail2ban (see
+      # modules/nixos/service-profiles.nix); sshguard is automatically disabled
+      # on these hosts (see modules/nixos/services/openssh.nix).
+      hardenedHosts = [
+        "oak"
+        "maple"
+        "mesquite"
+      ];
+
       # Shared across nixos / home-manager / darwin nix.settings
       nixAllowedUris = [
         "github:"

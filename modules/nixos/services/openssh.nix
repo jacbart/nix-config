@@ -1,4 +1,9 @@
-{ lib, ... }:
+{
+  lib,
+  config,
+  vars,
+  ...
+}:
 {
   services = {
     openssh = {
@@ -12,8 +17,11 @@
         KbdInteractiveAuthentication = lib.mkDefault true;
       };
     };
+    # Disabled on hardened hosts — fail2ban subsumes sshguard's role there
+    # (see modules/nixos/services/fail2ban.nix). Both watching the same logs
+    # and fighting over iptables chains is messy.
     sshguard = {
-      enable = true;
+      enable = !builtins.elem config.networking.hostName vars.hardenedHosts;
       whitelist = [
         "100.100.100.100/10"
       ];

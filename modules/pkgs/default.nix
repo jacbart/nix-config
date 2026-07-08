@@ -3,9 +3,11 @@
 {
   pkgs ? (import ../nixpkgs.nix) { },
 }:
+let
+  inherit (pkgs) lib;
+in
 {
   fex-cli = pkgs.callPackage ./fex { };
-  uconsole-nx = pkgs.callPackage ./nxengine { };
   mazter = pkgs.callPackage ./mazter { };
   koreader-sync-server = pkgs.callPackage ./koreader-sync-server { };
   fern = pkgs.callPackage ./fern { };
@@ -16,4 +18,7 @@
   lwc-language-server = pkgs.callPackage ./lwc-language-server { };
   sf-cli = pkgs.callPackage ./sf-cli { };
   prettier-apex = pkgs.callPackage ./prettier-apex { };
+}
+// lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+  uconsole-nx = pkgs.callPackage ./nxengine { };
 }
