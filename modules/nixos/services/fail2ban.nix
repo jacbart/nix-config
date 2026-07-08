@@ -7,10 +7,13 @@
 }:
 let
   # Hosts opted in via vars.hardenedHosts get explicit jails + a daily-fed
-  # scanner blocklist (Shodan/Censys C2, Spamhaus DROP/EDROP, FireHOL L1–L3).
+  # scanner blocklist (Shodan/Censys C2, Spamhaus DROP/EDROP, FireHOL L1).
   # Other fail2ban hosts get the baseline below (default sshd jail).
   hardened = builtins.elem config.networking.hostName vars.hardenedHosts;
   ipsetName = "f2b-scanners";
+
+  # Tailscale interface name — must match modules/nixos/services/tailscale.nix.
+  tailscaleIf = "tailscale0";
 
   fetchScript = pkgs.writeShellScript "scanner-blocklist-fetch" ''
     set -eu
@@ -40,16 +43,17 @@ let
       cat "$raw.parsed" >> "$combined"
     }
 
-    # Aggregated reputable blocklists (L1 conservative → L3 aggressive)
+    # Aggregated reputable blocklists — L1 only (conservative).
+    # L2/L3 are too aggressive for a blanket INPUT drop: they contain
+    # cloud/VPN ranges that break Tailscale DERP relays and legitimate
+    # remote access.
     fetch "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level1.netset" firehol
-    fetch "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level2.netset" firehol
-    fetch "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level3.netset" firehol
 
     # Hijacked / persistent malicious networks (source of truth)
     fetch "https://www.spamhaus.org/drop/drop.txt"  spamhaus
     fetch "https://www.spamhaus.org/drop/edrop.txt" spamhaus
 
-    # C2 frameworks tracked via Shodan + Censys data
+    # C2 frameworks tracked via Shodan + Censys data (~2500 IPs, precise)
     fetch "https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/c2_tracker.ipset" firehol
 
     # ── Dedup + validate ──
@@ -97,7 +101,11 @@ in
 
     # ── Baseline (all fail2ban hosts) ──
     maxretry = 3;
-    ignoreIP = [ "100.100.100.100/10" ];
+    ignoreIP = [
+      "100.100.100.100/10" # Tailscale CGNAT range
+      "${vars.lanSubnet}" # LAN — never ban local clients
+      "127.0.0.0/8" # loopback
+    ];
     bantime = "24h";
     bantime-increment = {
       enable = true;
@@ -145,17 +153,34 @@ in
   };
 
   # ── Scanner blocklist (hardened hosts only) ──────────────────────────────
-  # The ipset is created empty at firewall bring-up so the DROP rule can
+  # The ipset is created empty at firewall bring-up so the rules can
   # attach immediately; scanner-blocklist-fetch.service fills it shortly
   # after boot and daily thereafter. Uses the same iptables + ipset stack
   # as fail2ban's banaction above.
+  #
+  # Rule order matters: trusted sources are ACCEPTed BEFORE the DROP so
+  # that Tailscale (incl. DERP relay traffic), established connections,
+  # loopback, and the LAN can never be locked out by a false positive
+  # in the blocklist. Dropped packets are LOGged first to aid debugging.
   networking.firewall = lib.optionalAttrs hardened {
     extraCommands = ''
       ${pkgs.ipset}/bin/ipset create ${ipsetName} hash:net family inet hashsize 4096 maxelem 1048576 -exist
-      ${pkgs.iptables}/bin/iptables -I INPUT -m set --match-set ${ipsetName} src -j DROP
+      # Accept trusted sources before the blocklist DROP.
+      ${pkgs.iptables}/bin/iptables -I INPUT 1 -i lo -j ACCEPT
+      ${pkgs.iptables}/bin/iptables -I INPUT 2 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+      ${pkgs.iptables}/bin/iptables -I INPUT 3 -i ${tailscaleIf} -j ACCEPT
+      ${pkgs.iptables}/bin/iptables -I INPUT 4 -s ${vars.lanSubnet} -j ACCEPT
+      # Log then drop blocklisted sources.
+      ${pkgs.iptables}/bin/iptables -I INPUT 5 -m set --match-set ${ipsetName} src -j LOG --log-prefix "f2b-scanner DROP: " --log-level 6
+      ${pkgs.iptables}/bin/iptables -I INPUT 6 -m set --match-set ${ipsetName} src -j DROP
     '';
     extraStopCommands = ''
       ${pkgs.iptables}/bin/iptables -D INPUT -m set --match-set ${ipsetName} src -j DROP 2>/dev/null || true
+      ${pkgs.iptables}/bin/iptables -D INPUT -m set --match-set ${ipsetName} src -j LOG --log-prefix "f2b-scanner DROP: " --log-level 6 2>/dev/null || true
+      ${pkgs.iptables}/bin/iptables -D INPUT -s ${vars.lanSubnet} -j ACCEPT 2>/dev/null || true
+      ${pkgs.iptables}/bin/iptables -D INPUT -i ${tailscaleIf} -j ACCEPT 2>/dev/null || true
+      ${pkgs.iptables}/bin/iptables -D INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT 2>/dev/null || true
+      ${pkgs.iptables}/bin/iptables -D INPUT -i lo -j ACCEPT 2>/dev/null || true
     '';
   };
 
