@@ -6,9 +6,11 @@
   flake.modules.darwin.docker =
     { pkgs, ... }:
     {
-      # Use unstable Colima + lima-full (Lima 2.x); stable 25.11 pairs Colima with EOL Lima 1.2.2.
+      # Stable 26.05 ships Colima + lima-full 2.1.3 (non-EOL); no need for unstable.
+      # Unstable's lima-full 2.1.4 currently fails to build on aarch64-darwin due to
+      # a cctools-binutils-darwin-1010.6 ld SIGTRAP when linking limactl.
       environment.systemPackages = with pkgs; [
-        unstable.colima
+        colima
         docker-client
         docker-compose
         docker-buildx

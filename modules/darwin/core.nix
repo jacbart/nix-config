@@ -17,7 +17,7 @@
       users.users = lib.mkDefault { };
 
       environment.systemPackages = with pkgs; [
-        unstable.nixos-rebuild-ng
+        nixos-rebuild-ng
         jq
       ];
 
