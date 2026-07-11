@@ -14,4 +14,5 @@
   summarize-commit = pkgs.callPackage ./summarize-commit { };
   hx-go-tags = pkgs.callPackage ./hx-go-tags { };
   apex-impls = pkgs.callPackage ./apex-impls { };
+  resolve = pkgs.callPackage ./resolve { };
 }

@@ -7,6 +7,60 @@
 }:
 let
   inherit (pkgs.stdenv) isLinux;
+  keyPath = "~/.ssh/id_ratatoskr";
+  sshHosts = [
+    {
+      name = "ash";
+      user = "meep";
+      inherit keyPath;
+    }
+    {
+      name = "boojum";
+      user = "meep";
+      inherit keyPath;
+    }
+    {
+      name = "cork";
+      user = "meep";
+      inherit keyPath;
+    }
+    {
+      name = "maple";
+      user = "ratatoskr";
+      inherit keyPath;
+    }
+    {
+      name = "mesquite";
+      user = "ratatoskr";
+      inherit keyPath;
+    }
+    {
+      name = "oak";
+      user = "root";
+      keyPath = "~/.ssh/id_do";
+    }
+    {
+      name = "sycamore";
+      user = "jackbartlett";
+      inherit keyPath;
+    }
+    {
+      name = "unicron";
+      user = "jack";
+      inherit keyPath;
+    }
+  ];
+  mkSshHost = sshHost: {
+    HostName = sshHost.name;
+    User = sshHost.user;
+    SetEnv = {
+      TERM = "xterm-256color";
+    };
+    IdentityFile = sshHost.keyPath;
+    ControlMaster = "auto";
+    ControlPath = "~/.ssh/mux-%r@%h:%p";
+    ControlPersist = "10";
+  };
 in
 {
   imports = [
@@ -20,99 +74,40 @@ in
     with pkgs;
     [
       scripts.journal
+      scripts.resolve
       inputs.nix-diff.packages.${platform}.default
     ]
     ++ lib.optional isLinux pkgs.pax-utils;
 
-  home.file.".ssh/config".text = ''
-    Host ash
-        HostName ash
-        User meep
-        SetEnv TERM=xterm-256color
-        IdentityFile ~/.ssh/id_ratatoskr
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host boojum
-        HostName boojum
-        User meep
-        SetEnv TERM=xterm-256color
-        IdentityFile ~/.ssh/id_ratatoskr
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host cork
-        HostName cork
-        User meep
-        SetEnv TERM=xterm-256color
-        IdentityFile ~/.ssh/id_ratatoskr
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host jackjrny
-        HostName jackjrny
-        User jackbartlett
-        SetEnv TERM=xterm-256color
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host maple
-        HostName maple
-        User ratatoskr
-        SetEnv TERM=xterm-256color
-        IdentityFile ~/.ssh/id_ratatoskr
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host mesquite
-        HostName mesquite
-        User ratatoskr
-        SetEnv TERM=xterm-256color
-        IdentityFile ~/.ssh/id_ratatoskr
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host oak
-        HostName oak
-        User root
-        SetEnv TERM=xterm-256color
-        Port 3048
-        IdentityFile ~/.ssh/id_do
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host sycamore
-        HostName sycamore
-        User jackbartlett
-        SetEnv TERM=xterm-256color
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host unicron
-        HostName unicron
-        User jack
-        SetEnv TERM=xterm-256color
-        IdentityFile ~/.ssh/id_ratatoskr
-        ControlMaster auto
-        ControlPath ~/.ssh/mux-%r@%h:%p
-        ControlPersist 10
-
-    Host got.bbl.systems
-        User jack
-        IdentityFile ~/.ssh/id_ratatoskr
-        IdentitiesOnly yes
-
-    Host got.meep.sh
-        User git
-        IdentityFile ~/.ssh/id_ratatoskr
-        IdentitiesOnly yes
-  '';
+  programs.ssh = {
+    enable = true;
+    enableDefaultConfig = false;
+    settings =
+      (builtins.listToAttrs (
+        map (sshHost: {
+          name = sshHost.name;
+          value = mkSshHost sshHost;
+        }) sshHosts
+      ))
+      // {
+        "got.bbl.systems" = {
+          HostName = "got.bbl.systems";
+          User = "jack";
+          IdentityFile = "~/.ssh/id_ratatoskr";
+          IdentitiesOnly = true;
+        };
+        "got.meep.sh" = {
+          HostName = "got.meep.sh";
+          User = "git";
+          IdentityFile = "~/.ssh/id_ratatoskr";
+          IdentitiesOnly = true;
+        };
+        "github.com" = {
+          HostName = "github.com";
+          User = "jacbart";
+          IdentityFile = "~/.ssh/id_git";
+          IdentitiesOnly = true;
+        };
+      };
+  };
 }

@@ -9,11 +9,18 @@
 
   gh = {
     enable = true;
-    extensions = with pkgs; [ gh-markdown-preview ];
+    extensions = with pkgs; [
+      gh-markdown-preview
+      gh-dash
+    ];
+    hosts = {
+      "github.com" = {
+        user = "jacbart";
+      };
+    };
     settings = {
       editor = "hx";
       git_protocol = "ssh";
-      prompt = "enable";
     };
   };
 

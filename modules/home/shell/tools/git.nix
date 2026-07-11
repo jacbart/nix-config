@@ -13,10 +13,7 @@ in
     git = {
       enable = true;
       settings = s.gitSettingsBase // {
-        core = {
-          editor = "hx";
-          sshCommand = "ssh -i ~/.ssh/id_git";
-        };
+        core.editor = "hx";
         safe.directory = [
           "${config.home.homeDirectory}/workspace/*"
           "/git/*"

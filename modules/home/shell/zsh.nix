@@ -64,7 +64,6 @@ in
       lm = "if [ $(systemctl --user is-active lan-mouse) = \"inactive\" ]; then systemctl --user start lan-mouse && echo active; else systemctl --user stop lan-mouse && echo inactive; fi";
       more = "bat --paging=always";
       monitor = "fswatch -o . | while read; do clear; git diff; done";
-      secure = "ssh-add ~/.ssh/id_git";
       hist = "fc -RI";
       g = "gitu";
       gd = "git diff | delta";
@@ -83,6 +82,9 @@ in
         else
           ""
       );
+    }
+    // lib.optionalAttrs isLinux {
+      secure = "ssh-add ~/.ssh/id_git";
     };
     shellGlobalAliases = {
       UUID = "$(uuidgen | tr -d \\n)";
