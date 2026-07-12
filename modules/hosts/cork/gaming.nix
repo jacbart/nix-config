@@ -1,5 +1,12 @@
-{ config, lib, ... }:
+{ config, inputs, lib, ... }:
 {
+  imports = [ inputs.nix-citizen.nixosModules.default ];
+
+  programs.rsi-launcher = {
+    enable = true;
+    gamescope.enable = true;
+  };
+
   hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.latest;
 
   environment.sessionVariables = {

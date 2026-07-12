@@ -62,6 +62,9 @@
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
 
+    nix-citizen.url = "github:LovingMelody/nix-citizen";
+    nix-citizen.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
     rustfs.url = "github:rustfs/rustfs-flake";
     rustfs.inputs.nixpkgs.follows = "nixpkgs";
 

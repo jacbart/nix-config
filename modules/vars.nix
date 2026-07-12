@@ -33,11 +33,13 @@
 
       nixSubstitutersPublic = [
         "https://nix-community.cachix.org"
+        "https://nix-citizen.cachix.org"
         "https://cache.nixos.org"
       ];
 
       nixTrustedPublicKeysPublic = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "nix-citizen.cachix.org-1:lPMkWc2X8XD4/7YPEEwXKKBg+SVbYTVrAaLA2wQTKCo="
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       ];
 
