@@ -16,6 +16,7 @@ in
     ../tools/starship.nix
     ../tools
     ../../apps/newsboat.nix
+    ../../apps/fern.nix
     ../../apps/ai
   ];
 
@@ -37,7 +38,6 @@ in
     (with pkgs; [
       dua
       fswatch
-      fern
       mdbook
       pgsync
       postgresql_16
@@ -45,13 +45,12 @@ in
       htmlq
       unstable.nh
       stu
+      inputs.fern.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.ff.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default
     ])
     ++ lib.optional isLinux pkgs.unstable.tlrc
     ++ lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") pkgs.fex-cli;
-
-  home.file.".config/fern/themes".source = "${pkgs.fern}/share/fern/themes";
 
   programs.zsh.shellAliases.summarize = "summarize-commit";
 }

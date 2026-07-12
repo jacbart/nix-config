@@ -95,6 +95,24 @@
         "type": "github"
       }
     },
+    "fern": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783866268,
+        "narHash": "sha256-GKuheEw77rV2Joki+L5hIYgD/+UX4Gpt19pJLug8BTA=",
+        "rev": "df9eb3d633d7edddcf4cdf25953205b405079dea",
+        "type": "tarball",
+        "url": "https://codeberg.org/api/v1/repos/InodeLabs/fern/archive/df9eb3d633d7edddcf4cdf25953205b405079dea.tar.gz?rev=df9eb3d633d7edddcf4cdf25953205b405079dea"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://codeberg.org/InodeLabs/fern/archive/main.tar.gz"
+      }
+    },
     "ff": {
       "inputs": {
         "nixpkgs": "nixpkgs_2",
@@ -834,6 +852,7 @@
         "attic": "attic",
         "caddy-with-modules": "caddy-with-modules",
         "disko": "disko",
+        "fern": "fern",
         "ff": "ff",
         "flake-parts": "flake-parts_2",
         "got": "got",

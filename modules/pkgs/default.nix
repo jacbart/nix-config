@@ -9,7 +9,6 @@ in
 {
   fex-cli = pkgs.callPackage ./fex { };
   mazter = pkgs.callPackage ./mazter { };
-  fern = pkgs.callPackage ./fern { };
   pgsync = pkgs.callPackage ./pgsync { };
   apex-jorje-lsp = pkgs.callPackage ./apex-jorje-lsp { };
   tree-sitter-sfapex = pkgs.callPackage ./tree-sitter-sfapex { };

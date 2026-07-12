@@ -24,6 +24,9 @@
     jaws.url = "github:jacbart/jaws";
     ff.url = "github:jacbart/ff";
 
+    fern.url = "https://codeberg.org/InodeLabs/fern/archive/main.tar.gz";
+    fern.inputs.nixpkgs.follows = "nixpkgs";
+
     leadership-matrix.url = "git+ssh://git@github.com/taybart/leadership-matrix.git?ref=feat/solidjs-vite";
     rest.url = "github:taybart/rest";
     rest.inputs.nixpkgs.follows = "nixpkgs";
