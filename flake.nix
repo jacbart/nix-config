@@ -47,6 +47,8 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    nix-homebrew.inputs.brew-src.url = "github:Homebrew/brew/6.0.9";
+    nix-homebrew.inputs.brew-src.flake = false;
     homebrew-core.url = "github:homebrew/homebrew-core";
     homebrew-core.flake = false;
 
