@@ -341,11 +341,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1783993473,
-        "narHash": "sha256-RAtppRQVM4oCKH4boZi6rbcy2JaDO6EEN6awosaJMZA=",
+        "lastModified": 1783995987,
+        "narHash": "sha256-rmdfoDCx4i9AKQDXAhUxTFJfzHUUiDTGPxYNQN5cjkg=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "2dad689f4808d5ce13547cd87f26edb77f52458c",
+        "rev": "ee5610be46a855d6f190495a8db37b2fd3a53a62",
         "type": "github"
       },
       "original": {
@@ -781,6 +781,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_14": {
+      "locked": {
+        "lastModified": 1783776592,
+        "narHash": "sha256-UgCQzxeWI75XM8G+hPrPh+MKzEPjG3SpAj7dtqSbksA=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e7a3ca8092b61ff85b6a45bf863ea2b2d6a661b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1777954456,
@@ -938,11 +954,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783995068,
-        "narHash": "sha256-n0OmWo9n148o+dLSqogjS1ZU/YdqjIYaxZsklRUIQYM=",
+        "lastModified": 1783996788,
+        "narHash": "sha256-suiDnU4az/FnYrreNhOsEucRBZl20sEPMUZswdvrCV4=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "7202c6890fbf6448f37d134918ec7393f368bb80",
+        "rev": "232a227704286008a5ac6990a0b3f661d11f1ac2",
         "type": "github"
       },
       "original": {
@@ -953,16 +969,14 @@
     },
     "rest": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_14"
       },
       "locked": {
-        "lastModified": 1783958420,
-        "narHash": "sha256-12J3dBf03+7eGrtMMZFNbvJZmf0KbBO80HAx0Te6Hsg=",
+        "lastModified": 1783998170,
+        "narHash": "sha256-XfGZxd7wbKeQQVNAt5cDzftV9czwm59HqNGRP2zrKY4=",
         "owner": "taybart",
         "repo": "rest",
-        "rev": "b9f7b034b3176871bd229221388f0b0532b82453",
+        "rev": "81d666ce7ca87457fbad87665ddda36e372b964a",
         "type": "github"
       },
       "original": {

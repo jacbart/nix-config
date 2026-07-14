@@ -8,9 +8,7 @@
 let
   system = pkgs.stdenv.hostPlatform.system;
   ff = inputs.ff.packages.${system}.default;
-  rest = inputs.rest.packages.${system}.default.overrideAttrs (oldAttrs: {
-    vendorHash = "sha256-LLOQkMdrajZ/qlBn9Y5xz7/t1hq/6Htd3O/36bRUsT0=";
-  });
+  rest = inputs.rest.packages.${system}.default;
   jaws = inputs.jaws.packages.${system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
 
