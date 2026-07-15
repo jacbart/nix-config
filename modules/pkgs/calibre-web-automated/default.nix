@@ -33,9 +33,8 @@ let
     };
   };
 
-  pythonDeps = ps:
-    with ps;
-    [
+  pythonDeps =
+    ps: with ps; [
       # core
       apscheduler
       babel

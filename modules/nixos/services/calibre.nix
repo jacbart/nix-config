@@ -24,15 +24,15 @@ let
   user = "calibre-web";
   group = "media";
 
-  stateDir   = "/var/lib/calibre-web-automated";
-  configDir  = "${stateDir}/config";
+  stateDir = "/var/lib/calibre-web-automated";
+  configDir = "${stateDir}/config";
   libraryDir = "${stateDir}/library";
-  ingestDir  = "${stateDir}/ingest";
+  ingestDir = "${stateDir}/ingest";
   # Mounted as /app inside the unit. CWA writes /app/theme_migration_notice
   # and /app/cwa_update_notice (siblings of /app/calibre-web-automated),
   # so /app itself must be writable.
-  appRoot    = "${stateDir}/app-root";
-  appDir     = "${appRoot}/calibre-web-automated";
+  appRoot = "${stateDir}/app-root";
+  appDir = "${appRoot}/calibre-web-automated";
 
   cwa = pkgs.calibre-web-automated;
 
@@ -83,8 +83,8 @@ let
     # even though no GUI is needed.
     QT_QPA_PLATFORM = "offscreen";
     XDG_CONFIG_HOME = "/config/.xdg-config";
-    XDG_CACHE_HOME  = "/config/.xdg-cache";
-    XDG_DATA_HOME   = "/config/.xdg-data";
+    XDG_CACHE_HOME = "/config/.xdg-cache";
+    XDG_DATA_HOME = "/config/.xdg-data";
   };
 
   bindMounts = {
@@ -129,95 +129,104 @@ in
 
   systemd.services.calibre-web-automated = {
     description = "Calibre-Web-Automated";
-    after = [ "network.target" "zfs-mount.service" ];
+    after = [
+      "network.target"
+      "zfs-mount.service"
+    ];
     wants = [ "zfs-mount.service" ];
     wantedBy = [ "multi-user.target" ];
 
     environment = cwaEnv;
     path = runtimePath;
 
-    serviceConfig = hardenedServiceConfig // bindMounts // {
-      Type = "simple";
-      User = user;
-      Group = group;
-      WorkingDirectory = "/app/calibre-web-automated";
-      # '+' prefix runs as root, before privileges drop to User=
-      ExecStartPre = [
-        ("+" + (pkgs.writeShellScript "cwa-pre-start" ''
-          set -eu
+    serviceConfig =
+      hardenedServiceConfig
+      // bindMounts
+      // {
+        Type = "simple";
+        User = user;
+        Group = group;
+        WorkingDirectory = "/app/calibre-web-automated";
+        # '+' prefix runs as root, before privileges drop to User=
+        ExecStartPre = [
+          (
+            "+"
+            + (pkgs.writeShellScript "cwa-pre-start" ''
+              set -eu
 
-          # Mirror CWA package tree into writable state dir. Skip rsync if
-          # already synced from this exact $cwa store path.
-          stamp=${appDir}/.cwa-source-stamp
-          want=${cwa}
-          if [ ! -f "$stamp" ] || [ "$(${pkgs.coreutils}/bin/cat "$stamp" 2>/dev/null)" != "$want" ]; then
-            ${pkgs.rsync}/bin/rsync -a --delete \
-              --exclude='dirs.json' \
-              --exclude='metadata_change_logs/' \
-              --exclude='.cwa-source-stamp' \
-              ${cwa}/share/calibre-web-automated/ ${appDir}/
-            ${pkgs.coreutils}/bin/install -d -m 0750 ${appDir}/metadata_change_logs
-            if [ ! -f ${appDir}/dirs.json ]; then
-              ${pkgs.coreutils}/bin/install -m 0640 \
-                ${cwa}/share/calibre-web-automated/dirs.json ${appDir}/dirs.json
-            fi
-            printf '%s' "$want" > "$stamp"
-            ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${appDir}
-            # rsync preserved /nix/store's 0555/0444 modes. CWA writes runtime
-            # state inside cps/ and dirs.json, so grant the owner write back.
-            ${pkgs.coreutils}/bin/chmod -R u+w ${appDir}
-          fi
+              # Mirror CWA package tree into writable state dir. Skip rsync if
+              # already synced from this exact $cwa store path.
+              stamp=${appDir}/.cwa-source-stamp
+              want=${cwa}
+              if [ ! -f "$stamp" ] || [ "$(${pkgs.coreutils}/bin/cat "$stamp" 2>/dev/null)" != "$want" ]; then
+                ${pkgs.rsync}/bin/rsync -a --delete \
+                  --exclude='dirs.json' \
+                  --exclude='metadata_change_logs/' \
+                  --exclude='.cwa-source-stamp' \
+                  ${cwa}/share/calibre-web-automated/ ${appDir}/
+                ${pkgs.coreutils}/bin/install -d -m 0750 ${appDir}/metadata_change_logs
+                if [ ! -f ${appDir}/dirs.json ]; then
+                  ${pkgs.coreutils}/bin/install -m 0640 \
+                    ${cwa}/share/calibre-web-automated/dirs.json ${appDir}/dirs.json
+                fi
+                printf '%s' "$want" > "$stamp"
+                ${pkgs.coreutils}/bin/chown -R ${user}:${group} ${appDir}
+                # rsync preserved /nix/store's 0555/0444 modes. CWA writes runtime
+                # state inside cps/ and dirs.json, so grant the owner write back.
+                ${pkgs.coreutils}/bin/chmod -R u+w ${appDir}
+              fi
 
-          if [ ! -f ${configDir}/app.db ]; then
-            ${pkgs.coreutils}/bin/install -m 0600 -o ${user} -g ${group} \
-              ${cwa}/share/calibre-web-automated/empty_library/app.db ${configDir}/app.db
-          fi
+              if [ ! -f ${configDir}/app.db ]; then
+                ${pkgs.coreutils}/bin/install -m 0600 -o ${user} -g ${group} \
+                  ${cwa}/share/calibre-web-automated/empty_library/app.db ${configDir}/app.db
+              fi
 
-          # CWA's /user_profiles.json route opens this file on every page
-          # load and logs ERROR if missing. Seed it empty so the route can
-          # decode {} cleanly until a user uploads a profile picture.
-          if [ ! -f ${configDir}/user_profiles.json ]; then
-            ${pkgs.coreutils}/bin/install -m 0640 -o ${user} -g ${group} \
-              /dev/null ${configDir}/user_profiles.json
-            printf '{}' > ${configDir}/user_profiles.json
-            ${pkgs.coreutils}/bin/chown ${user}:${group} ${configDir}/user_profiles.json
-          fi
+              # CWA's /user_profiles.json route opens this file on every page
+              # load and logs ERROR if missing. Seed it empty so the route can
+              # decode {} cleanly until a user uploads a profile picture.
+              if [ ! -f ${configDir}/user_profiles.json ]; then
+                ${pkgs.coreutils}/bin/install -m 0640 -o ${user} -g ${group} \
+                  /dev/null ${configDir}/user_profiles.json
+                printf '{}' > ${configDir}/user_profiles.json
+                ${pkgs.coreutils}/bin/chown ${user}:${group} ${configDir}/user_profiles.json
+              fi
 
-          if [ ! -f ${libraryDir}/metadata.db ]; then
-            ${pkgs.coreutils}/bin/install -m 0644 -o ${user} -g ${group} \
-              ${cwa}/share/calibre-web-automated/empty_library/metadata.db ${libraryDir}/metadata.db
-          fi
+              if [ ! -f ${libraryDir}/metadata.db ]; then
+                ${pkgs.coreutils}/bin/install -m 0644 -o ${user} -g ${group} \
+                  ${cwa}/share/calibre-web-automated/empty_library/metadata.db ${libraryDir}/metadata.db
+              fi
 
-          ${pkgs.sqlite}/bin/sqlite3 ${configDir}/app.db <<SQL
-          UPDATE settings SET
-            config_converterpath = '${pkgs.calibre}/bin/ebook-convert',
-            config_kepubifypath  = '${pkgs.kepubify}/bin/kepubify',
-            config_binariesdir   = '${pkgs.calibre}/bin',
-            config_calibre_dir   = '/calibre-library';
-          SQL
-          # sqlite3 ran as root; reclaim db + journal/wal/shm for the user.
-          for f in ${configDir}/app.db ${configDir}/app.db-journal ${configDir}/app.db-wal ${configDir}/app.db-shm; do
-            [ -e "$f" ] && ${pkgs.coreutils}/bin/chown ${user}:${group} "$f" || true
-          done
+              ${pkgs.sqlite}/bin/sqlite3 ${configDir}/app.db <<SQL
+              UPDATE settings SET
+                config_converterpath = '${pkgs.calibre}/bin/ebook-convert',
+                config_kepubifypath  = '${pkgs.kepubify}/bin/kepubify',
+                config_binariesdir   = '${pkgs.calibre}/bin',
+                config_calibre_dir   = '/calibre-library';
+              SQL
+              # sqlite3 ran as root; reclaim db + journal/wal/shm for the user.
+              for f in ${configDir}/app.db ${configDir}/app.db-journal ${configDir}/app.db-wal ${configDir}/app.db-shm; do
+                [ -e "$f" ] && ${pkgs.coreutils}/bin/chown ${user}:${group} "$f" || true
+              done
 
-          # ---- preflight diagnostics (remove once green) ----
-          echo "==== cwa preflight ===="
-          ${pkgs.coreutils}/bin/ls -ld ${pkgs.calibre}/bin || true
-          ${pkgs.coreutils}/bin/ls -l ${pkgs.calibre}/bin/ebook-convert || true
-          HOME=/config QT_QPA_PLATFORM=offscreen \
-            ${pkgs.calibre}/bin/ebook-convert --version 2>&1 | ${pkgs.coreutils}/bin/head -5 \
-            || echo "ebook-convert --version FAILED rc=$?"
-          ${pkgs.sqlite}/bin/sqlite3 ${configDir}/app.db \
-            'SELECT config_binariesdir, config_converterpath, config_kepubifypath FROM settings;' \
-            || echo "sqlite SELECT FAILED rc=$?"
-          echo "==== end preflight ===="
-        ''))
-      ];
-      ExecStart = "${cwa}/bin/calibre-web-automated -i ${addr}";
-      Restart = "on-failure";
-      RestartSec = 5;
-      ReadWritePaths = [ stateDir ];
-    };
+              # ---- preflight diagnostics (remove once green) ----
+              echo "==== cwa preflight ===="
+              ${pkgs.coreutils}/bin/ls -ld ${pkgs.calibre}/bin || true
+              ${pkgs.coreutils}/bin/ls -l ${pkgs.calibre}/bin/ebook-convert || true
+              HOME=/config QT_QPA_PLATFORM=offscreen \
+                ${pkgs.calibre}/bin/ebook-convert --version 2>&1 | ${pkgs.coreutils}/bin/head -5 \
+                || echo "ebook-convert --version FAILED rc=$?"
+              ${pkgs.sqlite}/bin/sqlite3 ${configDir}/app.db \
+                'SELECT config_binariesdir, config_converterpath, config_kepubifypath FROM settings;' \
+                || echo "sqlite SELECT FAILED rc=$?"
+              echo "==== end preflight ===="
+            '')
+          )
+        ];
+        ExecStart = "${cwa}/bin/calibre-web-automated -i ${addr}";
+        Restart = "on-failure";
+        RestartSec = 5;
+        ReadWritePaths = [ stateDir ];
+      };
   };
 
   # Auto-ingest watcher: polls ingest folder, hands each new file to CWA's
@@ -231,29 +240,32 @@ in
     environment = cwaEnv;
     path = runtimePath;
 
-    serviceConfig = hardenedServiceConfig // bindMounts // {
-      Type = "simple";
-      User = user;
-      Group = group;
-      WorkingDirectory = "/app/calibre-web-automated";
-      ExecStart = pkgs.writeShellScript "cwa-ingest-loop" ''
-        set -eu
-        ${cwa}/bin/cwa-watch-fallback \
-          --path /cwa-book-ingest \
-          --interval 5 \
-          --exts epub,kepub,azw,azw3,mobi,pdf,cbz,cbr,cb7,fb2,rtf,txt,docx,doc,html,htm,lrf,lit,opf \
-          | while read -r line; do
-              event="''${line%% *}"
-              filepath="''${line#* }"
-              if [ "$event" = "CLOSE_WRITE" ] && [ -f "$filepath" ]; then
-                ${cwa}/bin/cwa-ingest-processor "$filepath" || true
-              fi
-            done
-      '';
-      Restart = "on-failure";
-      RestartSec = 5;
-      ReadWritePaths = [ stateDir ];
-    };
+    serviceConfig =
+      hardenedServiceConfig
+      // bindMounts
+      // {
+        Type = "simple";
+        User = user;
+        Group = group;
+        WorkingDirectory = "/app/calibre-web-automated";
+        ExecStart = pkgs.writeShellScript "cwa-ingest-loop" ''
+          set -eu
+          ${cwa}/bin/cwa-watch-fallback \
+            --path /cwa-book-ingest \
+            --interval 5 \
+            --exts epub,kepub,azw,azw3,mobi,pdf,cbz,cbr,cb7,fb2,rtf,txt,docx,doc,html,htm,lrf,lit,opf \
+            | while read -r line; do
+                event="''${line%% *}"
+                filepath="''${line#* }"
+                if [ "$event" = "CLOSE_WRITE" ] && [ -f "$filepath" ]; then
+                  ${cwa}/bin/cwa-ingest-processor "$filepath" || true
+                fi
+              done
+        '';
+        Restart = "on-failure";
+        RestartSec = 5;
+        ReadWritePaths = [ stateDir ];
+      };
   };
 
   services.nginx = {

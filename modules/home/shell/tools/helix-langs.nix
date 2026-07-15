@@ -381,6 +381,13 @@
         "yaml"
         "yml"
       ];
+      formatter = {
+        command = "prettier";
+        args = [
+          "--parser"
+          "yaml"
+        ];
+      };
       auto-format = true;
     }
   ];
