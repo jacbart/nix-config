@@ -2,9 +2,16 @@
 # Build them using 'nix build .#example' or (legacy) 'nix-build -A example'
 {
   pkgs ? (import ../nixpkgs.nix) { },
+  inputs,
 }:
 let
   inherit (pkgs) lib;
+  unstablePkgs = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    config = {
+      allowUnfree = true;
+    };
+  };
 in
 {
   fex-cli = pkgs.callPackage ./fex { };
@@ -15,6 +22,7 @@ in
   lwc-language-server = pkgs.callPackage ./lwc-language-server { };
   sf-cli = pkgs.callPackage ./sf-cli { };
   prettier-apex = pkgs.callPackage ./prettier-apex { };
+  woxi = unstablePkgs.callPackage ./woxi { inherit inputs; };
 }
 // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
   uconsole-nx = pkgs.callPackage ./nxengine { };

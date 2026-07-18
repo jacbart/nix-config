@@ -42,6 +42,7 @@ in
       pgsync
       postgresql_16
       uv
+      woxi
       htmlq
       unstable.nh
       stu
@@ -50,7 +51,8 @@ in
       inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default
     ])
     ++ lib.optional isLinux pkgs.unstable.tlrc
-    ++ lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") pkgs.fex-cli;
+    ++ lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") pkgs.fex-cli
+    ++ [ pkgs.scripts.wa ];
 
   programs.zsh.shellAliases.summarize = "summarize-commit";
 }

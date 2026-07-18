@@ -154,7 +154,8 @@ in
 
       # Must be tmux-* or screen-* (tmux(1)): xterm-* inside tmux breaks UTF-8, ACS, prompts (eza/starship/etc.).
       set-option -g default-terminal "tmux-256color"
-      set-option -sa terminal-overrides ",xterm*:Tc"
+      set-option -sa terminal-overrides ",xterm*:Tc,ghostty:Tc"
+      set-option -g allow-passthrough on
       set-option -g mouse on
 
       # sesh (https://github.com/joshmedeski/sesh): pairs with prefix+L (sesh last); no quit on last session close

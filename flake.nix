@@ -72,6 +72,9 @@
 
     secrets.url = "git+ssh://git@github.com/jacbart/nix-secrets.git?ref=main&shallow=1";
     secrets.flake = false;
+
+    woxi.url = "github:ad-si/Woxi/v0.2.0";
+    woxi.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs =
