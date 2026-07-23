@@ -13,10 +13,17 @@
     };
 
     # https://nixos.wiki/wiki/Overlays
-    modifications = final: _prev: {
+    modifications = final: prev: {
       inherit (final.lixPackageSets.stable)
         nix-eval-jobs
         ;
+      # Python 3.13 argparse quotes choices in error messages, breaking
+      # commitizen 4.13.9's regression fixture for test_invalid_command.
+      commitizen = prev.commitizen.overridePythonAttrs (old: {
+        disabledTests = (old.disabledTests or [ ]) ++ [
+          "test_invalid_command"
+        ];
+      });
     };
 
     uconsole-mods = final: prev: {
