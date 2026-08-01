@@ -15,6 +15,10 @@ let
   # Tailscale interface name — must match modules/nixos/services/tailscale.nix.
   tailscaleIf = "tailscale0";
 
+  # LAN subnets trusted on this host (per-host override of vars.lanSubnet).
+  # Used for both fail2ban ignoreIP and the scanner-blocklist allowlist below.
+  trustedLanSubnets = config.services.fail2ban.trustedLanSubnets;
+
   fetchScript = pkgs.writeShellScript "scanner-blocklist-fetch" ''
     set -eu
     tmpdir="$(mktemp -d)"
@@ -83,133 +87,157 @@ let
   '';
 in
 {
-  # Caddy JSON access-log filter — matches /var/log/caddy/access-*.log written
-  # by modules/nixos/services/caddy.nix. Only materialised on hardened hosts
-  # running Caddy.
-  environment.etc = lib.optionalAttrs (hardened && config.services.caddy.enable) {
-    "fail2ban/filter.d/caddy-status.conf".text = ''
-      [Definition]
-      failregex = ^.*"remote_ip":"<HOST>",.*?"status":(?:401|403|500),.*$
-      ignoreregex =
-      datepattern = LongEpoch
+  # ── Per-host trusted LAN subnets ──────────────────────────────────────────
+  # vars.lanSubnet is mesquite's LAN (10.120.0.0/24). Hosts on a different
+  # LAN (e.g. maple on 192.168.0.0/24) override this so their real LAN
+  # clients aren't banned by fail2ban or dropped by the f2b-scanners blocklist.
+  options.services.fail2ban.trustedLanSubnets = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    default = [ vars.lanSubnet ];
+    description = ''
+      LAN subnets trusted on this host: exempt from fail2ban bans
+      (ignoreIP) and from the f2b-scanners blocklist DROP (hardened
+      hosts). Override per host when it sits on a different LAN than
+      vars.lanSubnet.
     '';
   };
 
-  services.fail2ban = {
-    enable = true;
-    extraPackages = [ pkgs.ipset ];
-
-    # ── Baseline (all fail2ban hosts) ──
-    maxretry = 3;
-    ignoreIP = [
-      "100.100.100.100/10" # Tailscale CGNAT range
-      "${vars.lanSubnet}" # LAN — never ban local clients
-      "127.0.0.0/8" # loopback
-    ];
-    bantime = "24h";
-    bantime-increment = {
-      enable = true;
-      formula = "ban.Time * math.exp(float(ban.Count+1)*banFactor)/math.exp(1*banFactor)";
-      maxtime = "168h";
-      overalljails = true;
+  config = {
+    # Caddy JSON access-log filter — matches /var/log/caddy/access-*.log written
+    # by modules/nixos/services/caddy.nix. Only materialised on hardened hosts
+    # running Caddy.
+    environment.etc = lib.optionalAttrs (hardened && config.services.caddy.enable) {
+      "fail2ban/filter.d/caddy-status.conf".text = ''
+        [Definition]
+        failregex = ^.*"remote_ip":"<HOST>",.*?"status":(?:401|403|500),.*$
+        ignoreregex =
+        datepattern = LongEpoch
+      '';
     };
-    banaction = "iptables-ipset-proto6-allports";
 
-    jails = lib.mkMerge (
-      [
-        {
-          # Explicit sshd jail — predictable settings on all fail2ban hosts.
-          sshd.settings = {
+    services.fail2ban = {
+      enable = true;
+      extraPackages = [ pkgs.ipset ];
+
+      # ── Baseline (all fail2ban hosts) ──
+      maxretry = 3;
+      ignoreIP = [
+        "100.100.100.100/10" # Tailscale CGNAT range
+        "127.0.0.0/8" # loopback
+      ]
+      ++ trustedLanSubnets; # LAN subnets — never ban local clients (per host)
+      bantime = "24h";
+      bantime-increment = {
+        enable = true;
+        formula = "ban.Time * math.exp(float(ban.Count+1)*banFactor)/math.exp(1*banFactor)";
+        maxtime = "168h";
+        overalljails = true;
+      };
+      banaction = "iptables-ipset-proto6-allports";
+
+      jails = lib.mkMerge (
+        [
+          {
+            # Explicit sshd jail — predictable settings on all fail2ban hosts.
+            sshd.settings = {
+              enabled = true;
+              port = "ssh";
+              maxretry = 3;
+              findtime = "10m";
+              bantime = "24h";
+            };
+          }
+        ]
+        ++ lib.optional hardened {
+          # Long-ban repeat offenders across all jails.
+          recidive.settings = {
             enabled = true;
-            port = "ssh";
             maxretry = 3;
-            findtime = "10m";
-            bantime = "24h";
+            findtime = "1d";
+            bantime = "1w";
           };
         }
-      ]
-      ++ lib.optional hardened {
-        # Long-ban repeat offenders across all jails.
-        recidive.settings = {
-          enabled = true;
-          maxretry = 3;
-          findtime = "1d";
-          bantime = "1w";
-        };
-      }
-      ++ lib.optional (hardened && config.services.caddy.enable) {
-        # Ban IPs returning 401/403/500 from Caddy — filter defined above.
-        caddy-status.settings = {
-          enabled = true;
-          port = "http,https";
-          filter = "caddy-status";
-          logpath = "/var/log/caddy/*.access.log";
-          maxretry = 5;
-          findtime = "10m";
-          bantime = "1h";
-        };
-      }
-    );
-  };
-
-  # ── Scanner blocklist (hardened hosts only) ──────────────────────────────
-  # The ipset is created empty at firewall bring-up so the rules can
-  # attach immediately; scanner-blocklist-fetch.service fills it shortly
-  # after boot and daily thereafter. Uses the same iptables + ipset stack
-  # as fail2ban's banaction above.
-  #
-  # Rule order matters: trusted sources are ACCEPTed BEFORE the DROP so
-  # that Tailscale (incl. DERP relay traffic), established connections,
-  # loopback, and the LAN can never be locked out by a false positive
-  # in the blocklist. Dropped packets are LOGged first to aid debugging.
-  networking.firewall = lib.optionalAttrs hardened {
-    extraCommands = ''
-      ${pkgs.ipset}/bin/ipset create ${ipsetName} hash:net family inet hashsize 4096 maxelem 1048576 -exist
-      # Accept trusted sources before the blocklist DROP.
-      ${pkgs.iptables}/bin/iptables -I INPUT 1 -i lo -j ACCEPT
-      ${pkgs.iptables}/bin/iptables -I INPUT 2 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-      ${pkgs.iptables}/bin/iptables -I INPUT 3 -i ${tailscaleIf} -j ACCEPT
-      ${pkgs.iptables}/bin/iptables -I INPUT 4 -s ${vars.lanSubnet} -j ACCEPT
-      # Log then drop blocklisted sources.
-      ${pkgs.iptables}/bin/iptables -I INPUT 5 -m set --match-set ${ipsetName} src -j LOG --log-prefix "f2b-scanner DROP: " --log-level 6
-      ${pkgs.iptables}/bin/iptables -I INPUT 6 -m set --match-set ${ipsetName} src -j DROP
-    '';
-    extraStopCommands = ''
-      ${pkgs.iptables}/bin/iptables -D INPUT -m set --match-set ${ipsetName} src -j DROP 2>/dev/null || true
-      ${pkgs.iptables}/bin/iptables -D INPUT -m set --match-set ${ipsetName} src -j LOG --log-prefix "f2b-scanner DROP: " --log-level 6 2>/dev/null || true
-      ${pkgs.iptables}/bin/iptables -D INPUT -s ${vars.lanSubnet} -j ACCEPT 2>/dev/null || true
-      ${pkgs.iptables}/bin/iptables -D INPUT -i ${tailscaleIf} -j ACCEPT 2>/dev/null || true
-      ${pkgs.iptables}/bin/iptables -D INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT 2>/dev/null || true
-      ${pkgs.iptables}/bin/iptables -D INPUT -i lo -j ACCEPT 2>/dev/null || true
-    '';
-  };
-
-  systemd.services.scanner-blocklist-fetch = lib.optionalAttrs hardened {
-    description = "Fetch and refresh the ${ipsetName} ipset from public blocklists";
-    after = [
-      "network-online.target"
-      "firewall.service"
-    ];
-    wants = [ "network-online.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = fetchScript;
+        ++ lib.optional (hardened && config.services.caddy.enable) {
+          # Ban IPs returning 401/403/500 from Caddy — filter defined above.
+          caddy-status.settings = {
+            enabled = true;
+            port = "http,https";
+            filter = "caddy-status";
+            logpath = "/var/log/caddy/*.access.log";
+            maxretry = 5;
+            findtime = "10m";
+            bantime = "1h";
+          };
+        }
+      );
     };
-    path = [
-      pkgs.curl
-      pkgs.ipset
-      pkgs.gawk
-      pkgs.coreutils
-    ];
-  };
 
-  systemd.timers.scanner-blocklist-fetch = lib.optionalAttrs hardened {
-    description = "Daily refresh of the ${ipsetName} ipset";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "5min";
-      OnUnitActiveSec = "24h";
-      Persistent = true;
+    # ── Scanner blocklist (hardened hosts only) ──────────────────────────────
+    # The ipset is created empty at firewall bring-up so the rules can
+    # attach immediately; scanner-blocklist-fetch.service fills it shortly
+    # after boot and daily thereafter. Uses the same iptables + ipset stack
+    # as fail2ban's banaction above.
+    #
+    # Rule order matters: trusted sources are ACCEPTed BEFORE the DROP so
+    # that Tailscale (incl. DERP relay traffic), established connections,
+    # loopback, and the LAN can never be locked out by a false positive
+    # in the blocklist. Dropped packets are LOGged first to aid debugging.
+    networking.firewall = lib.optionalAttrs hardened {
+      extraCommands = ''
+        ${pkgs.ipset}/bin/ipset create ${ipsetName} hash:net family inet hashsize 4096 maxelem 1048576 -exist
+        # Accept trusted sources before the blocklist DROP.
+        ${pkgs.iptables}/bin/iptables -I INPUT 1 -i lo -j ACCEPT
+        ${pkgs.iptables}/bin/iptables -I INPUT 2 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+        ${pkgs.iptables}/bin/iptables -I INPUT 3 -i ${tailscaleIf} -j ACCEPT
+        pos=4
+        for s in ${lib.concatStringsSep " " trustedLanSubnets}; do
+          ${pkgs.iptables}/bin/iptables -I INPUT $pos -s "$s" -j ACCEPT
+          pos=$((pos+1))
+        done
+        # Log then drop blocklisted sources.
+        ${pkgs.iptables}/bin/iptables -I INPUT $pos -m set --match-set ${ipsetName} src -j LOG --log-prefix "f2b-scanner DROP: " --log-level 6
+        pos=$((pos+1))
+        ${pkgs.iptables}/bin/iptables -I INPUT $pos -m set --match-set ${ipsetName} src -j DROP
+      '';
+      extraStopCommands = ''
+        ${pkgs.iptables}/bin/iptables -D INPUT -m set --match-set ${ipsetName} src -j DROP 2>/dev/null || true
+        ${pkgs.iptables}/bin/iptables -D INPUT -m set --match-set ${ipsetName} src -j LOG --log-prefix "f2b-scanner DROP: " --log-level 6 2>/dev/null || true
+        for s in ${lib.concatStringsSep " " trustedLanSubnets}; do
+          ${pkgs.iptables}/bin/iptables -D INPUT -s "$s" -j ACCEPT 2>/dev/null || true
+        done
+        ${pkgs.iptables}/bin/iptables -D INPUT -i ${tailscaleIf} -j ACCEPT 2>/dev/null || true
+        ${pkgs.iptables}/bin/iptables -D INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT 2>/dev/null || true
+        ${pkgs.iptables}/bin/iptables -D INPUT -i lo -j ACCEPT 2>/dev/null || true
+      '';
+    };
+
+    systemd.services.scanner-blocklist-fetch = lib.optionalAttrs hardened {
+      description = "Fetch and refresh the ${ipsetName} ipset from public blocklists";
+      after = [
+        "network-online.target"
+        "firewall.service"
+      ];
+      wants = [ "network-online.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = fetchScript;
+      };
+      path = [
+        pkgs.curl
+        pkgs.ipset
+        pkgs.gawk
+        pkgs.coreutils
+      ];
+    };
+
+    systemd.timers.scanner-blocklist-fetch = lib.optionalAttrs hardened {
+      description = "Daily refresh of the ${ipsetName} ipset";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "5min";
+        OnUnitActiveSec = "24h";
+        Persistent = true;
+      };
     };
   };
 }

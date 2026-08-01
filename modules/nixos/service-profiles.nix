@@ -81,7 +81,8 @@
         lib.genAttrs
           [
             "audiobookshelf"
-            "calibre-web"
+            "calibre-web-automated"
+            "calibre-web-automated-watcher"
             "dendrite"
             "got"
             "immich-server"

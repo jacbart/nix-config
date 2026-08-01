@@ -118,6 +118,11 @@
             };
           };
 
+          # maple's LAN is 192.168.0.0/24, not vars.lanSubnet (mesquite's
+          # 10.120.0.0/24); whitelist it so fail2ban / the scanner blocklist
+          # don't drop or ban local clients (e.g. calibre.meep.sh over LAN).
+          services.fail2ban.trustedLanSubnets = [ "192.168.0.0/24" ];
+
           nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
           nixpkgs.config.allowBroken = true;
 
