@@ -9,6 +9,7 @@
         flakeModules.darwin.core
         flakeModules.darwin.nix-homebrew
         flakeModules.darwin.docker
+        flakeModules.darwin.colima
       ];
 
       users.users.${username} = {

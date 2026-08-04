@@ -6,17 +6,11 @@
 }:
 let
   name = "mazter";
-  inherit (lib) licenses maintainers optionals;
-  inherit (pkgs.stdenv) isDarwin;
-  inherit (pkgs.darwin.apple_sdk) frameworks;
+  inherit (lib) licenses maintainers;
 in
 rustPlatform.buildRustPackage rec {
   pname = name;
   version = "1.0.0";
-
-  buildInputs = optionals isDarwin [
-    frameworks.SystemConfiguration
-  ];
 
   src = fetchFromGitHub {
     owner = "Canop";
