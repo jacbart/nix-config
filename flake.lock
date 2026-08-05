@@ -325,11 +325,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1785851422,
-        "narHash": "sha256-YWXw2cHjzyz6bVW6CVc6XOg0SuCXfVngWbT72YaZnPQ=",
+        "lastModified": 1785937245,
+        "narHash": "sha256-GyQyVPXh2f2b2KKXTAM52fgdhHRM5lyEDyMhCqIyOjw=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "96e8895ca38f8c3161851d8f532194227414d833",
+        "rev": "332490ae3fc81329ac3c383926cbb21269894e16",
         "type": "github"
       },
       "original": {
@@ -341,11 +341,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1785850670,
-        "narHash": "sha256-8I/UwUP4uNxhPw7/LIG900P2Z5Tbd6m1EzhqaalU8No=",
+        "lastModified": 1785937036,
+        "narHash": "sha256-ussLBuSssrTluM8urr0xanaLL7uw0oZm22kjQUQ9HNs=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "df7a57136d7d6e2c5fcfd398f9149c76bdaea4f5",
+        "rev": "01ee2a3a328ea495af39ce3d85867bd6548ea836",
         "type": "github"
       },
       "original": {
@@ -365,11 +365,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1785789223,
-        "narHash": "sha256-wr/uVO7lXjDOaES0RcXktsQjeKjtkC98bgGVrG/HcX8=",
+        "lastModified": 1785912859,
+        "narHash": "sha256-RxXNsOLlU9YTtDKyBqs3aSlAscVoHDF+LPqs5OTlymE=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "aa9ab8409785f287df156f441502f8ae6073c65c",
+        "rev": "7a623fe78de92443bb836881f4525b9228345876",
         "type": "github"
       },
       "original": {
@@ -751,11 +751,11 @@
     },
     "nixpkgs_12": {
       "locked": {
-        "lastModified": 1785734586,
-        "narHash": "sha256-ODZkEK9Gy50yg6h98u7KkitZ3oc/uuTFK00bh1CRdNA=",
+        "lastModified": 1785858998,
+        "narHash": "sha256-fKCq5jphd6l/Ms6gc3dptkw/TcKLYub9lQE5g6rbbkc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "531670d871c0e29724a02f3cbcac170adc65b58c",
+        "rev": "04607e1165ac22c5fde6dcc54c9e0b3c0487c555",
         "type": "github"
       },
       "original": {
@@ -954,11 +954,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785809412,
-        "narHash": "sha256-QbFIduUhpNIucJy/WcwRxsvTQocnwIXlSwnYEjmGMSQ=",
+        "lastModified": 1785934634,
+        "narHash": "sha256-5Sw7ziqfdp/Tvuj/H9xUaR6dx23HuSekfdZGi8bAEjg=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "e41c99439605df6d2fa62409139f96ded6ac7345",
+        "rev": "02316e0c567c410e13989ce04bec10e6b980a643",
         "type": "github"
       },
       "original": {
@@ -1118,11 +1118,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784874492,
-        "narHash": "sha256-E4kC+rya1KfPpDGWtq+E3Ka4HoJGVIo5f9ZsHzYivUs=",
+        "lastModified": 1785926649,
+        "narHash": "sha256-lHkFMwuD8uRu6FRT87DpOx/J5inqXncKyDo/+SuCkjM=",
         "owner": "rustfs",
         "repo": "rustfs-flake",
-        "rev": "7dedccc7160410a325f922ed8591d90152a261b7",
+        "rev": "e71e6becd51bbf537c6a2574245e4c56df800b5a",
         "type": "github"
       },
       "original": {
