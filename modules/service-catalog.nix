@@ -47,7 +47,6 @@ in
         "fs.${domain}"
         "s3.${domain}"
         "wiki.${domain}"
-        "kosync.${domain}"
         "photos.${domain}"
         "mail.${domain}"
         "got.${domain}"

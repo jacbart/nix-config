@@ -201,7 +201,10 @@ in
                 config_converterpath = '${pkgs.calibre}/bin/ebook-convert',
                 config_kepubifypath  = '${pkgs.kepubify}/bin/kepubify',
                 config_binariesdir   = '${pkgs.calibre}/bin',
-                config_calibre_dir   = '/calibre-library';
+                config_calibre_dir   = '/calibre-library',
+                config_kobo_sync     = 1,
+                config_kobo_proxy    = 1,
+                config_external_port = 443;
               SQL
               # sqlite3 ran as root; reclaim db + journal/wal/shm for the user.
               for f in ${configDir}/app.db ${configDir}/app.db-journal ${configDir}/app.db-wal ${configDir}/app.db-shm; do
@@ -216,7 +219,7 @@ in
                 ${pkgs.calibre}/bin/ebook-convert --version 2>&1 | ${pkgs.coreutils}/bin/head -5 \
                 || echo "ebook-convert --version FAILED rc=$?"
               ${pkgs.sqlite}/bin/sqlite3 ${configDir}/app.db \
-                'SELECT config_binariesdir, config_converterpath, config_kepubifypath FROM settings;' \
+                'SELECT config_binariesdir, config_converterpath, config_kepubifypath, config_kobo_sync, config_kobo_proxy, config_external_port FROM settings;' \
                 || echo "sqlite SELECT FAILED rc=$?"
               echo "==== end preflight ===="
             '')

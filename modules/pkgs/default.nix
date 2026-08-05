@@ -26,6 +26,5 @@ in
 }
 // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
   uconsole-nx = pkgs.callPackage ./nxengine { };
-  koreader-sync-server = pkgs.callPackage ./koreader-sync-server { };
   calibre-web-automated = pkgs.callPackage ./calibre-web-automated { };
 }

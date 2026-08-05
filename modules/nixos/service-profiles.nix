@@ -73,7 +73,6 @@
         ./services/microbin.nix
         ./services/smartmon.nix
         ./services/leadership-matrix.nix
-        ./services/koreader-sync-server.nix
         ./services/immich.nix
       ];
 
@@ -87,7 +86,6 @@
             "got"
             "immich-server"
             "kiwix-serve"
-            "koreader-sync-server"
             "microbin"
             "postgresql"
             "postgresql-backup"
