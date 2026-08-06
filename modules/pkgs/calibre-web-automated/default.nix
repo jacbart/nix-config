@@ -174,6 +174,21 @@ py.pkgs.buildPythonApplication rec {
       scripts koreader \
       $out/share/calibre-web-automated/
 
+    # Build koplugin.zip — CWA's /kosync page links to this as a static file
+    # for downloading the cwasync.koplugin. The Docker image creates it during
+    # build; we do it here from the bundled koreader/plugins/ tree.
+    ${py.interpreter} -c "
+    import zipfile, os
+    plugin_dir = 'koreader/plugins/cwasync.koplugin'
+    dest = os.path.join(os.environ['out'], 'share/calibre-web-automated/cps/static/koplugin.zip')
+    with zipfile.ZipFile(dest, 'w', zipfile.ZIP_DEFLATED) as zf:
+        for root, dirs, files in os.walk(plugin_dir):
+            for f in files:
+                filepath = os.path.join(root, f)
+                arcname = os.path.relpath(filepath, 'koreader/plugins/')
+                zf.write(filepath, arcname)
+    "
+
     # Mutable subdirs that CWA writes into at runtime.
     # Created as placeholders so systemd BindPaths can mount over them.
     install -d $out/share/calibre-web-automated/metadata_change_logs

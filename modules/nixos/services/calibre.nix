@@ -290,6 +290,7 @@ in
           proxy_request_buffering off;
           proxy_max_temp_file_size 0;
           proxy_read_timeout 300s;
+          proxy_buffer_size 128k;
           proxy_buffers 16 64k;
           proxy_busy_buffers_size 128k;
         '';

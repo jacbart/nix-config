@@ -40,7 +40,7 @@
       cfgProfiles = config.colima.profiles;
 
       # Path to the pre-downloaded nix-installer binary on the macOS host.
-# The VM's $HOME is mounted via virtiofs, so this is accessible inside the VM.
+      # The VM's $HOME is mounted via virtiofs, so this is accessible inside the VM.
       installerPath = "/Users/${username}/.local/share/colima-provision/nix-installer";
 
       # Path to persisted SSH host keys on the macOS host.
@@ -102,6 +102,25 @@
           chown -R remotebuild:remotebuild /home/remotebuild/.ssh
           # Enable nix-daemon (installer may already do this — safety net)
           systemctl enable --now nix-daemon 2>/dev/null || true
+          # Put nix on PATH for non-interactive SSH (Nix remote-build protocol
+          # runs `ssh remotebuild@host nix-store ...` which bypasses profile.d
+          # and ~/.bashrc). The Determinate installer was invoked with
+          # --no-modify-profile, so neither /etc/profile.d/nix.sh nor the
+          # /etc/environment PATH were written. We write both: profile.d for
+          # login/interactive shells, and /etc/environment for pam_env (which
+          # sshd's PAM session stack reads for every connection, including
+          # non-interactive). Idempotent.
+          if [ ! -f /etc/profile.d/nix.sh ]; then
+            printf '%s\n' \
+              'if [ -d "/nix/var/nix/profiles/default/bin" ]; then' \
+              '    PATH="/nix/var/nix/profiles/default/bin:$PATH"' \
+              'fi' \
+              'export PATH' > /etc/profile.d/nix.sh
+            chmod 644 /etc/profile.d/nix.sh
+          fi
+          if ! grep -q '/nix/var/nix/profiles/default/bin' /etc/environment 2>/dev/null; then
+            sed -i 's|^PATH="|PATH="/nix/var/nix/profiles/default/bin:|' /etc/environment
+          fi
           # Write nix.custom.conf with substituters/trusted-keys from the flake's vars.
           # The Determinate installer manages nix.conf and includes nix.custom.conf.
           mkdir -p /etc/nix
@@ -114,7 +133,8 @@
 
       # Combine user-defined provision scripts with builder scripts.
       # SSH key persistence runs first, then builder bootstrap.
-      mkProvision = cfg:
+      mkProvision =
+        cfg:
         let
           builderScripts = lib.optionals cfg.builder.enable [
             mkSshKeyProvision
@@ -122,7 +142,7 @@
           ];
           all = cfg.provision ++ builderScripts;
         in
-          if all == [ ] then null else all;
+        if all == [ ] then null else all;
 
       # Build the colima.yaml config attrs for a profile
       mkYamlConfig = cfg: {
@@ -169,8 +189,7 @@
         env = cfg.env;
       };
 
-      mkProfileYaml = name: cfg:
-        yamlFormat.generate "colima-${name}.yaml" (mkYamlConfig cfg);
+      mkProfileYaml = name: cfg: yamlFormat.generate "colima-${name}.yaml" (mkYamlConfig cfg);
     in
     {
       options.colima = {
@@ -519,14 +538,12 @@
                     echo "colima: updating ${name} config"
                     cp "${yamlFile}" "${colimaYaml}"
                     chown ${username} "${colimaYaml}"
-                ${
-                  lib.optionalString config.colima.autoRestart ''
-                    if ${colimaBin} status ${name} 2>&1 | grep -q "Running"; then
-                      echo "colima: restarting ${name} to apply config changes"
-                      ${colimaBin} restart ${name}
-                    fi
-                  ''
-                }
+                ${lib.optionalString config.colima.autoRestart ''
+                  if ${colimaBin} status ${name} 2>&1 | grep -q "Running"; then
+                    echo "colima: restarting ${name} to apply config changes"
+                    ${colimaBin} restart ${name}
+                  fi
+                ''}
                   fi
                 fi
               ''
@@ -553,24 +570,17 @@
         );
 
         # Add known hosts for builder VMs
-        programs.ssh.knownHosts =
-          lib.mapAttrs'
-            (
-              name: cfg:
-              lib.nameValuePair "colima-${name}" {
-                hostNames = [
-                  cfg.builder.hostName
-                  "colima"
-                  "colima-${name}"
-                ];
-                publicKey = cfg.builder.hostKey;
-              }
-            )
-            (
-              lib.filterAttrs (
-                _name: cfg: cfg.builder.enable && cfg.builder.hostKey != ""
-              ) cfgProfiles
-            );
+        programs.ssh.knownHosts = lib.mapAttrs' (
+          name: cfg:
+          lib.nameValuePair "colima-${name}" {
+            hostNames = [
+              cfg.builder.hostName
+              "colima"
+              "colima-${name}"
+            ];
+            publicKey = cfg.builder.hostKey;
+          }
+        ) (lib.filterAttrs (_name: cfg: cfg.builder.enable && cfg.builder.hostKey != "") cfgProfiles);
       };
     };
 }
