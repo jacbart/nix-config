@@ -4,3 +4,4 @@ result
 vendor/
 .bundle/
 .sfdx/
+ash-recovery/

@@ -12,9 +12,12 @@
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/hardware/uconsole.nix
-      # uConsole kernel with CWU50 panel/backlight/PMU drivers; overrides the
-      # linuxPackages_latest default from hardware/uconsole.nix.
-      inputs.nixos-uconsole.nixosModules."kernel-7.0-potatomania"
+      # uConsole kernel: nixos-hardware rpi-6.18.y + CWU50 panel/backlight/PMU
+      # drivers; also wires the firmware partition (U-Boot, config.txt).
+      inputs.nixos-uconsole.nixosModules."kernel-6.18-potatomania"
+      # The card is flashed by dd'ing this image; filesystems (by-label
+      # NIXOS_SD/FIRMWARE) come from the sd-image module, no disko.
+      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
       ../../nixos/security/acme-hostname.nix
       config.flake.modules.nixos.profileOnlinePersonal
       (
@@ -29,44 +32,19 @@
             "smart"
           ];
 
-          # use x86_64 steam and allow unfree license
-          nixpkgs.overlays = [
-            (
-              self: super:
-              let
-                x86pkgs = import pkgs.path {
-                  system = "x86_64-linux";
-                  config.allowUnfreePredicate =
-                    pkg:
-                    builtins.elem (lib.getName pkg) [
-                      "steam"
-                      "steam-original"
-                      "steam-runtime"
-                      "steam-unwrapped"
-                    ];
-                };
-              in
-              {
-                inherit (x86pkgs) steam steam-run;
-              }
-            )
-          ];
+          sdImage.compressImage = false;
 
           environment.systemPackages = with pkgs; [
             uconsole-nx
-            steam
-            steam-run
           ];
 
-          # allow build for x86_64-linux architecture through emulation
-          boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-
-          # Root + /boot/firmware: see ./disks.nix (disko). Do not set fileSystems."/" here — conflicts with disko’s by-partlabel device.
-
+          # zram first (fast), SD swapfile only as backstop.
+          zramSwap.enable = true;
           swapDevices = [
             {
               device = "/var/lib/swapfile";
               size = 16 * 1024;
+              priority = 5;
             }
           ];
 
@@ -87,7 +65,6 @@
           };
         }
       )
-      ./disks.nix
       ../../hosts/shared/distributed-builds.nix
     ];
   };

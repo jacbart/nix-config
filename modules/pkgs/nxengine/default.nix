@@ -52,8 +52,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
+  # CMake >= 4 removed compatibility with < 3.5 project files
+  cmakeFlags = [ "-DCMAKE_POLICY_VERSION_MINIMUM=3.5" ];
+
   buildPhase = ''
-    cmake -DCMAKE_BUILD_TYPE=Release ..
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
     make
     cd ..
   '';
