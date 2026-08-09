@@ -51,17 +51,23 @@
   # Port of clockworkpi's uconsole-4g-cm4 script (Code/scripts in the
   # uConsole repo). NOTE: the original uses wiringPi pin numbers, so
   # wPi24 -> BCM19 (4G power enable) and wPi15 -> BCM14 (power key pulse).
+  # Uses gpioset (libgpiod): nixpkgs' libraspberrypi no longer ships
+  # raspi-gpio. BCM19 must stay driven, hence --daemonize (a plain gpioset
+  # releases the line on exit).
   # Verify with `mmcli -L` that a SIMCOM_SIM7600G-H shows up.
   systemd.services.uconsole-4g-enable = {
     description = "Power on the uConsole 4G/LTE extension";
     wantedBy = [ "multi-user.target" ];
     before = [ "ModemManager.service" ];
     serviceConfig.Type = "oneshot";
+    path = [ pkgs.libgpiod ];
     script = ''
-      ${pkgs.libraspberrypi}/bin/raspi-gpio set 19 op dh
-      ${pkgs.libraspberrypi}/bin/raspi-gpio set 14 op dh
-      sleep 5
-      ${pkgs.libraspberrypi}/bin/raspi-gpio set 14 op dl
+      # 4G power enable: drive high and KEEP holding (daemonized gpioset
+      # retains the line request; a plain gpioset would release it on exit).
+      gpioset --daemonize gpiochip0 19=1
+      # power-key pulse: high for 5s, then low; --hold-period lets the
+      # process exit after the toggle completes (libgpiod v2 syntax).
+      gpioset --toggle 5s --hold-period 6s gpiochip0 14=1
       echo "waiting for modem to enumerate..."
       sleep 13
     '';
