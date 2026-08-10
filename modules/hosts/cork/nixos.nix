@@ -20,6 +20,7 @@
       ../../nixos/apps/ghostty.nix
       ../../nixos/apps/steam.nix
       ../../nixos/apps/gaming.nix
+      ../../nixos/apps/sunshine.nix
       ./gaming.nix
       (
         { pkgs, ... }:
