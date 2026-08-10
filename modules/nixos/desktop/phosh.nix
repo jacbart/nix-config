@@ -11,6 +11,13 @@
     phocConfig.xwayland = "immediate";
     phocConfig.outputs = {
       DSI-1 = {
+        # Clockwise 90 = wl transform 3 (phoc's fix_transform swaps 90<->270
+        # to keep ini values clockwise). This rotates the pre-session phoc
+        # phase; the session itself is rotated by the rotate step in
+        # uconsole-panel-heal (phosh 0.54 has no monitor persistence and
+        # applies nothing at startup), and the lockscreen follows the
+        # session transform because CHASSIS=convertible (machine-info)
+        # disables phosh's force-portrait-on-lock fixup.
         rotate = "90";
         scale = 1;
       };

@@ -62,12 +62,16 @@
     serviceConfig.Type = "oneshot";
     path = [ pkgs.libgpiod ];
     script = ''
-      # 4G power enable: drive high and KEEP holding (daemonized gpioset
-      # retains the line request; a plain gpioset would release it on exit).
-      gpioset --daemonize gpiochip0 19=1
-      # power-key pulse: high for 5s, then low; --hold-period lets the
-      # process exit after the toggle completes (libgpiod v2 syntax).
-      gpioset --toggle 5s --hold-period 6s gpiochip0 14=1
+      # BCM19 (4G power-enable, wPi24) is held high by a gpio-hog in the
+      # device-tree overlay — do NOT hold it from here: systemd kills the
+      # cgroup when this oneshot finishes, which would drop the line.
+      # (Also, libgpiod v2 has no <chip> positional: -c gpiochip0, and all
+      # positionals are <line>=<value>.)
+      # Power-key pulse (BCM14, wPi15): high 5s, then low, per clockwork's
+      # uconsole-4g-cm4 script. NOTE: gpioset --toggle LOOPS its period
+      # list forever — the trailing ",0" period is the terminator that
+      # makes it exit after one high->low cycle.
+      gpioset -c gpiochip0 --toggle=5s,0 14=1
       echo "waiting for modem to enumerate..."
       sleep 13
     '';
