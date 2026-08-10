@@ -22,5 +22,9 @@
     menu_driver = "ozone"
     assets_directory = "${pkgs.retroarch-assets}/share/retroarch/assets"
     libretro_info_path = "${pkgs.libretro-core-info}/share/retroarch/cores"
+    # keybinds (RetroArch defaults, pinned): F fullscreen, F1 menu, Esc quit
+    input_toggle_fullscreen = "f"
+    input_menu_toggle = "f1"
+    input_exit_emulator = "escape"
   '';
 }
