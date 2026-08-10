@@ -17,6 +17,8 @@
   # fail (harmless warning), so keep this minimal — only what the CM4 needs.
   xdg.configFile."retroarch/retroarch.cfg".text = ''
     video_threaded = "true"
+    video_fullscreen = "true"
+    video_windowed_fullscreen = "false"
     menu_driver = "ozone"
     assets_directory = "${pkgs.retroarch-assets}/share/retroarch/assets"
     libretro_info_path = "${pkgs.libretro-core-info}/share/retroarch/cores"
