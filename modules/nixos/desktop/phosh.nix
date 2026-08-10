@@ -27,6 +27,9 @@
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
+  # Secret Service provider (Newsflash/RSS credentials, future apps).
+  services.gnome.gnome-keyring.enable = true;
+
   # GTK4 defaults to its Vulkan renderer; on v3dv (VC4/VC6) that crashes
   # GTK4 apps at swapchain creation (observed: kgx SIGSEGV in
   # gsk_gpu_renderer_render, VK_ERROR_OUT_OF_DEVICE_MEMORY). Force the GL
