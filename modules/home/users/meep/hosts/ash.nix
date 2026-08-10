@@ -15,6 +15,10 @@
     pkgs.unstable.newsflash
     # Wayland clipboard CLI (wl-copy/wl-paste) — nothing else provides one here.
     pkgs.wl-clipboard
+    # Game-streaming client: the CM4 can't run Steam (x86-only client+games);
+    # this plays the whole library from a Sunshine host (e.g. cork) instead.
+    # H264 only — the BCM2711 has no HEVC hardware decode.
+    pkgs.moonlight-qt
   ];
 
   # newsboat's freshrss-passwordfile. The FreshRSS API password is the same
