@@ -6,7 +6,7 @@
     (pkgs.retroarch.withCores (
       cores: with cores; [
         mgba # GBA
-        snes9x # SNES
+        # snes9x # SNES
         pcsx-rearmed # PSX (aarch64 dynarec)
       ]
     ))
