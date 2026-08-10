@@ -17,13 +17,15 @@ _: {
         case_sensitive = false;
         whole_word = false;
       };
+      processes = {
+        default_grouped = true;
+        default_tree = true;
+      };
       flags = {
         dot_marker = false;
         enable_gpu_memory = true;
-        group_processes = true;
         hide_table_gap = true;
         mem_as_value = true;
-        tree = true;
         avg_cpu = true;
         temperature_type = "c";
         battery = true;

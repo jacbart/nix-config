@@ -2,6 +2,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -9,6 +10,24 @@
     ../../../apps/retroarch.nix
     ../../../apps/newsboat.nix
   ];
+
+  # Ghostty >=1.3 requires OpenGL 4.3; the CM4's V3D driver tops out at GL 3.1
+  # (and ghostty disables the GLES path itself), so it only renders via
+  # llvmpipe ("Unable to acquire an OpenGL context" otherwise). Wrap just the
+  # binary — not session-wide — so everything else keeps hardware GLES.
+  programs.ghostty.package = lib.mkForce (
+    pkgs.symlinkJoin {
+      name = "ghostty-llvmpipe";
+      paths = [ pkgs.ghostty ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      meta.mainProgram = "ghostty";
+      postBuild = ''
+        rm $out/bin/ghostty
+        makeWrapper ${pkgs.ghostty}/bin/ghostty $out/bin/ghostty \
+          --set LIBGL_ALWAYS_SOFTWARE 1
+      '';
+    }
+  );
 
   home.packages = [
     # Touch-friendly FreshRSS client; one-time GUI login, stored in gnome-keyring.

@@ -5,6 +5,16 @@
 }:
 let
   inherit (pkgs.stdenv) isDarwin;
+
+  # foot's terminfo entry, dumped from nixpkgs' ncurses db (which ships foot).
+  # It must be compiled on the Mac with the *system* tic: Apple's ancient
+  # ncurses (6.0 — /bin/zsh, /usr/bin/*) can't parse nix-compiled entries, and
+  # /usr/share/terminfo has no foot, so ssh sessions arriving with TERM=foot
+  # failed with "'foot': unknown terminal type". ~/.terminfo is searched by
+  # both Apple and nix ncurses, ahead of TERMINFO_DIRS below.
+  footTerminfo = pkgs.runCommand "foot.info" { } ''
+    ${lib.getExe' pkgs.ncurses "infocmp"} -x foot > $out
+  '';
 in
 {
   imports = [
@@ -49,6 +59,14 @@ in
       TERMINFO_DIRS = "${pkgs.ncurses}/share/terminfo";
     };
   };
+
+  # Compile foot's terminfo with the macOS system tic into ~/.terminfo so TERM=foot
+  # resolves for every consumer here (Apple ncurses and nix ncurses alike).
+  home.activation.terminfoFootDarwin = lib.mkIf isDarwin (
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      /usr/bin/tic -x -o "$HOME/.terminfo" ${footTerminfo}
+    ''
+  );
 
   # default shell programs
   programs = {
