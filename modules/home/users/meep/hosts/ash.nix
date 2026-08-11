@@ -40,6 +40,26 @@
     pkgs.moonlight-qt
   ];
 
+  # Discord + Slack ship proprietary x86_64-only binaries (meta.platforms
+  # excludes aarch64-linux), so the native nixpkgs packages won't build on the
+  # CM4. Run them as Vivaldi PWAs instead — Vivaldi is aarch64-compatible and
+  # the vivaldiPwa module is already enabled via the phosh desktop. Icons are
+  # committed locally (the services' CDNs redirect, which fetchurl can't
+  # follow). profile = "isolated" gives each its own persistent user-data-dir
+  # under ~/.config/vivaldi-pwas/<id> so logins survive independently.
+  vivaldiPwa.pwas = {
+    "Discord" = {
+      url = "https://discord.com/app";
+      icon = ../../../files/icons/discord.png;
+      profile = "isolated";
+    };
+    "Slack" = {
+      url = "https://app.slack.com";
+      icon = ../../../files/icons/slack.ico;
+      profile = "isolated";
+    };
+  };
+
   # newsboat's freshrss-passwordfile. The FreshRSS API password is the same
   # as the login password, which nix-secrets already holds.
   sops.secrets."freshrss/admin-password" = {
