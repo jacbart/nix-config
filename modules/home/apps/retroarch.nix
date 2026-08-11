@@ -28,6 +28,15 @@
     rgui_browser_directory = "${config.home.homeDirectory}/ROMs"
     # Boxart/title screens auto-download while browsing playlists
     menu_show_online_updater = "true"
+    # Ozone menu color theme: 3 == Gruvbox Dark
+    # (enum: 0 Basic White, 1 Basic Black, 2 Nord, 3 Gruvbox Dark, ...)
+    ozone_menu_color_theme = "3"
+    # uConsole L/R shoulder buttons are the mouse left/right click buttons
+    # (stock keyboard firmware: L=Mouse.press(1), R=Mouse.press(2); trackball
+    # click is middle). Bind them to RetroPad L/R so GBA/PSX shoulder buttons
+    # work in-game. _mbtn map (input_config_parse_mouse_button): 1=left, 2=right.
+    input_player1_l_mbtn = "1"
+    input_player1_r_mbtn = "2"
     # keybinds (RetroArch defaults, pinned): F fullscreen, F1 menu, Esc quit
     input_toggle_fullscreen = "f"
     input_menu_toggle = "f1"
