@@ -23,6 +23,13 @@ in
   sf-cli = pkgs.callPackage ./sf-cli { };
   prettier-apex = pkgs.callPackage ./prettier-apex { };
   woxi = unstablePkgs.callPackage ./woxi { inherit inputs; };
+
+  # Rebuild fern from the locked flake source with a corrected vendorHash
+  # (upstream's FOD hash drifted — see ./fern/default.nix for details).
+  fern = pkgs.callPackage ./fern {
+    fernSource = inputs.fern.outPath;
+    fernVersion = inputs.fern.sourceInfo.shortRev or "dev";
+  };
 }
 // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
   uconsole-nx = pkgs.callPackage ./nxengine { };

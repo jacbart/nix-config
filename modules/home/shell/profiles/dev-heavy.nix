@@ -46,7 +46,7 @@ in
       htmlq
       unstable.nh
       stu
-      inputs.fern.packages.${pkgs.stdenv.hostPlatform.system}.default
+      fern
       inputs.ff.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default
     ])
