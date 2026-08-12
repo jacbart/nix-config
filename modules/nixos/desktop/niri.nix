@@ -1,6 +1,10 @@
 { pkgs, username, ... }:
 {
   programs.niri.enable = true;
+  # wayvnc: VNC server for wlroots compositors. Installs the package + sets
+  # up the PAM service so wayvnc can authenticate with the user's login
+  # password. The user-level systemd service is in home/apps/wayvnc.nix.
+  programs.wayvnc.enable = true;
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.swaylock = { };

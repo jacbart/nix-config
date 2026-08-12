@@ -36,6 +36,7 @@
                 "1password-cli"
                 "claude-code"
                 "ghostty"
+                "tailscale"
               ];
             };
           }

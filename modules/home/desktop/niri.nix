@@ -10,6 +10,7 @@
     ../apps/zed-editor.nix
     ../apps/ghostty.nix
     ../apps/lan-mouse.nix # virtual kvm
+    ../apps/wayvnc.nix # VNC server bound to tailscale0
     ./personal-services.nix
     ./vivaldi-pwa.nix
     inputs.noctalia.homeModules.default

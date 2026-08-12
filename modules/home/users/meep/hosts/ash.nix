@@ -38,6 +38,11 @@
     # this plays the whole library from a Sunshine host (e.g. cork) instead.
     # H264 only — the BCM2711 has no HEVC hardware decode.
     pkgs.moonlight-qt
+    # VNC viewer: connects to wayvnc servers on boojum/cork and macOS Screen
+    # Sharing on sycamore, all over Tailscale. TigerVNC's vncviewer supports
+    # SASL/SCRAM auth (needed for wayvnc's PAM authentication). Runs under
+    # XWayland on phosh. Connect with: vncviewer <tailscale-ip>:5900
+    pkgs.tigervnc
   ];
 
   # Discord + Slack ship proprietary x86_64-only binaries (meta.platforms

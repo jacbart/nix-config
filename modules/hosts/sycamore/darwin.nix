@@ -43,6 +43,25 @@
               ];
             };
           };
+
+          # macOS Screen Sharing (VNC on :5900) for remote access over
+          # Tailscale. The ARD kickstart activates the agent, enables access
+          # for all users, and turns on legacy VNC so standard VNC clients
+          # (e.g. TigerVNC viewer on ash) can connect. Auth is the macOS
+          # user's login credentials. The Tailscale cask is installed via
+          # nix-homebrew.nix; open the Tailscale app once to log in.
+          # NOTE: Screen Sharing listens on all interfaces — macOS's
+          # Application Firewall (if enabled) scopes it to allowed clients.
+          # For Tailscale-only access, ensure the firewall is on and deny
+          # public network access, or rely on the Tailscale IP for connectivity.
+          system.activationScripts.enableScreenSharing.text = ''
+            /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart \
+              -activate \
+              -configure -access -on \
+              -configure -allowAccessFor -allUsers \
+              -configure -clientopts -setvnclegacy -vnclegacy yes \
+              -configure -restart -agent -privs -all
+          '';
         }
       )
     ];
