@@ -9,6 +9,7 @@
       ../../home/dev/salesforce # Salesforce dev: Apex/LWC/SOQL toolchain + Helix wiring
       ../../home/users/jackbartlett/default.nix
       ./git-1password.nix
+      ({ pkgs, ... }: { home.packages = [ pkgs.corepack ]; })
     ];
   };
 }
