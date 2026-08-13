@@ -162,6 +162,11 @@ in
               "brightness"
               "clock"
             ];
+          }
+          // lib.optionalAttrs handheld {
+            # v5 defaults margin_ends to 100; on the 1066px-wide handheld
+            # screen the bar should span the full width instead.
+            margin_ends = 0;
           };
         };
         widget = {
@@ -263,6 +268,17 @@ in
           Alt+T { spawn "${terminal}"; }
           Alt+W { spawn "vivaldi"; }
           Alt+Q repeat=false { close-window; }
+          Alt+F { fullscreen-window; }
+          // Fn+Up on the uConsole keyboard emits Page_Up. This steals bare
+          // Page_Up from apps (foot scrollback is Shift+Page_Up, unaffected).
+          Page_Up { toggle-overview; }
+          Alt+Tab repeat=false { toggle-overview; }
+          // Column/window resizing (no Super+drag on handheld).
+          Alt+R { switch-preset-column-width; }
+          Alt+Minus { set-column-width "-10%"; }
+          Alt+Equal { set-column-width "+10%"; }
+          Alt+Shift+Minus { set-window-height "-10%"; }
+          Alt+Shift+Equal { set-window-height "+10%"; }
           Alt+H { focus-column-left; }
           Alt+J { focus-window-or-workspace-down; }
           Alt+K { focus-window-or-workspace-up; }
@@ -427,9 +443,11 @@ in
         XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "set" "${brightnessUpArg}"; }
         XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "${brightnessDownArg}"; }
 
-        // Alt+Tab window cycling
-        Alt+Tab { focus-window-or-monitor-down; }
-        Alt+Shift+Tab { focus-window-or-monitor-up; }
+        ${lib.optionalString (!handheld) ''
+          // Alt+Tab window cycling (on handheld, Alt+Tab is the overview instead).
+          Alt+Tab { focus-window-or-monitor-down; }
+          Alt+Shift+Tab { focus-window-or-monitor-up; }
+        ''}
       }
 
       // Window rules
