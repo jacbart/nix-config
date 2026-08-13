@@ -7,8 +7,9 @@
 }:
 {
   # Handheld mode: gates out lan-mouse/zed/rustdesk, drops heavy/x86-only
-  # packages, adds DSI-1 output transform, raw brightness steps, disables
-  # noctalia screen-off idle.
+  # packages, adds DSI-1 output config (rotation comes from the DRM
+  # panel-orientation property), raw brightness steps, disables noctalia
+  # screen-off idle.
   niri-desktop.handheld = true;
 
   imports = [

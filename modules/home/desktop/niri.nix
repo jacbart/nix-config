@@ -18,7 +18,7 @@ in
   options.niri-desktop.handheld = lib.mkOption {
     type = lib.types.bool;
     default = false;
-    description = "Optimize niri for a handheld device (uConsole: no lan-mouse/zed/rustdesk, no heavy apps, DSI-1 output transform, raw brightness steps, no screen-off idle).";
+    description = "Optimize niri for a handheld device (uConsole: no lan-mouse/zed/rustdesk, no heavy apps, DSI-1 output config, raw brightness steps, no screen-off idle).";
   };
 
   imports = [
@@ -182,12 +182,16 @@ in
 
     xdg.configFile."niri/config.kdl".text = ''
       ${lib.optionalString handheld ''
-        // uConsole CWU50 panel: 720x1280 portrait, rotated 270° CCW (= 90° CW)
-        // to landscape. phoc used rotate="90" (phoc swaps 90/270 to keep ini
-        // clockwise); niri uses standard wl_output_transform, so 270 = 90° CW.
+        // uConsole CWU50 panel: 720x1280 portrait, mounted landscape. The
+        // kernel exports the mounting via the DRM "panel orientation"
+        // property, and niri ADDS it to the configured transform — so the
+        // transform must stay normal here (normal + panel-orientation 90°
+        // = correct landscape). A configured "270" cancels the auto-rotation
+        // (270+90=360=normal) and leaves the desktop sideways. Mode has no
+        // @refresh: the panel only advertises 720x1280@59.597, and an exact
+        // @60 match would warn and fall back to preferred anyway.
         output "DSI-1" {
-          mode "720x1280@60"
-          transform "270"
+          mode "720x1280"
           scale 1
         }
       ''}
