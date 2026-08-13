@@ -196,7 +196,7 @@ in
         [main]
         font = monospace:size=14
 
-        [colors]
+        [colors-dark]
         foreground = ebdbb2
         background = 282828
         regular0 = 282828
