@@ -188,6 +188,15 @@ in
       };
     };
 
+    # foot is the handheld terminal (the `terminal` let-binding); its default
+    # 8pt font is tiny on the 5" panel. ~100 columns at full width with 14.
+    xdg.configFile."foot/foot.ini" = lib.mkIf handheld {
+      text = ''
+        [main]
+        font = monospace:size=14
+      '';
+    };
+
     xdg.configFile."niri/config.kdl".text = ''
       ${lib.optionalString handheld ''
         // uConsole CWU50 panel: 720x1280 portrait, mounted landscape. The
