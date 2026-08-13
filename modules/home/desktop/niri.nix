@@ -13,6 +13,9 @@ let
   # ghostty on the CM4 renders via llvmpipe (V3D tops out at GL 3.1); foot is
   # the GL-free fallback terminal the nixos niri module installs on handhelds.
   terminal = if handheld then "foot" else "ghostty";
+  # Handheld: full-width columns. The 853x480 logical output can't fit most
+  # app minimum widths (~500px) in the default 0.5-proportion columns.
+  defaultWidth = if handheld then "1.0" else "0.5";
 in
 {
   options.niri-desktop.handheld = lib.mkOption {
@@ -220,7 +223,7 @@ in
           proportion 0.66667
         }
 
-        default-column-width { proportion 0.5; }
+        default-column-width { proportion ${defaultWidth}; }
       }
 
       spawn-at-startup "noctalia"
