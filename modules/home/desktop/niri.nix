@@ -123,7 +123,7 @@ in
         theme = {
           mode = "dark";
           source = "builtin";
-          builtin = "Kanagawa";
+          builtin = "Gruvbox";
         };
         nightlight.enabled = true;
         idle = {
@@ -190,12 +190,47 @@ in
 
     # foot is the handheld terminal (the `terminal` let-binding); its default
     # 8pt font is tiny on the 5" panel. ~100 columns at full width with 14.
+    # Colors: gruvbox dark, matching noctalia's builtin palette.
     xdg.configFile."foot/foot.ini" = lib.mkIf handheld {
       text = ''
         [main]
         font = monospace:size=14
+
+        [colors]
+        foreground = ebdbb2
+        background = 282828
+        regular0 = 282828
+        regular1 = cc241d
+        regular2 = 98971a
+        regular3 = d79921
+        regular4 = 458588
+        regular5 = b16286
+        regular6 = 689d6a
+        regular7 = a89984
+        bright0 = 928374
+        bright1 = fb4934
+        bright2 = b8bb26
+        bright3 = fabd2f
+        bright4 = 83a598
+        bright5 = d3869b
+        bright6 = 8ec07c
+        bright7 = ebdbb2
       '';
     };
+
+    # fuzzel launcher: gruvbox dark, matching noctalia's builtin palette.
+    xdg.configFile."fuzzel/fuzzel.ini".text = ''
+      [colors]
+      background = 282828ff
+      text = ebdbb2ff
+      prompt = b8bb26ff
+      input = ebdbb2ff
+      match = b8bb26ff
+      selection = 3c3836ff
+      selection-text = fbf1c7ff
+      selection-match = b8bb26ff
+      border = 57514eff
+    '';
 
     xdg.configFile."niri/config.kdl".text = ''
       ${lib.optionalString handheld ''
@@ -230,6 +265,14 @@ in
       layout {
         gaps 8
         background-color "transparent"
+
+        // Subtle focus ring (gruvbox): thin muted gray instead of niri's
+        // default bright blue gradient.
+        focus-ring {
+          width 2
+          active-color "#7c6f64"
+          inactive-color "#3c3836"
+        }
 
         preset-column-widths {
           proportion 0.33333
