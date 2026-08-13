@@ -89,14 +89,19 @@ let
     # Best-effort: seed Kagi into Web Data keywords (skipped if present).
     # Column list is introspected so schema changes across versions are safe.
     if [ -f "$web_data" ]; then
-      if ${sqlite3} "$web_data" \
-        "SELECT 1 FROM keywords WHERE keyword = 'kagi.com' LIMIT 1;" | grep -q 1; then
+      kagi_present=$(${sqlite3} -cmd "PRAGMA busy_timeout=5000;" "$web_data" \
+        "SELECT 1 FROM keywords WHERE keyword = 'kagi.com' LIMIT 1;" 2>/dev/null || true)
+      if [ "$kagi_present" = "1" ]; then
         echo "vivaldi-apply-prefs: Kagi search engine already present"
       else
         now=$((($(date +%s) + 11644473600) * 1000000)) # chromium epoch (1601), µs
         guid=$(cat /proc/sys/kernel/random/uuid)
-        cols=$(${sqlite3} "$web_data" \
-          "SELECT group_concat(name, char(10)) FROM pragma_table_info('keywords');")
+        cols=$(${sqlite3} -cmd "PRAGMA busy_timeout=5000;" "$web_data" \
+          "SELECT group_concat(name, char(10)) FROM pragma_table_info('keywords');" 2>/dev/null || true)
+        if [ -z "$cols" ]; then
+          echo "vivaldi-apply-prefs: Web Data is locked/unreadable; Kagi seed skipped" >&2
+          exit 0
+        fi
         col_list=""
         val_list=""
         add() { # <column> <sql literal>
@@ -131,9 +136,12 @@ let
         add starter_pack_id 0
         add enforced_by_policy 0
         add featured_by_search_surface 0
-        ${sqlite3} "$web_data" \
-          "INSERT INTO keywords ($col_list) VALUES ($val_list);"
-        echo "vivaldi-apply-prefs: Kagi search engine seeded (set it as default in vivaldi:settings/search if needed)"
+        if ${sqlite3} -cmd "PRAGMA busy_timeout=5000;" "$web_data" \
+          "INSERT INTO keywords ($col_list) VALUES ($val_list);"; then
+          echo "vivaldi-apply-prefs: Kagi search engine seeded (set it as default in vivaldi:settings/search if needed)"
+        else
+          echo "vivaldi-apply-prefs: Kagi seed insert failed (skipped)" >&2
+        fi
       fi
     fi
   '';
