@@ -16,6 +16,8 @@ let
   # Handheld: full-width columns. The 853x480 logical output can't fit most
   # app minimum widths (~500px) in the default 0.5-proportion columns.
   defaultWidth = if handheld then "1.0" else "0.5";
+  # Tighter window gaps on the small handheld screen.
+  gaps = if handheld then 4 else 8;
 in
 {
   options.niri-desktop.handheld = lib.mkOption {
@@ -263,7 +265,7 @@ in
       }
 
       layout {
-        gaps 8
+        gaps ${toString gaps}
         background-color "transparent"
 
         // Subtle focus ring (gruvbox): thin muted gray instead of niri's
