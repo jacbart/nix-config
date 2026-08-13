@@ -28,6 +28,7 @@ in
 
   imports = [
     ../apps/ghostty.nix
+    ../apps/vivaldi.nix # minimal UI prefs + Kagi homepage/search seed
     ../apps/wayvnc.nix # VNC server bound to tailscale0
     ./personal-services.nix
     ./vivaldi-pwa.nix
