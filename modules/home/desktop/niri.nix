@@ -189,10 +189,12 @@ in
         // = correct landscape). A configured "270" cancels the auto-rotation
         // (270+90=360=normal) and leaves the desktop sideways. Mode has no
         // @refresh: the panel only advertises 720x1280@59.597, and an exact
-        // @60 match would warn and fall back to preferred anyway.
+        // @60 match would warn and fall back to preferred anyway. Scale 1.5:
+        // the 5" panel is ~297 DPI, so scale 1 is unreadably small (853x480
+        // logical); scale 2 (640x360) overflows dialogs.
         output "DSI-1" {
           mode "720x1280"
-          scale 1
+          scale 1.5
         }
       ''}
       input {
