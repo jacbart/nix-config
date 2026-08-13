@@ -1,5 +1,4 @@
-# Declarative Vivaldi setup: minimal UI (tabs + slim address bar), Kagi homepage,
-# and a best-effort seed of the Kagi search engine.
+# Declarative Vivaldi setup: minimal UI (tabs + slim address bar), Kagi homepage.
 #
 # How it works:
 # - UI prefs live in ~/.config/vivaldi/Default/Preferences (JSON). Key names were
@@ -8,12 +7,15 @@
 # - The merge must run while Vivaldi is CLOSED — a running Vivaldi overwrites
 #   Preferences on exit. The script skips with a warning if Vivaldi is up; re-run
 #   `vivaldi-apply-prefs` after closing it (also runs on every HM switch).
-# - Kagi as DEFAULT search engine cannot be fully declarative: engines live in
-#   the "Web Data" sqlite DB and Vivaldi encrypts/hashes the default pointer in
-#   Preferences. This module seeds the engine row (so it appears in
-#   vivaldi:settings/search); if the default doesn't stick, the one-time manual
-#   step is: open kagi.com (it is the homepage) → sign in → right-click Kagi's
-#   search field → "Add as Search Engine" → check "Set as Default Search".
+# - Kagi as the default search engine CANNOT be automated (verified empirically
+#   on Vivaldi 8.1): search engines live in the "Web Data" sqlite `keywords`
+#   table, but rows require Vivaldi-computed encrypted fields (`position`,
+#   `url_hash`); foreign rows are pruned on startup. The default selection pref
+#   (`vivaldi.system.search_engine.default.index`) only accepts prepopulate_ids
+#   of built-in engines and resets otherwise.
+#   One-time manual step per profile (Kagi's official method):
+#   open kagi.com (it is the homepage) → sign in → right-click Kagi's search
+#   field → "Add as Search Engine" → check "Set as Default Search".
 {
   lib,
   pkgs,
@@ -21,7 +23,6 @@
 }:
 let
   jq = lib.getExe pkgs.jq;
-  sqlite3 = "${pkgs.sqlite}/bin/sqlite3";
 
   prefs = {
     vivaldi = {
@@ -64,7 +65,6 @@ let
     set -euo pipefail
     profile_dir="$HOME/.config/vivaldi/Default"
     prefs_file="$profile_dir/Preferences"
-    web_data="$profile_dir/Web Data"
 
     if pgrep -x vivaldi-bin >/dev/null 2>&1 || pgrep -x vivaldi >/dev/null 2>&1; then
       echo "vivaldi-apply-prefs: Vivaldi is running; close it and re-run" >&2
@@ -85,65 +85,6 @@ let
     mv "$prefs_file.new" "$prefs_file"
     rm -f "$prefs_file.work"
     echo "vivaldi-apply-prefs: preferences applied"
-
-    # Best-effort: seed Kagi into Web Data keywords (skipped if present).
-    # Column list is introspected so schema changes across versions are safe.
-    if [ -f "$web_data" ]; then
-      kagi_present=$(${sqlite3} -cmd "PRAGMA busy_timeout=5000;" "$web_data" \
-        "SELECT 1 FROM keywords WHERE keyword = 'kagi.com' LIMIT 1;" 2>/dev/null || true)
-      if [ "$kagi_present" = "1" ]; then
-        echo "vivaldi-apply-prefs: Kagi search engine already present"
-      else
-        now=$((($(date +%s) + 11644473600) * 1000000)) # chromium epoch (1601), µs
-        guid=$(cat /proc/sys/kernel/random/uuid)
-        cols=$(${sqlite3} -cmd "PRAGMA busy_timeout=5000;" "$web_data" \
-          "SELECT group_concat(name, char(10)) FROM pragma_table_info('keywords');" 2>/dev/null || true)
-        if [ -z "$cols" ]; then
-          echo "vivaldi-apply-prefs: Web Data is locked/unreadable; Kagi seed skipped" >&2
-          exit 0
-        fi
-        col_list=""
-        val_list=""
-        add() { # <column> <sql literal>
-          if printf '%s\n' "$cols" | grep -qx "$1"; then
-            col_list="''${col_list:+$col_list, }$1"
-            val_list="''${val_list:+$val_list, }$2"
-          fi
-        }
-        add short_name "'Kagi'"
-        add keyword "'kagi.com'"
-        add favicon_url "'https://kagi.com/favicon.ico'"
-        add url "'https://kagi.com/search?q={searchTerms}'"
-        add safe_for_autoreplace 0
-        add originating_url "'''"
-        add date_created "$now"
-        add usage_count 0
-        add input_encodings "'UTF-8'"
-        add suggest_url "'https://kagi.com/api/autosuggest?q={searchTerms}'"
-        add prepopulate_id 0
-        add created_by_policy 0
-        add last_modified "$now"
-        add sync_guid "'$guid'"
-        add alternate_urls "'[]'"
-        add image_url "'''"
-        add search_url_post_params "'''"
-        add suggest_url_post_params "'''"
-        add image_url_post_params "'''"
-        add new_tab_url "'''"
-        add last_visited 0
-        add created_from_play_api 0
-        add is_active 1
-        add starter_pack_id 0
-        add enforced_by_policy 0
-        add featured_by_search_surface 0
-        if ${sqlite3} -cmd "PRAGMA busy_timeout=5000;" "$web_data" \
-          "INSERT INTO keywords ($col_list) VALUES ($val_list);"; then
-          echo "vivaldi-apply-prefs: Kagi search engine seeded (set it as default in vivaldi:settings/search if needed)"
-        else
-          echo "vivaldi-apply-prefs: Kagi seed insert failed (skipped)" >&2
-        fi
-      fi
-    fi
   '';
 in
 lib.mkIf pkgs.stdenv.isLinux {
