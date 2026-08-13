@@ -1,51 +1,81 @@
-{ pkgs, username, ... }:
 {
-  programs.niri.enable = true;
-  # wayvnc: VNC server for wlroots compositors. Installs the package + sets
-  # up the PAM service so wayvnc can authenticate with the user's login
-  # password. The user-level systemd service is in home/apps/wayvnc.nix.
-  programs.wayvnc.enable = true;
-  security.polkit.enable = true;
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.swaylock = { };
-
-  # XDG portals for flatpak, file dialogs, etc.
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = with pkgs; [
-    xdg-desktop-portal-wlr
-    xdg-desktop-portal-gtk
-  ];
-
-  services.greetd = {
-    enable = true;
-    package = pkgs.greetd;
-    settings = rec {
-      initial_session = {
-        command = "${pkgs.niri}/bin/niri-session";
-        user = "${username}";
-      };
-      default_session = initial_session;
-    };
+  pkgs,
+  lib,
+  config,
+  username,
+  ...
+}:
+let
+  handheld = config.niri-desktop.handheld;
+in
+{
+  options.niri-desktop.handheld = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+    description = "Optimize niri for a handheld device (uConsole: no PPD, GSK_RENDERER=ngl, foot fallback).";
   };
 
-  # Noctalia requirements
-  networking.networkmanager.enable = true;
-  hardware.bluetooth.enable = true;
-  services.upower.enable = true;
-  services.power-profiles-daemon.enable = true;
+  config = {
+    programs.niri.enable = true;
+    # wayvnc: VNC server for wlroots compositors. Installs the package + sets
+    # up the PAM service so wayvnc can authenticate with the user's login
+    # password. The user-level systemd service is in home/apps/wayvnc.nix.
+    programs.wayvnc.enable = true;
+    security.polkit.enable = true;
+    services.gnome.gnome-keyring.enable = true;
+    security.pam.services.swaylock = { };
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  environment.systemPackages = with pkgs; [
-    xwayland-satellite
-    unstable.ghostty
-    fuzzel
-    swaylock
-    swayidle
-    cliphist
-    wlsunset
-    wl-clipboard
-    grim
-    slurp
-    unstable.gnome-software
-  ];
+    # XDG portals for flatpak, file dialogs, etc.
+    xdg.portal.enable = true;
+    xdg.portal.extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
+
+    services.greetd = {
+      enable = true;
+      package = pkgs.greetd;
+      settings = rec {
+        initial_session = {
+          command = "${pkgs.niri}/bin/niri-session";
+          user = "${username}";
+        };
+        default_session = initial_session;
+      };
+    };
+
+    # Noctalia requirements
+    networking.networkmanager.enable = true;
+    hardware.bluetooth.enable = true;
+    services.upower.enable = true;
+    # PPD manages the CPU governor itself, conflicting with the uConsole's
+    # explicit powerManagement.cpuFreqGovernor = "ondemand". Skip PPD on
+    # handhelds; keep it on desk machines.
+    services.power-profiles-daemon.enable = !handheld;
+
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    # GTK4 defaults to its Vulkan renderer; on v3dv (VC4/VC6) that crashes
+    # GTK4 apps at swapchain creation (VK_ERROR_OUT_OF_DEVICE_MEMORY). Force
+    # the GL renderer, which works on v3d.
+    environment.sessionVariables.GSK_RENDERER = lib.mkIf handheld "ngl";
+
+    environment.systemPackages =
+      with pkgs;
+      [
+        xwayland-satellite
+        unstable.ghostty
+        fuzzel
+        swaylock
+        swayidle
+        cliphist
+        wlsunset
+        wl-clipboard
+        grim
+        slurp
+        unstable.gnome-software
+      ]
+      ++ lib.optionals handheld [
+        foot # wayland-native terminal (fallback; no GL dependency)
+      ];
+  };
 }

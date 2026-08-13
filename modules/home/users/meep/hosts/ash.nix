@@ -6,6 +6,11 @@
   ...
 }:
 {
+  # Handheld mode: gates out lan-mouse/zed/rustdesk, drops heavy/x86-only
+  # packages, adds DSI-1 output transform, raw brightness steps, disables
+  # noctalia screen-off idle.
+  niri-desktop.handheld = true;
+
   imports = [
     ../../../apps/retroarch.nix
     ../../../apps/newsboat.nix
@@ -41,14 +46,14 @@
     # VNC viewer: connects to wayvnc servers on boojum/cork and macOS Screen
     # Sharing on sycamore, all over Tailscale. TigerVNC's vncviewer supports
     # SASL/SCRAM auth (needed for wayvnc's PAM authentication). Runs under
-    # XWayland on phosh. Connect with: vncviewer <tailscale-ip>:5900
+    # XWayland via xwayland-satellite. Connect with: vncviewer <ip>:5900
     pkgs.tigervnc
   ];
 
   # Discord + Slack ship proprietary x86_64-only binaries (meta.platforms
   # excludes aarch64-linux), so the native nixpkgs packages won't build on the
   # CM4. Run them as Vivaldi PWAs instead — Vivaldi is aarch64-compatible and
-  # the vivaldiPwa module is already enabled via the phosh desktop. Icons are
+  # the vivaldiPwa module is enabled via the niri desktop. Icons are
   # committed locally (the services' CDNs redirect, which fetchurl can't
   # follow). profile = "isolated" gives each its own persistent user-data-dir
   # under ~/.config/vivaldi-pwas/<id> so logins survive independently.

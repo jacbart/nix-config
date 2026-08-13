@@ -8,15 +8,23 @@
   nixosHosts.ash = {
     system = "aarch64-linux";
     username = "meep";
-    desktop = "phosh";
+    desktop = "niri";
     modules = [
       config.flake.modules.nixos.core
       ../../nixos/hardware/uconsole.nix
       # Panel cold-boot heal + suspend disable (see module comments).
+      # Hacks are gated on the `desktop` arg: phosh gets actkbd +
+      # Mutter rotate; niri gets a greetd restart.
       ../../nixos/hardware/uconsole-display.nix
-      # NM with the iwd backend (phosh enables NM but leaves the default
-      # wpa_supplicant backend, which is not installed -> wlan0 "unavailable").
+      # NM with the iwd backend. Without this, NM defaults to wpa_supplicant
+      # which is not installed -> wlan0 "unavailable".
       ../../nixos/services/networkmanager.nix
+      # Bluetooth: the BT hardware fix (bt_pins DT overlay) is in the
+      # nixos-uconsole kernel module; this enables the userspace stack.
+      ../../nixos/services/bluetooth.nix
+      # Audio: pipewire + wireplumber. The BCM2711 onboard audio driver is
+      # configured via snd_bcm2835 kernel params in uconsole.nix.
+      ../../nixos/services/pipewire.nix
       # uConsole kernel: nixos-hardware rpi-6.18.y + CWU50 panel/backlight/PMU
       # drivers; also wires the firmware partition (U-Boot, config.txt).
       inputs.nixos-uconsole.nixosModules."kernel-6.18-potatomania"
@@ -38,6 +46,11 @@
           ];
 
           sdImage.compressImage = true;
+
+          # Handheld optimizations: disables power-profiles-daemon (conflicts
+          # with cpuFreqGovernor=ondemand), sets GSK_RENDERER=ngl (GTK4 Vulkan
+          # crashes on v3dv), adds foot (GL-free terminal fallback).
+          niri-desktop.handheld = true;
 
           # Bring-up diagnostics: text boot instead of the plymouth splash so
           # boot progress/stalls are visible on the panel.
