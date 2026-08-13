@@ -277,7 +277,10 @@ in
           Alt+T { spawn "${terminal}"; }
           Alt+W { spawn "vivaldi"; }
           Alt+Q repeat=false { close-window; }
-          Alt+F { fullscreen-window; }
+          Alt+F { maximize-column; }
+          // Fn+'-' on the uConsole keyboard emits F11. Steals F11 from apps,
+          // but niri fullscreen is visually the same as app fullscreen.
+          F11 { fullscreen-window; }
           // Fn+Up on the uConsole keyboard emits Page_Up. This steals bare
           // Page_Up from apps (foot scrollback is Shift+Page_Up, unaffected).
           Page_Up { toggle-overview; }
