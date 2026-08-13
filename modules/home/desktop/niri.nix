@@ -192,12 +192,12 @@ in
         // = correct landscape). A configured "270" cancels the auto-rotation
         // (270+90=360=normal) and leaves the desktop sideways. Mode has no
         // @refresh: the panel only advertises 720x1280@59.597, and an exact
-        // @60 match would warn and fall back to preferred anyway. Scale 1.5:
-        // the 5" panel is ~297 DPI, so scale 1 is unreadably small (853x480
-        // logical); scale 2 (640x360) overflows dialogs.
+        // @60 match would warn and fall back to preferred anyway. Scale 1.2:
+        // the 5" panel is ~297 DPI; 1.2 gives a 1066x600 logical output, the
+        // largest scale that still fits Noctalia Settings' 1020x500 minimum.
         output "DSI-1" {
           mode "720x1280"
-          scale 1.5
+          scale 1.2
         }
       ''}
       input {
