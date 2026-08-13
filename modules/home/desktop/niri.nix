@@ -10,6 +10,9 @@ let
   # uConsole panel max_brightness is 9 — step in raw units, not percent.
   brightnessUpArg = if handheld then "+1" else "5%+";
   brightnessDownArg = if handheld then "1-" else "5%-";
+  # ghostty on the CM4 renders via llvmpipe (V3D tops out at GL 3.1); foot is
+  # the GL-free fallback terminal the nixos niri module installs on handhelds.
+  terminal = if handheld then "foot" else "ghostty";
 in
 {
   options.niri-desktop.handheld = lib.mkOption {
@@ -125,7 +128,9 @@ in
             lock = {
               enabled = true;
               timeout = 660;
-              command = "noctalia:session lock";
+              # noctalia v5 built-in action; the old "noctalia:session lock"
+              # string was v4 IPC and is ignored with a warning.
+              action = "lock";
             };
             "screen-off" = {
               # The CWU50 panel's DPMS off/on path is flaky (dim -> wake goes
@@ -134,8 +139,7 @@ in
               # alone protects the session.
               enabled = !handheld;
               timeout = 600;
-              command = "noctalia:dpms-off";
-              resume_command = "noctalia:dpms-on";
+              action = "screen_off";
             };
           };
         };
@@ -143,7 +147,9 @@ in
           main = {
             position = "top";
             radius = 0;
-            start = [ "active_window" ];
+            # Handheld: trackball-clickable launcher button (uConsole has no
+            # dedicated Super key, so keybinds alone aren't enough there).
+            start = lib.optionals handheld [ "fuzzel_button" ] ++ [ "active_window" ];
             center = [ "workspaces" ];
             end = [
               "tray"
@@ -156,10 +162,19 @@ in
           };
         };
         widget = {
+          # v4's settings.display = "none" is gone in v5 (warned + ignored);
+          # this is the equivalent: workspace pills without number labels.
           workspaces = {
-            settings = {
-              display = "none";
-            };
+            show_labels = false;
+          };
+        }
+        // lib.optionalAttrs handheld {
+          # Bar button that launches fuzzel (noctalia v5 custom_button widget).
+          fuzzel_button = {
+            type = "custom_button";
+            glyph = "grid-dots";
+            tooltip = "Launcher";
+            command = "fuzzel";
           };
         };
       };
@@ -172,7 +187,7 @@ in
         // clockwise); niri uses standard wl_output_transform, so 270 = 90° CW.
         output "DSI-1" {
           mode "720x1280@60"
-          transform 270
+          transform "270"
           scale 1
         }
       ''}
@@ -225,11 +240,40 @@ in
         Mod+Space { spawn "fuzzel"; }
 
         // Terminal
-        Mod+Return { spawn "ghostty"; }
-        Mod+T { spawn "ghostty"; }
+        Mod+Return { spawn "${terminal}"; }
+        Mod+T { spawn "${terminal}"; }
 
         // Browser
         Mod+W { spawn "vivaldi"; }
+        ${lib.optionalString handheld ''
+          // Handheld (uConsole): Super is only reachable as an Fn+Cmd chord,
+          // so mirror the essentials on Alt (a first-class key on its keyboard).
+          Alt+D { spawn "fuzzel"; }
+          Alt+Space { spawn "fuzzel"; }
+          Alt+Return { spawn "${terminal}"; }
+          Alt+T { spawn "${terminal}"; }
+          Alt+W { spawn "vivaldi"; }
+          Alt+Q repeat=false { close-window; }
+          Alt+H { focus-column-left; }
+          Alt+J { focus-window-or-workspace-down; }
+          Alt+K { focus-window-or-workspace-up; }
+          Alt+L { focus-column-right; }
+          Alt+Left { focus-column-left; }
+          Alt+Down { focus-window-or-workspace-down; }
+          Alt+Up { focus-window-or-workspace-up; }
+          Alt+Right { focus-column-right; }
+          Alt+1 { focus-workspace 1; }
+          Alt+2 { focus-workspace 2; }
+          Alt+3 { focus-workspace 3; }
+          Alt+4 { focus-workspace 4; }
+          Alt+5 { focus-workspace 5; }
+          Alt+6 { focus-workspace 6; }
+          Alt+7 { focus-workspace 7; }
+          Alt+8 { focus-workspace 8; }
+          Alt+9 { focus-workspace 9; }
+          Alt+Escape allow-inhibiting=false { spawn "swaylock"; }
+          Alt+Shift+E { quit; }
+        ''}
 
         // Overview
         Mod+Tab repeat=false { toggle-overview; }

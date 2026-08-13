@@ -129,9 +129,13 @@ in
         };
       }
     ))
-    # niri variant: restart greetd, which respawns niri-session. niri reads
-    # its output config (transform, mode) from config.kdl at startup, so no
-    # post-restart rotation step is needed (unlike phosh).
+    # niri variant: stop greetd, kill any lingering niri, then start greetd
+    # fresh. A plain `systemctl restart greetd` orphans the niri process
+    # (it escapes greetd's cgroup), so the new niri sees "A niri session is
+    # already running" and refuses to start. Explicitly killing niri between
+    # stop and start avoids the race. The fresh niri does a new modeset,
+    # reviving the CWU50 panel. niri reads its output config (transform, mode)
+    # from config.kdl at startup, so no post-restart rotation step is needed.
     (lib.mkIf isNiri {
       description = "Restart the display stack once to revive the DSI panel";
       wantedBy = [ "graphical.target" ];
@@ -141,7 +145,12 @@ in
         # Give niri time to come up and do the initial (dark) modeset before
         # cycling the session (greetd auto-logins via initial_session).
         ExecStartPre = "${pkgs.coreutils}/bin/sleep 20";
-        ExecStart = "${pkgs.systemd}/bin/systemctl restart greetd.service";
+        ExecStart = pkgs.writeShellScript "uconsole-niri-heal" ''
+          ${pkgs.systemd}/bin/systemctl stop greetd.service
+          ${pkgs.procps}/bin/pkill -u ${username} -x niri 2>/dev/null || true
+          sleep 2
+          ${pkgs.systemd}/bin/systemctl start greetd.service
+        '';
       };
     })
   ];
