@@ -344,6 +344,12 @@ in
           Alt+Down { focus-window-or-workspace-down; }
           Alt+Up { focus-window-or-workspace-up; }
           Alt+Right { focus-column-right; }
+          // Move windows (Mod+Ctrl+arrows exists globally, but Super needs
+          // the Fn+Cmd chord on this keyboard).
+          Alt+Ctrl+Left { move-column-left; }
+          Alt+Ctrl+Down { move-window-down; }
+          Alt+Ctrl+Up { move-window-up; }
+          Alt+Ctrl+Right { move-column-right; }
           Alt+1 { focus-workspace 1; }
           Alt+2 { focus-workspace 2; }
           Alt+3 { focus-workspace 3; }
