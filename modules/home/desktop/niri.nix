@@ -162,6 +162,8 @@ in
               # "privacy-indicator"
               "volume"
               "brightness"
+              # Auto-hides on machines with no battery (e.g. cork).
+              "battery"
               "clock"
             ];
           }
