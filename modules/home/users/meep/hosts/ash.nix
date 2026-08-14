@@ -40,10 +40,10 @@
     pkgs.unstable.newsflash
     # Wayland clipboard CLI (wl-copy/wl-paste) — nothing else provides one here.
     pkgs.wl-clipboard
-    # Game-streaming wrapper: resolves cork's Tailscale IP at runtime and
-    # launches moonlight-embedded (software decode, DRM/KMS fullscreen).
-    # H264 only — no HEVC HW decode on BCM2711.
-    # Usage: moonlight-ash [app-name]
+    # Game-streaming client: moonlight-qt with built-in keyboard-to-gamepad
+    # mapping so the uConsole's Y/X/B/A keys work as controller input.
+    # The moonlight-ash wrapper script forces software H264 decoding.
+    pkgs.moonlight-qt
     pkgs.scripts.moonlight-ash
     # VNC viewer: connects to wayvnc servers on boojum/cork and macOS Screen
     # Sharing on sycamore, all over Tailscale. TigerVNC's vncviewer supports
