@@ -40,12 +40,11 @@
     pkgs.unstable.newsflash
     # Wayland clipboard CLI (wl-copy/wl-paste) — nothing else provides one here.
     pkgs.wl-clipboard
-    # Game-streaming client (CLI): the CM4 has no usable HW decoder on NixOS
-    # (no MMAL, V4L2 stateless broken on mainline). moonlight-embedded supports
-    # FFmpeg software decoding and direct DRM/KMS rendering, which is lighter
-    # than moonlight-qt's Qt+SDL stack. H264 only — no HEVC HW decode.
-    # Usage: moonlight stream -1080 -30fps -h264 <cork-ip>
-    pkgs.moonlight-embedded
+    # Game-streaming wrapper: resolves cork's Tailscale IP at runtime and
+    # launches moonlight-embedded (software decode, DRM/KMS fullscreen).
+    # H264 only — no HEVC HW decode on BCM2711.
+    # Usage: moonlight-ash [app-name]
+    pkgs.scripts.moonlight-ash
     # VNC viewer: connects to wayvnc servers on boojum/cork and macOS Screen
     # Sharing on sycamore, all over Tailscale. TigerVNC's vncviewer supports
     # SASL/SCRAM auth (needed for wayvnc's PAM authentication). Runs under

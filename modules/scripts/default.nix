@@ -16,4 +16,5 @@
   apex-impls = pkgs.callPackage ./apex-impls { };
   resolve = pkgs.callPackage ./resolve { };
   wa = pkgs.callPackage ./wa { };
+  moonlight-ash = pkgs.callPackage ./moonlight-ash { };
 }
