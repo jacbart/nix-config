@@ -58,6 +58,14 @@
           # boot progress/stalls are visible on the panel.
           boot.plymouth.enable = lib.mkForce false;
 
+          # uinput: needed for antimicrox to create virtual gamepad events
+          # from the uConsole's keyboard controls (Y/X/B/A, d-pad, etc.).
+          hardware.uinput.enable = true;
+          users.users.meep.extraGroups = [ "input" ];
+          services.udev.extraRules = ''
+            KERNEL=="uinput", SUBSYSTEM=="misc", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+          '';
+
           environment.systemPackages = with pkgs; [
             uconsole-nx
           ];
