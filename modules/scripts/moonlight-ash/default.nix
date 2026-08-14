@@ -6,7 +6,7 @@ pkgs.writeShellApplication {
   inherit name;
   runtimeInputs = with pkgs; [
     tailscale
-    moonlight-qt
+    moonlight-embedded
   ];
   text = builtins.readFile ./${name}.sh;
 }

@@ -40,10 +40,12 @@
     pkgs.unstable.newsflash
     # Wayland clipboard CLI (wl-copy/wl-paste) — nothing else provides one here.
     pkgs.wl-clipboard
-    # Game-streaming client: moonlight-qt with built-in keyboard-to-gamepad
-    # mapping so the uConsole's Y/X/B/A keys work as controller input.
-    # The moonlight-ash wrapper script forces software H264 decoding.
-    pkgs.moonlight-qt
+    # Game-streaming client: moonlight-embedded works with software decoding
+    # on the CM4 (moonlight-qt has no video output). antimicrox maps the
+    # uConsole's keyboard controls (Y/X/B/A, d-pad, shoulders) to a virtual
+    # gamepad that moonlight-embedded picks up.
+    pkgs.moonlight-embedded
+    pkgs.antimicrox
     pkgs.scripts.moonlight-ash
     # VNC viewer: connects to wayvnc servers on boojum/cork and macOS Screen
     # Sharing on sycamore, all over Tailscale. TigerVNC's vncviewer supports

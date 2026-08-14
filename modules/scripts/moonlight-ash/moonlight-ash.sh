@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Stream from cork (Sunshine host) to ash (uConsole CM4) over Tailscale.
-# Wraps moonlight-qt with software H264 decoding (no HW decoder on CM4/NixOS).
+# Uses moonlight-embedded (software decode via FFmpeg, works on CM4).
 #
 # Usage:
-#   moonlight-ash              # launch moonlight-qt GUI (pair, browse apps)
-#   moonlight-ash stream       # stream Desktop directly (720p 30fps H264)
+#   moonlight-ash              # stream Desktop (720p 30fps H264)
+#   moonlight-ash list         # list available apps on cork
 #   moonlight-ash stream <app> # stream a specific app
 
 set -euo pipefail
@@ -12,6 +12,8 @@ set -euo pipefail
 CORK_HOST="cork"
 RESOLUTION="720"
 FPS="30"
+CODEC="h264"
+DEFAULT_APP="Desktop"
 
 # Resolve cork's Tailscale IPv4 at runtime.
 resolve_tailscale_ip() {
@@ -27,36 +29,35 @@ resolve_tailscale_ip() {
   echo "$ip"
 }
 
-MOONLIGHT_FLAGS=(
-  -appoption streamingpreferences.videoDecoderSelection=2
-  -appoption streamingpreferences.videoCodecConfig=1
-)
+CORK_IP=$(resolve_tailscale_ip "$CORK_HOST")
 
 case "${1:-}" in
+  list)
+    echo "Available apps on cork ($CORK_IP):"
+    moonlight list "$CORK_IP"
+    ;;
   stream)
-    CORK_IP=$(resolve_tailscale_ip "$CORK_HOST")
-    if [[ -n "${2:-}" ]]; then
-      echo "Streaming '$2' from cork ($CORK_IP) at ${RESOLUTION}p/${FPS}fps (H264, software decode)..."
-      moonlight "${MOONLIGHT_FLAGS[@]}" \
-        -appoption "streamingpreferences.width=$RESOLUTION" \
-        -appoption "streamingpreferences.height=$((RESOLUTION * 16 / 9))" \
-        -appoption "streamingpreferences.fps=$FPS" \
-        -start "$2" "$CORK_IP"
-    else
-      echo "Streaming Desktop from cork ($CORK_IP) at ${RESOLUTION}p/${FPS}fps (H264, software decode)..."
-      moonlight "${MOONLIGHT_FLAGS[@]}" \
-        -appoption "streamingpreferences.width=$RESOLUTION" \
-        -appoption "streamingpreferences.height=$((RESOLUTION * 16 / 9))" \
-        -appoption "streamingpreferences.fps=$FPS" \
-        "$CORK_IP"
-    fi
+    APP="${2:-$DEFAULT_APP}"
+    echo "Streaming '$APP' from cork ($CORK_IP) at ${RESOLUTION}p/${FPS}fps ($CODEC)..."
+    moonlight stream \
+      -"$RESOLUTION" \
+      -fps "$FPS" \
+      -codec "$CODEC" \
+      -app "$APP" \
+      "$CORK_IP"
+    ;;
+  "")
+    echo "Streaming Desktop from cork ($CORK_IP) at ${RESOLUTION}p/${FPS}fps ($CODEC)..."
+    moonlight stream \
+      -"$RESOLUTION" \
+      -fps "$FPS" \
+      -codec "$CODEC" \
+      -app "$DEFAULT_APP" \
+      "$CORK_IP"
     ;;
   *)
-    echo "Launching moonlight-qt (software H264 decode)..."
-    echo "  Pair with cork first, then select an app to stream."
-    echo ""
-    echo "Quick start: moonlight-ash stream        # stream Desktop"
-    echo "             moonlight-ash stream <app>   # stream a specific app"
-    moonlight "${MOONLIGHT_FLAGS[@]}" "$@"
+    echo "Unknown action: $1" >&2
+    echo "Usage: moonlight-ash [stream|list] [app-name]" >&2
+    exit 1
     ;;
 esac
