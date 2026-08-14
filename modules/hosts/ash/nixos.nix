@@ -19,6 +19,8 @@
       # NM with the iwd backend. Without this, NM defaults to wpa_supplicant
       # which is not installed -> wlan0 "unavailable".
       ../../nixos/services/networkmanager.nix
+      # Avahi: mDNS/DNS-SD for Moonlight host discovery (finds cork on LAN).
+      ../../nixos/services/avahi.nix
       # Bluetooth: the BT hardware fix (bt_pins DT overlay) is in the
       # nixos-uconsole kernel module; this enables the userspace stack.
       ../../nixos/services/bluetooth.nix

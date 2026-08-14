@@ -8,7 +8,7 @@
       ../../home/shell/default.nix
       ../../home/users/meep/default.nix
       ../../home/desktop/default.nix
-      ../../home/apps/lan-mouse.nix
+      # ../../home/apps/lan-mouse.nix
       ../../home/apps/gaming.nix
     ];
   };
