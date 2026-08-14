@@ -3,8 +3,8 @@
 # Uses moonlight-embedded with software decoding (no HW decoder on CM4/NixOS).
 #
 # Usage:
-#   moonlight-ash              # default: 720p 30fps H264
-#   moonlight-ash desktop      # stream the desktop app
+#   moonlight-ash              # stream desktop (720p 30fps H264)
+#   moonlight-ash list         # list available apps on cork
 #   moonlight-ash <app-name>   # stream a specific Sunshine app
 
 set -euo pipefail
@@ -13,6 +13,7 @@ CORK_HOST="cork"
 RESOLUTION="720"
 FPS="30"
 CODEC="h264"
+DEFAULT_APP="Desktop"
 
 # Resolve cork's Tailscale IPv4 at runtime.
 resolve_tailscale_ip() {
@@ -30,19 +31,27 @@ resolve_tailscale_ip() {
 
 CORK_IP=$(resolve_tailscale_ip "$CORK_HOST")
 
-echo "Streaming from cork ($CORK_IP) at ${RESOLUTION}p/${FPS}fps ($CODEC)..."
-
-if [[ -n "${1:-}" ]]; then
-  moonlight stream \
-    -"$RESOLUTION" \
-    -fps "$FPS" \
-    -codec "$CODEC" \
-    -app "$1" \
-    "$CORK_IP"
-else
-  moonlight stream \
-    -"$RESOLUTION" \
-    -fps "$FPS" \
-    -codec "$CODEC" \
-    "$CORK_IP"
-fi
+case "${1:-}" in
+  list)
+    echo "Available apps on cork ($CORK_IP):"
+    moonlight list "$CORK_IP"
+    ;;
+  "")
+    echo "Streaming desktop from cork ($CORK_IP) at ${RESOLUTION}p/${FPS}fps ($CODEC)..."
+    moonlight stream \
+      -"$RESOLUTION" \
+      -fps "$FPS" \
+      -codec "$CODEC" \
+      -app "$DEFAULT_APP" \
+      "$CORK_IP"
+    ;;
+  *)
+    echo "Streaming '$1' from cork ($CORK_IP) at ${RESOLUTION}p/${FPS}fps ($CODEC)..."
+    moonlight stream \
+      -"$RESOLUTION" \
+      -fps "$FPS" \
+      -codec "$CODEC" \
+      -app "$1" \
+      "$CORK_IP"
+    ;;
+esac
