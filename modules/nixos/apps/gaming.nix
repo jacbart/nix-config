@@ -15,6 +15,7 @@
       libkrb5
       libusb1
     ];
+    gamescopeSession.enable = true;
   };
 
   boot.kernel.sysctl."vm.swappiness" = 10; # prefer RAM; disk swap only under pressure
