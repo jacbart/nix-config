@@ -44,8 +44,18 @@
 
   # 4G/LTE extension (SIM7600G-H on USB). Kernel drivers (option, qmi_wwan)
   # ship with the 6.18 kernel variant; userspace is ModemManager +
-  # NetworkManager (nmcli c add type gsm ...).
+  # NetworkManager. US Mobile SIM (LightSpeed/Verizon MVNO, no PIN); APN
+  # vzwinternet. ensureProfiles renders the keyfile declaratively under
+  # /etc/NetworkManager/system-connections/.
   networking.modemmanager.enable = lib.mkDefault true;
+  networking.networkmanager.ensureProfiles.profiles."gsm/usmobile" = {
+    connection = {
+      id = "US Mobile";
+      type = "gsm";
+      autoconnect = true;
+    };
+    gsm.apn = "vzwinternet";
+  };
 
   # The 4G extension is powered down by default; power it on at boot.
   # Port of clockworkpi's uconsole-4g-cm4 script (Code/scripts in the
