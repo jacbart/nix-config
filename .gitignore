@@ -4,4 +4,5 @@ result
 vendor/
 .bundle/
 .sfdx/
+.opencode
 ash-recovery/
