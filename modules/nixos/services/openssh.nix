@@ -24,6 +24,7 @@
       enable = !builtins.elem config.networking.hostName vars.hardenedHosts;
       whitelist = [
         "100.100.100.100/10"
+        # "192.168.0.0/24"
       ];
     };
     gnome.gcr-ssh-agent.enable = lib.mkForce false;

@@ -15,6 +15,7 @@
   imports = [
     ../../../apps/retroarch.nix
     ../../../apps/newsboat.nix
+    ../../../apps/ai
   ];
 
   # Ghostty >=1.3 requires OpenGL 4.3; the CM4's V3D driver tops out at GL 3.1
@@ -65,11 +66,6 @@
     "Discord" = {
       url = "https://discord.com/app";
       icon = ../../../files/icons/discord.png;
-      profile = "isolated";
-    };
-    "Slack" = {
-      url = "https://app.slack.com";
-      icon = ../../../files/icons/slack.ico;
       profile = "isolated";
     };
   };

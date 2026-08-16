@@ -13,21 +13,21 @@
     #   supportedFeatures = [ "benchmark" "big-parallel" "gccarch-armv8-a" "kvm" "nixos-test" ];
     #   speedFactor = 1;
     # }
-    {
-      hostName = "boojum";
-      protocol = "ssh";
-      sshUser = "remotebuild";
-      sshKey = "~/.ssh/builder_boojum";
-      systems = [ "x86_64-linux" ];
-      supportedFeatures = [
-        "nixos-test"
-        "big-parallel"
-        "kvm"
-        "benchmark"
-      ];
-      maxJobs = 2;
-      speedFactor = 4;
-    }
+    # {
+    #   hostName = "boojum";
+    #   protocol = "ssh";
+    #   sshUser = "remotebuild";
+    #   sshKey = "~/.ssh/builder_boojum";
+    #   systems = [ "x86_64-linux" ];
+    #   supportedFeatures = [
+    #     "nixos-test"
+    #     "big-parallel"
+    #     "kvm"
+    #     "benchmark"
+    #   ];
+    #   maxJobs = 2;
+    #   speedFactor = 4;
+    # }
     # {
     #   hostName = "ash";
     #   protocol = "ssh";

@@ -34,6 +34,7 @@
       # NIXOS_SD/FIRMWARE) come from the sd-image module, no disko.
       "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
       ../../nixos/security/acme-hostname.nix
+      ../../nixos/services/flatpak.nix
       config.flake.modules.nixos.profileOnlinePersonal
       (
         { pkgs, ... }:
