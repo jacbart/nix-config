@@ -13,6 +13,13 @@
   ...
 }:
 {
+  users.users.attic-watch-store = {
+    isSystemUser = true;
+    group = "attic-watch-store";
+  };
+
+  users.groups.attic-watch-store = { };
+
   sops.secrets."attic/push-token" = {
     owner = "attic-watch-store";
     mode = "0400";
@@ -26,7 +33,8 @@
     ];
     environment.HOME = "/var/lib/attic-watch-store";
     serviceConfig = {
-      DynamicUser = true;
+      User = "attic-watch-store";
+      Group = "attic-watch-store";
       MemoryHigh = "5%";
       MemoryMax = "10%";
       LoadCredential = "push-token:${config.sops.secrets."attic/push-token".path}";
