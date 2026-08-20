@@ -53,6 +53,80 @@
       ]
       ++ nixTrustedPublicKeysPublic;
 
+      # ── Distributed build registry ──────────────────────────────────────────
+      # Nix has no runtime builder auto-discovery (NixOS/nix#523: "let
+      # provisioners update /etc/nix/machines"). For a fixed flake host set
+      # this shared list IS the "determine what's available" — every host gets
+      # the full list (minus itself), and Nix's scheduler routes jobs optimally
+      # via speedFactor / maxJobs / supportedFeatures.
+      #
+      # speedFactor: relative integer, higher = faster.  Tuned to the fleet.
+      # sshKey: absolute path to the shared remotebuild private key (sops).
+      # publicHostKey: base64 ed25519 host key for MITM-safe SSH (null = use
+      #   known_hosts; fill in via `ssh-keyscan -t ed25519 <host>`).
+      remotebuildKey = "/var/secrets/remotebuild_id";
+
+      builders = [
+        {
+          hostName = "cork";
+          systems = [
+            "x86_64-linux"
+            "aarch64-linux"
+          ];
+          speedFactor = 10;
+          maxJobs = 8;
+          supportedFeatures = [
+            "kvm"
+            "big-parallel"
+            "nixos-test"
+            "benchmark"
+          ];
+          publicHostKey = null;
+        }
+        {
+          hostName = "boojum";
+          systems = [
+            "x86_64-linux"
+            "aarch64-linux"
+          ];
+          speedFactor = 6;
+          maxJobs = 8;
+          supportedFeatures = [
+            "kvm"
+            "big-parallel"
+            "nixos-test"
+            "benchmark"
+          ];
+          publicHostKey = null;
+        }
+        {
+          hostName = "maple";
+          systems = [ "aarch64-linux" ];
+          speedFactor = 2;
+          maxJobs = 2;
+          supportedFeatures = [ "big-parallel" ];
+          publicHostKey = null;
+        }
+        {
+          hostName = "ash";
+          systems = [ "aarch64-linux" ];
+          speedFactor = 1;
+          maxJobs = 1;
+          supportedFeatures = [ ];
+          publicHostKey = null;
+        }
+      ];
+
+      # SSH host keys for known_hosts (MITM protection for the build channel).
+      # Run `ssh-keyscan -t ed25519 <host>` and paste the key here.
+      builderHostKeys = {
+        boojum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE4MTXIg+HPG7g8ZKCReM2nRMcC3+m3MPStHL5sw9E7H";
+        ash = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
+        maple = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4sTgZqEhhNkle8EwV+vWjOL11WjK+QyllSRTpPw8wk";
+        cork = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
+        # colima = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvJR2xPpXLBfD+QmKhHz2r6UK+7kASNcYOk6q7H7sl3";
+      };
+
       serviceCatalog = import ./service-catalog.nix { inherit domain; };
     };
     stateVersion = lib.mkDefault "25.11";

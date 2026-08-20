@@ -22,6 +22,7 @@ in
       "tun.${domain}" = mkCert "tun.${domain}";
       "oak.${domain}" = mkCert "oak.${domain}";
       "mail.${domain}" = mkCert "mail.${domain}";
+      "nix-cache.${domain}" = mkCert "nix-cache.${domain}";
     };
   };
 }

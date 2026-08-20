@@ -7,24 +7,11 @@
       imports = [ ./services/tailscale.nix ];
     };
 
-  flake.modules.nixos.profileNixupd =
-    { ... }:
-    {
-      imports = [ ./services/nixupd-client.nix ];
-    };
-
-  flake.modules.nixos.profileLeadershipMatrix =
-    { ... }:
-    {
-      imports = [ ./services/leadership-matrix.nix ];
-    };
-
   flake.modules.nixos.profileOnlinePersonal =
     { ... }:
     {
       imports = [
         ./services/tailscale.nix
-        # ./services/nixupd-client.nix
         ./services/leadership-matrix.nix
       ];
     };
@@ -33,7 +20,7 @@
     { ... }:
     {
       imports = [
-        ./services/qemu.nix
+        ./services/binfmt.nix
         ./services/docker.nix
         ./services/bluetooth.nix
         ./services/pipewire.nix
@@ -56,11 +43,10 @@
     { lib, ... }:
     {
       imports = [
-        # ./services/attic.nix
+        ./services/attic.nix
         # ./services/hydra.nix
         # ./services/mailserver.nix
         # ./services/maildns.nix
-        # ./services/nixupd-client.nix
         ./services/got.nix
         ./services/freshrss.nix
         ./services/rustfs.nix
@@ -79,6 +65,7 @@
       systemd.services =
         lib.genAttrs
           [
+            "atticd"
             "audiobookshelf"
             "calibre-web-automated"
             "calibre-web-automated-watcher"
@@ -96,5 +83,15 @@
             requires = [ "zfs-mount.service" ];
             after = [ "zfs-mount.service" ];
           });
+    };
+
+  # Auto-push anything entering the local Nix store to the attic cache.
+  # Import on every host that builds (locally or via remote delegation) so
+  # built + copied-back paths populate the shared cache.  Uses attic's
+  # `watch-store` which skips paths already on upstream caches by default.
+  flake.modules.nixos.profileAtticWatchStore =
+    { ... }:
+    {
+      imports = [ ./services/attic-watch-store.nix ];
     };
 }

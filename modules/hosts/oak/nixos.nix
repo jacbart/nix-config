@@ -57,6 +57,7 @@
         }
       )
       ./nginx.nix
+      ../shared/distributed-builds.nix
     ];
   };
 }

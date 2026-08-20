@@ -16,6 +16,7 @@
       config.flake.modules.nixos.profileWorkstationMedia
       ../../nixos/services/flatpak.nix
       config.flake.modules.nixos.profileOnlinePersonal
+      config.flake.modules.nixos.profileAtticWatchStore
       ../../nixos/apps/ghostty.nix
       (
         { pkgs, ... }:
@@ -65,6 +66,7 @@
       (import ./disks.nix { })
       ./remote-builder.nix
       ./virt.nix
+      ../shared/distributed-builds.nix
     ];
   };
 }

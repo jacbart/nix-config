@@ -1,53 +1,59 @@
-{ ... }:
+# Distributed-build consumer module.
+# Enables remote builds and registers all fleet builders (minus this host).
+# Import on every NixOS host that should be able to delegate builds.
+{
+  config,
+  lib,
+  vars,
+  ...
+}:
+let
+  host = config.networking.hostName;
+  # Full fleet minus self (a host never delegates to itself).
+  remoteBuilders = lib.filter (m: m.hostName != host) vars.builders;
+  knownHosts = lib.filterAttrs (name: _: name != host) vars.builderHostKeys;
+in
 {
   nix.distributedBuilds = true;
   nix.settings.builders-use-substitutes = true;
 
+  # `remotebuild` must be trusted on consumers too (it owns the SSH key).
   nix.settings.trusted-users = [ "remotebuild" ];
 
-  nix.buildMachines = [
-    # {
-    #   hostName = "localhost";
-    #   protocol = null;
-    #   system = "aarch64-linux";
-    #   supportedFeatures = [ "benchmark" "big-parallel" "gccarch-armv8-a" "kvm" "nixos-test" ];
-    #   speedFactor = 1;
-    # }
-    # {
-    #   hostName = "boojum";
-    #   protocol = "ssh";
-    #   sshUser = "remotebuild";
-    #   sshKey = "~/.ssh/builder_boojum";
-    #   systems = [ "x86_64-linux" ];
-    #   supportedFeatures = [
-    #     "nixos-test"
-    #     "big-parallel"
-    #     "kvm"
-    #     "benchmark"
-    #   ];
-    #   maxJobs = 2;
-    #   speedFactor = 4;
-    # }
-    # {
-    #   hostName = "ash";
-    #   protocol = "ssh";
-    #   sshUser = "remotebuild";
-    #   sshKey = "~/.ssh/builder_ash";
-    #   systems = [ "aarch64-linux" ];
-    #   supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" ];
-    #   maxJobs = 1;
-    #   speedFactor = 2;
-    # }
-  ];
+  nix.buildMachines = map (m: {
+    inherit (m)
+      hostName
+      systems
+      speedFactor
+      maxJobs
+      supportedFeatures
+      publicHostKey
+      ;
+    protocol = "ssh-ng";
+    sshUser = "remotebuild";
+    sshKey = vars.remotebuildKey;
+  }) remoteBuilders;
 
-  programs.ssh.knownHosts = {
-    boojum = {
-      extraHostNames = [ "boojum" ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE4MTXIg+HPG7g8ZKCReM2nRMcC3+m3MPStHL5sw9E7H";
-    };
-    # ash = {
-    #   extraHostNames = [ "ash" ];
-    #   publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
-    # };
+  # Shared remotebuild SSH private key (deployed by sops from nix-secrets).
+  # The nix-daemon (root) reads this to authenticate to remote builders.
+  sops.secrets."private_keys/remotebuild" = {
+    path = vars.remotebuildKey;
+    owner = "root";
+    mode = "0600";
   };
+
+  # Fail fast on unreachable builders instead of blocking for the OS TCP
+  # timeout (~2min, worse on Tailscale where offline nodes drop packets
+  # silently).  ServerAlive also detects builders that die mid-build.
+  programs.ssh.extraConfig = ''
+    Host ${lib.concatStringsSep " " (map (m: m.hostName) vars.builders)}
+      ConnectTimeout 10
+      ServerAliveInterval 15
+      ServerAliveCountMax 3
+  '';
+
+  programs.ssh.knownHosts = lib.mapAttrs (name: key: {
+    hostNames = [ name ];
+    publicKey = key;
+  }) knownHosts;
 }

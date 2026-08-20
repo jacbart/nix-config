@@ -3,6 +3,10 @@
   keyFile,
 }:
 {
+  lib,
+  ...
+}:
+{
   services.openssh.settings.KbdInteractiveAuthentication = false;
 
   users.users.remotebuild = {
@@ -24,8 +28,8 @@
       ];
       min-free = 10 * 1024 * 1024;
       max-free = 50 * 1024 * 1024;
-      max-jobs = "auto";
-      inherit cores;
+      max-jobs = lib.mkDefault "auto";
+      cores = lib.mkDefault cores;
     };
   };
 

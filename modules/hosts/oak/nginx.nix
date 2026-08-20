@@ -17,6 +17,7 @@ in
       "matrix-server".servers."${maple}:8008" = { };
       "auth-server".servers."${maple}:8008" = { };
       "tunnel".servers."127.0.0.1:9000" = { };
+      "nix-cache".servers."${maple}:443" = { };
     };
     virtualHosts = {
       "${domain}" = {
@@ -55,6 +56,24 @@ in
         useACMEHost = "tun.${domain}";
         locations."/" = {
           proxyPass = "http://tunnel";
+        };
+      };
+      # Public reverse-proxy for the private attic binary cache on maple.
+      # Tailscale hosts hit maple directly (via /etc/hosts); public DNS routes
+      # here.  Auth is gated by attic's JWT (netrc on each consuming host) —
+      # unauthenticated requests get 401 from attic, not from nginx.
+      "nix-cache.${domain}" = {
+        addSSL = true;
+        useACMEHost = "nix-cache.${domain}";
+        locations."/" = {
+          proxyPass = "https://nix-cache";
+          proxyWebsockets = true;
+          extraConfig = ''
+            proxy_set_header Host $host;
+            proxy_ssl_server_name on;
+            proxy_ssl_name nix-cache.${domain};
+            proxy_pass_header Authorization;
+          '';
         };
       };
     };

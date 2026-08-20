@@ -27,7 +27,10 @@ in
     port = mkDefault 0; # 0 = autoselect
     openFirewall = mkDefault true;
     useRoutingFeatures = mkDefault "client"; # "none", "client", "server", or "both"
-    extraUpFlags = mkDefault [ "--accept-routes" ];
+    extraUpFlags = mkDefault [
+      "--accept-routes"
+      "--accept-dns"
+    ];
     authKeyFile = config.sops.secrets."tailscale/auth-key".path;
   };
 }

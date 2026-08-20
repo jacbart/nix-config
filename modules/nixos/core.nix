@@ -200,7 +200,28 @@
 
           substituters = vars.nixSubstitutersNixOS;
           trusted-public-keys = vars.nixTrustedPublicKeysNixOS;
+
+          # Authenticate to the private attic cache (nix-cache.meep.sh).
+          # The netrc holds a pull JWT (atticadm make-token --pull nix-cache).
+          # Stored in nix-secrets as `attic/netrc`.
+          netrc-file = config.sops.secrets."attic/netrc".path;
+
+          # Cache/builder outage resilience.
+          #   fallback: build from source if a substitute download fails (e.g.
+          #     attic on maple is down) instead of hard-failing.
+          #   max-connect-timeout / download-attempts: cap HTTP connect
+          #     backoff so a downed cache fails over quickly (defaults 300s / 5).
+          fallback = true;
+          max-connect-timeout = 15;
+          download-attempts = 3;
         };
+      };
+
+      # Pull token for the private binary cache — deployed to every NixOS host
+      # so the nix-daemon (root) can authenticate to nix-cache.meep.sh.
+      sops.secrets."attic/netrc" = {
+        owner = "root";
+        mode = "0400";
       };
 
       programs = {

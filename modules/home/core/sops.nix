@@ -27,6 +27,14 @@ in
       "public_keys/ratatoskr-sk" = {
         path = "${homeDir}/.ssh/id_ratatoskr_sk.pub";
       };
+      # Shared remotebuild key for darwin hosts to SSH into NixOS builders
+      # (NixOS hosts get this via sops-nix in distributed-builds.nix instead).
+      "private_keys/remotebuild" = {
+        path = "${homeDir}/.ssh/id_remotebuild";
+      };
+      "public_keys/remotebuild" = {
+        path = "${homeDir}/.ssh/id_remotebuild.pub";
+      };
     };
   };
 }

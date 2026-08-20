@@ -1,3 +1,13 @@
+# Attic — self-hosted, multi-tenant Nix binary cache.
+# Runs on maple with local storage (on the `trunk` ZFS pool — create a dataset:
+#   zfs create trunk/atticd -o mountpoint=/var/lib/atticd/storage
+# ). The cache is kept PRIVATE: pulls require a JWT (distributed as a netrc
+# via sops to every NixOS host — see modules/nixos/core.nix).  Pushes use a
+# separate JWT (see attic-watch-store.nix).
+#
+# maple's nginx terminates TLS for nix-cache.meep.sh using the wildcard
+# *.meep.sh ACME cert (acme-base.nix).  oak reverse-proxies the public path
+# to maple over Tailscale (oak/nginx.nix).
 {
   config,
   inputs,
@@ -13,8 +23,12 @@ in
 
   users.groups.atticd = { };
 
+  # environmentFile must define ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64
+  # (generate with: openssl rand 64 | base64 -w0).  Stored in nix-secrets
+  # as `attic/token` (env-file format: VAR=value).
   sops.secrets."attic/token" = {
     group = "atticd";
+    mode = "0440";
   };
 
   services.atticd = {

@@ -36,6 +36,7 @@
       ../../nixos/security/acme-hostname.nix
       ../../nixos/services/flatpak.nix
       config.flake.modules.nixos.profileOnlinePersonal
+      config.flake.modules.nixos.profileAtticWatchStore
       (
         { pkgs, ... }:
         let
@@ -62,7 +63,10 @@
           # uinput: needed for antimicrox to create virtual gamepad events
           # from the uConsole's keyboard controls (Y/X/B/A, d-pad, etc.).
           hardware.uinput.enable = true;
-          users.users.meep.extraGroups = [ "uinput" "input" ];
+          users.users.meep.extraGroups = [
+            "uinput"
+            "input"
+          ];
 
           environment.systemPackages = with pkgs; [
             uconsole-nx
@@ -117,6 +121,7 @@
         }
       )
       ../../hosts/shared/distributed-builds.nix
+      ./remote-builder.nix
     ];
   };
 }

@@ -124,13 +124,15 @@
           nixpkgs.config.allowBroken = true;
 
           nix.settings = {
-            max-jobs = 3;
+            max-jobs = 2;
             cores = 6;
           };
         }
       )
       ./disks.nix
+      ./remote-builder.nix
       ../../hosts/shared/distributed-builds.nix
+      config.flake.modules.nixos.profileAtticWatchStore
     ];
   };
 }

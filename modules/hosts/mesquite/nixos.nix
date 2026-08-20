@@ -130,6 +130,7 @@
       (import ./disks.nix { })
       ./network.nix
       ./nftables.nix
+      ../shared/distributed-builds.nix
     ];
   };
 }

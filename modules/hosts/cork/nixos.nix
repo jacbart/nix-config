@@ -17,11 +17,14 @@
       config.flake.modules.nixos.profileWorkstationMedia
       ../../nixos/services/flatpak.nix
       config.flake.modules.nixos.profileOnlinePersonal
+      config.flake.modules.nixos.profileAtticWatchStore
       ../../nixos/apps/ghostty.nix
       ../../nixos/apps/steam.nix
       ../../nixos/apps/gaming.nix
       ../../nixos/apps/sunshine.nix
       ./gaming.nix
+      ./remote-builder.nix
+      ../shared/distributed-builds.nix
       (
         { pkgs, ... }:
         let

@@ -6,6 +6,7 @@ let
   # Hosts that reach maple’s services over Tailscale (same IP on ash / oak).
   mapleClientHostsOnTailscale = [
     "maple.${domain}"
+    "nix-cache.${domain}"
     "s3.${domain}"
     "books.${domain}"
     "calibre.${domain}"
@@ -45,6 +46,7 @@ in
         "calibre.${domain}"
         "files.${domain}"
         "fs.${domain}"
+        "nix-cache.${domain}"
         "s3.${domain}"
         "wiki.${domain}"
         "photos.${domain}"
@@ -75,18 +77,21 @@ in
         "boojum.${domain}"
         "remote.dev"
       ];
+      "100.116.178.48" = mapleClientHostsOnTailscale;
     };
     cork = {
       "127.0.0.2" = [
         "cork.${domain}"
         "remote.dev"
       ];
+      "100.116.178.48" = mapleClientHostsOnTailscale;
     };
     mesquite = {
       "127.0.0.2" = [
         "mesquite"
         "mesquite.${domain}"
       ];
+      "100.116.178.48" = mapleClientHostsOnTailscale;
     };
   };
 }

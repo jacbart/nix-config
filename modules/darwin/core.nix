@@ -23,14 +23,23 @@
 
       programs.zsh.enable = true;
 
-      # Nix daemon (root) runs SSH for remote builders; it does not use ~/.ssh/known_hosts.
-      programs.ssh.knownHosts.maple = {
-        hostNames = [
-          "maple"
-          "maple.meep.sh"
-        ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4sTgZqEhhNkle8EwV+vWjOL11WjK+QyllSRTpPw8wk";
-      };
+      # SSH host keys for all fleet builders (MITM protection for the build
+      # channel).  Generated from vars.builderHostKeys; colima is added
+      # separately by colima.nix.
+      programs.ssh.knownHosts = lib.mapAttrs (name: key: {
+        hostNames = [ name ] ++ lib.optional (name == "maple") "maple.meep.sh";
+        publicKey = key;
+      }) vars.builderHostKeys;
+
+      # Fail fast on unreachable builders (see distributed-builds.nix for the
+      # NixOS equivalent).  Written to /etc/ssh/ssh_config.d/, read by root's
+      # nix-daemon when it SSHes to remote builders.
+      programs.ssh.extraConfig = ''
+        Host ${lib.concatStringsSep " " (map (m: m.hostName) vars.builders)}
+          ConnectTimeout 10
+          ServerAliveInterval 15
+          ServerAliveCountMax 3
+      '';
 
       nixpkgs = {
         overlays = lib.attrValues overlays;
@@ -49,25 +58,23 @@
         };
         optimise.automatic = true;
 
-        # Deploying NixOS (e.g. aarch64-linux maple) from this Mac requires
-        # delegating linux drvs (e.g. system.build.nixos-rebuild) to a linux builder.
+        # Deploying NixOS from this Mac requires delegating linux drvs to a
+        # linux builder.  Use the full fleet from vars.builders (all linux
+        # builders) so darwin can offload to cork/boojum/etc. via Tailscale.
         distributedBuilds = true;
-        buildMachines = [
-          {
-            hostName = "maple";
-            protocol = "ssh";
-            sshUser = "ratatoskr";
-            # Root nix-daemon cannot resolve ~ to your login user; use an absolute path.
-            sshKey = "/Users/${username}/.ssh/id_ratatoskr";
-            systems = [ "aarch64-linux" ];
-            maxJobs = 2;
-            speedFactor = 1;
-            supportedFeatures = [
-              "big-parallel"
-              "benchmark"
-            ];
-          }
-        ];
+        buildMachines = map (m: {
+          inherit (m)
+            hostName
+            systems
+            speedFactor
+            maxJobs
+            supportedFeatures
+            publicHostKey
+            ;
+          protocol = "ssh-ng";
+          sshUser = "remotebuild";
+          sshKey = "/Users/${username}/.ssh/id_remotebuild";
+        }) vars.builders;
 
         settings = {
           trusted-users = [
@@ -86,6 +93,11 @@
           keep-derivations = true;
           warn-dirty = false;
           builders-use-substitutes = true;
+
+          # Cache/builder outage resilience (see modules/nixos/core.nix).
+          fallback = true;
+          max-connect-timeout = 15;
+          download-attempts = 3;
         };
       };
 
