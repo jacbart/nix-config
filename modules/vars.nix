@@ -11,7 +11,7 @@
       lanDomain = "lan.meep.sh";
 
       # NixOS hosts opted in to the hardened fail2ban profile: explicit sshd /
-      # caddy-status / recidive jails plus a daily-fed scanner blocklist
+      # recidive jails plus a daily-fed scanner blocklist
       # (Shodan/Censys C2, Spamhaus DROP/EDROP, FireHOL L1–L3) dropped at the
       # firewall via ipset. Add a host's networking.hostName here to opt in.
       # The host must also import profileFail2ban (see
@@ -129,6 +129,6 @@
 
       serviceCatalog = import ./service-catalog.nix { inherit domain; };
     };
-    stateVersion = lib.mkDefault "25.11";
+    stateVersion = lib.mkDefault "26.05";
   };
 }

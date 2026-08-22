@@ -8,7 +8,7 @@
     ../../apps/ghostty.nix
   ];
 
-  # Prefer over anything else that might still set gpg’s SSH socket (old HM env, ordering).
+  # Prefer over anything else that might still set gpg's SSH socket (old HM env, ordering).
   systemd.user.sessionVariables = {
     SSH_AUTH_SOCK = lib.mkForce "%t/ssh-agent";
   };

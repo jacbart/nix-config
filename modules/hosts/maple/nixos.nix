@@ -120,7 +120,6 @@
           # don't drop or ban local clients (e.g. calibre.meep.sh over LAN).
           services.fail2ban.trustedLanSubnets = [ "192.168.0.0/24" ];
 
-          nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
           nixpkgs.config.allowBroken = true;
 
           nix.settings = {

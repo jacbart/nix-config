@@ -6,7 +6,12 @@
 # hash drifted (upstream pin: sha256-HaBIU…, actual: sha256-cswCL…). This
 # rebuilds from the same locked source (inputs.fern.outPath) with the hash the
 # build actually produces. Remove this module once upstream fixes the hash.
-{ lib, buildGoModule, fernSource, fernVersion ? "dev" }:
+{
+  lib,
+  buildGoModule,
+  fernSource,
+  fernVersion ? "dev",
+}:
 
 buildGoModule rec {
   pname = "fern";

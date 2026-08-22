@@ -18,9 +18,6 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # patched caddy with cloudflare provider
-    caddy-with-modules.url = "github:jacbart/nixos-caddy-patched";
-
     jaws.url = "github:jacbart/jaws";
     ff.url = "github:jacbart/ff";
 
@@ -29,19 +26,13 @@
 
     leadership-matrix.url = "git+ssh://git@github.com/taybart/leadership-matrix.git?ref=feat/solidjs-vite";
     rest.url = "github:taybart/rest";
-    # rest.inputs.nixpkgs.follows = "nixpkgs";
+    rest.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-diff.url = "github:Mic92/nix-diff-rs";
     lan-mouse.url = "github:feschber/lan-mouse";
 
     noctalia.url = "github:noctalia-dev/noctalia-shell";
     noctalia.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    hydra.url = "github:NixOS/hydra";
-    hydra.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixupd.url = "git+ssh://git@github.com/jacbart/nixupd.git?ref=main";
-    nixupd.inputs.nixpkgs.follows = "nixpkgs";
 
     attic.url = "github:zhaofengli/attic";
     attic.inputs.nixpkgs.follows = "nixpkgs";

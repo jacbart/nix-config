@@ -23,6 +23,7 @@ in
   sf-cli = pkgs.callPackage ./sf-cli { };
   prettier-apex = pkgs.callPackage ./prettier-apex { };
   woxi = unstablePkgs.callPackage ./woxi { inherit inputs; };
+  tmux-agent-indicator = pkgs.callPackage ./tmux-agent-indicator { };
 
   # Rebuild fern from the locked flake source with a corrected vendorHash
   # (upstream's FOD hash drifted — see ./fern/default.nix for details).

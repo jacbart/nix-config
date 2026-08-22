@@ -31,7 +31,10 @@ in
   systemd.user.services.wayvnc = {
     Unit = {
       Description = "VNC server (wayvnc) bound to tailscale0";
-      After = [ "graphical-session.target" "tailscaled.service" ];
+      After = [
+        "graphical-session.target"
+        "tailscaled.service"
+      ];
       PartOf = [ "graphical-session.target" ];
     };
     Service = {

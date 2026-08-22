@@ -1,31 +1,23 @@
-{
-  pkgs,
-  platform,
-  inputs,
-  lib,
-  ...
-}:
-let
-  inherit (pkgs.stdenv) isLinux;
-  inherit (pkgs.stdenv) isDarwin;
-in
+{ pkgs, ... }:
 {
   imports = [
     ./base.nix
     ../zsh.nix
-    ../tools/starship.nix
     ../tools
     ../../apps/newsboat.nix
     ../../apps/fern.nix
     ../../apps/ai
   ];
 
-  home.sessionPath = [
-    "$HOME/.local/bin"
-    "$HOME/go/bin"
-    "$HOME/.cargo/bin"
-  ]
-  ++ lib.optional isDarwin "/opt/homebrew/bin";
+  home.packages = with pkgs; [
+    mdbook
+    pgsync
+    postgresql_16
+    uv
+    woxi
+    fern
+    scripts.wa
+  ];
 
   programs.carapace = {
     enable = true;
@@ -33,26 +25,6 @@ in
     enableZshIntegration = true;
     enableNushellIntegration = true;
   };
-
-  home.packages =
-    (with pkgs; [
-      dua
-      fswatch
-      mdbook
-      pgsync
-      postgresql_16
-      uv
-      woxi
-      htmlq
-      unstable.nh
-      stu
-      fern
-      inputs.ff.packages.${pkgs.stdenv.hostPlatform.system}.default
-      inputs.jaws.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ])
-    ++ lib.optional isLinux pkgs.unstable.tlrc
-    ++ lib.optional (pkgs.stdenv.hostPlatform.system != "aarch64-linux") pkgs.fex-cli
-    ++ [ pkgs.scripts.wa ];
 
   programs.zsh.shellAliases.summarize = "summarize-commit";
 }

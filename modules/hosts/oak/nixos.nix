@@ -56,6 +56,7 @@
           ];
         }
       )
+      ../../nixos/services/anubis.nix
       ./nginx.nix
       ../shared/distributed-builds.nix
     ];

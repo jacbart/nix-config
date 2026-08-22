@@ -85,7 +85,6 @@
           networking.useDHCP = lib.mkDefault true;
 
           # cpu
-          nixpkgs.hostPlatform = lib.mkForce "x86_64-linux";
           hardware.cpu.amd.updateMicrocode = lib.mkForce true;
         }
       )

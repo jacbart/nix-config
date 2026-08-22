@@ -9,7 +9,9 @@ let
   user = "vmail";
   group = "vmail";
   dataDir = "mail";
-  oakIp = "100.116.178.48";
+  # The oak mail relay (postfix) submits inbound mail to this server on 587.
+  # Resolved via public DNS at postfix start.
+  oakHost = "oak.${domain}";
 in
 {
   users.users."${user}" = {
@@ -45,7 +47,7 @@ in
       mynetworks = [
         "127.0.0.0/8"
         "::1/128"
-        "${oakIp}"
+        "${oakHost}"
       ];
       mailbox_size_limit = 0;
       message_size_limit = 52428800;
@@ -60,43 +62,46 @@ in
     enable = true;
     enablePAM = false;
     createMailUser = true;
-    mailUser = user;
-    mailGroup = group;
-    mailLocation = "maildir:~/Maildir";
-    mailboxes = {
-      All = {
-        auto = "create";
-        specialUse = "All";
+    settings = {
+      dovecot_config_version = config.services.dovecot2.package.version;
+      dovecot_storage_version = config.services.dovecot2.package.version;
+      mail_uid = user;
+      mail_gid = group;
+      mail_home = "/var/lib/${dataDir}/%{user}";
+      mail_driver = "maildir";
+      mail_path = "~/Maildir";
+      protocols = [ "imap" ];
+      ssl_server_cert_file = "/var/lib/acme/certs/mail.${domain}/fullchain.pem";
+      ssl_server_key_file = "/var/lib/acme/private/mail.${domain}/key.pem";
+      "namespace inbox" = {
+        inbox = true;
+        separator = "/";
+        mailbox = {
+          All = {
+            auto = "create";
+            special_use = "\\All";
+          };
+          Sent = {
+            auto = "create";
+            special_use = "\\Sent";
+          };
+          Trash = {
+            auto = "create";
+            special_use = "\\Trash";
+          };
+          Junk = {
+            auto = "create";
+            special_use = "\\Junk";
+          };
+        };
       };
-      Sent = {
-        auto = "create";
-        specialUse = "Sent";
+      "passdb passwd-file" = {
+        passwd_file_path = config.sops.secrets."mail-password".path;
       };
-      Trash = {
-        auto = "create";
-        specialUse = "Trash";
-      };
-      Junk = {
-        auto = "create";
-        specialUse = "Junk";
+      "protocol imap" = {
+        mail_max_userip_connections = 10;
       };
     };
-    sslServerCert = "/var/lib/acme/certs/mail.${domain}/fullchain.pem";
-    sslServerKey = "/var/lib/acme/private/mail.${domain}/key.pem";
-    extraConfig = ''
-      auth_mechanisms = plain login
-      passdb {
-        driver = passwd-file
-        args = scheme=CRYPT ${config.sops.secrets."mail-password".path}
-      }
-      userdb {
-        driver = static
-        args = uid=vmail gid=vmail home=/var/lib/mail/%u
-      }
-      protocol imap {
-        mail_max_userip_connections = 10
-      }
-    '';
   };
 
   services.rspamd = {

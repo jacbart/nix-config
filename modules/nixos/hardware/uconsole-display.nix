@@ -57,12 +57,18 @@ in
     bindings = [
       {
         keys = [ 224 ];
-        events = [ "key" "rep" ];
+        events = [
+          "key"
+          "rep"
+        ];
         command = "${pkgs.brightnessctl}/bin/brightnessctl set 1-";
       }
       {
         keys = [ 225 ];
-        events = [ "key" "rep" ];
+        events = [
+          "key"
+          "rep"
+        ];
         command = "${pkgs.brightnessctl}/bin/brightnessctl set +1";
       }
     ];

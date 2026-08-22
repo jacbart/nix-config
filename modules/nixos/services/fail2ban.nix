@@ -103,18 +103,6 @@ in
   };
 
   config = {
-    # Caddy JSON access-log filter — matches /var/log/caddy/access-*.log written
-    # by modules/nixos/services/caddy.nix. Only materialised on hardened hosts
-    # running Caddy.
-    environment.etc = lib.optionalAttrs (hardened && config.services.caddy.enable) {
-      "fail2ban/filter.d/caddy-status.conf".text = ''
-        [Definition]
-        failregex = ^.*"remote_ip":"<HOST>",.*?"status":(?:401|403|500),.*$
-        ignoreregex =
-        datepattern = LongEpoch
-      '';
-    };
-
     services.fail2ban = {
       enable = true;
       extraPackages = [ pkgs.ipset ];
@@ -155,18 +143,6 @@ in
             maxretry = 3;
             findtime = "1d";
             bantime = "1w";
-          };
-        }
-        ++ lib.optional (hardened && config.services.caddy.enable) {
-          # Ban IPs returning 401/403/500 from Caddy — filter defined above.
-          caddy-status.settings = {
-            enabled = true;
-            port = "http,https";
-            filter = "caddy-status";
-            logpath = "/var/log/caddy/*.access.log";
-            maxretry = 5;
-            findtime = "10m";
-            bantime = "1h";
           };
         }
       );

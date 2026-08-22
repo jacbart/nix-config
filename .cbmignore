@@ -1,0 +1,7 @@
+flake.lock
+templates/
+*.jpg
+*.png
+*.ico
+*.crt
+*.patch

@@ -44,9 +44,8 @@
     {
       imports = [
         ./services/attic.nix
-        # ./services/hydra.nix
-        # ./services/mailserver.nix
-        # ./services/maildns.nix
+        ./services/mailserver.nix
+        ./services/maildns.nix
         ./services/got.nix
         ./services/freshrss.nix
         ./services/rustfs.nix

@@ -20,12 +20,10 @@ in
   imports = [
     ./docker-darwin.nix
     ./bottom.nix
-    # ./bitwarden.nix
     ./broot.nix
     ./eza.nix
     ./git.nix
     ./helix.nix
-    # ./neofetch.nix
     ./tmux.nix
     ./zoxide.nix
   ];

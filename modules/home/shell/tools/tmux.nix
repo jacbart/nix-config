@@ -142,8 +142,13 @@ in
       run '${tmuxPlugins.sensible}/share/tmux-plugins/sensible/sensible.tmux'
       set -g @tmux-gruvbox '${hostGruvbox}'
       set -g @tmux-gruvbox-statusbar-alpha 'false'
+      # place the agent indicator in gruvbox's rightmost (hostname) status slot
+      set -g @tmux-gruvbox-right-status-z '#h #{agent_indicator}'
       run '${tmuxPlugins.gruvbox}/share/tmux-plugins/gruvbox/gruvbox-tpm.tmux'
       run '${tmuxPlugins.better-mouse-mode}/share/tmux-plugins/better-mouse-mode/scroll_copy_mode.tmux'
+
+      # tmux-agent-indicator: AI agent state in pane borders / window titles / status bar
+      run '${pkgs.tmux-agent-indicator}/share/tmux-plugins/agent-indicator/agent-indicator.tmux'
 
       # Window Splitting
       unbind %
