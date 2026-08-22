@@ -12,6 +12,25 @@
       scripts = import ../scripts { pkgs = final; };
     };
 
+    # Cross-built x86_64-linux pkgs set, exposed as `pkgs.x86`.
+    # Used by the `coq` wrapper (modules/scripts/coq/) which needs a
+    # working x86_64 glibc/libgcc alongside the native aarch64 dynarec
+    # (box64) to translate the Unity x86_64 binary. The wrapper bakes
+    # the store paths into itself at derivation time — no runtime /etc
+    # file is consulted, so the wrapper stays self-contained and works
+    # after a home-manager-only deploy (no nixos-rebuild required).
+    x86-packages =
+      final: prev:
+      {
+        x86 = import inputs.nixpkgs {
+          system = "x86_64-linux";
+          config = {
+            allowUnfree = true;
+            allowUnsupportedSystem = true;
+          };
+        };
+      };
+
     # https://nixos.wiki/wiki/Overlays
     modifications = final: prev: {
       inherit (final.lixPackageSets.stable)

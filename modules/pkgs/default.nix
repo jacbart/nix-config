@@ -6,12 +6,6 @@
 }:
 let
   inherit (pkgs) lib;
-  unstablePkgs = import inputs.nixpkgs-unstable {
-    inherit (pkgs.stdenv.hostPlatform) system;
-    config = {
-      allowUnfree = true;
-    };
-  };
 in
 {
   fex-cli = pkgs.callPackage ./fex { };
@@ -22,7 +16,6 @@ in
   lwc-language-server = pkgs.callPackage ./lwc-language-server { };
   sf-cli = pkgs.callPackage ./sf-cli { };
   prettier-apex = pkgs.callPackage ./prettier-apex { };
-  woxi = unstablePkgs.callPackage ./woxi { inherit inputs; };
   tmux-agent-indicator = pkgs.callPackage ./tmux-agent-indicator { };
 
   # Rebuild fern from the locked flake source with a corrected vendorHash

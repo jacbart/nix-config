@@ -14,9 +14,7 @@
     pgsync
     postgresql_16
     uv
-    woxi
     fern
-    scripts.wa
   ];
 
   programs.carapace = {

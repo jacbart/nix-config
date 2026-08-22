@@ -27,6 +27,10 @@
       # Audio: pipewire + wireplumber. The BCM2711 onboard audio driver is
       # configured via snd_bcm2835 kernel params in uconsole.nix.
       ../../nixos/services/pipewire.nix
+      # box64: native aarch64 dynarec that translates the x86_64
+      # Caves of Qud launcher + UnityPlayer.so. The x86_64 glibc/libgcc
+      # the ELF needs are baked into the `coq` wrapper (home-manager
+      # side, via the `pkgs.x86` overlay) — see modules/scripts/coq/.
       # uConsole kernel: nixos-hardware rpi-6.18.y + CWU50 panel/backlight/PMU
       # drivers; also wires the firmware partition (U-Boot, config.txt).
       inputs.nixos-uconsole.nixosModules."kernel-6.18-potatomania"
@@ -70,6 +74,11 @@
 
           environment.systemPackages = with pkgs; [
             uconsole-nx
+            # x86_64 → aarch64 dynarec for Caves of Qud (via the `coq`
+            # wrapper). Listed here so `box64` is also available from
+            # a bare login shell / ssh session, not just inside the
+            # wrapper.
+            box64
           ];
 
           # zram first (fast), SD swapfile only as backstop.

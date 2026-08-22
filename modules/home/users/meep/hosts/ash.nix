@@ -14,6 +14,10 @@
 
   imports = [
     ../../../apps/retroarch.nix
+    # Caves of Qud: x86_64 Linux build translated by box64. The `coq`
+    # wrapper is self-contained (x86_64 glibc/libgcc baked in at
+    # derivation time via the `pkgs.x86` overlay).
+    ../../../apps/coq.nix
     ../../../apps/newsboat.nix
     ../../../apps/ai
   ];
