@@ -11,6 +11,7 @@
 {
   config,
   inputs,
+  lib,
   vars,
   ...
 }:
@@ -21,11 +22,21 @@ in
 {
   imports = [ inputs.attic.nixosModules.atticd ];
 
+  # Static user + group so local ZFS storage (trunk/atticd) keeps a stable
+  # owner across boots.  The atticd module defaults to DynamicUser=true, which
+  # reallocates the UID every boot and cannot write to a root-owned ZFS dataset.
+  users.users.atticd = {
+    isSystemUser = true;
+    group = "atticd";
+  };
+
   users.groups.atticd = { };
 
-  # environmentFile must define ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64
-  # (generate with: openssl rand 64 | base64 -w0).  Stored in nix-secrets
-  # as `attic/token` (env-file format: VAR=value).
+  systemd.services.atticd.serviceConfig.DynamicUser = lib.mkForce false;
+
+  # environmentFile must define ATTIC_SERVER_TOKEN_RS256_SECRET_BASE64
+  # (generate with: openssl genrsa -traditional 4096 | base64 -w0).  Stored in
+  # nix-secrets as `attic/token` (env-file format: VAR=value).
   sops.secrets."attic/token" = {
     group = "atticd";
     mode = "0440";
@@ -37,7 +48,7 @@ in
     mode = "monolithic";
     settings = {
       listen = "${addr}:${port}";
-      api-endpoint = "https://nix-cache.${vars.domain}";
+      api-endpoint = "https://nix-cache.${vars.domain}/";
       database.url = "sqlite:///var/lib/atticd/server.db?mode=rwc";
       storage = {
         type = "local";

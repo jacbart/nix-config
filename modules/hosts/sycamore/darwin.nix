@@ -13,6 +13,9 @@
             cpu = 6;
             memory = 16;
             disk = 100;
+            # /nix lives on the root filesystem; maple's full aarch64 closure
+            # (immich/ffmpeg/gtk/attic/...) exceeds colima's 20 GiB default.
+            rootDisk = 80;
             arch = "aarch64";
             runtime = "docker";
             vmType = "vz";
