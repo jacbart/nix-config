@@ -28,7 +28,6 @@
 
           virtualisation.digitalOceanImage.compressionMethod = "bzip2";
           networking = {
-            networkmanager.dns = "none";
             firewall = {
               enable = true;
               allowedTCPPorts = [
@@ -59,6 +58,7 @@
       ../../nixos/services/anubis.nix
       ./nginx.nix
       ../shared/distributed-builds.nix
+      ../../nixos/services/dns.nix
     ];
   };
 }

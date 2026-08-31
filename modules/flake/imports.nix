@@ -21,6 +21,7 @@
     ../darwin/nix-homebrew.nix
     ../darwin/docker.nix
     ../darwin/colima.nix
+    ../darwin/stevenblack.nix
     ../darwin/laptop.nix
   ];
 }

@@ -6,3 +6,4 @@ vendor/
 .sfdx/
 .opencode
 ash-recovery/
+flake.lock.prev

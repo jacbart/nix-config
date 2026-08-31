@@ -127,6 +127,15 @@
         # colima = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvJR2xPpXLBfD+QmKhHz2r6UK+7kASNcYOk6q7H7sl3";
       };
 
+      # Host keys for non-builder hosts reached over SSH by flake inputs
+      # (supply-chain MITM protection). The `got` input fetches
+      # git+ssh://git@got.bbl.systems; pin its key so a DNS/BGP poisoning
+      # cannot substitute a rogue server during evaluation.
+      extraKnownHosts = {
+        "got.bbl.systems" =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHOUi4f/tscM+MdtNIwB3RbxzaQ8Rq1J+a5hY0CUtC5b";
+      };
+
       serviceCatalog = import ./service-catalog.nix { inherit domain; };
     };
     stateVersion = lib.mkDefault "26.05";

@@ -69,6 +69,7 @@
           keep-derivations = true;
           warn-dirty = false;
           substituters = vars.nixSubstitutersPublic;
+          trusted-substituters = vars.nixSubstitutersPublic;
           trusted-public-keys = vars.nixTrustedPublicKeysPublic;
         };
       };

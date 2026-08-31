@@ -76,6 +76,7 @@ in
       scripts.journal
       scripts.resolve
       inputs.nix-diff.packages.${platform}.default
+      go-task # Taskfile-driven flake update gating (Taskfile.yml at repo root)
     ]
     ++ lib.optional isLinux pkgs.pax-utils;
 

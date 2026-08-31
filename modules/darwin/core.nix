@@ -26,10 +26,15 @@
       # SSH host keys for all fleet builders (MITM protection for the build
       # channel).  Generated from vars.builderHostKeys; colima is added
       # separately by colima.nix.
-      programs.ssh.knownHosts = lib.mapAttrs (name: key: {
-        hostNames = [ name ] ++ lib.optional (name == "maple") "maple.meep.sh";
-        publicKey = key;
-      }) vars.builderHostKeys;
+      programs.ssh.knownHosts =
+        (lib.mapAttrs (name: key: {
+          hostNames = [ name ] ++ lib.optional (name == "maple") "maple.meep.sh";
+          publicKey = key;
+        }) vars.builderHostKeys)
+        // (lib.mapAttrs (name: key: {
+          hostNames = [ name ];
+          publicKey = key;
+        }) vars.extraKnownHosts);
 
       # Fail fast on unreachable builders (see distributed-builds.nix for the
       # NixOS equivalent).  Written to /etc/ssh/ssh_config.d/, read by root's
@@ -84,6 +89,7 @@
           auto-optimise-store = true;
           allowed-uris = vars.nixAllowedUris;
           substituters = vars.nixSubstitutersPublic;
+          trusted-substituters = vars.nixSubstitutersPublic;
           trusted-public-keys = vars.nixTrustedPublicKeysPublic;
           experimental-features = [
             "nix-command"

@@ -52,8 +52,13 @@ in
       ServerAliveCountMax 3
   '';
 
-  programs.ssh.knownHosts = lib.mapAttrs (name: key: {
-    hostNames = [ name ];
-    publicKey = key;
-  }) knownHosts;
+  programs.ssh.knownHosts =
+    (lib.mapAttrs (name: key: {
+      hostNames = [ name ];
+      publicKey = key;
+    }) knownHosts)
+    // (lib.mapAttrs (name: key: {
+      hostNames = [ name ];
+      publicKey = key;
+    }) vars.extraKnownHosts);
 }

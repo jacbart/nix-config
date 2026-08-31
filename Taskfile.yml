@@ -1,0 +1,125 @@
+# Update-gating workflow for this flake.
+#
+# The rule: never `nix flake update` + switch by hand. Go through `task update`
+# so every lock change passes the gate (flake check, nix-diff review, toplevel
+# builds) before it can be committed.
+#
+#   task update                        # update ALL inputs, full gate
+#   task update:stable                 # release-channel inputs only
+#   task update:unstable               # nixos-unstable only
+#   task update:third-party            # everything else except rev-pinned inputs
+#   task update:brew                   # after bumping the brew-src tag in flake.nix
+#   task gate                          # re-run the gate on the current lock
+#   task commit                        # commit a lock that passed the gate
+#
+# Build gate scope:
+#   task update HOSTS="boojum cork"   # NixOS hosts to build (default: boojum)
+#   task update DARWIN_HOSTS=sycamore # additionally build darwin closures
+#
+# Rev-pinned inputs (fern, got, leadership-matrix) never move on `nix flake
+# update`; bump them deliberately by editing the rev in flake.nix, then run
+# `task gate`.
+
+version: '3'
+
+vars:
+  STABLE_INPUTS: nixpkgs home-manager nix-darwin nixos-hardware
+  UNSTABLE_INPUTS: nixpkgs-unstable
+  THIRD_PARTY_INPUTS: >-
+    flake-parts sops-nix disko nix-diff lan-mouse attic nix-homebrew jaws ff
+    nixos-uconsole rest noctalia nix-citizen rustfs
+
+tasks:
+  update:
+    desc: Update flake inputs (all, or INPUTS="a b c") and run the gate
+    vars:
+      INPUTS: '{{.INPUTS | default ""}}'
+    cmds:
+      - cp flake.lock flake.lock.prev
+      - nix flake update {{.INPUTS}}
+      - task: gate
+
+  update:stable:
+    desc: Update release-channel inputs (nixpkgs/home-manager/nix-darwin/nixos-hardware)
+    cmds:
+      - task: update
+        vars: { INPUTS: '{{.STABLE_INPUTS}}' }
+
+  update:unstable:
+    desc: Update nixpkgs-unstable only
+    cmds:
+      - task: update
+        vars: { INPUTS: '{{.UNSTABLE_INPUTS}}' }
+
+  update:third-party:
+    desc: Update third-party flakes (not rev-pinned ones)
+    cmds:
+      - task: update
+        vars: { INPUTS: '{{.THIRD_PARTY_INPUTS}}' }
+
+  update:brew:
+    desc: Re-lock after bumping the brew-src tag in flake.nix
+    cmds:
+      - cp flake.lock flake.lock.prev
+      - nix flake update nix-homebrew/brew-src
+      - task: gate
+
+  update:hosts:
+    desc: Print the current sha256 of the StevenBlack hosts file (paste into modules/darwin/stevenblack.nix)
+    cmds:
+      - nix-prefetch-url "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+
+  gate:
+    desc: Verify the current flake.lock (check + diff review + toplevel builds)
+    cmds:
+      - task: check
+      - task: diff
+      - task: build
+      - task: build:darwin
+
+  check:
+    desc: Evaluate the flake and run flake checks (no builds)
+    cmds:
+      - nix flake check --no-build
+
+  diff:
+    desc: Review what changed between the previous lock and the current one
+    preconditions:
+      - sh: test -f flake.lock.prev
+        msg: No flake.lock.prev snapshot — run `task update` first.
+    cmds:
+      - nix-diff --color always flake.lock.prev flake.lock
+
+  build:
+    desc: Build NixOS toplevel closures for HOSTS (default boojum)
+    vars:
+      HOSTS: '{{.HOSTS | default "boojum"}}'
+    cmds:
+      - |
+        for h in {{.HOSTS}}; do
+          echo "── building nixosConfigurations.$h ──"
+          nix build ".#nixosConfigurations.$h.config.system.build.toplevel" --print-out-paths || exit 1
+        done
+
+  build:darwin:
+    desc: Build darwin closures for DARWIN_HOSTS (skipped when unset)
+    vars:
+      DARWIN_HOSTS: '{{.DARWIN_HOSTS | default ""}}'
+    cmds:
+      - |
+        for h in {{.DARWIN_HOSTS}}; do
+          echo "── building darwinConfigurations.$h ──"
+          nix build ".#darwinConfigurations.$h.system" --print-out-paths || exit 1
+        done
+
+  commit:
+    desc: Commit flake.lock after a successful gate
+    preconditions:
+      - sh: test -f flake.lock.prev
+        msg: No gated lock found — run `task update` first.
+      - sh: git status --porcelain flake.lock | grep -q flake.lock
+        msg: flake.lock is unchanged — nothing to commit.
+    cmds:
+      - git add flake.lock
+      - git commit -m "flake lock update"
+      - rm -f flake.lock.prev

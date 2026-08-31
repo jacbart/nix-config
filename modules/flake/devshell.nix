@@ -7,6 +7,7 @@
         nativeBuildInputs = with pkgs; [
           home-manager
           git
+          go-task
         ];
       };
 

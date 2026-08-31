@@ -3,10 +3,8 @@
   networking = {
     networkmanager = {
       enable = true;
-      insertNameservers = [
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
+      # No hardcoded nameservers: resolution goes through systemd-resolved
+      # (see services/dns.nix) with strict DNS-over-TLS upstream.
       wifi = {
         backend = "iwd";
         powersave = false;

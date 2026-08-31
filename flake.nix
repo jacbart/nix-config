@@ -59,7 +59,8 @@
     rustfs.url = "github:rustfs/rustfs-flake";
     rustfs.inputs.nixpkgs.follows = "nixpkgs";
 
-    got.url = "git+ssh://git@got.bbl.systems/git/got";
+    # Pinned by rev: bump deliberately, do not track `main`.
+    got.url = "git+ssh://git@got.bbl.systems/git/got?rev=c1e25159cd44ad45e704da531410bbf46a03941d";
 
     secrets.url = "git+ssh://git@github.com/jacbart/nix-secrets.git?ref=main&shallow=1";
     secrets.flake = false;

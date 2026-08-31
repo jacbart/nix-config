@@ -18,6 +18,7 @@
       ../../nixos/services/flatpak.nix
       config.flake.modules.nixos.profileOnlinePersonal
       config.flake.modules.nixos.profileAtticWatchStore
+      ../../nixos/services/dns.nix
       ../../nixos/apps/ghostty.nix
       ../../nixos/apps/steam.nix
       ../../nixos/apps/gaming.nix
