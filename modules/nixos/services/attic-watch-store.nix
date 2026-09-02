@@ -4,7 +4,11 @@
 # etc.) by default — attic's filter handles this.
 #
 # The push JWT is deployed via sops (attic/push-token).  Create it on maple:
-#   atticadm make-token --sub <host> --validity '99 years' --push nix-cache
+#   atticadm make-token --sub <host> --validity '99 years' \
+#     --push nix-cache --create-cache nix-cache
+# (`attic use` needs pull — granted to every token on a public cache. The
+# create-cache scope lets the script below re-create the cache after an
+# atticd DB reset instead of crash-looping until an admin intervenes.)
 {
   config,
   pkgs,
@@ -47,6 +51,9 @@
       set -eux -o pipefail
       ATTIC_TOKEN=$(< "$CREDENTIALS_DIRECTORY/push-token")
       attic login prod https://nix-cache.${vars.domain} "$ATTIC_TOKEN"
+      # Self-heal after an atticd DB reset (fresh DB = NoSuchCache).
+      # Needs the create-cache scope on the token; a no-op otherwise.
+      attic cache create prod:nix-cache 2>/dev/null || true
       attic use prod:nix-cache
       exec attic watch-store prod:nix-cache
     '';

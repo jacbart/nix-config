@@ -79,24 +79,26 @@ in
       "namespace inbox" = {
         inbox = true;
         separator = "/";
-        mailbox = {
-          All = {
-            auto = "create";
-            special_use = "\\All";
-          };
-          Sent = {
-            auto = "create";
-            special_use = "\\Sent";
-          };
-          Trash = {
-            auto = "create";
-            special_use = "\\Trash";
-          };
-          Junk = {
-            auto = "create";
-            special_use = "\\Junk";
-          };
-        };
+      };
+      # Dovecot 2.4 wants named mailbox sections *inside* the namespace,
+      # rendered as `mailbox Sent { ... }` — a flat key with the name after
+      # the section keyword (same shape as `passdb passwd-file`), not a
+      # nested `mailbox.Sent` attrset (which yields an invalid `mailbox { }`).
+      "namespace inbox"."mailbox All" = {
+        auto = "create";
+        special_use = "\\All";
+      };
+      "namespace inbox"."mailbox Sent" = {
+        auto = "create";
+        special_use = "\\Sent";
+      };
+      "namespace inbox"."mailbox Trash" = {
+        auto = "create";
+        special_use = "\\Trash";
+      };
+      "namespace inbox"."mailbox Junk" = {
+        auto = "create";
+        special_use = "\\Junk";
       };
       "passdb passwd-file" = {
         passwd_file_path = config.sops.secrets."mail-password".path;
