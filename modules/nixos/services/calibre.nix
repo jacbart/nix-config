@@ -9,6 +9,7 @@
 {
   pkgs,
   lib,
+  config,
   vars,
   ...
 }:
@@ -147,6 +148,11 @@ in
         User = user;
         Group = group;
         WorkingDirectory = "/app/calibre-web-automated";
+        # HARDCOVER_TOKEN (shared sops env file with hardcover-sync): feeds
+        # CWA's metadata provider, auto-Hardcover-ID task, and scheduled
+        # syncs. Kobo progress sync additionally needs the per-user token
+        # set in the CWA user settings UI.
+        EnvironmentFile = config.sops.secrets."hardcover/env_file".path;
         # '+' prefix runs as root, before privileges drop to User=
         ExecStartPre = [
           (
@@ -204,6 +210,8 @@ in
                 config_calibre_dir   = '/calibre-library',
                 config_kobo_sync     = 1,
                 config_kobo_proxy    = 1,
+                config_hardcover_sync = 1,
+                config_hardcover_annotations_sync = 1,
                 config_external_port = 443;
               SQL
               # sqlite3 ran as root; reclaim db + journal/wal/shm for the user.
@@ -219,7 +227,7 @@ in
                 ${pkgs.calibre}/bin/ebook-convert --version 2>&1 | ${pkgs.coreutils}/bin/head -5 \
                 || echo "ebook-convert --version FAILED rc=$?"
               ${pkgs.sqlite}/bin/sqlite3 ${configDir}/app.db \
-                'SELECT config_binariesdir, config_converterpath, config_kepubifypath, config_kobo_sync, config_kobo_proxy, config_external_port FROM settings;' \
+                'SELECT config_binariesdir, config_converterpath, config_kepubifypath, config_kobo_sync, config_kobo_proxy, config_hardcover_sync, config_hardcover_annotations_sync, config_external_port FROM settings;' \
                 || echo "sqlite SELECT FAILED rc=$?"
               echo "==== end preflight ===="
             '')

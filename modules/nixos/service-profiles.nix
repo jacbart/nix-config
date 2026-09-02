@@ -70,6 +70,7 @@
             "calibre-web-automated-watcher"
             "dendrite"
             "got"
+            "hardcover-sync"
             "immich-server"
             "kiwix-serve"
             "microbin"

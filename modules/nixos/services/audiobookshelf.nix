@@ -1,11 +1,42 @@
-{ pkgs, vars, ... }:
+{
+  pkgs,
+  config,
+  vars,
+  ...
+}:
 let
   package = pkgs.unstable.audiobookshelf;
   subdomain = "books";
   domain = vars.domain;
+
+  # Hardcover.app sync sidecar: pushes listening progress, reading status,
+  # and ownership from ABS to Hardcover on a schedule. Tokens come from a
+  # sops env file (AUDIOBOOKSHELF_TOKEN / HARDCOVER_TOKEN) shared with the
+  # CWA unit, so both integrations use the same Hardcover API key.
+  syncPackage = pkgs.audiobookshelf-hardcover-sync;
+  syncStateDir = "/var/lib/hardcover-sync";
 in
 {
-  environment.systemPackages = [ package ];
+  environment.systemPackages = [
+    package
+    syncPackage
+  ];
+
+  sops.secrets."hardcover/env_file" = {
+    mode = "0440";
+    group = "media";
+    restartUnits = [
+      "hardcover-sync.service"
+      "calibre-web-automated.service"
+    ];
+  };
+
+  users.users.hardcover-sync = {
+    isSystemUser = true;
+    group = "media";
+    home = syncStateDir;
+    description = "Audiobookshelf to Hardcover sync";
+  };
 
   services.audiobookshelf = {
     enable = true;
@@ -14,6 +45,48 @@ in
     host = "127.0.0.2";
     port = 8234;
     openFirewall = false;
+  };
+
+  systemd.services.hardcover-sync = {
+    description = "Audiobookshelf to Hardcover sync";
+    after = [
+      "network.target"
+      "audiobookshelf.service"
+    ];
+    requires = [ "audiobookshelf.service" ];
+    wantedBy = [ "multi-user.target" ];
+
+    environment = {
+      AUDIOBOOKSHELF_URL = "http://127.0.0.2:8234";
+      SYNC_INTERVAL = "10m";
+      # Want to Read is handled by the CWA/Kobo shelf flow; avoid duplicating
+      # the whole unstarted ABS library on Hardcover.
+      SYNC_WANT_TO_READ = "false";
+      SYNC_OWNED = "true";
+      SYNC_STATE_FILE = "${syncStateDir}/sync_state.json";
+      LOG_FORMAT = "console";
+      SHUTDOWN_TIMEOUT = "30s";
+    };
+
+    serviceConfig = {
+      Type = "simple";
+      User = "hardcover-sync";
+      Group = "media";
+      EnvironmentFile = config.sops.secrets."hardcover/env_file".path;
+      StateDirectory = "hardcover-sync";
+      ExecStart = "${syncPackage}/bin/audiobookshelf-hardcover-sync";
+      Restart = "on-failure";
+      RestartSec = 5;
+      NoNewPrivileges = true;
+      PrivateTmp = true;
+      ProtectHome = true;
+      ProtectSystem = "strict";
+      ProtectKernelTunables = true;
+      ProtectKernelModules = true;
+      ProtectControlGroups = true;
+      RestrictSUIDSGID = true;
+      RestrictRealtime = true;
+    };
   };
 
   services.nginx = {

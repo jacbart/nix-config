@@ -28,4 +28,5 @@ in
 // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
   uconsole-nx = pkgs.callPackage ./nxengine { };
   calibre-web-automated = pkgs.callPackage ./calibre-web-automated { };
+  audiobookshelf-hardcover-sync = pkgs.callPackage ./audiobookshelf-hardcover-sync { };
 }
