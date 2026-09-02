@@ -71,8 +71,11 @@ in
       mail_driver = "maildir";
       mail_path = "~/Maildir";
       protocols = [ "imap" ];
-      ssl_server_cert_file = "/var/lib/acme/certs/mail.${domain}/fullchain.pem";
-      ssl_server_key_file = "/var/lib/acme/private/mail.${domain}/key.pem";
+      # Reference the cert entry's directory rather than hardcoding a layout;
+      # this nixpkgs keeps per-cert state at /var/lib/acme/<name>, not
+      # /var/lib/acme/certs/<name>.
+      ssl_server_cert_file = "${config.security.acme.certs."mail.${domain}".directory}/fullchain.pem";
+      ssl_server_key_file = "${config.security.acme.certs."mail.${domain}".directory}/key.pem";
       "namespace inbox" = {
         inbox = true;
         separator = "/";
@@ -126,6 +129,13 @@ in
     "d /var/lib/${dataDir}/dkim 0750 ${user} ${group} - -"
     "d /var/lib/postfix 0755 postfix ${group} - -"
   ];
+
+  # Dovecot reads the ACME-issued cert directly; wait for issuance instead of
+  # racing it at boot.
+  systemd.services.dovecot = {
+    after = [ "acme-mail.${domain}.service" ];
+    wants = [ "acme-mail.${domain}.service" ];
+  };
 
   networking.firewall.allowedTCPPorts = [
     993 # IMAPS

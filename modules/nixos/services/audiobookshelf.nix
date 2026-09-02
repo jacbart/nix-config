@@ -64,6 +64,12 @@ in
       SYNC_WANT_TO_READ = "false";
       SYNC_OWNED = "true";
       SYNC_STATE_FILE = "${syncStateDir}/sync_state.json";
+      # The app defaults these to ./data ./cache ./mismatches relative to the
+      # working directory; under ProtectSystem=strict that's read-only, so
+      # anchor them in the StateDirectory explicitly.
+      DATA_DIR = "${syncStateDir}/data";
+      CACHE_DIR = "${syncStateDir}/cache";
+      MISMATCH_OUTPUT_DIR = "${syncStateDir}/mismatches";
       LOG_FORMAT = "console";
       SHUTDOWN_TIMEOUT = "30s";
     };
@@ -72,8 +78,10 @@ in
       Type = "simple";
       User = "hardcover-sync";
       Group = "media";
+      WorkingDirectory = syncStateDir;
       EnvironmentFile = config.sops.secrets."hardcover/env_file".path;
       StateDirectory = "hardcover-sync";
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${syncStateDir}/data ${syncStateDir}/cache ${syncStateDir}/mismatches";
       ExecStart = "${syncPackage}/bin/audiobookshelf-hardcover-sync";
       Restart = "on-failure";
       RestartSec = 5;
