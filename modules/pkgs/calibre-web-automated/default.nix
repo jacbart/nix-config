@@ -156,6 +156,12 @@ py.pkgs.buildPythonApplication rec {
     # Ingest processor builds env for calibredb from os.environ.copy(), which
     # inherits CWA's PYTHONPATH and breaks calibre's bundled Python on regex.
     ./patches/0003-ingest-strip-pythonpath.patch
+    # TaskAutoHardcoverID creates its CalibreDB session in __init__, i.e. in
+    # the web-request greenlet, but uses it in the worker thread; under the
+    # gevent server the pooled connection is closed by then and the task dies
+    # with ResourceClosedError("This Connection is closed"). Create the
+    # session at the start of run() instead.
+    ./patches/0004-hardcover-task-session.patch
   ];
 
   nativeBuildInputs = [ makeWrapper ];
