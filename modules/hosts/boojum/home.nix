@@ -8,6 +8,7 @@
       ../../home/shell/default.nix
       ../../home/users/meep/default.nix
       ../../home/desktop/default.nix
+      ../../home/apps/aerc.nix
     ]
     ++ [
       ../../home/users/meep/hosts/boojum.nix

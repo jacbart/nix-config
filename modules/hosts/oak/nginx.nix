@@ -1,7 +1,7 @@
 { vars, ... }:
 let
   domain = vars.domain;
-  maple = "100.116.178.48";
+  maple = vars.tailscaleIps.maple;
 in
 {
   services.nginx = {

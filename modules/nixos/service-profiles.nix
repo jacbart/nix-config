@@ -45,7 +45,6 @@
       imports = [
         ./services/attic.nix
         ./services/mailserver.nix
-        ./services/maildns.nix
         ./services/got.nix
         ./services/freshrss.nix
         ./services/rustfs.nix

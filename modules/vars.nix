@@ -10,6 +10,26 @@
       lanGateway = "10.120.0.1";
       lanDomain = "lan.meep.sh";
 
+      # Public IPv4 of the oak edge (DigitalOcean droplet, FRA). Only changes
+      # when the droplet is rebuilt. PTR comes from the droplet name
+      # (mail.meep.sh).
+      publicIps.oak = "46.101.182.66";
+
+      # Tailscale IPv4s by host. Postfix relay trust/targets, oak's nginx
+      # upstreams and the /etc/hosts service catalog derive from this map.
+      # Fleet DNS records are generated from it at sync time (cloudflare-dns.nix);
+      # keep values in sync with `tailscale status` when devices re-register.
+      tailscaleIps = {
+        maple = "100.116.178.48";
+        oak = "100.97.69.102";
+        ash = "100.69.126.51";
+        boojum = "100.118.9.78";
+        cork = "100.113.192.12";
+        sycamore = "100.88.231.43";
+        unicron = "100.78.207.83";
+        acorn = "100.107.253.35";
+      };
+
       # NixOS hosts opted in to the hardened fail2ban profile: explicit sshd /
       # recidive jails plus a daily-fed scanner blocklist
       # (Shodan/Censys C2, Spamhaus DROP/EDROP, FireHOL L1–L3) dropped at the
@@ -66,9 +86,11 @@
       #   known_hosts; fill in via `ssh-keyscan -t ed25519 <host>`).
       remotebuildKey = "/var/secrets/remotebuild_id";
 
+      # FQDNs so builder SSH resolves via public DNS (bare hostnames don't
+      # resolve on strict-DoT hosts; MagicDNS is not relied upon).
       builders = [
         {
-          hostName = "cork";
+          hostName = "cork.${domain}";
           systems = [
             "x86_64-linux"
             "aarch64-linux"
@@ -84,7 +106,7 @@
           publicHostKey = null;
         }
         {
-          hostName = "boojum";
+          hostName = "boojum.${domain}";
           systems = [
             "x86_64-linux"
             "aarch64-linux"
@@ -100,7 +122,7 @@
           publicHostKey = null;
         }
         {
-          hostName = "maple";
+          hostName = "maple.${domain}";
           systems = [ "aarch64-linux" ];
           speedFactor = 2;
           maxJobs = 2;
@@ -108,7 +130,7 @@
           publicHostKey = null;
         }
         {
-          hostName = "ash";
+          hostName = "ash.${domain}";
           systems = [ "aarch64-linux" ];
           speedFactor = 1;
           maxJobs = 1;
@@ -118,13 +140,13 @@
       ];
 
       # SSH host keys for known_hosts (MITM protection for the build channel).
-      # Run `ssh-keyscan -t ed25519 <host>` and paste the key here.
+      # Keys must be keyed by FQDN (what ssh actually connects to). Verify with
+      # `ssh-keyscan -t ed25519 <fqdn>` after re-imaging a builder.
       builderHostKeys = {
-        boojum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE4MTXIg+HPG7g8ZKCReM2nRMcC3+m3MPStHL5sw9E7H";
-        ash = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
-        maple = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4sTgZqEhhNkle8EwV+vWjOL11WjK+QyllSRTpPw8wk";
-        cork = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
-        # colima = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvJR2xPpXLBfD+QmKhHz2r6UK+7kASNcYOk6q7H7sl3";
+        "boojum.${domain}" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE4MTXIg+HPG7g8ZKCReM2nRMcC3+m3MPStHL5sw9E7H";
+        "ash.${domain}" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
+        "maple.${domain}" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4sTgZqEhhNkle8EwV+vWjOL11WjK+QyllSRTpPw8wk";
+        "cork.${domain}" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5Mu5GWUBvLLK/y/Zr+rLmr44QlLhAQgvcKIHoLgvha";
       };
 
       # Host keys for non-builder hosts reached over SSH by flake inputs
@@ -136,7 +158,130 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHOUi4f/tscM+MdtNIwB3RbxzaQ8Rq1J+a5hY0CUtC5b";
       };
 
-      serviceCatalog = import ./service-catalog.nix { inherit domain; };
+      # ── Declarative Cloudflare DNS (octodns; see nixos/services/cloudflare-dns.nix) ──
+      # `records` is the single source of truth for the zone. Fleet hostname
+      # A records are NOT listed here — they are generated at sync time from
+      # `tailscale status --json` on oak using the `fleetHosts` allowlist.
+      # All A records are DNS-only (grey): SMTP and Tailscale traffic must
+      # never be proxied.
+      # One grey A record pointing at a Tailscale IP (helper for dns.records).
+      tsRecords = ip: [
+        {
+          type = "A";
+          ttl = 300;
+          values = [ ip ];
+        }
+      ];
+
+      dns = {
+        zone = domain;
+        fleetHosts = [
+          "oak"
+          "maple"
+          "ash"
+          "boojum"
+          "cork"
+          "sycamore"
+          "unicron"
+          "acorn"
+        ];
+        # Abort a sync when fewer allowlisted peers than this are visible to
+        # tailscaled (guards against mass-deleting fleet records on a flaky
+        # or unauthenticated API call).
+        fleetMinPeers = 4;
+        records = {
+          # Apex: edge (anubis/nginx) + mail routing + SPF
+          "" = [
+            {
+              type = "A";
+              ttl = 300;
+              values = [ publicIps.oak ];
+            }
+            {
+              type = "MX";
+              ttl = 300;
+              values = [ { exchange = "mail.${domain}."; preference = 10; } ];
+            }
+            {
+              type = "TXT";
+              ttl = 300;
+              values = [ "v=spf1 mx ~all" ];
+            }
+          ];
+          www = [
+            {
+              type = "A";
+              ttl = 300;
+              values = [ publicIps.oak ];
+            }
+          ];
+          # Public edge vhosts terminated on oak
+          matrix = [
+            {
+              type = "A";
+              ttl = 300;
+              values = [ publicIps.oak ];
+            }
+          ];
+          tun = [
+            {
+              type = "A";
+              ttl = 300;
+              values = [ publicIps.oak ];
+            }
+          ];
+          # MX target (postfix edge on oak; PTR = droplet name)
+          mail = [
+            {
+              type = "A";
+              ttl = 300;
+              values = [ publicIps.oak ];
+            }
+          ];
+          # maple-served names reachable over Tailscale
+          nix-cache = tsRecords tailscaleIps.maple;
+          auth = tsRecords tailscaleIps.maple;
+          books = tsRecords tailscaleIps.maple;
+          photos = tsRecords tailscaleIps.maple;
+          files = tsRecords tailscaleIps.maple;
+          wiki = tsRecords tailscaleIps.maple;
+          got = tsRecords tailscaleIps.maple;
+          s3 = tsRecords tailscaleIps.maple;
+          fs = tsRecords tailscaleIps.maple;
+          # Heavy LAN traffic (calibre ingest) stays on maple's LAN
+          calibre = [
+            {
+              type = "A";
+              ttl = 300;
+              values = [ "192.168.0.44" ];
+            }
+          ];
+          _dmarc = [
+            {
+              type = "TXT";
+              ttl = 300;
+              # octodns TXT values escape ";" as "\;" (the provider
+              # un-escapes before sending to the Cloudflare API).
+              values = [ "v=DMARC1\\; p=none\\; rua=mailto:postmaster@${domain}\\; pct=100" ];
+            }
+          ];
+          # TODO(mail): after maple's mail-dkim-keygen service runs once, copy
+          # the TXT record from /var/lib/mail/dkim/${domain}.mail.txt (escape
+          # every ";" as "\;") and add:
+          #   mail._domainkey = [{
+          #     type = "TXT"; ttl = 300;
+          #     values = [ "v=DKIM1\\; k=rsa\\; p=<pubkey>" ];
+          #   }];
+          # then `task dns:apply` again.
+        };
+      };
+
+      serviceCatalog = import ./service-catalog.nix {
+        inherit
+          domain
+          tailscaleIps
+          ;
+      };
     };
     stateVersion = lib.mkDefault "26.05";
   };

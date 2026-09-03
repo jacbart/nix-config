@@ -4,7 +4,6 @@
 {
   imports = [
     ./sycamore/darwin.nix
-    ./jackjrny/darwin.nix
     ./ash/nixos.nix
     ./boojum/nixos.nix
     ./cork/nixos.nix
@@ -15,7 +14,6 @@
     ./oak/nixos.nix
     ./unicron/home.nix
     ./sycamore/home.nix
-    ./jackjrny/home.nix
     ./oak/home.nix
     ./mesquite/home.nix
     ./maple/home.nix

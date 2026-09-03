@@ -9,9 +9,11 @@
 }:
 let
   host = config.networking.hostName;
-  # Full fleet minus self (a host never delegates to itself).
-  remoteBuilders = lib.filter (m: m.hostName != host) vars.builders;
-  knownHosts = lib.filterAttrs (name: _: name != host) vars.builderHostKeys;
+  # Full fleet minus self (a host never delegates to itself). Builder
+  # hostNames are FQDNs (vars.builders), so match on the "<host>." prefix.
+  isSelf = name: lib.hasPrefix "${host}." name;
+  remoteBuilders = lib.filter (m: !isSelf m.hostName) vars.builders;
+  knownHosts = lib.filterAttrs (name: _: !isSelf name) vars.builderHostKeys;
 in
 {
   nix.distributedBuilds = true;

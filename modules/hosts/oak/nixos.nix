@@ -59,6 +59,7 @@
       ./nginx.nix
       ../shared/distributed-builds.nix
       ../../nixos/services/dns.nix
+      ../../nixos/services/cloudflare-dns.nix
     ];
   };
 }

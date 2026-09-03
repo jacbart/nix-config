@@ -69,6 +69,28 @@ tasks:
     cmds:
       - nix-prefetch-url "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
 
+  # ── Declarative Cloudflare DNS (octodns on oak) ────────────────────────
+  # Records live in vars.dns.records; fleet host A records are generated
+  # from `tailscale status` at sync time. plan is always a dry-run.
+
+  dns:plan:
+    desc: Dry-run octodns sync against Cloudflare (shows the planned changes)
+    cmds:
+      - ssh oak systemctl start octodns-cloudflare-plan.service
+      - ssh oak journalctl -u octodns-cloudflare-plan.service -n 300 --no-pager
+
+  dns:apply:
+    desc: Apply octodns changes to Cloudflare (--doit; run `task dns:plan` first)
+    cmds:
+      - ssh oak systemctl start octodns-cloudflare-apply.service
+      - ssh oak journalctl -u octodns-cloudflare-apply.service -n 300 --no-pager
+
+  dns:dump:
+    desc: Dump the live Cloudflare zone as octodns YAML (adoption reference)
+    cmds:
+      - ssh oak systemctl start octodns-cloudflare-dump.service
+      - ssh oak cat /var/lib/octodns-cloudflare/dump/meep.sh.yaml
+
   gate:
     desc: Verify the current flake.lock (check + diff review + toplevel builds)
     cmds:

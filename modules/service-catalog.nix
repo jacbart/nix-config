@@ -1,8 +1,9 @@
 # Logical service layout: public names, backends, and local binds.
 # Change backend hostnames here when moving workloads between machines.
-{ domain }:
+{ domain, tailscaleIps }:
 let
   mapleFqdn = "maple.${domain}";
+  mapleTs = tailscaleIps.maple;
   # Hosts that reach maple’s services over Tailscale (same IP on ash / oak).
   mapleClientHostsOnTailscale = [
     "maple.${domain}"
@@ -53,7 +54,7 @@ in
         "mail.${domain}"
         "got.${domain}"
       ];
-      "100.78.207.83" = [
+      "${tailscaleIps.unicron}" = [
         "unicron"
         "unicron.bbl.systems"
       ];
@@ -66,32 +67,32 @@ in
         "tun.${domain}"
         "mail.${domain}"
       ];
-      "100.116.178.48" = mapleClientHostsOnTailscale;
+      "${mapleTs}" = mapleClientHostsOnTailscale;
     };
     ash = {
       "127.0.0.2" = [ "ash.${domain}" ];
-      "100.116.178.48" = mapleClientHostsOnTailscale;
+      "${mapleTs}" = mapleClientHostsOnTailscale;
     };
     boojum = {
       "127.0.0.2" = [
         "boojum.${domain}"
         "remote.dev"
       ];
-      "100.116.178.48" = mapleClientHostsOnTailscale;
+      "${mapleTs}" = mapleClientHostsOnTailscale;
     };
     cork = {
       "127.0.0.2" = [
         "cork.${domain}"
         "remote.dev"
       ];
-      "100.116.178.48" = mapleClientHostsOnTailscale;
+      "${mapleTs}" = mapleClientHostsOnTailscale;
     };
     mesquite = {
       "127.0.0.2" = [
         "mesquite"
         "mesquite.${domain}"
       ];
-      "100.116.178.48" = mapleClientHostsOnTailscale;
+      "${mapleTs}" = mapleClientHostsOnTailscale;
     };
   };
 }
