@@ -6,6 +6,8 @@ in
 {
   services.nginx = {
     enable = true;
+    # Anubis owns :80; nginx serves plain HTTP on 8080 and TLS directly on 443.
+    defaultHTTPListenPort = 8080;
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;

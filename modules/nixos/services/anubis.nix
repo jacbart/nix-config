@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   # Enable the Anubis service
   # Anubis sits in front of nginx to provide bot protection and filtering
@@ -25,42 +25,6 @@
           # nginx listens on localhost:8080 for HTTP traffic from Anubis
           # nginx also handles HTTPS (port 443) directly for TLS termination
           TARGET = "http://127.0.0.1:8080";
-
-          # Upstream proxy/backend server that Anubis will protect
-          # This is an alias for TARGET in some Anubis versions
-          UPSTREAM = "http://127.0.0.1:8080";
-
-          # Bot detection policy to block AI scrapers and crawlers
-          # Must be a JSON string for environment variable
-          botPolicy = builtins.toJSON {
-            rules = [
-              {
-                name = "block-ai-scrapers";
-                condition = "userAgent matches '.*(GPTBot|ChatGPT|Google-Extended|anthropic-ai|Claude-Web|CCBot|PerplexityBot|YouBot|Bingbot|BingPreview).*'";
-                action = "block";
-              }
-              {
-                name = "block-common-bots";
-                condition = "userAgent matches '.*(bot|crawler|spider|scraper|crawling).*'";
-                action = "block";
-              }
-              {
-                name = "block-empty-user-agents";
-                condition = "userAgent == ''";
-                action = "block";
-              }
-              {
-                name = "allow-legitimate-bots";
-                condition = "userAgent matches '.*(Googlebot|Bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|Applebot|ia_archiver).*'";
-                action = "allow";
-              }
-              {
-                name = "allow-healthy-traffic";
-                condition = "true";
-                action = "allow";
-              }
-            ];
-          };
         };
       };
     };
@@ -69,6 +33,16 @@
     defaultOptions = {
       # You can set global defaults here if needed
     };
+  };
+
+  # Anubis runs as a hardened DynamicUser with an empty capability set, so it
+  # cannot bind the privileged port 80. Grant only CAP_NET_BIND_SERVICE.
+  # PrivateUsers must stay off: a private user namespace has no capabilities in
+  # the host namespace, so CAP_NET_BIND_SERVICE could not bind port 80.
+  systemd.services."anubis-public-proxy".serviceConfig = {
+    CapabilityBoundingSet = lib.mkForce [ "CAP_NET_BIND_SERVICE" ];
+    AmbientCapabilities = lib.mkForce [ "CAP_NET_BIND_SERVICE" ];
+    PrivateUsers = lib.mkForce false;
   };
 
   # Ensure the service listens on the desired ports
