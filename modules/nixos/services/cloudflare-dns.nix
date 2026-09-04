@@ -133,9 +133,9 @@ let
       exit 1
     fi
     : > "${fleetDir}/${zone}.yaml"
-    printf '%s\n' "$peers" | while read -r name ip; do
-      # Keys must be alphabetized inside each record (octodns 1.15 YamlProvider
-      # enforces ordering: octodns < ttl < type < values).
+    # Top-level record names must be alphabetized too (octodns 1.15
+    # enforce_order applies to the whole file, not just record keys).
+    printf '%s\n' "$peers" | sort | while read -r name ip; do
       printf '%s:\n  octodns:\n    cloudflare:\n      proxied: false\n  ttl: 300\n  type: A\n  values:\n    - %s\n' \
         "$name" "$ip" >> "${fleetDir}/${zone}.yaml"
     done
