@@ -210,10 +210,10 @@
           # Cache/builder outage resilience.
           #   fallback: build from source if a substitute download fails (e.g.
           #     attic on maple is down) instead of hard-failing.
-          #   max-connect-timeout / download-attempts: cap HTTP connect
-          #     backoff so a downed cache fails over quickly (defaults 300s / 5).
+          #   connect-timeout / download-attempts: cap HTTP connect backoff
+          #     so a downed cache fails over quickly (defaults 0s / 5).
           fallback = true;
-          max-connect-timeout = 15;
+          connect-timeout = 15;
           download-attempts = 3;
         };
       };

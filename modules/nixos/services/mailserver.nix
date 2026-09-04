@@ -145,10 +145,16 @@ in
       "passdb passwd-file" = {
         passwd_file_path = config.sops.secrets."mail-password".path;
       };
-      # Delivery identity for LMTP: every mailbox lives under vmail.
-      userdb = {
-        driver = "static";
-        args = "uid=${user} gid=${group} home=/var/lib/${dataDir}/%u";
+      # Delivery identity for LMTP: every mailbox lives under vmail. Dovecot
+      # 2.4 wants the compact section name plus a structured fields block
+      # (verified against doveconf 2.4.5; a bare `userdb { args = ... }` is
+      # rejected).
+      "userdb static" = {
+        fields = {
+          uid = user;
+          gid = group;
+          home = "/var/lib/${dataDir}/%u";
+        };
       };
       "protocol imap" = {
         mail_max_userip_connections = 10;
