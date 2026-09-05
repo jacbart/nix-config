@@ -161,7 +161,11 @@ let
         RuntimeDirectory = "octodns-cloudflare";
         EnvironmentFile = config.sops.secrets."cloudflare_api_key".path;
         ExecStartPre = [ "${fleetGen}" ];
-        ExecStart = "${octodns}/bin/octodns-sync --config-file ${configFile}${lib.optionalString doit " --doit"}";
+        # --force bypasses octodns's 30%-change safety threshold so a first
+        # adoption (or a fleet-wide tailscale IP drift) can always be planned
+        # and reviewed. It does NOT auto-apply: --doit is only appended for
+        # the apply unit, and there is deliberately no timer.
+        ExecStart = "${octodns}/bin/octodns-sync --config-file ${configFile} --force${lib.optionalString doit " --doit"}";
       };
     };
 in
