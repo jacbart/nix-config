@@ -91,6 +91,11 @@ let
         # Same token lego uses for ACME DNS-01 (CLOUDFLARE_DNS_API_TOKEN in
         # the cloudflare_api_key sops env file).
         token = "env/CLOUDFLARE_DNS_API_TOKEN";
+        # No page rules / URLFWD records are managed here. Disabling this
+        # skips the /pagerules API call during populate, which would otherwise
+        # 403 because the token is scoped to Zone.DNS only (not Firewall
+        # Services).
+        pagerules = false;
       };
     };
     processors = {
