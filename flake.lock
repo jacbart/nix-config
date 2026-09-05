@@ -951,10 +951,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1788479101,
-        "narHash": "sha256-oMzOmN3i1PQbJKt/Pe04AWxLVav4bRU8Y09uO4CfAHU=",
+        "lastModified": 1788629044,
+        "narHash": "sha256-VfCPZDLyIJzMc64mJqa10FHE0Ga8CyM+XZYdf/UoNxg=",
         "ref": "main",
-        "rev": "f868fbd131f845aa5c03cdad21e6668a690c3c5c",
+        "rev": "f45003d6efb8573686c63ae05995d4bb9df95823",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/jacbart/nix-secrets.git"
