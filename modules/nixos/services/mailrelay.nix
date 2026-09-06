@@ -28,7 +28,10 @@ in
     enableSubmission = true;
     submissionOptions = {
       smtpd_sasl_auth_enable = "no";
-      smtpd_client_restrictions = "permit_mynetworks, reject";
+      # No space after the comma: this lands in master.cf as a single
+      # `-o smtpd_client_restrictions=...` token, and a space splits it into
+      # a bogus extra argument that crashes smtpd ("unexpected argument").
+      smtpd_client_restrictions = "permit_mynetworks,reject";
     };
     settings.main = {
       myhostname = "mail.${domain}";
