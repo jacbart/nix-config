@@ -65,6 +65,7 @@ in
     # point SASL at dovecot's auth socket.
     enableSubmission = true;
     submissionOptions = {
+      smtpd_sasl_auth_enable = "yes";
       smtpd_sasl_type = "dovecot";
       smtpd_sasl_path = "private/auth";
     };
