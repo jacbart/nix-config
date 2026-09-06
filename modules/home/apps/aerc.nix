@@ -18,6 +18,7 @@
 #   - `gruvbox` styleset matches helix's gruvbox_dark_hard.
 {
   config,
+  pkgs,
   vars,
   ...
 }:
@@ -31,6 +32,10 @@ let
   fd = "fd";
   fzf = "fzf";
   hx = "hx";
+
+  # `:open-link` target. macOS has no xdg-utils, so use its own `open`; the
+  # NixOS hosts (niri) use vivaldi as their browser (see desktop/niri.nix).
+  browser = if pkgs.stdenv.isDarwin then "open" else "vivaldi";
 
   # The colorize filter already pipes ANSI-colored email into the pager, so bat
   # must *not* add its own syntax highlighting (`--color=never`), and the
@@ -66,12 +71,19 @@ in
         "text/*" = batPager;
         "message/*" = batPager;
         "application/pgp-signature" = batPager;
+        # Web links (`:open-link`, bound to <C-l>) go to the browser.
+        "x-scheme-handler/http" = browser;
+        "x-scheme-handler/https" = browser;
       };
       # A user aerc.conf fully replaces aerc's built-in defaults, so the
       # [filters] section must be reproduced here too — otherwise opening a
-      # part reports "no filter configured".
+      # part reports "no filter configured". aerc 0.21's built-in defaults
+      # include `text/html=! html` (its bundled w3m-based `html` filter, which
+      # nixpkgs wraps with w3m + dante on PATH), so HTML-only messages are
+      # viewable. Keep it here or the same message is unviewable.
       filters = {
         "text/plain" = "colorize";
+        "text/html" = "! html";
         "text/calendar" = "calendar";
         "message/delivery-status" = "colorize";
         "message/rfc822" = "colorize";
