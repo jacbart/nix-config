@@ -18,6 +18,12 @@
     enable = true;
     extraConfig = {
       general.unsafe-accounts-conf = true;
+      # On macOS aerc's default opener is `open`, which has no handler for
+      # .asc (PGP/unknown parts) and exits 1. View text-ish parts in the
+      # pager instead; other types (images, pdfs) still use `open`.
+      openers."text/*" = "less -R";
+      openers."message/*" = "less -R";
+      openers."application/pgp-signature" = "less -R";
     };
   };
 
