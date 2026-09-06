@@ -35,7 +35,7 @@ in
       relay_domains = [ domain ];
       mynetworks = [
         "127.0.0.0/8"
-        "::1/128"
+        "[::1]/128"
         "${mapleIp}/32" # maple's outbound relay
       ];
       message_size_limit = 52428800;

@@ -76,7 +76,7 @@ in
       virtual_transport = "lmtp:unix:private/dovecot-lmtp";
       mynetworks = [
         "127.0.0.0/8"
-        "::1/128"
+        "[::1]/128"
         "${oakIp}/32" # inbound relay from oak
       ];
       # All remote outbound mail rides oak's clean IP + PTR. Virtual/local
