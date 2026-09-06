@@ -47,9 +47,10 @@ in
   users.groups."${group}" = { };
 
   sops.secrets."mail-password" = {
-    owner = user;
-    group = group;
-    mode = "0600";
+    # dovecot's auth process (runs as dovecot2) reads the passdb file; it
+    # must be group-readable rather than owned by vmail.
+    group = "dovecot2";
+    mode = "0440";
   };
 
   environment.systemPackages = with pkgs; [
