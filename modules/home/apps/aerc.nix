@@ -60,12 +60,22 @@ in
       compose = {
         editor = hx;
         # `:attach -m` (bound to `a` in compose) picks attachments with fzf.
-        file-picker-cmd = "${fd} --type f --strip-cwd-prefix | ${fzf} --multi --height 40% --reverse --border --border-label ' attach ' --prompt '⚡  ' --preview '${bat} --style=plain --color=always {}'";
+        file-picker-cmd = "${fd} --type f --strip-cwd-prefix | ${fzf} --multi --height 40% --reverse --border --border-label ' attach ' --prompt 'attach> ' --preview '${bat} --style=plain --color=always {}'";
       };
       openers = {
         "text/*" = batPager;
         "message/*" = batPager;
         "application/pgp-signature" = batPager;
+      };
+      # A user aerc.conf fully replaces aerc's built-in defaults, so the
+      # [filters] section must be reproduced here too — otherwise opening a
+      # part reports "no filter configured".
+      filters = {
+        "text/plain" = "colorize";
+        "text/calendar" = "calendar";
+        "message/delivery-status" = "colorize";
+        "message/rfc822" = "colorize";
+        ".headers" = "colorize";
       };
     };
 
