@@ -147,6 +147,10 @@ in
         auto = "create";
         special_use = "\\Junk";
       };
+      # LMTP/SASL look up `jack@meep.sh`, but the passwd-file key is the bare
+      # local part `jack`. Strip the domain for lookups (dovecot 2.4 renamed
+      # 2.3's %n to %{user | username}).
+      auth_username_format = "%{user | username}";
       "passdb passwd-file" = {
         passwd_file_path = config.sops.secrets."mail-password".path;
       };
@@ -158,7 +162,7 @@ in
         fields = {
           uid = user;
           gid = group;
-          home = "/var/lib/${dataDir}/%u";
+          home = "/var/lib/${dataDir}/%{user}";
         };
       };
       "protocol imap" = {
