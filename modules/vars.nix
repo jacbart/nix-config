@@ -265,14 +265,20 @@
               values = [ "v=DMARC1\\; p=none\\; rua=mailto:postmaster@${domain}\\; pct=100" ];
             }
           ];
-          # TODO(mail): after maple's mail-dkim-keygen service runs once, copy
-          # the TXT record from /var/lib/mail/dkim/${domain}.mail.txt (escape
-          # every ";" as "\;") and add:
-          #   mail._domainkey = [{
-          #     type = "TXT"; ttl = 300;
-          #     values = [ "v=DKIM1\\; k=rsa\\; p=<pubkey>" ];
-          #   }];
-          # then `task dns:apply` again.
+          # DKIM public key for rspamd's outbound signing on maple
+          # (selector "mail"; generated once by maple's mail-dkim-keygen
+          # service into /var/lib/mail/dkim/meep.sh.mail.txt).
+          "mail._domainkey" = [
+            {
+              type = "TXT";
+              ttl = 300;
+              # octodns TXT values escape ";" as "\;" (the provider
+              # un-escapes before sending to the Cloudflare API).
+              values = [
+                "v=DKIM1\\; k=rsa\\; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtQpno/Bisd5fgt5md5efP9YqknZkQUh4qqtntVfRWh76jTX/vRW1YI3FmtIkc9IwLJUfm4pQnZ9ljK3fpw/mqjlxKxEHvu9WKyKupw7k89mFXmSIdALGTUrOymLHxWh6VNFDwi++sNMbjQS6hW4KDPBiiR3n/blg6Y0nN/qXGyBmb9ccY84JrRwmjnWRJBB8ogF/Q4rgU09mjLe4ahnYp7TQPdMpwdQnsHmJyA+mDYT8dfBqyJeVO0eIfdD1LapfoASoI5tbGRO/kC0p4ue7GQREp40HQanNlPF2To6LvbZK8RQL4nX5j0fXIi8TUOwni4EE8OoeJmRHfuWv+R2E4QIDAQAB"
+              ];
+            }
+          ];
         };
       };
 
