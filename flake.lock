@@ -536,11 +536,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786322881,
-        "narHash": "sha256-gtLQ1V3eXH9SeTHxlblgQa0QLZN0hNA/5nWUDWRbcOQ=",
+        "lastModified": 1788729303,
+        "narHash": "sha256-eohktdpl0v3dmEnP9YWwiRvcsJd4tXz3lhjh8tk/hyI=",
         "owner": "jacbart",
         "repo": "nixos-uconsole",
-        "rev": "5a2844e3a40f56d95bc8a2e9f00847ac33eb5822",
+        "rev": "0096572cae8c89fa900575af87f5608042f07008",
         "type": "github"
       },
       "original": {

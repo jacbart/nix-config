@@ -15,6 +15,7 @@ in
 {
   services.immich = {
     enable = true;
+    package = pkgs.unstable.immich;
     inherit host port mediaLocation;
     openFirewall = false;
     machine-learning.enable = false;
