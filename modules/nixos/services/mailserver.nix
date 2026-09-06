@@ -68,7 +68,11 @@ in
       smtpd_sasl_path = "private/auth";
     };
     settings.main = {
-      myhostname = "mail.${domain}";
+      # Distinct from oak's mail.<domain> (the public MX): postfix's loop
+      # detection bounces oak->maple relay when both greet with the same
+      # hostname. maple only talks SMTP over Tailscale, so its own name is
+      # fine (the wildcard *.meep.sh cert still covers it for TLS).
+      myhostname = "maple.${domain}";
       mydomain = domain;
       # meep.sh is delivered via LMTP (virtual), not to system users.
       mydestination = [ "localhost" ];
