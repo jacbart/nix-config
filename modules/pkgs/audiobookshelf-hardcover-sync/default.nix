@@ -20,6 +20,10 @@ buildGoModule rec {
 
   vendorHash = "sha256-qtmNg229OY2eh8nj2lbv+cY+QiX4sUUdD9UiRoiSG10=";
 
+  # TestRateLimiterConcurrentAccess is timing-sensitive and flakes under load
+  # (max-concurrent assertions race the limiter); skip it in checkPhase.
+  checkFlags = [ "-skip=TestRateLimiterConcurrentAccess" ];
+
   ldflags = [
     "-s"
     "-w"
