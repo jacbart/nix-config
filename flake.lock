@@ -364,11 +364,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1788736784,
-        "narHash": "sha256-gLICdm6WiPIVYy0t77NM1ZjmIx8sSu39oppPAGxfUE8=",
+        "lastModified": 1788752685,
+        "narHash": "sha256-+iM8yqpkLedopzVoRzOASLszAlGKQPIKDcTX26EgsqY=",
         "ref": "simple",
-        "rev": "094b44917fae8d00e90d585962364a55ed9075ba",
-        "revCount": 57,
+        "rev": "f3403a1a4355e79aab7acdbba996c282a9ef587e",
+        "revCount": 58,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -762,16 +762,16 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1753489912,
-        "narHash": "sha256-uDCFHeXdRIgJpYmtcUxGEsZ+hYlLPBhR83fdU+vbC1s=",
+        "lastModified": 1788614874,
+        "narHash": "sha256-7QYjT2vHLuX9Z1pdxHXDKCbh1CR3D/2rywB9Tx0MPRg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "13e8d35b7d6028b7198f8186bc0347c6abaa2701",
+        "rev": "c043004d1c6985732bcc1cbc5a9c9aecbbb4e0f0",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-25.05",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
