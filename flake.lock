@@ -364,11 +364,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1788754709,
-        "narHash": "sha256-mLcv+ouY/J2TDa5pcL9GBBv8+x6XhEaVPyLuwcV8+2Y=",
+        "lastModified": 1788797071,
+        "narHash": "sha256-gR29flQI+WpmTmQQTqlzzea6Vdsmk1czuncSMpLmwx0=",
         "ref": "simple",
-        "rev": "3dbe052854941bac7203fc91e2793b6d28fa9949",
-        "revCount": 59,
+        "rev": "9120b07990d23c9d956e59f6088933f8a2d458d2",
+        "revCount": 60,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -452,11 +452,11 @@
         "nmt": "nmt"
       },
       "locked": {
-        "lastModified": 1753647809,
-        "narHash": "sha256-QCkCQIF2biY3Lh3j3J/FQ8hnwYWZrxxXnJzAY7Ow0T0=",
+        "lastModified": 1783080654,
+        "narHash": "sha256-D1fYuLjg+JY+XCv2+F5zrceYjdGYViAqpxPmw2M6Sag=",
         "owner": "Gerschtli",
         "repo": "nix-formatter-pack",
-        "rev": "5c4c97df6a05fa102cc5d7907f516588f2e578c6",
+        "rev": "9ed243d4590bfeea0e734f58056bc4d2c8e35023",
         "type": "github"
       },
       "original": {
@@ -971,11 +971,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1788678114,
-        "narHash": "sha256-pcqbpV4ZI79al6KAlr+WJjaEo/PYfgctRlG43D5BSJM=",
+        "lastModified": 1788765185,
+        "narHash": "sha256-pp8lb5CrKjmscZbTK34HuCaq18zDU4Q6zlaD5dS+Hi4=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "4748ec2f5ed4a881474ed4c98aa71a5308cdac8d",
+        "rev": "ca7f624be3935a5bc46d2c240515491ab8675503",
         "type": "github"
       },
       "original": {
