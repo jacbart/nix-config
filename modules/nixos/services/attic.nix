@@ -79,6 +79,18 @@ in
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $connection_upgrade;
+
+        # atticd does heavy work (dedup, chunking, SQLite) while `attic
+        # watch-store` streams large NAR uploads through here.  The default 60s
+        # proxy_read_timeout returns 504 under load, which makes the attic
+        # client panic and crash-loop.  Allow long uploads and stream the
+        # bodies instead of buffering/spooling them.
+        proxy_connect_timeout 15s;
+        proxy_send_timeout 1h;
+        proxy_read_timeout 1h;
+        client_max_body_size 0;
+        proxy_request_buffering off;
+        proxy_buffering off;
       '';
     };
   };

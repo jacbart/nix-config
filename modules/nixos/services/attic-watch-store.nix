@@ -31,9 +31,15 @@
 
   systemd.services.attic-watch-store = {
     wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
     after = [
       "network-online.target"
       "nix-daemon.service"
+      # Start only once the cache backend is actually reachable, otherwise
+      # `attic use`/`attic cache create` get a 502 during a switch and the
+      # unit fails activation.
+      "atticd.service"
+      "nginx.service"
     ];
     environment.HOME = "/var/lib/attic-watch-store";
     serviceConfig = {
@@ -43,8 +49,13 @@
       MemoryMax = "10%";
       LoadCredential = "push-token:${config.sops.secrets."attic/push-token".path}";
       StateDirectory = "attic-watch-store";
+      # The attic client panics on a failed upload (upstream bug), so a crash
+      # is expected occasionally.  Back off exponentially instead of re-hitting
+      # the cache every 30s and re-amplifying load.
       Restart = "on-failure";
+      RestartMode = "exponential";
       RestartSec = "30s";
+      RestartMaxDelaySec = "30min";
     };
     path = [ pkgs.attic-client ];
     script = ''
