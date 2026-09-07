@@ -364,11 +364,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1788752685,
-        "narHash": "sha256-+iM8yqpkLedopzVoRzOASLszAlGKQPIKDcTX26EgsqY=",
+        "lastModified": 1788754709,
+        "narHash": "sha256-mLcv+ouY/J2TDa5pcL9GBBv8+x6XhEaVPyLuwcV8+2Y=",
         "ref": "simple",
-        "rev": "f3403a1a4355e79aab7acdbba996c282a9ef587e",
-        "revCount": 58,
+        "rev": "3dbe052854941bac7203fc91e2793b6d28fa9949",
+        "revCount": 59,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -971,11 +971,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1753671061,
-        "narHash": "sha256-IU4eBWfe9h2QejJYST+EAlhg8a1H6mh9gbcmWgZ2/mQ=",
+        "lastModified": 1788678114,
+        "narHash": "sha256-pcqbpV4ZI79al6KAlr+WJjaEo/PYfgctRlG43D5BSJM=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "40065d17ee4dbec3ded8ca61236132aede843fab",
+        "rev": "4748ec2f5ed4a881474ed4c98aa71a5308cdac8d",
         "type": "github"
       },
       "original": {
