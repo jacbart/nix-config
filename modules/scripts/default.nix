@@ -16,4 +16,6 @@
   apex-impls = pkgs.callPackage ./apex-impls { };
   resolve = pkgs.callPackage ./resolve { };
   moonlight-ash = pkgs.callPackage ./moonlight-ash { };
+  uconsole-screen = pkgs.callPackage ./uconsole-screen { };
+  uconsole-gamepad = pkgs.callPackage ./uconsole-gamepad { };
 }

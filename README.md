@@ -6,7 +6,7 @@ Personal [flake-parts](https://flake.parts/) based Nix configuration managing Ni
 
 | Hostname |     OEM      |            Model             |    OS     |   Role    | Desktop | Status            |
 | :------- | :----------: | :--------------------------: | :-------: | :-------: | :-----: | :---------------- |
-| ash      | Clockworkpi  | [uConsole (CM-4, 4G Module)] |   NixOS   | Handheld  |  phosh  | partially working |
+| ash      | Clockworkpi  | [uConsole (CM-4, 4G Module)] |   NixOS   | Handheld  |  niri   | working           |
 | boojum   |    Lenovo    |      ThinkPad X1 Gen 6       |   NixOS   |  Laptop   |  niri   | working           |
 | cork     |              |       Tower (3060 Ti)        |   NixOS   |  Desktop  |  niri   | working           |
 | jackjrny |    Apple     |     Macbook Pro M1 2020      |   macOS   |  Laptop   |         | working           |

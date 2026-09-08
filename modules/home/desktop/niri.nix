@@ -292,6 +292,9 @@ in
       spawn-at-startup "xwayland-satellite"
       spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
       spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
+      ${lib.optionalString handheld ''
+        spawn-at-startup "${pkgs.scripts.uconsole-gamepad}/bin/uconsole-gamepad"
+      ''}
 
       prefer-no-csd
 
@@ -329,10 +332,17 @@ in
           // Fn+'-' on the uConsole keyboard emits F11. Steals F11 from apps,
           // but niri fullscreen is visually the same as app fullscreen.
           F11 { fullscreen-window; }
-          // Fn+Up on the uConsole keyboard emits Page_Up. This steals bare
-          // Page_Up from apps (foot scrollback is Shift+Page_Up, unaffected).
-          Page_Up { toggle-overview; }
+          // Fn+Up / Fn+Down on the uConsole keyboard emit Page_Up / Page_Down.
+          // Mirror the global Mod+Page_Up/Down workspace cycling (Mod needs the
+          // Fn+Cmd chord on this keyboard, so bare Page_Up/Down take its place).
+          // Overview stays on Alt+Tab (and Mod+Tab).
+          Page_Up { focus-workspace-up; }
+          Page_Down { focus-workspace-down; }
           Alt+Tab repeat=false { toggle-overview; }
+          // Power button (axp20x-pek emits KEY_POWER): toggle the panel
+          // backlight off/on, mirroring phosh's screen-off behavior without
+          // touching the flaky CWU50 DPMS path.
+          XF86PowerOff allow-when-locked=true { spawn "${pkgs.scripts.uconsole-screen}/bin/uconsole-screen"; }
           // Column/window resizing (no Super+drag on handheld).
           Alt+R { switch-preset-column-width; }
           Alt+Minus { set-column-width "-10%"; }

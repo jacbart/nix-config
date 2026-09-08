@@ -48,6 +48,10 @@
     pkgs.moonlight-embedded
     pkgs.antimicrox
     pkgs.scripts.moonlight-ash
+    # Power-button screen toggle (bound in niri config.kdl) + game-button
+    # macros (evsieve; needs the back switch in joystick mode).
+    pkgs.scripts.uconsole-screen
+    pkgs.scripts.uconsole-gamepad
     # VNC viewer: connects to wayvnc servers on boojum/cork and macOS Screen
     # Sharing on sycamore, all over Tailscale. TigerVNC's vncviewer supports
     # SASL/SCRAM auth (needed for wayvnc's PAM authentication). Runs under
