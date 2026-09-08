@@ -24,6 +24,7 @@
       ../../nixos/apps/gaming.nix
       ../../nixos/apps/sunshine.nix
       ./gaming.nix
+      ./avahi.nix
       ./remote-builder.nix
       ../shared/distributed-builds.nix
       (

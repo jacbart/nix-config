@@ -1,18 +1,20 @@
+{ config, lib, ... }:
 {
-  config,
-  inputs,
-  lib,
-  ...
-}:
-{
-  imports = [ inputs.nix-citizen.nixosModules.default ];
-
-  programs.rsi-launcher = {
-    enable = true;
-    gamescope.enable = true;
-  };
-
   hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.stable;
+
+  # ntsync: modern Wine sync primitive (general Proton/Wine perf). /dev/ntsync
+  # is 0666 by default, so no udev rule is needed.
+  boot.kernelModules = [ "ntsync" ];
+
+  # High fd limit for Wine/Proton titles (was rsi-launcher's setLimits).
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "16777216";
+    }
+  ];
 
   environment.sessionVariables = {
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
