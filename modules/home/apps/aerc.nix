@@ -304,8 +304,19 @@ in
         "<C-PgUp>" = ":prev-tab<Enter>";
         "<C-n>" = ":next-tab<Enter>";
         "<C-PgDn>" = ":next-tab<Enter>";
-        e = ":edit<Enter>";
-        a = ":attach -m<Enter>";
+      };
+
+      "compose::editor" = {
+        "$noinherit" = true;
+        "$ex" = "<C-x>";
+        "<C-k>" = ":prev-field<Enter>";
+        "<C-Up>" = ":prev-field<Enter>";
+        "<C-j>" = ":next-field<Enter>";
+        "<C-Down>" = ":next-field<Enter>";
+        "<C-p>" = ":prev-tab<Enter>";
+        "<C-PgUp>" = ":prev-tab<Enter>";
+        "<C-n>" = ":next-tab<Enter>";
+        "<C-PgDn>" = ":next-tab<Enter>";
       };
 
       "compose::review" = {
