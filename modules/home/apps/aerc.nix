@@ -29,6 +29,7 @@ let
   # bat/fd/fzf/hx live). Interpolating store paths here also trips a Nix string-
   # context bug in home-manager's writeTextFile passAsFile path.
   bat = "bat";
+  bsdtar = "bsdtar";
   fd = "fd";
   fzf = "fzf";
   hx = "hx";
@@ -45,6 +46,14 @@ let
   batPager = "${bat} --paging=always --style=plain --color=never --pager 'less -R'";
 in
 {
+  # bsdtar (libarchive) reads zip from stdin natively (unzip/zipinfo can't),
+  # and pdftotext (poppler-utils) reads PDF from stdin (mutool can't); both
+  # are used by filters below.
+  home.packages = [
+    pkgs.libarchive
+    pkgs.poppler-utils
+  ];
+
   programs.aerc = {
     enable = true;
     extraConfig = {
@@ -81,14 +90,37 @@ in
       # include `text/html=! html` (its bundled w3m-based `html` filter, which
       # nixpkgs wraps with w3m + dante on PATH), so HTML-only messages are
       # viewable. Keep it here or the same message is unviewable.
-      filters = {
-        "text/plain" = "colorize";
-        "text/html" = "! html";
-        "text/calendar" = "calendar";
-        "message/delivery-status" = "colorize";
-        "message/rfc822" = "colorize";
-        ".headers" = "colorize";
-      };
+      # Written as a literal string (not an attrset): home-manager renders
+      # attrset sections with generators.toKeyValue, which sorts keys
+      # alphabetically — `text/*` would sort before `text/html`, hijacking
+      # HTML parts before their `! html` filter. aerc matches filters with
+      # fnmatch and uses the first hit, so order below is significant.
+      filters = ''
+        # text — most specific first; `text/*` is the last-resort catch-all.
+        text/plain=colorize
+        text/html=! html
+        text/calendar=calendar
+        # Catch-all for other text subtypes (diff, markdown, vcard, log, ...)
+        # that would otherwise report "no filter configured".
+        text/*=colorize
+
+        message/delivery-status=colorize
+        message/rfc822=colorize
+        .headers=colorize
+
+        # Attachments. `image/*` is deliberately left unfiltered: with no
+        # filter aerc's Vaxis terminal renders images natively (kitty/sixel),
+        # and defining one would disable that.
+        application/json=jq --color-output .
+        # pdftotext reads from stdin (`-`) and is capped at 10 pages; fmt
+        # re-wraps at 100 cols for the pager.
+        application/pdf=pdftotext - -l 10 -nopgbrk -q - | fmt -w 100
+        # bsdtar reads zip from stdin (unzip/zipinfo need a seekable file).
+        application/zip=${bsdtar} -tvf -
+        # Tabulate comma-separated attachments (`.filename,` = exact-substring
+        # match on the attachment filename, no regex escaping needed).
+        .filename,.csv=column -t --separator=','
+      '';
     };
 
     # A user binds.conf fully replaces aerc's built-in defaults, so this is a
