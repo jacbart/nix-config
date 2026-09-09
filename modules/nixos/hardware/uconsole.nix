@@ -48,6 +48,10 @@
   # vzwinternet. ensureProfiles renders the keyfile declaratively under
   # /etc/NetworkManager/system-connections/.
   networking.modemmanager.enable = lib.mkDefault true;
+  # ModemManager's upstream unit is Type=dbus with no WantedBy=; D-Bus
+  # activation isn't firing on this board (mmcli reports "couldn't find the
+  # ModemManager process"), so start it explicitly at boot.
+  systemd.services.ModemManager.wantedBy = [ "multi-user.target" ];
   networking.networkmanager.ensureProfiles.profiles."gsm/usmobile" = {
     connection = {
       id = "US Mobile";
