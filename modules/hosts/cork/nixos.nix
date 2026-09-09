@@ -86,6 +86,14 @@
 
           networking.useDHCP = lib.mkDefault true;
 
+          # cork sits on the same LAN that maple advertises as a Tailscale
+          # subnet route. Accepting it installs `192.168.0.0/24 dev tailscale0`
+          # into tailscale's routing table (consulted before main), so local
+          # traffic (e.g. Sunshine/Moonlight from the Steam Deck) hairpins
+          # through maple instead of going direct via enp39s0. Only accept
+          # DNS, not subnet routes.
+          services.tailscale.extraUpFlags = [ "--accept-dns" ];
+
           # cpu
           hardware.cpu.amd.updateMicrocode = lib.mkForce true;
         }
