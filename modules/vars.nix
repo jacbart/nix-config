@@ -255,6 +255,7 @@
           got = tsRecords tailscaleIps.maple;
           s3 = tsRecords tailscaleIps.maple;
           fs = tsRecords tailscaleIps.maple;
+          rss = tsRecords tailscaleIps.maple;
           # Heavy LAN traffic (calibre ingest) stays on maple's LAN
           calibre = [
             {
