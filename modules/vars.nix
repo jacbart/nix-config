@@ -141,10 +141,14 @@
       # Keys must be keyed by FQDN (what ssh actually connects to). Verify with
       # `ssh-keyscan -t ed25519 <fqdn>` after re-imaging a builder.
       builderHostKeys = {
-        "boojum.${domain}" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE4MTXIg+HPG7g8ZKCReM2nRMcC3+m3MPStHL5sw9E7H";
-        "ash.${domain}" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
-        "maple.${domain}" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4sTgZqEhhNkle8EwV+vWjOL11WjK+QyllSRTpPw8wk";
-        "cork.${domain}" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5Mu5GWUBvLLK/y/Zr+rLmr44QlLhAQgvcKIHoLgvha";
+        "boojum.${domain}" =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE4MTXIg+HPG7g8ZKCReM2nRMcC3+m3MPStHL5sw9E7H";
+        "ash.${domain}" =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILQCfoMseiQ9Ddr9boq7bnGvMdK6egjvshXptsWXgNsu";
+        "maple.${domain}" =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4sTgZqEhhNkle8EwV+vWjOL11WjK+QyllSRTpPw8wk";
+        "cork.${domain}" =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5Mu5GWUBvLLK/y/Zr+rLmr44QlLhAQgvcKIHoLgvha";
       };
 
       # Host keys for non-builder hosts reached over SSH by flake inputs
@@ -198,7 +202,12 @@
             {
               type = "MX";
               ttl = 300;
-              values = [ { exchange = "mail.${domain}."; preference = 10; } ];
+              values = [
+                {
+                  exchange = "mail.${domain}.";
+                  preference = 10;
+                }
+              ];
             }
             {
               type = "TXT";

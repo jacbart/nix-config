@@ -59,15 +59,13 @@ let
 
   # octodns zone YAML: a name maps to a single record dict, or a list when
   # several record types share the name (e.g. apex A + MX + TXT).
-  zoneYaml = lib.mapAttrs
-    (
-      _name: rs:
-      let
-        rendered = map mkRecord rs;
-      in
-      if lib.length rendered == 1 then lib.head rendered else rendered
-    )
-    records;
+  zoneYaml = lib.mapAttrs (
+    _name: rs:
+    let
+      rendered = map mkRecord rs;
+    in
+    if lib.length rendered == 1 then lib.head rendered else rendered
+  ) records;
 
   staticZoneDir = pkgs.runCommand "octodns-static-${zone}" { } ''
     mkdir -p $out
@@ -122,7 +120,9 @@ let
   fleetGen = pkgs.writeShellScript "octodns-fleet-gen" ''
     set -euo pipefail
     mkdir -p "${fleetDir}"
-    allow=$(printf '%s\n' ${lib.concatStringsSep " " (map (h: "'${h}'") fleetHosts)} | ${pkgs.jq}/bin/jq -R . | ${pkgs.jq}/bin/jq -s .)
+    allow=$(printf '%s\n' ${
+      lib.concatStringsSep " " (map (h: "'${h}'") fleetHosts)
+    } | ${pkgs.jq}/bin/jq -R . | ${pkgs.jq}/bin/jq -s .)
     peers=$(${lib.getExe pkgs.tailscale} status --json | ${pkgs.jq}/bin/jq -r --argjson allow "$allow" '
       # .Peer is an object keyed by nodekey on current tailscale; tolerate an
       # array too. Self is always present.
@@ -147,27 +147,25 @@ let
     echo "fleet records generated: $count" >&2
   '';
 
-  mkSyncService =
-    name: doit:
-    {
-      description = "octodns ${name} for ${zone} (Cloudflare${lib.optionalString doit ", applies changes"})";
-      after = [
-        "network-online.target"
-        "tailscaled.service"
-      ];
-      wants = [ "network-online.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        RuntimeDirectory = "octodns-cloudflare";
-        EnvironmentFile = config.sops.secrets."cloudflare_api_key".path;
-        ExecStartPre = [ "${fleetGen}" ];
-        # --force bypasses octodns's 30%-change safety threshold so a first
-        # adoption (or a fleet-wide tailscale IP drift) can always be planned
-        # and reviewed. It does NOT auto-apply: --doit is only appended for
-        # the apply unit, and there is deliberately no timer.
-        ExecStart = "${octodns}/bin/octodns-sync --config-file ${configFile} --force${lib.optionalString doit " --doit"}";
-      };
+  mkSyncService = name: doit: {
+    description = "octodns ${name} for ${zone} (Cloudflare${lib.optionalString doit ", applies changes"})";
+    after = [
+      "network-online.target"
+      "tailscaled.service"
+    ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RuntimeDirectory = "octodns-cloudflare";
+      EnvironmentFile = config.sops.secrets."cloudflare_api_key".path;
+      ExecStartPre = [ "${fleetGen}" ];
+      # --force bypasses octodns's 30%-change safety threshold so a first
+      # adoption (or a fleet-wide tailscale IP drift) can always be planned
+      # and reviewed. It does NOT auto-apply: --doit is only appended for
+      # the apply unit, and there is deliberately no timer.
+      ExecStart = "${octodns}/bin/octodns-sync --config-file ${configFile} --force${lib.optionalString doit " --doit"}";
     };
+  };
 in
 {
   systemd.services = {
