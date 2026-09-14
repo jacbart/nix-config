@@ -229,6 +229,10 @@ in
       # Scooter popup
       bind-key S display-popup -y 55% -h 75% -d '#{pane_current_path}' -E "scooter"
 
+      # Aerc popup
+      unbind m
+      bind-key m display-popup -y 55% -h 55% -w 75% -E "aerc"
+
       is_hx="ps -o state= -o comm= -t '#{pane_tty}' \
         | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?hx?x?|fzf)(diff)?$'"
       bind-key -n 'C-h' if-shell "$is_hx" 'send-keys C-h'  'select-pane -L'
