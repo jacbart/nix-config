@@ -4,7 +4,7 @@
     ./base.nix
     ../zsh.nix
     ../tools
-    ../../apps/newsboat.nix
+    ../../apps/eilmeldung.nix
     ../../apps/fern.nix
     ../../apps/ai
   ];
