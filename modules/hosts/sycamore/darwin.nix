@@ -47,6 +47,18 @@
             };
           };
 
+          # Local development vhosts, appended to /etc/hosts after the
+          # StevenBlack blocklist (see modules/darwin/stevenblack.nix).
+          #
+          # IPv4 only, deliberately. Colima publishes container ports through
+          # an `ssh` forwarder that binds IPv4 only, despite `docker port`
+          # reporting [::], so a `::1 remote.dev` line advertises an address
+          # nothing is listening on and every IPv6-first client stalls before
+          # falling back.
+          stevenblack.extraHosts = ''
+            127.0.0.1  remote.dev
+          '';
+
           # macOS Screen Sharing (VNC on :5900) for remote access over
           # Tailscale. The ARD kickstart activates the agent, enables access
           # for all users, and turns on legacy VNC so standard VNC clients
