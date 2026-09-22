@@ -22,7 +22,7 @@ in
   services.rustfs = {
     enable = true;
     package = inputs.rustfs.packages.${platform}.default;
-    volumes = "/var/lib/rustfs";
+    pools = [ { volumes = [ "/var/lib/rustfs" ]; } ];
     # RustFS rejects addresses not listed on local interfaces (rustfs_utils::net::check_local_server_addr).
     # 127.0.0.2 is rarely on lo — only 127.0.0.1 is — so bind 127.0.0.1.
     address = "127.0.0.1:9000";
