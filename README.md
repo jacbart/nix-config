@@ -34,7 +34,7 @@ This flake uses the dendritic pattern with [flake-parts](https://flake.parts/) t
   - `shellProfile` — `"lite"` | `"zsh-lite"` (default) | `"dev-heavy"`; selects [`modules/home/shell/profiles/`](modules/home/shell/profiles/) (minimal tools vs full dev stack). See **Shell profiles** below.
   - [`modules/home/desktop/default.nix`](modules/home/desktop/default.nix) imports `./${desktop}.nix` when `desktop` is non-null (aligned with NixOS desktop id).
   - Optional feature modules (e.g. [`modules/home/dev/salesforce`](modules/home/dev/salesforce/)) are toggled by adding/removing them in the host's `modules` list — see [`modules/hosts/sycamore/home.nix`](modules/hosts/sycamore/home.nix).
-- **Darwin** — Home Manager is wired automatically. [`modules/darwin/laptop.nix`](modules/darwin/laptop.nix) bundles core + nix-homebrew + docker for the Mac laptops; `flakeModules` is passed in `specialArgs` so nested modules can import flake-exported modules.
+- **Darwin** — Home Manager is wired automatically. [`modules/darwin/laptop.nix`](modules/darwin/laptop.nix) bundles core + docker for the Mac laptops; `flakeModules` is passed in `specialArgs` so nested modules can import flake-exported modules.
 - **Overlays** — Custom packages, script packages, Lix-related tweaks, and `pkgs.unstable` are available via [`modules/flake/overlays.nix`](modules/flake/overlays.nix).
 
 ## Shell profiles
@@ -76,9 +76,8 @@ Per-host `shellProfile` is set in each [`modules/hosts/*/home.nix`](modules/host
 | Category     | Contents                                          |
 | :----------- | :------------------------------------------------ |
 | core         | Lix, zsh, auto GC, flake support, state version 6 |
-| nix-homebrew | Homebrew taps + formulae/casks via nix-homebrew   |
 | docker       | Colima + Docker CLI (unstable Colima)             |
-| laptop       | core + nix-homebrew + docker + primary user       |
+| laptop       | core + docker + primary user                      |
 
 ## Project templates
 
@@ -152,7 +151,7 @@ large and only resolves where those inputs are reachable. See
 nix run nix-darwin -- switch --flake $HOME/workspace/personal/nix-config#<hostname>
 ```
 
-Laptop hosts (`sycamore`, `jackjrny`) use the shared `darwin.laptop` module (core + Homebrew + Docker tooling).
+Laptop hosts (`sycamore`, `jackjrny`) use the shared `darwin.laptop` module (core + Docker tooling).
 
 ## Applying Changes
 

@@ -1,4 +1,4 @@
-# Shared nix-darwin stack for personal laptops (core + Homebrew + Colima/docker + primary user).
+# Shared nix-darwin stack for personal laptops (core + Colima/docker + primary user).
 
 { ... }:
 {
@@ -7,7 +7,6 @@
     {
       imports = [
         flakeModules.darwin.core
-        flakeModules.darwin.nix-homebrew
         flakeModules.darwin.docker
         flakeModules.darwin.colima
         flakeModules.darwin.stevenblack

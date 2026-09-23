@@ -25,23 +25,6 @@
         "type": "github"
       }
     },
-    "brew-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790006612,
-        "narHash": "sha256-7Rc3LKFvjgqXiMPtcpWAf6Qk7bEgi23bSRl35DfYohs=",
-        "owner": "Homebrew",
-        "repo": "brew",
-        "rev": "570982948a8a194f0f42f43f4a5bce2d1c9f64cb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Homebrew",
-        "ref": "7.0.4",
-        "repo": "brew",
-        "type": "github"
-      }
-    },
     "crane": {
       "locked": {
         "lastModified": 1781825982,
@@ -228,38 +211,6 @@
         "type": "github"
       }
     },
-    "homebrew-cask": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789957922,
-        "narHash": "sha256-uDFUNWpQH/HoQM0KByxcg/bYYeS28YusopasXTabtgU=",
-        "owner": "homebrew",
-        "repo": "homebrew-cask",
-        "rev": "62a9f3ed767bcf6f88cbfddf4c990c9c5319cbe7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "homebrew",
-        "repo": "homebrew-cask",
-        "type": "github"
-      }
-    },
-    "homebrew-core": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789958162,
-        "narHash": "sha256-cpCUSVqDR2Uuis7b8lueKpX/qGVAii1TFLAN+iYsq9c=",
-        "owner": "homebrew",
-        "repo": "homebrew-core",
-        "rev": "fab220681d0ab7f41ac7ac8f55c21fb16e14de39",
-        "type": "github"
-      },
-      "original": {
-        "owner": "homebrew",
-        "repo": "homebrew-core",
-        "type": "github"
-      }
-    },
     "jaws": {
       "inputs": {
         "nixpkgs": "nixpkgs_4",
@@ -285,11 +236,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1789808092,
-        "narHash": "sha256-rM60xEjwm4lVty3gIk3PW4EqJWq8qIiSDCau8JfUXBQ=",
+        "lastModified": 1790151420,
+        "narHash": "sha256-VKUBX/UUZfALZudf+ypG/QTcdpbmNNf5N05i/7geTPo=",
         "owner": "feschber",
         "repo": "lan-mouse",
-        "rev": "b81c595586046daffded40a13bd2f2b340760f9c",
+        "rev": "2789a465163ec32016929e7f392d663169ef7b69",
         "type": "github"
       },
       "original": {
@@ -305,11 +256,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1790110595,
-        "narHash": "sha256-6ObT7NzJuPO4ireP13HNenJaRwcRIDQ1LX+7EHi2Zf4=",
+        "lastModified": 1790184972,
+        "narHash": "sha256-uZtWCbz6cmRhuLWpbHQ3XK5/FVRsOSa+a54MgrAx21c=",
         "ref": "simple",
-        "rev": "1aae39123ae55b83984a813b39e99e13da6ec57d",
-        "revCount": 72,
+        "rev": "53f59d422d88862ef99c96681ff5f403a34e805b",
+        "revCount": 73,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -404,34 +355,16 @@
         "type": "github"
       }
     },
-    "nix-homebrew": {
-      "inputs": {
-        "brew-src": "brew-src"
-      },
-      "locked": {
-        "lastModified": 1789928041,
-        "narHash": "sha256-iV37ieTcE4ZLOYEe0VznW6dWMBe4lEL8AbK1vblyZGM=",
-        "owner": "zhaofengli",
-        "repo": "nix-homebrew",
-        "rev": "c11cccfdd36dd69b5323d70d354b2853379c2426",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zhaofengli",
-        "repo": "nix-homebrew",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1789752250,
-        "narHash": "sha256-q0J27mJDfd4BM9a7KcMVbcRmqyU+goQwudbMIu66qsg=",
+        "lastModified": 1789978172,
+        "narHash": "sha256-FIRXajv1pPZ+l6On6ekkmcQ6le0Zi0ncRUoR3nB0vKA=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "b2d7d02644f0002535a3bb51a73780945cdc7ba4",
+        "rev": "9ebcb7766700d7e006d9505247bd7ce0426f4232",
         "type": "github"
       },
       "original": {
@@ -513,11 +446,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1789785513,
-        "narHash": "sha256-B44WL6h0XoLjJ41bUPJk0X5SDinLCII//6EcBLXKiJ0=",
+        "lastModified": 1790046670,
+        "narHash": "sha256-MYiI+CzL0tuWgRPjGsKCDHqYs2T3OzMlMQWOYWG0qso=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "20b1ddd1aa5ace70c9468305030aa4f9ef79671b",
+        "rev": "6774f7bc253789b113a4f39285dc0fa100abeacc",
         "type": "github"
       },
       "original": {
@@ -542,11 +475,11 @@
     },
     "nixpkgs_11": {
       "locked": {
-        "lastModified": 1789885152,
-        "narHash": "sha256-mDNo95riUw8k0MA2Btzj/OuiMcfLKofqIliLYsLbrSY=",
+        "lastModified": 1790113641,
+        "narHash": "sha256-D2aaQetafdpHxbwA4ldAxs51UX0b11pXL+JL/5L8VrM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6d663c0533ff269008fb84e45930151e37c99db9",
+        "rev": "1bc55b9def8165e82073919945c3239903fe4dc2",
         "type": "github"
       },
       "original": {
@@ -723,11 +656,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789952304,
-        "narHash": "sha256-trV4jrU9OM877SuB2oYbDp6MjOQn8PN/kdQlWwENRew=",
+        "lastModified": 1790104132,
+        "narHash": "sha256-yvcudrhnWvWSFS2ujWxAJ7CVdgdiZs2BDGbgn38p1l0=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "de4867dd1bdbfc30454f4465e1ef18a126bfe381",
+        "rev": "61aa22730c434500fd3f2048eba47658b1f20aad",
         "type": "github"
       },
       "original": {
@@ -743,11 +676,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789138678,
-        "narHash": "sha256-CbwfucyLrZClDR1Zmk40IlWe0k2RhWmAi8IeHSXZ2Fs=",
+        "lastModified": 1790120654,
+        "narHash": "sha256-+GOrmS5k2o6PiOEvhI0ee3DCQcoSxQjA/udWRzWDfc0=",
         "owner": "taybart",
         "repo": "rest",
-        "rev": "5b99ebc5fcbc583185c4081d98a2e15e65fdecc2",
+        "rev": "382a25d1cdd0bef3ed8acfd4b2edbbab9537fcb4",
         "type": "github"
       },
       "original": {
@@ -765,14 +698,11 @@
         "flake-parts": "flake-parts_2",
         "got": "got",
         "home-manager": "home-manager",
-        "homebrew-cask": "homebrew-cask",
-        "homebrew-core": "homebrew-core",
         "jaws": "jaws",
         "lan-mouse": "lan-mouse",
         "leadership-matrix": "leadership-matrix",
         "nix-darwin": "nix-darwin",
         "nix-diff": "nix-diff",
-        "nix-homebrew": "nix-homebrew",
         "nixos-hardware": "nixos-hardware",
         "nixos-uconsole": "nixos-uconsole",
         "nixpkgs": "nixpkgs_11",

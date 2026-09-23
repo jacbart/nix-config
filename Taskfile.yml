@@ -8,7 +8,6 @@
 #   task update:stable                 # release-channel inputs only
 #   task update:unstable               # nixos-unstable only
 #   task update:third-party            # everything else except rev-pinned inputs
-#   task update:brew                   # after bumping the brew-src tag in flake.nix
 #   task gate                          # re-run the gate on the current lock
 #   task commit                        # commit a lock that passed the gate
 #
@@ -26,8 +25,14 @@ vars:
   STABLE_INPUTS: nixpkgs home-manager nix-darwin nixos-hardware
   UNSTABLE_INPUTS: nixpkgs-unstable
   THIRD_PARTY_INPUTS: >-
-    flake-parts sops-nix disko nix-diff lan-mouse attic nix-homebrew jaws ff
+    flake-parts sops-nix disko nix-diff lan-mouse attic jaws ff
     nixos-uconsole rest noctalia nix-citizen rustfs
+
+  # Attic binary cache (self-hosted on maple, reachable over Tailscale).
+  # Server alias `prod`, cache `nix-cache`. Push auth is a JWT in ATTIC_TOKEN.
+  ATTIC_ENDPOINT: https://nix-cache.meep.sh
+  ATTIC_SERVER: prod
+  ATTIC_CACHE: prod:nix-cache
 
 tasks:
   update:
@@ -56,13 +61,6 @@ tasks:
     cmds:
       - task: update
         vars: { INPUTS: '{{.THIRD_PARTY_INPUTS}}' }
-
-  update:brew:
-    desc: Re-lock after bumping the brew-src tag in flake.nix
-    cmds:
-      - cp flake.lock flake.lock.prev
-      - nix flake update nix-homebrew/brew-src
-      - task: gate
 
   update:hosts:
     desc: Print the current sha256 of the StevenBlack hosts file (paste into modules/darwin/stevenblack.nix)
@@ -132,6 +130,38 @@ tasks:
         for h in {{.DARWIN_HOSTS}}; do
           echo "── building darwinConfigurations.$h ──"
           nix build ".#darwinConfigurations.$h.system" --print-out-paths || exit 1
+        done
+
+  # ── Attic push (manual warm of the private cache) ──────────────────────
+  # Hosts auto-push via attic watch-store, but `task push` pushes a freshly
+  # built toplevel from THIS machine so the shared closure is cached before any
+  # host pulls it. Needs a push JWT in ATTIC_TOKEN — mint one on maple:
+  #   atticadm make-token --sub <host> --push nix-cache
+
+  push:
+    desc: Build NixOS toplevels (HOSTS) and push closures to attic
+    vars:
+      HOSTS: '{{.HOSTS | default "boojum"}}'
+    cmds:
+      - nix run nixpkgs#attic-client -- login {{.ATTIC_SERVER}} {{.ATTIC_ENDPOINT}} "$ATTIC_TOKEN"
+      - |
+        for h in {{.HOSTS}}; do
+          echo "── pushing nixosConfigurations.$h ──"
+          out="$(nix build ".#nixosConfigurations.$h.config.system.build.toplevel" --print-out-paths --no-link)" || exit 1
+          nix run nixpkgs#attic-client -- push {{.ATTIC_CACHE}} "$out" || exit 1
+        done
+
+  push:darwin:
+    desc: Build darwin closures (DARWIN_HOSTS) and push closures to attic
+    vars:
+      DARWIN_HOSTS: '{{.DARWIN_HOSTS | default ""}}'
+    cmds:
+      - nix run nixpkgs#attic-client -- login {{.ATTIC_SERVER}} {{.ATTIC_ENDPOINT}} "$ATTIC_TOKEN"
+      - |
+        for h in {{.DARWIN_HOSTS}}; do
+          echo "── pushing darwinConfigurations.$h ──"
+          out="$(nix build ".#darwinConfigurations.$h.system" --print-out-paths --no-link)" || exit 1
+          nix run nixpkgs#attic-client -- push {{.ATTIC_CACHE}} "$out" || exit 1
         done
 
   commit:

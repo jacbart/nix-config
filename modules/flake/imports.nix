@@ -18,7 +18,6 @@
     ../nixos/service-profiles.nix
     ../home/core.nix
     ../darwin/core.nix
-    ../darwin/nix-homebrew.nix
     ../darwin/docker.nix
     ../darwin/colima.nix
     ../darwin/stevenblack.nix

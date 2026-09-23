@@ -40,15 +40,6 @@
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    nix-homebrew.inputs.brew-src.url = "github:Homebrew/brew/7.0.6";
-    nix-homebrew.inputs.brew-src.flake = false;
-    homebrew-core.url = "github:homebrew/homebrew-core";
-    homebrew-core.flake = false;
-
-    homebrew-cask.url = "github:homebrew/homebrew-cask";
-    homebrew-cask.flake = false;
-
     nixos-uconsole.url = "github:jacbart/nixos-uconsole";
     nixos-uconsole.inputs.nixpkgs.follows = "nixpkgs";
     nixos-uconsole.inputs.nixos-hardware.follows = "nixos-hardware";
