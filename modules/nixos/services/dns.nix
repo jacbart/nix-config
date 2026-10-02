@@ -27,4 +27,17 @@
       DNSSEC = "allow-downgrade";
     };
   };
+
+  # Time-sync must not depend on DNS. No-RTC hosts (RockPro64) boot with a
+  # garbage clock; strict DoT needs a correct clock for TLS cert validation,
+  # and timesyncd's default servers (nixos.pool.ntp.org) are hostnames that
+  # need DNS to resolve — a bootstrap deadlock (no DNS until clock is right,
+  # no clock until DNS works). Point timesyncd at NTP servers by IP so the
+  # clock self-heals on boot.
+  services.timesyncd.servers = [
+    "162.159.200.1" # Cloudflare
+    "162.159.200.123" # Cloudflare
+    "216.239.35.0" # Google
+    "216.239.35.4" # Google
+  ];
 }
