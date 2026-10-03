@@ -39,7 +39,6 @@ in
     virtualHosts.${domain} = {
       addSSL = true;
       useACMEHost = domain;
-      forceSSL = true;
       locations."/" = {
         proxyPass = "https://127.0.0.1:47990";
         proxyWebsockets = true;
