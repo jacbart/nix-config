@@ -545,6 +545,14 @@ in
         match app-id="1Password"
         open-floating true
       }
+
+      // Steam Big Picture Mode opens tiled under niri; force fullscreen so
+      // Sunshine/Moonlight sessions land in Big Picture fullscreen.
+      window-rule {
+        match app-id="steam"
+        match app-id="Steam"
+        open-fullscreen true
+      }
     '';
   };
 }
