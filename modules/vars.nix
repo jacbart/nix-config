@@ -264,6 +264,8 @@
               values = [ "192.168.0.44" ];
             }
           ];
+          # cork-served names reachable over Tailscale
+          sunshine = tsRecords tailscaleIps.cork;
           _dmarc = [
             {
               type = "TXT";

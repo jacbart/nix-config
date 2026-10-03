@@ -11,6 +11,7 @@
       ../../home/apps/aerc.nix
       # ../../home/apps/lan-mouse.nix
       ../../home/apps/gaming.nix
+      ../../home/users/meep/hosts/cork.nix
     ];
   };
 }

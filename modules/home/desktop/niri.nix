@@ -7,6 +7,7 @@
 }:
 let
   handheld = config.niri-desktop.handheld;
+  headless = config.niri-desktop.headless;
   # uConsole panel max_brightness is 9 — step in raw units, not percent.
   brightnessUpArg = if handheld then "+1" else "5%+";
   brightnessDownArg = if handheld then "1-" else "5%-";
@@ -24,6 +25,12 @@ in
     type = lib.types.bool;
     default = false;
     description = "Optimize niri for a handheld device (uConsole: no lan-mouse/zed/rustdesk, no heavy apps, DSI-1 output config, raw brightness steps, no screen-off idle).";
+  };
+
+  options.niri-desktop.headless = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+    description = "Headless desktop (no monitor, remote VNC/Moonlight control): disable noctalia's idle lock and screen-off so a remote session is never locked or DPMS-blanked.";
   };
 
   imports = [
@@ -132,7 +139,7 @@ in
         idle = {
           behavior = {
             lock = {
-              enabled = true;
+              enabled = !headless;
               timeout = 660;
               # noctalia v5 built-in action; the old "noctalia:session lock"
               # string was v4 IPC and is ignored with a warning.
@@ -143,7 +150,7 @@ in
               # through the same path as the cold-boot dark-panel quirk).
               # Disable screen-off on handheld; the panel stays on and lock
               # alone protects the session.
-              enabled = !handheld;
+              enabled = !handheld && !headless;
               timeout = 600;
               action = "screen_off";
             };
