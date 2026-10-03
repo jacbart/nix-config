@@ -34,10 +34,6 @@ in
 {
   hardware.firmware = [ edidFirmware ];
 
-  boot.initrd.systemd.contents."/lib/firmware/edid/virtual-display.bin" = {
-    source = "${edidFirmware}/lib/firmware/edid/virtual-display.bin";
-  };
-
   boot.kernelParams = [
     "drm.edid_firmware=${connector}:edid/virtual-display.bin"
     "video=${connector}:e"
