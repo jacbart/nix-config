@@ -1,4 +1,5 @@
 flake.lock
+package-lock.json
 templates/
 *.jpg
 *.png
