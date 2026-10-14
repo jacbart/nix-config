@@ -60,6 +60,14 @@
         unstable = unstablePkgs // {
           # Default vivaldi build omits ffmpeg blob; upstream binary still dlopen()'s libffmpeg.so → startup fail.
           vivaldi = unstablePkgs.vivaldi.override { proprietaryCodecs = true; };
+
+          # mockery v3.8.0 pins golang.org/x/tools v0.49.0, which can't read Go 1.27's
+          # export data (version 5). Build sesh — and the go-mockery it depends on —
+          # with Go 1.26 instead (sesh's go.mod still targets go 1.26.0). Drop once
+          # nixpkgs-unstable ships mockery >= 3.8.1 (x/tools v0.51.0).
+          sesh = unstablePkgs.sesh.override {
+            buildGo127Module = unstablePkgs.buildGo126Module;
+          };
         };
       };
   };
