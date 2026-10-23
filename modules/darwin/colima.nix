@@ -39,6 +39,9 @@
 
       cfgProfiles = config.colima.profiles;
 
+      # The nix-managed colima binary (from environment.systemPackages).
+      colimaBin = "/run/current-system/sw/bin/colima";
+
       # Path to the pre-downloaded nix-installer binary on the macOS host.
       # The VM's $HOME is mounted via virtiofs, so this is accessible inside the VM.
       installerPath = "/Users/${username}/.local/share/colima-provision/nix-installer";
@@ -197,6 +200,12 @@
           type = lib.types.bool;
           default = true;
           description = "Auto-restart colima profiles when their config changes during darwin-rebuild switch.";
+        };
+
+        autoStart = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Start colima automatically at login via a per-user launchd LaunchAgent.";
         };
 
         profiles = lib.mkOption {
@@ -518,6 +527,22 @@
         # Always install colima — it's the VM manager
         environment.systemPackages = [ pkgs.colima ];
 
+        # Start colima at login via a per-user LaunchAgent. `colima start -f`
+        # keeps the process in the foreground so launchd's KeepAlive can
+        # supervise it (the same pattern Homebrew's colima service used, now
+        # against the nix-managed binary).
+        launchd.agents.colima = lib.mkIf config.colima.autoStart {
+          command = "${colimaBin} start -f";
+          serviceConfig = {
+            RunAtLoad = true;
+            KeepAlive = {
+              SuccessfulExit = true;
+            };
+            StandardOutPath = "/Users/${username}/Library/Logs/colima.log";
+            StandardErrorPath = "/Users/${username}/Library/Logs/colima.log";
+          };
+        };
+
         # Activation: sync rendered YAML to ~/.colima/<profile>/ and restart if changed.
         # nix-darwin only executes a fixed set of activation scripts — custom names are
         # not run. We append to postActivation (types.lines concatenates all definitions).
@@ -529,7 +554,6 @@
                 yamlFile = mkProfileYaml name cfg;
                 colimaDir = "/Users/${username}/.colima/${name}";
                 colimaYaml = "${colimaDir}/colima.yaml";
-                colimaBin = "/run/current-system/sw/bin/colima";
               in
               ''
                 # Colima profile: ${name}

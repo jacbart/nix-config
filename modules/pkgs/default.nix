@@ -17,6 +17,7 @@ in
   sf-cli = pkgs.callPackage ./sf-cli { };
   prettier-apex = pkgs.callPackage ./prettier-apex { };
   tmux-agent-indicator = pkgs.callPackage ./tmux-agent-indicator { };
+  codebase-memory-mcp = pkgs.callPackage ./codebase-memory-mcp { };
 
   # Rebuild fern from the locked flake source with a corrected vendorHash
   # (upstream's FOD hash drifted — see ./fern/default.nix for details).
