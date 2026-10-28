@@ -5,7 +5,6 @@
     ../zsh.nix
     ../tools
     ../../apps/eilmeldung.nix
-    ../../apps/fern.nix
     ../../apps/ai
   ];
 
@@ -14,7 +13,6 @@
     pgsync
     postgresql_16
     uv
-    fern
   ];
 
   programs.carapace = {

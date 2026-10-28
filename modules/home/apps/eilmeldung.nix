@@ -37,7 +37,7 @@ let
     # capture it too fights copy-mode and steals clicks in popups.
     mouse_support = false;
 
-    # Matches the repo's gruvbox theming (ghostty, fern, tmux).
+    # Matches the repo's gruvbox theming (ghostty, helix, tmux).
     theme.base16_theme = "gruvbox-dark-medium";
 
     login_setup = {

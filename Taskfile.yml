@@ -15,7 +15,7 @@
 #   task update HOSTS="boojum cork"   # NixOS hosts to build (default: boojum)
 #   task update DARWIN_HOSTS=sycamore # additionally build darwin closures
 #
-# Rev-pinned inputs (fern, got, leadership-matrix) never move on `nix flake
+# Rev-pinned inputs (got, leadership-matrix) never move on `nix flake
 # update`; bump them deliberately by editing the rev in flake.nix, then run
 # `task gate`.
 

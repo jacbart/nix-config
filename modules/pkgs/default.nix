@@ -18,13 +18,6 @@ in
   prettier-apex = pkgs.callPackage ./prettier-apex { };
   tmux-agent-indicator = pkgs.callPackage ./tmux-agent-indicator { };
   codebase-memory-mcp = pkgs.callPackage ./codebase-memory-mcp { };
-
-  # Rebuild fern from the locked flake source with a corrected vendorHash
-  # (upstream's FOD hash drifted — see ./fern/default.nix for details).
-  fern = pkgs.callPackage ./fern {
-    fernSource = inputs.fern.outPath;
-    fernVersion = inputs.fern.sourceInfo.shortRev or "dev";
-  };
 }
 // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
   uconsole-nx = pkgs.callPackage ./nxengine { };

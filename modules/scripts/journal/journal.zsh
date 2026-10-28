@@ -19,7 +19,7 @@ function open_page() {
   if [ ! -f "${HOME}/workspace/journal/${page}.md" ]; then
     echo "# ${page}" >"${HOME}/workspace/journal/${page}.md"
   fi
-  fern open "$HOME"/workspace/journal
+  "${EDITOR}" "$HOME"/workspace/journal
 }
 
 function main() {
