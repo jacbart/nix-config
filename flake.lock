@@ -278,11 +278,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1790196284,
-        "narHash": "sha256-ZXFZ1pl2zzu0pIhl2O+dufPuCv8fZj3iA4NJ88OBWiw=",
+        "lastModified": 1793828992,
+        "narHash": "sha256-LQFanGM0e0+GKFVEzbuNtcghNzVfSt8XmAcVMODCr2U=",
         "ref": "simple",
-        "rev": "44a5e936d4377a2bd5aca06898705c1e2c15f08e",
-        "revCount": 74,
+        "rev": "5818a160d3bc822f9ecb258ad6d0501b6fd479e7",
+        "revCount": 76,
         "type": "git",
         "url": "ssh://git@github.com/taybart/leadership-matrix.git"
       },
@@ -468,11 +468,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1793540411,
-        "narHash": "sha256-fiPJ88izTVucjeo2EQ3jk4aWmLg03I1D4vxnX2QjEgE=",
+        "lastModified": 1793726008,
+        "narHash": "sha256-jQp1wKvbwWdLBASTXkSi/VYmDJ5AbBi1WvcMt9HWJC8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "0bb2eedc20e4739f29e8045034f2828ad7054f8f",
+        "rev": "1d060086d60cb76a40cf37109f979d88a5bd6396",
         "type": "github"
       },
       "original": {
@@ -678,11 +678,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793752457,
-        "narHash": "sha256-a86NFhFjCr80wHaHaaYVRkFw0cW80dD/eQxf6ldawVE=",
+        "lastModified": 1793842268,
+        "narHash": "sha256-UUQgvceElesdOclY723TJh4d+yU89czYl3GPMyzTRS4=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "234ff9af201d3e3e9ad7af32c980b8405459de49",
+        "rev": "43bfc457421db865961d18526967df7c85465f56",
         "type": "github"
       },
       "original": {
@@ -699,11 +699,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793642228,
-        "narHash": "sha256-UKTSVxggfjGOeci/h79DsTxm9x1i9nGh7g6bY73hwJQ=",
+        "lastModified": 1793827994,
+        "narHash": "sha256-uGepuQqC2Fk7L09Mm/v+dOb+X7qIqBkuLLjpVEnHcDc=",
         "owner": "taybart",
         "repo": "rest",
-        "rev": "c007ac5068a9faa1f4b42be40c9b7f2699082698",
+        "rev": "48605a314484e2afa6f6cef76e3c4981e303b3fd",
         "type": "github"
       },
       "original": {
