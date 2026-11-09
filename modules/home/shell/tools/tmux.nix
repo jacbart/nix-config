@@ -138,8 +138,8 @@ in
     file.".tmux.conf".text = ''
       # 50ms (not 10): Ghostty sends multi-byte kitty sequences (e.g. CSI 27 u
       # for Esc). Below macOS timer granularity tmux can split them into a bare
-      # ESC + fragments — eilmeldung then inserts ^[ as text instead of aborting
-      # and every bottom-input becomes a trap. 50ms keeps Esc snappy.
+      # ESC + fragments — apps then insert ^[ as text instead of aborting and
+      # every bottom-input becomes a trap. 50ms keeps Esc snappy.
       set -sg escape-time 50
 
       # Plugins (from nixpkgs; no TPM — avoids translucent/odd status from mixed load order + @plugin)
@@ -167,10 +167,10 @@ in
       set-option -g allow-passthrough on
       set-option -g mouse on
 
-      # Kitty keyboard protocol (Ghostty <-> tmux <-> crossterm/ratatui apps
-      # like eilmeldung): without this tmux mangles the capability handshake
-      # and apps mis-decode or swallow keys (everything echoes at the bottom).
-      # Negotiated per-app, so legacy apps (hx, fzf) just keep legacy keys.
+      # Kitty keyboard protocol (Ghostty <-> tmux <-> crossterm/ratatui apps):
+      # without this tmux mangles the capability handshake and apps mis-decode
+      # or swallow keys (everything echoes at the bottom). Negotiated per-app,
+      # so legacy apps (hx, fzf) just keep legacy keys.
       set-option -s extended-keys on
       set-option -sa terminal-features ",xterm*:extkeys"
 
@@ -217,10 +217,6 @@ in
       unbind j
       bind-key j display-popup -y 55% -h 75% -E "hx ~/workspace/journal/"
 
-      # eilmeldung (3 panels need width; 75% height leaves context visible)
-      unbind N
-      bind-key N display-popup -y 55% -w 90% -h 75% -E "eilmeldung"
-
       # Simple shell popup
       unbind e
       bind-key e display-popup -y 55% -h 75% -E "$SHELL"
@@ -245,7 +241,7 @@ in
       bind-key m display-popup -y 55% -h 55% -w 75% -E "aerc"
 
       is_hx="ps -o state= -o comm= -t '#{pane_tty}' \
-        | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?hx?x?|fzf|eilmeldung)(diff)?$'"
+        | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?hx?x?|fzf)(diff)?$'"
       bind-key -n 'C-h' if-shell "$is_hx" 'send-keys C-h'  'select-pane -L'
       bind-key -n 'C-j' if-shell "$is_hx" 'send-keys C-j'  'select-pane -D'
       bind-key -n 'C-k' if-shell "$is_hx" 'send-keys C-k'  'select-pane -U'

@@ -4,7 +4,6 @@
     ./base.nix
     ../zsh.nix
     ../tools
-    ../../apps/eilmeldung.nix
     ../../apps/ai
   ];
 

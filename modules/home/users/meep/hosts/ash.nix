@@ -1,4 +1,4 @@
-# meep@ash only: emulators + RSS clients for the uConsole.
+# meep@ash only: emulators + a touch-friendly RSS client for the uConsole.
 {
   pkgs,
   lib,
@@ -13,7 +13,6 @@
 
   imports = [
     ../../../apps/retroarch.nix
-    ../../../apps/eilmeldung.nix
     ../../../apps/ai
   ];
 
