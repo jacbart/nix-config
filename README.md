@@ -9,7 +9,6 @@ Personal [flake-parts](https://flake.parts/) based Nix configuration managing Ni
 | ash      | Clockworkpi  | [uConsole (CM-4, 4G Module)] |   NixOS   | Handheld  |  niri   | working           |
 | boojum   |    Lenovo    |      ThinkPad X1 Gen 6       |   NixOS   |  Laptop   |  niri   | working           |
 | cork     |              |       Tower (3060 Ti)        |   NixOS   |  Desktop  |  niri   | working           |
-| jackjrny |    Apple     |     Macbook Pro M1 2020      |   macOS   |  Laptop   |         | working           |
 | maple    |    Pine64    |         [RockPro64]          |   NixOS   |  Server   |         | working           |
 | mesquite |  Protectli   |           [FW4B0]            |   NixOS   |  Router   |         | untested          |
 | oak      | DigitalOcean |             VPS              |   NixOS   |  Server   |         | working           |
@@ -151,7 +150,7 @@ large and only resolves where those inputs are reachable. See
 nix run nix-darwin -- switch --flake $HOME/workspace/personal/nix-config#<hostname>
 ```
 
-Laptop hosts (`sycamore`, `jackjrny`) use the shared `darwin.laptop` module (core + Docker tooling).
+Laptop hosts (`sycamore`) use the shared `darwin.laptop` module (core + Docker tooling).
 
 ## Applying Changes
 

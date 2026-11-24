@@ -3,6 +3,7 @@
   platform,
   lib,
   inputs,
+  vars,
   ...
 }:
 let
@@ -13,25 +14,25 @@ let
   sshHosts = [
     {
       name = "ash";
-      hostName = "ash.meep.sh";
+      hostName = "ash.${vars.domain}";
       user = "meep";
       inherit keyPath;
     }
     {
       name = "boojum";
-      hostName = "boojum.meep.sh";
+      hostName = "boojum.${vars.domain}";
       user = "meep";
       inherit keyPath;
     }
     {
       name = "cork";
-      hostName = "cork.meep.sh";
+      hostName = "cork.${vars.domain}";
       user = "meep";
       inherit keyPath;
     }
     {
       name = "maple";
-      hostName = "maple.meep.sh";
+      hostName = "maple.${vars.domain}";
       user = "ratatoskr";
       inherit keyPath;
     }
@@ -44,20 +45,20 @@ let
     }
     {
       name = "oak";
-      hostName = "oak.meep.sh";
+      hostName = "oak.${vars.domain}";
       port = 3048;
       user = "root";
       keyPath = "~/.ssh/id_do";
     }
     {
       name = "sycamore";
-      hostName = "sycamore.meep.sh";
+      hostName = "sycamore.${vars.domain}";
       user = "jackbartlett";
       inherit keyPath;
     }
     {
       name = "unicron";
-      hostName = "unicron.meep.sh";
+      hostName = "unicron.${vars.domain}";
       user = "jack";
       inherit keyPath;
     }
@@ -110,8 +111,8 @@ in
           IdentityFile = "~/.ssh/id_ratatoskr";
           IdentitiesOnly = true;
         };
-        "got.meep.sh" = {
-          HostName = "got.meep.sh";
+        "got.${vars.domain}" = {
+          HostName = "got.${vars.domain}";
           User = "git";
           IdentityFile = "~/.ssh/id_ratatoskr";
           IdentitiesOnly = true;

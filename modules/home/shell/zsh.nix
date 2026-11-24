@@ -10,6 +10,7 @@ let
   ff = inputs.ff.packages.${system}.default;
   rest = inputs.rest.packages.${system}.default;
   jaws = inputs.jaws.packages.${system}.default;
+  deploy-rs = inputs.deploy-rs.packages.${system}.default;
   inherit (pkgs.stdenv) isLinux isDarwin;
 
   sesh = pkgs.unstable.sesh;
@@ -42,6 +43,7 @@ in
         rest # rest easy
         stu # TUI explorer application for Amazon S3
         ff # not so percise search
+        deploy-rs # multi-host nixos/darwin deploy tool
       ]
       ++ lib.optional isLinux unstable.tlrc
       ++ lib.optional (system != "aarch64-linux") fex-cli;

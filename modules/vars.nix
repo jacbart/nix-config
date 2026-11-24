@@ -43,6 +43,23 @@
         "mesquite"
       ];
 
+      # deploy-rs rollout allowlist (see modules/flake/deploy.nix). Deliberately
+      # a subset of nixosHosts/darwinHosts — add a host here only once it has
+      # been exercised with `deploy --dry-activate` and a verified real deploy.
+      # `iso`/`iso-maple` (installer images) and `unicron` (its NixOS system
+      # lives outside this flake) must never appear here.
+      deployHosts = {
+        nixos = [
+          "ash"
+          "boojum"
+          "cork"
+          "maple"
+          "mesquite"
+          "oak"
+        ];
+        darwin = [ "sycamore" ];
+      };
+
       # Shared across nixos / home-manager / darwin nix.settings
       nixAllowedUris = [
         "github:"

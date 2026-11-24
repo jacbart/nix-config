@@ -1,6 +1,6 @@
 {
   perSystem =
-    { pkgs, self', ... }:
+    { pkgs, self', inputs', ... }:
     {
       devShells.default = pkgs.mkShell {
         NIX_CONFIG = "experimental-features = nix-command flakes";
@@ -8,6 +8,7 @@
           home-manager
           git
           go-task
+          inputs'.deploy-rs.packages.default
         ];
       };
 

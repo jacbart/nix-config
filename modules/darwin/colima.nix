@@ -264,18 +264,22 @@
                       enabled = lib.mkOption {
                         type = lib.types.bool;
                         default = false;
+                        description = "Provision a k3s cluster inside the VM.";
                       };
                       version = lib.mkOption {
                         type = lib.types.str;
                         default = "v1.35.0+k3s1";
+                        description = "k3s version to install.";
                       };
                       k3sArgs = lib.mkOption {
                         type = lib.types.listOf lib.types.str;
                         default = [ "--disable=traefik" ];
+                        description = "Extra arguments passed to the k3s server.";
                       };
                       port = lib.mkOption {
                         type = lib.types.int;
                         default = 0;
+                        description = "Kubernetes API server port (0 = random).";
                       };
                     };
                   };
@@ -300,6 +304,7 @@
                           "bridged"
                         ];
                         default = "shared";
+                        description = "VM networking mode.";
                       };
                       interface = lib.mkOption {
                         type = lib.types.str;
@@ -309,22 +314,27 @@
                       preferredRoute = lib.mkOption {
                         type = lib.types.bool;
                         default = false;
+                        description = "Prefer this VM's route for its subnet.";
                       };
                       dns = lib.mkOption {
                         type = lib.types.nullOr (lib.types.listOf lib.types.str);
                         default = null;
+                        description = "Custom DNS servers for the VM (null = use host defaults).";
                       };
                       dnsHosts = lib.mkOption {
                         type = lib.types.attrsOf lib.types.str;
                         default = { };
+                        description = "Static hostname-to-IP entries for the VM's resolver.";
                       };
                       hostAddresses = lib.mkOption {
                         type = lib.types.bool;
                         default = false;
+                        description = "Add host-side addresses to the VM's hosts file.";
                       };
                       gatewayAddress = lib.mkOption {
                         type = lib.types.str;
                         default = "192.168.5.2";
+                        description = "Gateway address for the VM's shared network.";
                       };
                     };
                   };
@@ -356,6 +366,7 @@
                     "none"
                   ];
                   default = "ssh";
+                  description = "Mechanism used to forward VM ports to the host.";
                 };
                 rosetta = lib.mkOption {
                   type = lib.types.bool;
@@ -370,6 +381,7 @@
                 nestedVirtualization = lib.mkOption {
                   type = lib.types.bool;
                   default = false;
+                  description = "Enable nested virtualization inside the VM.";
                 };
                 mountType = lib.mkOption {
                   type = lib.types.enum [
@@ -405,6 +417,7 @@
                         };
                         script = lib.mkOption {
                           type = lib.types.str;
+                          description = "Shell script to run for this provision entry.";
                         };
                       };
                     }
@@ -428,10 +441,12 @@
                       options = {
                         location = lib.mkOption {
                           type = lib.types.str;
+                          description = "Host path to mount into the VM.";
                         };
                         writable = lib.mkOption {
                           type = lib.types.bool;
                           default = true;
+                          description = "Mount the path read-write.";
                         };
                       };
                     }
@@ -441,6 +456,7 @@
                 diskImage = lib.mkOption {
                   type = lib.types.str;
                   default = "";
+                  description = "Path to a custom VM disk image (empty = colima's default).";
                 };
                 rootDisk = lib.mkOption {
                   type = lib.types.ints.positive;
@@ -485,6 +501,7 @@
                       maxJobs = lib.mkOption {
                         type = lib.types.ints.positive;
                         default = 4;
+                        description = "Maximum concurrent build jobs on this builder.";
                       };
                       speedFactor = lib.mkOption {
                         type = lib.types.ints.positive;
@@ -497,18 +514,22 @@
                           "big-parallel"
                           "benchmark"
                         ];
+                        description = "Nix builder features this machine supports.";
                       };
                       systems = lib.mkOption {
                         type = lib.types.listOf lib.types.str;
                         default = [ "aarch64-linux" ];
+                        description = "Systems this builder can build for.";
                       };
                       substituters = lib.mkOption {
                         type = lib.types.listOf lib.types.str;
                         default = vars.nixSubstitutersNixOS;
+                        description = "Binary cache substituters the builder should trust.";
                       };
                       trustedPublicKeys = lib.mkOption {
                         type = lib.types.listOf lib.types.str;
                         default = vars.nixTrustedPublicKeysNixOS;
+                        description = "Public keys for the trusted substituters.";
                       };
                     };
                   };

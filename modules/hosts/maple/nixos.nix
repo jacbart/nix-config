@@ -130,7 +130,7 @@
       )
       ./disks.nix
       ./remote-builder.nix
-      ../../hosts/shared/distributed-builds.nix
+      ../shared/distributed-builds.nix
       ../../nixos/services/dns.nix
       config.flake.modules.nixos.profileAtticWatchStore
     ];

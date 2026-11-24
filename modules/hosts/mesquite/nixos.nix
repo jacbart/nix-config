@@ -1,7 +1,6 @@
 {
   config,
   inputs,
-  lib,
   ...
 }:
 {
@@ -127,7 +126,7 @@
           };
         }
       )
-      (import ./disks.nix { })
+      ./disks.nix
       ./network.nix
       ./nftables.nix
       ../shared/distributed-builds.nix

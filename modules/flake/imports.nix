@@ -12,6 +12,7 @@
     ../configurations.nix
     ../pkgs.nix
     ../scripts.nix
+    ./deploy.nix
 
     # Core modules that export to flake.modules
     ../nixos/core.nix

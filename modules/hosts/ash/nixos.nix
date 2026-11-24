@@ -122,7 +122,7 @@
           };
         }
       )
-      ../../hosts/shared/distributed-builds.nix
+      ../shared/distributed-builds.nix
       ./remote-builder.nix
     ];
   };

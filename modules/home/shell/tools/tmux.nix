@@ -16,7 +16,6 @@ let
       oak = "dark";
       mesquite = "light256";
       maple = "light";
-      jackjrny = "dark256";
       iso = "dark256";
     }
     .${hostname} or "dark256";
@@ -32,7 +31,6 @@ let
       oak = "colour208";
       mesquite = "colour61";
       maple = "colour9";
-      jackjrny = "colour214";
       iso = "colour12";
     }
     .${hostname} or "colour33";

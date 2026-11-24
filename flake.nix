@@ -29,6 +29,8 @@
     lan-mouse.url = "github:feschber/lan-mouse";
 
     noctalia.url = "github:noctalia-dev/noctalia-shell";
+    # Tracks nixpkgs-unstable deliberately: noctalia moves fast and needs
+    # package versions newer than the stable nixos-26.05 channel ships.
     noctalia.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     attic.url = "github:zhaofengli/attic";
@@ -43,6 +45,9 @@
 
     rustfs.url = "github:rustfs/rustfs-flake";
     rustfs.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
     # Pinned by rev: bump deliberately, do not track `main`.
     got.url = "git+ssh://git@got.bbl.systems/git/got?rev=c1e25159cd44ad45e704da531410bbf46a03941d";

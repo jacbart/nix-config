@@ -61,6 +61,7 @@ in
               };
               username = lib.mkOption {
                 type = lib.types.str;
+                default = "root";
                 description = "Primary username for this Darwin host";
               };
             };

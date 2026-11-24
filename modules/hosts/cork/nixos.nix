@@ -99,7 +99,7 @@
           hardware.cpu.amd.updateMicrocode = lib.mkForce true;
         }
       )
-      (import ./disks.nix { })
+      ./disks.nix
     ];
   };
 }

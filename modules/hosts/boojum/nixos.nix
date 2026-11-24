@@ -62,7 +62,7 @@
           hardware.cpu.intel.updateMicrocode = lib.mkForce true;
         }
       )
-      (import ./disks.nix { })
+      ./disks.nix
       ./remote-builder.nix
       ./virt.nix
       ../shared/distributed-builds.nix
