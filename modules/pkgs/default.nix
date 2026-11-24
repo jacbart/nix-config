@@ -8,7 +8,6 @@ let
   inherit (pkgs) lib;
 in
 {
-  fex-cli = pkgs.callPackage ./fex { };
   mazter = pkgs.callPackage ./mazter { };
   pgsync = pkgs.callPackage ./pgsync { };
   apex-jorje-lsp = pkgs.callPackage ./apex-jorje-lsp { };
@@ -18,6 +17,10 @@ in
   prettier-apex = pkgs.callPackage ./prettier-apex { };
   tmux-agent-indicator = pkgs.callPackage ./tmux-agent-indicator { };
   codebase-memory-mcp = pkgs.callPackage ./codebase-memory-mcp { };
+}
+// lib.optionalAttrs (pkgs.stdenv.hostPlatform.system != "aarch64-linux") {
+  # fex's meta.platforms excludes aarch64-linux.
+  fex-cli = pkgs.callPackage ./fex { };
 }
 // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
   uconsole-nx = pkgs.callPackage ./nxengine { };

@@ -1,6 +1,9 @@
 {
   pkgs ? (import ../nixpkgs.nix) { },
 }:
+let
+  inherit (pkgs) lib;
+in
 {
   add-zim = pkgs.callPackage ./add-zim { };
   br = pkgs.callPackage ./br { };
@@ -15,6 +18,10 @@
   hx-go-tags = pkgs.callPackage ./hx-go-tags { };
   apex-impls = pkgs.callPackage ./apex-impls { };
   resolve = pkgs.callPackage ./resolve { };
+}
+// lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+  # moonlight-embedded, evsieve, and brightnessctl are Linux-only
+  # (meta.platforms), so `nix flake check` fails evaluating these on darwin.
   moonlight-ash = pkgs.callPackage ./moonlight-ash { };
   uconsole-screen = pkgs.callPackage ./uconsole-screen { };
   uconsole-gamepad = pkgs.callPackage ./uconsole-gamepad { };
